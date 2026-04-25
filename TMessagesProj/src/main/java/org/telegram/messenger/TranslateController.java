@@ -548,7 +548,7 @@ public class TranslateController extends BaseController {
             ArrayList<Long> toNotify = new ArrayList<>();
             for (long dialogId : translatableDialogs) {
                 String language = detectedDialogLanguage.get(dialogId);
-                if (language != null && Translator.isLanguageRestricted(language)) {
+                if (language != null && isLanguageRestricted(language)) {
                     cancelTranslations(dialogId);
                     translatingDialogs.remove(dialogId);
                     toNotify.add(dialogId);
@@ -885,7 +885,7 @@ public class TranslateController extends BaseController {
             isTranslatable(messageObject) &&
             messageObject.messageOwner.originalLanguage != null &&
             !UNKNOWN_LANGUAGE.equals(messageObject.messageOwner.originalLanguage) &&
-            !Translator.isLanguageRestricted(messageObject.messageOwner.originalLanguage)
+            !isLanguageRestricted(messageObject.messageOwner.originalLanguage)
         );
 
         if (isUnknown) {
@@ -1638,14 +1638,7 @@ public class TranslateController extends BaseController {
     }
 
     private boolean isLanguageRestricted(String lng) {
-        if (getUserConfig().isPremium()) {
-            return RestrictedLanguagesSelectActivity.getRestrictedLanguages().contains(lng);
-        }
-        try {
-            return TextUtils.equals(LocaleController.getInstance().getCurrentLocaleInfo().pluralLangCode, lng);
-        } catch (Exception ignore) {
-            return false;
-        }
+        return Translator.isLanguageRestricted(lng);
     }
 
     private void loadTranslatingDialogsCached() {
@@ -1675,7 +1668,7 @@ public class TranslateController extends BaseController {
             if ("null".equals(to)) to = null;
             if (from != null) {
                 detectedDialogLanguage.put(did, from);
-                if (!Translator.isLanguageRestricted(from)) {
+                if (!isLanguageRestricted(from)) {
                     translatingDialogs.put(did, !disabled);
                     translatableDialogs.add(did);
                 }
@@ -1771,7 +1764,7 @@ public class TranslateController extends BaseController {
     public boolean canTranslateStory(TL_stories.StoryItem storyItem) {
         return storyItem != null && !TextUtils.isEmpty(storyItem.caption) && !MessageHelper.isLinkOnlyMessage(storyItem.caption, storyItem.entities) && (
             storyItem.detectedLng == null && storyItem.translatedText != null && TextUtils.equals(storyItem.translatedLng, TranslateAlert2.getToLanguage()) ||
-            storyItem.detectedLng != null && !Translator.isLanguageRestricted(storyItem.detectedLng)
+            storyItem.detectedLng != null && !isLanguageRestricted(storyItem.detectedLng)
         );
     }
 
@@ -1882,7 +1875,7 @@ public class TranslateController extends BaseController {
         }
         return messageObject != null && messageObject.messageOwner != null && !TextUtils.isEmpty(messageObject.messageOwner.message) && (
             detectedLanguage == null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, TranslateAlert2.getToLanguage()) ||
-            detectedLanguage != null && !Translator.isLanguageRestricted(messageObject.messageOwner.originalLanguage) &&
+            detectedLanguage != null && !isLanguageRestricted(messageObject.messageOwner.originalLanguage) &&
             !MessageHelper.isLinkOrEmojiOnlyMessage(messageObject)
         ) && !messageObject.translated;
     }

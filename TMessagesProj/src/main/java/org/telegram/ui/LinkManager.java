@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import org.nemogram.messenger.settings.NemoLanguagesSelectActivity;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BirthdayController;
@@ -360,7 +361,7 @@ public class LinkManager {
         }
         if ("language".equalsIgnoreCase(first)) { // open_settings = 10;
             if ("do-not-translate".equalsIgnoreCase(second)) {
-                presentFragment(new RestrictedLanguagesSelectActivity());
+                presentFragment(new NemoLanguagesSelectActivity(NemoLanguagesSelectActivity.TYPE_RESTRICTED));
                 return true;
             }
             presentFragment(new LanguageSelectActivity());
