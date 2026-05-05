@@ -604,6 +604,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private final static int delete_group = 45;
     private final static int enable_no_forwards = 46;
     private final static int disable_no_forwards = 47;
+    private final static int export_chat = 48;
 
     private Rect rect = new Rect();
 
@@ -2556,6 +2557,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     DialogsActivity fragment = new DialogsActivity(args);
                     fragment.setDelegate(ProfileActivity.this);
                     presentFragment(fragment);
+                } else if (id == export_chat) {
+                    new org.nemogram.messenger.export.ExportSettingsDialog(
+                            getParentActivity(),
+                            getDialogId(),
+                            getResourceProvider()
+                    ).show();
                 } else if (id == edit_contact) {
                     Bundle args = new Bundle();
                     args.putLong("user_id", userId);
@@ -12152,6 +12159,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 if (!isBot && getContactsController().contactsDict.get(userId) != null) {
                     otherItem.addSubItem(add_shortcut, R.drawable.msg_home, LocaleController.getString(R.string.AddShortcut));
                 }
+                otherItem.addSubItem(export_chat, R.drawable.msg_saved, LocaleController.getString(R.string.ExportChat));
             }
         } else if (chatId != 0) {
             TLRPC.Chat chat = getMessagesController().getChat(chatId);
@@ -12216,6 +12224,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             otherItem.addSubItem(leave_group, R.drawable.msg_leave, getString(R.string.LeaveMega));
                             leaveAction = true;
                         }
+                        otherItem.addSubItem(export_chat, R.drawable.msg_saved, LocaleController.getString(R.string.ExportChat));
                     }
                 } else {
                     if (chat.creator || chat.admin_rights != null && chat.admin_rights.edit_stories) {
@@ -12277,6 +12286,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 otherItem.addSubItem(leave_group, R.drawable.msg_leave, LocaleController.getString(R.string.DeleteAndExit));
                 leaveAction = true;
+                otherItem.addSubItem(export_chat, R.drawable.msg_saved, LocaleController.getString(R.string.ExportChat));
             }
         }
 

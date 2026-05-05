@@ -265,16 +265,6 @@ public class NemoConfig {
         }
     }
 
-    public static String exportConfigs() {
-        if (gson == null) {
-            gson = new GsonBuilder()
-                    .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
-                    .create();
-        }
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        return gson.toJson(preferences.getAll());
-    }
-
     public static void importConfigs(String config) {
         if (gson == null) {
             gson = new GsonBuilder()

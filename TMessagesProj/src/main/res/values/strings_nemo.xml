@@ -340,6 +340,25 @@
     <string name="AutoCheckUpdates">Auto-check for updates</string>
     <string name="HideGifts">Hide gifts tab</string>
     <string name="HideAiButton">Hide AI editor button</string>
+    <string name="ExportChat">Export chat history</string>
+    <string name="ExportChatFormat">Format</string>
+    <string name="ExportChatFormatHtml">HTML</string>
+    <string name="ExportChatFormatJson">JSON</string>
+    <string name="ExportChatStart">Export</string>
+    <string name="ExportChatProgress">Exported: %1$d messages</string>
+    <string name="ExportChatDone">Export complete</string>
+    <string name="ExportChatPreparing">Preparing...</string>
+    <string name="ExportChatError">Error: %1$s</string>
+    <string name="ExportChatInclude">Include in export</string>
+    <string name="ExportChatPhotos">Photos</string>
+    <string name="ExportChatVideos">Videos</string>
+    <string name="ExportChatFiles">Files and documents</string>
+    <string name="ExportChatVoice">Voice messages</string>
+    <string name="ExportChatMusic">Music</string>
+    <string name="ExportChatMessageLimit">Message limit</string>
+    <string name="ExportChatMediaLimit">Media size limit</string>
+    <string name="ExportLimitUnlimited">Unlimited</string>
+    <string name="ExportLimitMessages">%1$d messages</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

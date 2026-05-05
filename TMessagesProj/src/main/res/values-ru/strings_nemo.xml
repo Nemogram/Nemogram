@@ -336,6 +336,25 @@
     <string name="AutoCheckUpdates">Автоматически проверять обновления</string>
     <string name="HideGifts">Скрыть вкладку подарков</string>
     <string name="HideAiButton">Скрыть кнопку AI редактора</string>
+    <string name="ExportChat">Экспорт истории чата</string>
+    <string name="ExportChatFormat">Формат</string>
+    <string name="ExportChatFormatHtml">HTML</string>
+    <string name="ExportChatFormatJson">JSON</string>
+    <string name="ExportChatStart">Экспортировать</string>
+    <string name="ExportChatProgress">Экспортировано: %1$d сообщений</string>
+    <string name="ExportChatDone">Экспорт завершён</string>
+    <string name="ExportChatPreparing">Подготовка...</string>
+    <string name="ExportChatError">Ошибка: %1$s</string>
+    <string name="ExportChatInclude">Включить в экспорт</string>
+    <string name="ExportChatPhotos">Фото</string>
+    <string name="ExportChatVideos">Видео</string>
+    <string name="ExportChatFiles">Файлы и документы</string>
+    <string name="ExportChatVoice">Голосовые сообщения</string>
+    <string name="ExportChatMusic">Музыка</string>
+    <string name="ExportChatMessageLimit">Лимит сообщений</string>
+    <string name="ExportChatMediaLimit">Лимит объёма медиа</string>
+    <string name="ExportLimitUnlimited">Без ограничений</string>
+    <string name="ExportLimitMessages">%1$d сообщений</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>
 </resources>
