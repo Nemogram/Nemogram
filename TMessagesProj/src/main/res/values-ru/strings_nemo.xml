@@ -337,6 +337,7 @@
     <string name="SpoilerKeywordsInChannels">Режим спойлера в каналах</string>
     <string name="AutoCheckUpdates">Автоматически проверять обновления</string>
     <string name="HideGifts">Скрыть вкладку подарков</string>
+    <string name="HideBirthdayHint">Скрыть подсказку настройки дня рождения</string>
     <string name="HideAiButton">Скрыть кнопку AI редактора</string>
     <string name="ExportChat">Экспорт истории чата</string>
     <string name="ExportChatFormat">Формат</string>
