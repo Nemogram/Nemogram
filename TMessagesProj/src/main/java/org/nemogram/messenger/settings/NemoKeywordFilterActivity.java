@@ -4,6 +4,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.AlertDialog;
@@ -15,13 +16,13 @@ import org.telegram.ui.Components.UniversalAdapter;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import org.nemogram.messenger.NemoConfig;
-
 public class NemoKeywordFilterActivity extends BaseNemoSettingsActivity {
 
     private final int filterInChatsRow = rowId++;
+    private final int spoilerInChatsRow = rowId++;
     private final int addChatKeywordRow = rowId++;
     private final int filterInChannelsRow = rowId++;
+    private final int spoilerInChannelsRow = rowId++;
     private final int addChannelKeywordRow = rowId++;
 
     private final ArrayList<String> chatKeywords = new ArrayList<>();
@@ -63,6 +64,7 @@ public class NemoKeywordFilterActivity extends BaseNemoSettingsActivity {
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(LocaleController.getString(R.string.FilterKeywordsChatsHeader)));
         items.add(UItem.asCheck(filterInChatsRow, LocaleController.getString(R.string.FilterKeywordsInChats)).slug("filterInChats").setChecked(NemoConfig.filterKeywordsInChats));
+        items.add(UItem.asCheck(spoilerInChatsRow, LocaleController.getString(R.string.SpoilerKeywordsInChats)).setChecked(NemoConfig.spoilerKeywordsInChats));
         items.add(TextSettingsCellFactory.of(addChatKeywordRow, LocaleController.getString(R.string.AddKeyword)).slug("addChatKeyword").accent());
         if (!chatKeywords.isEmpty()) {
             for (int i = 0; i < chatKeywords.size(); i++) {
@@ -71,9 +73,9 @@ public class NemoKeywordFilterActivity extends BaseNemoSettingsActivity {
         }
         items.add(UItem.asShadow(LocaleController.getString(R.string.FilterKeywordsInChatsAbout)));
 
-        // Channels section
         items.add(UItem.asHeader(LocaleController.getString(R.string.FilterKeywordsChannelsHeader)));
         items.add(UItem.asCheck(filterInChannelsRow, LocaleController.getString(R.string.FilterKeywordsInChannels)).slug("filterInChannels").setChecked(NemoConfig.filterKeywordsInChannels));
+        items.add(UItem.asCheck(spoilerInChannelsRow, LocaleController.getString(R.string.SpoilerKeywordsInChannels)).setChecked(NemoConfig.spoilerKeywordsInChannels));
         items.add(TextSettingsCellFactory.of(addChannelKeywordRow, LocaleController.getString(R.string.AddKeyword)).slug("addChannelKeyword").accent());
         if (!channelKeywords.isEmpty()) {
             for (int i = 0; i < channelKeywords.size(); i++) {
@@ -86,15 +88,25 @@ public class NemoKeywordFilterActivity extends BaseNemoSettingsActivity {
     @Override
     protected void onItemClick(UItem item, View view, int position, float x, float y) {
         int id = item.id;
-            if (id == filterInChatsRow) {
+        if (id == filterInChatsRow) {
             NemoConfig.toggleFilterKeywordsInChats();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.filterKeywordsInChats);
+            }
+        } else if (id == spoilerInChatsRow) {
+            NemoConfig.toggleSpoilerKeywordsInChats();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.spoilerKeywordsInChats);
             }
         } else if (id == filterInChannelsRow) {
             NemoConfig.toggleFilterKeywordsInChannels();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.filterKeywordsInChannels);
+            }
+        } else if (id == spoilerInChannelsRow) {
+            NemoConfig.toggleSpoilerKeywordsInChannels();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.spoilerKeywordsInChannels);
             }
         } else if (id == addChatKeywordRow) {
             showAddKeywordDialog(false);

@@ -21090,10 +21090,21 @@ public class ChatActivity extends BaseFragment implements
                 }
 
                 TLRPC.MessageAction action = obj.messageOwner.action;
-                if (!obj.isOutOwner() && (currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup
-                    ? (NemoConfig.filterKeywordsInChannels && NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null))
-                    : (NemoConfig.filterKeywordsInChats && NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null)))) {
-                    continue;
+                if (!obj.isOutOwner()) {
+                    boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
+                    boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
+                    boolean blocked = isChannel
+                        ? NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null)
+                        : NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null);
+
+                    if (hide && blocked) {
+                        boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
+                        if (spoiler) {
+                            injectSpoilerEntity(obj);
+                        } else {
+                            continue;
+                        }
+                    }
                 }
 
                 if (currentChat != null && currentChat.creator && (action instanceof TLRPC.TL_messageActionChatCreate || dropPhotoAction != null && action == dropPhotoAction)) {
@@ -25442,10 +25453,21 @@ public class ChatActivity extends BaseFragment implements
                 if (obj.type < 0 || messagesDict[0].indexOfKey(messageId) >= 0) {
                     continue;
                 }
-                if (!obj.isOutOwner() && (currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup
-                    ? (NemoConfig.filterKeywordsInChannels && NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null))
-                    : (NemoConfig.filterKeywordsInChats && NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null)))) {
-                    continue;
+                if (!obj.isOutOwner()) {
+                    boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
+                    boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
+                    boolean blocked = isChannel
+                        ? NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null)
+                        : NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null);
+
+                    if (hide && blocked) {
+                        boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
+                        if (spoiler) {
+                            injectSpoilerEntity(obj);
+                        } else {
+                            continue;
+                        }
+                    }
                 }
                 if (currentChat != null && currentChat.creator && (!ChatObject.isChannel(currentChat) || currentChat.megagroup) && (action instanceof TLRPC.TL_messageActionChatCreate || action instanceof TLRPC.TL_messageActionChatEditPhoto && messages.size() < 2)) {
                     continue;
@@ -25579,10 +25601,21 @@ public class ChatActivity extends BaseFragment implements
                 if (obj.type < 0 || messagesDict[0].indexOfKey(messageId) >= 0) {
                     continue;
                 }
-                if (!obj.isOutOwner() && (currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup
-                    ? (NemoConfig.filterKeywordsInChannels && NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null))
-                    : (NemoConfig.filterKeywordsInChats && NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null)))) {
-                    continue;
+                if (!obj.isOutOwner()) {
+                    boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
+                    boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
+                    boolean blocked = isChannel
+                        ? NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null)
+                        : NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null);
+
+                    if (hide && blocked) {
+                        boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
+                        if (spoiler) {
+                            injectSpoilerEntity(obj);
+                        } else {
+                            continue;
+                        }
+                    }
                 }
                 if (currentChat != null && currentChat.creator && (!ChatObject.isChannel(currentChat) || currentChat.megagroup) && (action instanceof TLRPC.TL_messageActionChatCreate || action instanceof TLRPC.TL_messageActionChatEditPhoto && messages.size() < 2)) {
                     continue;
@@ -25979,6 +26012,22 @@ public class ChatActivity extends BaseFragment implements
         if (currentUser != null && currentUser.bot) {
             updateTopPanel(true);
         }
+    }
+
+    private static void injectSpoilerEntity(MessageObject obj) {
+        if (obj.messageOwner == null || obj.messageOwner.message == null) return;
+        var entity = new TLRPC.TL_messageEntitySpoiler();
+        entity.offset = 0;
+        entity.length = obj.messageOwner.message.length();
+        if (obj.messageOwner.entities == null) {
+            obj.messageOwner.entities = new ArrayList<>();
+        }
+        for (var e : obj.messageOwner.entities) {
+            if (e instanceof TLRPC.TL_messageEntitySpoiler
+                    && e.offset == 0 && e.length == entity.length) return;
+        }
+        obj.messageOwner.entities.add(entity);
+        obj.resetLayout();
     }
 
     private int getStableIdForDateObject(int date) {

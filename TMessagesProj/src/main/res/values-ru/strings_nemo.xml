@@ -333,6 +333,8 @@
     <string name="FilterKeywordsChannelsHeader">Каналы</string>
     <string name="FilterKeywordsInChannelsAbout">Скрывать сообщения с заблокированными ключевыми словами в каналах.</string>
     <string name="MessageHidden">Сообщение скрыто</string>
+    <string name="SpoilerKeywordsInChats">Режим спойлера в чатах</string>
+    <string name="SpoilerKeywordsInChannels">Режим спойлера в каналах</string>
     <string name="AutoCheckUpdates">Автоматически проверять обновления</string>
     <string name="HideGifts">Скрыть вкладку подарков</string>
     <string name="HideAiButton">Скрыть кнопку AI редактора</string>

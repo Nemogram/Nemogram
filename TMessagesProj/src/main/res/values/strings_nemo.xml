@@ -336,6 +336,8 @@
     <string name="FilterKeywordsChatsHeader">Chats</string>
     <string name="FilterKeywordsChannelsHeader">Channels</string>
     <string name="FilterKeywordsInChannelsAbout">Hide messages with blocked keywords in channels.</string>
+    <string name="SpoilerKeywordsInChats">Spoiler mode in chats</string>
+    <string name="SpoilerKeywordsInChannels">Spoiler mode in channels</string>
     <string name="MessageHidden">Message hidden</string>
     <string name="AutoCheckUpdates">Auto-check for updates</string>
     <string name="HideGifts">Hide gifts tab</string>

@@ -148,6 +148,8 @@ public class NemoConfig {
     public static boolean disableGooeyAvatarAnimation = false;
     public static boolean filterKeywordsInChats = false;
     public static boolean filterKeywordsInChannels = false;
+    public static boolean spoilerKeywordsInChats = false;
+    public static boolean spoilerKeywordsInChannels = false;
     public static boolean autoCheckUpdates = true;
 
     public static boolean shouldNOTTrustMe = false;
@@ -225,6 +227,8 @@ public class NemoConfig {
             blockedKeywordsChannels = preferences.getStringSet("blockedKeywordsChannels", new HashSet<>());
             filterKeywordsInChats = preferences.getBoolean("filterKeywordsInChats", false);
             filterKeywordsInChannels = preferences.getBoolean("filterKeywordsInChannels", false);
+            spoilerKeywordsInChats = preferences.getBoolean("spoilerKeywordsInChats", false);
+            spoilerKeywordsInChannels = preferences.getBoolean("spoilerKeywordsInChannels", false);
             disableMarkdownByDefault = preferences.getBoolean("disableMarkdownByDefault", false);
             showRPCError = preferences.getBoolean("showRPCError", false);
             hideTimeOnSticker = preferences.getBoolean("hideTimeOnSticker", false);
@@ -1003,6 +1007,18 @@ public class NemoConfig {
         filterKeywordsInChannels = !filterKeywordsInChannels;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("filterKeywordsInChannels", filterKeywordsInChannels).apply();
+    }
+
+    public static void toggleSpoilerKeywordsInChats() {
+        spoilerKeywordsInChats = !spoilerKeywordsInChats;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("spoilerKeywordsInChats", spoilerKeywordsInChats).apply();
+    }
+
+    public static void toggleSpoilerKeywordsInChannels() {
+        spoilerKeywordsInChannels = !spoilerKeywordsInChannels;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("spoilerKeywordsInChannels", spoilerKeywordsInChannels).apply();
     }
 
     public static void toggleAutoCheckUpdates() {

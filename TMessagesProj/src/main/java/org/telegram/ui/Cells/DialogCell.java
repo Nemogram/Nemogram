@@ -1222,11 +1222,45 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
         CharSequence msgText = message != null ? message.messageText : null;
         if (msgText != null && message != null && !message.isOutOwner()) {
             String msgRaw = message.messageOwner != null ? message.messageOwner.message : null;
-            boolean blocked = chat != null && ChatObject.isChannel(chat) && !chat.megagroup
-                    ? (NemoConfig.filterKeywordsInChannels && NemoConfig.isKeywordBlockedInChannels(msgRaw))
-                    : (NemoConfig.filterKeywordsInChats && NemoConfig.isKeywordBlockedInChats(msgRaw));
+            boolean isChannel = chat != null && ChatObject.isChannel(chat) && !chat.megagroup;
+            boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
+            boolean blocked = hide && (isChannel ? NemoConfig.isKeywordBlockedInChannels(msgRaw) : NemoConfig.isKeywordBlockedInChats(msgRaw));
+
+            if (message.messageOwner != null && message.messageOwner.entities != null && msgRaw != null) {
+                boolean removed = false;
+                for (int i = 0; i < message.messageOwner.entities.size(); i++) {
+                    TLRPC.MessageEntity e = message.messageOwner.entities.get(i);
+                    if (e instanceof TLRPC.TL_messageEntitySpoiler && e.offset == 0 && e.length == msgRaw.length()) {
+                        message.messageOwner.entities.remove(i);
+                        removed = true;
+                        break;
+                    }
+                }
+                if (removed) {
+                    message.resetLayout();
+                    msgText = message.messageText;
+                }
+            }
+
             if (blocked) {
-                msgText = LocaleController.getString(R.string.MessageHidden);
+                boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
+
+                if (spoiler) {
+                    if (message.messageOwner != null && msgRaw != null) {
+                        TLRPC.TL_messageEntitySpoiler entity = new TLRPC.TL_messageEntitySpoiler();
+                        entity.offset = 0;
+                        entity.length = msgRaw.length();
+
+                        if (message.messageOwner.entities == null) {
+                            message.messageOwner.entities = new ArrayList<>();
+                        }
+                        message.messageOwner.entities.add(entity);
+                        message.resetLayout();
+                        msgText = message.messageText;
+                    }
+                } else {
+                    msgText = LocaleController.getString(R.string.MessageHidden);
+                }
             }
         }
         if (msgText instanceof Spannable) {
