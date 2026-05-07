@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.EmojiHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
+import org.nemogram.messenger.settings.SearchBarStyleActivity;
 
 public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity implements NotificationCenter.NotificationCenterDelegate {
 
@@ -31,6 +32,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int hideBottomNavigationBarRow = rowId++;
     private final int disableGooeyAvatarAnimationRow = rowId++;
     private final int tabletModeRow = rowId++;
+    private final int searchBarStyleRow = rowId++;
 
     private final int hideStoriesRow = rowId++;
     private final int mediaPreviewRow = rowId++;
@@ -76,6 +78,12 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             case NemoConfig.TABLET_ENABLE -> LocaleController.getString(R.string.Enable);
             default -> LocaleController.getString(R.string.Disable);
         }).slug("tabletMode"));
+        items.add(TextSettingsCellFactory.of(searchBarStyleRow,
+                LocaleController.getString(R.string.SearchBarStyle),
+                LocaleController.getString(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT
+                        ? R.string.SearchBarStyleCompact
+                        : R.string.SearchBarStyleNormal)
+        ).slug("searchBarStyle"));
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.SavedDialogsTab)));
@@ -213,6 +221,8 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.strokeOnViews);
             }
+        } else if (id == searchBarStyleRow) {
+            presentFragment(new SearchBarStyleActivity());
         }
     }
 
@@ -250,5 +260,12 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             item.text = title;
             return item;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listView.adapter.updateWithoutNotify();
+        notifyItemChanged(searchBarStyleRow);
     }
 }

@@ -50,6 +50,9 @@ public class NemoConfig {
     public static final int TABLET_ENABLE = 1;
     public static final int TABLET_DISABLE = 2;
 
+    public static final int SEARCH_BAR_NORMAL  = 0;
+    public static final int SEARCH_BAR_COMPACT = 1;
+
     public static final int BOOST_NONE = 0;
     public static final int BOOST_AVERAGE = 1;
     public static final int BOOST_EXTREME = 2;
@@ -152,10 +155,15 @@ public class NemoConfig {
     public static boolean spoilerKeywordsInChats = false;
     public static boolean spoilerKeywordsInChannels = false;
     public static boolean autoCheckUpdates = true;
+    public static boolean hideSearchBarOnScroll = true;
+    public static boolean hideSearchBarPlaceholder = false;
+    public static String searchBarPlaceholder = "";
 
     public static boolean shouldNOTTrustMe = false;
 
     public static int userMcc = 0;
+    public static int searchBarStyle = SEARCH_BAR_NORMAL;
+
 
     private static boolean configLoaded;
     private static Gson gson;
@@ -264,6 +272,10 @@ public class NemoConfig {
             strokeOnViews = preferences.getBoolean("strokeOnViews", true);
             disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", false);
             autoCheckUpdates = preferences.getBoolean("autoCheckUpdates", true);
+            searchBarStyle = preferences.getInt("searchBarStyle", SEARCH_BAR_NORMAL);
+            hideSearchBarOnScroll = preferences.getBoolean("hideSearchBarOnScroll", false);
+            hideSearchBarPlaceholder = preferences.getBoolean("hideSearchBarPlaceholder", false);
+            searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
 
             LensHelper.checkLensSupportAsync();
 
@@ -1033,6 +1045,34 @@ public class NemoConfig {
         autoCheckUpdates = !autoCheckUpdates;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("autoCheckUpdates", autoCheckUpdates).apply();
+    }
+
+    public static void setSearchBarStyle(int style) {
+        searchBarStyle = style;
+        SharedPreferences preferences = ApplicationLoader.applicationContext
+                .getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putInt("searchBarStyle", searchBarStyle).apply();
+    }
+
+    public static void toggleHideSearchBarOnScroll() {
+        hideSearchBarOnScroll = !hideSearchBarOnScroll;
+        SharedPreferences preferences = ApplicationLoader.applicationContext
+                .getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("hideSearchBarOnScroll", hideSearchBarOnScroll).apply();
+    }
+
+    public static void toggleHideSearchBarPlaceholder() {
+        hideSearchBarPlaceholder = !hideSearchBarPlaceholder;
+        SharedPreferences preferences = ApplicationLoader.applicationContext
+                .getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("hideSearchBarPlaceholder", hideSearchBarPlaceholder).apply();
+    }
+
+    public static void setSearchBarPlaceholder(String text) {
+        searchBarPlaceholder = text;
+        SharedPreferences preferences = ApplicationLoader.applicationContext
+                .getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putString("searchBarPlaceholder", searchBarPlaceholder).apply();
     }
 
     public static int getNotificationColor() {

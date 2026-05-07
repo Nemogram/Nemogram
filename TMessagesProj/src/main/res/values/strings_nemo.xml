@@ -362,6 +362,15 @@
     <string name="ExportChatMediaLimit">Media size limit</string>
     <string name="ExportLimitUnlimited">Unlimited</string>
     <string name="ExportLimitMessages">%1$d messages</string>
+    <string name="SearchBarStyle">Search bar style</string>
+    <string name="SearchBarStyleNormal">Normal</string>
+    <string name="SearchBarStyleCompact">Compact</string>
+    <string name="HideSearchBarOnScroll">Hide on scroll</string>
+    <string name="SearchBarStylePreviewTitle">Preview</string>
+    <string name="Placeholder">Placeholder</string>
+    <string name="SearchBarPlaceholder">Search bar placeholder</string>
+    <string name="SearchBarPlaceholderHide">Hide search bar placeholder</string>
+    <string name="SearchBarPlaceholderEmpty">Empty</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

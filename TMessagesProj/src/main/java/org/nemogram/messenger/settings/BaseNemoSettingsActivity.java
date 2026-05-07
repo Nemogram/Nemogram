@@ -461,6 +461,7 @@ public abstract class BaseNemoSettingsActivity extends BaseFragment {
             } else {
                 textCell.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText, resourcesProvider));
             }
+            textCell.setEnabled(item.enabled);
         }
 
         public static UItem of(int id, CharSequence title) {
