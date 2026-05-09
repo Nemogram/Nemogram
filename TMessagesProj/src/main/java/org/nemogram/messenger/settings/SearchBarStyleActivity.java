@@ -191,7 +191,7 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
 
     @Override
     protected String getKey() {
-        return "appearance";
+        return "searchbarstyle";
     }
 
     @SuppressLint("ViewConstructor")

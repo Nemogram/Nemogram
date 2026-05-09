@@ -13587,11 +13587,16 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     private void checkUi_searchFieldHint() {
         final boolean topics = getRightSlidingProgress() > 0.5f;
-        final String hint = topics
-                ? getString(R.string.SearchTopics)
-                : (NemoConfig.searchBarPlaceholder.isEmpty()
-                ? getString(R.string.SearchChats)
-                : NemoConfig.searchBarPlaceholder);
+        final String hint;
+        if (topics) {
+            hint = getString(R.string.SearchTopics);
+        } else if (NemoConfig.hideSearchBarPlaceholder) {
+            hint = "";
+        } else if (!NemoConfig.searchBarPlaceholder.isEmpty()) {
+            hint = NemoConfig.searchBarPlaceholder;
+        } else {
+            hint = getString(R.string.SearchChats);
+        }
 
         fragmentSearchField.editText.setContentDescription(hint);
         fragmentSearchField.editText.setHint(hint);
