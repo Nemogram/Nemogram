@@ -47,6 +47,7 @@ import org.telegram.ui.Components.AvatarDrawable;
 import org.telegram.ui.LaunchActivity;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 
 public class MusicPlayerService extends Service implements NotificationCenter.NotificationCenterDelegate {
 
@@ -98,13 +99,16 @@ public class MusicPlayerService extends Service implements NotificationCenter.No
             NotificationCenter.getInstance(a).addObserver(this, NotificationCenter.fileLoaded);
         }
         imageReceiver = new ImageReceiver(null);
+        WeakReference<MusicPlayerService> weakSelf = new WeakReference<>(this);
         imageReceiver.setDelegate((imageReceiver, set, thumb, memCache) -> {
-            if (set && !TextUtils.isEmpty(loadingFilePath)) {
+            MusicPlayerService self = weakSelf.get();
+            if (self == null) return;
+            if (set && !TextUtils.isEmpty(self.loadingFilePath)) {
                 MessageObject messageObject = MediaController.getInstance().getPlayingMessageObject();
                 if (messageObject != null) {
-                    createNotification(messageObject, true);
+                    self.createNotification(messageObject, true);
                 }
-                loadingFilePath = null;
+                self.loadingFilePath = null;
             }
         });
 
@@ -679,6 +683,12 @@ public class MusicPlayerService extends Service implements NotificationCenter.No
     public void onDestroy() {
         unregisterReceiver(headsetPlugReceiver);
         super.onDestroy();
+        if (imageReceiver != null) {
+            imageReceiver.setDelegate(null);
+            imageReceiver.cancelLoadImage();
+            imageReceiver.onDetachedFromWindow();
+            imageReceiver = null;
+        }
         stopForeground(true);
         if (remoteControlClient != null) {
             RemoteControlClient.MetadataEditor metadataEditor = remoteControlClient.editMetadata(true);
