@@ -621,6 +621,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     public int birthdayRow;
     private int setUsernameRow;
     private int bioRow;
+    private int musicListRow;
     private int phoneSuggestionSectionRow;
     private int graceSuggestionRow;
     private int graceSuggestionSectionRow;
@@ -6034,7 +6035,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int getActionsExtraHeight(boolean withMusic) {
         if (userId != 0 && imageUpdater != null && !myProfile)
             return 0;
-        return dp(74 + (withMusic && hasMusic ? 25 : 0));
+            return dp(74 + (withMusic && hasMusic && !NemoConfig.musicViewAlternativeLayout ? 25 : 0));
     }
 
     private int getHeaderExtraHeight() {
@@ -7409,6 +7410,37 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             showDialog(dialog);
             return true;
         } else if (position == noteRow) {
+
+        } else if (position == musicListRow) {
+            if (savedMusicList == null) {
+                if (
+                        MediaController.getInstance().currentSavedMusicList != null &&
+                                MediaController.getInstance().currentSavedMusicList.currentAccount == currentAccount &&
+                                MediaController.getInstance().currentSavedMusicList.dialogId == getDialogId()) {
+                    savedMusicList = MediaController.getInstance().currentSavedMusicList;
+                } else {
+                    savedMusicList = new MessagesController.SavedMusicList(currentAccount, getDialogId());
+                    if (userInfo != null && userInfo.saved_music != null) {
+                        savedMusicList.setup(userInfo.saved_music);
+                    }
+                }
+            }
+            if (!savedMusicList.list.isEmpty()) {
+                boolean sameList = false;
+                if (
+                        MediaController.getInstance().currentSavedMusicList != savedMusicList ||
+                                !MediaController.getInstance().isPlayingMessage(savedMusicList.list.get(0))
+                ) {
+                    MediaController.getInstance().cleanup();
+                } else {
+                    sameList = true;
+                }
+                MediaController.getInstance().currentSavedMusicList = savedMusicList;
+                MediaController.getInstance().getPlaylist().clear();
+                MediaController.getInstance().getPlaylist().addAll(savedMusicList.list);
+                if (!sameList) MediaController.getInstance().playMessage(savedMusicList.list.get(0));
+                showDialog(new AudioPlayerAlert(getContext(), getResourceProvider()));
+            }
 
         } else if (position == phoneRow || position == numberRow) {
             if (editRow(view, position)) return true;
@@ -10439,6 +10471,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         numberRow = -1;
         birthdayRow = -1;
         setUsernameRow = -1;
+        musicListRow = -1;
         bioRow = -1;
         channelRow = -1;
         channelDividerRow = -1;
@@ -10589,7 +10622,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             }
 
             if (emptyRow < 0 && emptyRow2 < 0) {
-                if (hasMusic || peerColor != null || actionsView == null) {
+                if ((hasMusic && !NemoConfig.musicViewAlternativeLayout) || peerColor != null || actionsView == null) {
                     emptyRow2 = rowCount++;
                 } else {
                     emptyRow = rowCount++;
@@ -10692,6 +10725,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 infoStartRow = rowCount;
                 if (!isBot && (hasPhone || !hasInfo)) {
                     phoneRow = hidePhone ? -1 : rowCount++;
+                }
+                if (!isBot && NemoConfig.musicViewAlternativeLayout && userInfo != null && userInfo.saved_music != null) {
+                    musicListRow = rowCount++;
                 }
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.about)) {
                     userInfoRow = rowCount++;
@@ -11027,7 +11063,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (userInfo != null) {
                 musicView.setMusicDocument(userInfo.saved_music);
             }
-            musicView.setVisibility(hasMusic ? View.VISIBLE : View.GONE);
+            musicView.setVisibility(hasMusic && !NemoConfig.musicViewAlternativeLayout ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -11184,7 +11220,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             actionsView.updatePosition(listView.getMeasuredWidth(), dp(74));
         } else {
             actionsView.clipHeight = -1;
-            float bottom = extraHeight + newTop - dp(hasMusic ? 25 : 0);
+            float bottom = extraHeight + newTop - dp(hasMusic && !NemoConfig.musicViewAlternativeLayout ? 25 : 0);
             float height = Math.min(dp(74), bottom - newTop);
             actionsView.updatePosition(bottom - height, height);
         }
@@ -13451,6 +13487,22 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
                             //containsGift = !myProfile && today && !getMessagesController().premiumPurchaseBlocked();
                         }
+                    } else if (position == musicListRow) {
+                        if (userInfo != null && userInfo.saved_music != null) {
+                            CharSequence author = ProfileMusicView.getAuthor(userInfo.saved_music);
+                            CharSequence title = ProfileMusicView.getTitle(userInfo.saved_music);
+                            String text;
+                            if (TextUtils.isEmpty(author) && TextUtils.isEmpty(title)) {
+                                text = getString(R.string.AudioUnknownArtist) + " - " + getString(R.string.AudioUnknownTitle);
+                            } else if (TextUtils.isEmpty(author)) {
+                                text = title.toString();
+                            } else if (TextUtils.isEmpty(title)) {
+                                text = author.toString();
+                            } else {
+                                text = author + " - " + title;
+                            }
+                            detailCell.setTextAndValue(text, LocaleController.getString(R.string.ProfileMusicLabel), false);
+                        }
                     } else if (position == phoneRow) {
                         String text;
                         TLRPC.User user = getMessagesController().getUser(userId);
@@ -14148,6 +14200,42 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 case VIEW_TYPE_BOT_APP:
                     break;
                 case VIEW_TYPE_MUSIC:
+                    if (holder.itemView instanceof ProfileMusicView && userInfo != null && userInfo.saved_music != null) {
+                        ProfileMusicView lmv = (ProfileMusicView) holder.itemView;
+                        lmv.setColor(peerColor);
+                        lmv.setMusicDocument(userInfo.saved_music);
+                        lmv.setOnClickListener(v -> {
+                            if (savedMusicList == null) {
+                                if (
+                                        MediaController.getInstance().currentSavedMusicList != null &&
+                                                MediaController.getInstance().currentSavedMusicList.currentAccount == currentAccount &&
+                                                MediaController.getInstance().currentSavedMusicList.dialogId == getDialogId()) {
+                                    savedMusicList = MediaController.getInstance().currentSavedMusicList;
+                                } else {
+                                    savedMusicList = new MessagesController.SavedMusicList(currentAccount, getDialogId());
+                                    if (userInfo.saved_music != null) {
+                                        savedMusicList.setup(userInfo.saved_music);
+                                    }
+                                }
+                            }
+                            if (!savedMusicList.list.isEmpty()) {
+                                boolean sameList = false;
+                                if (
+                                        MediaController.getInstance().currentSavedMusicList != savedMusicList ||
+                                                !MediaController.getInstance().isPlayingMessage(savedMusicList.list.get(0))
+                                ) {
+                                    MediaController.getInstance().cleanup();
+                                } else {
+                                    sameList = true;
+                                }
+                                MediaController.getInstance().currentSavedMusicList = savedMusicList;
+                                MediaController.getInstance().getPlaylist().clear();
+                                MediaController.getInstance().getPlaylist().addAll(savedMusicList.list);
+                                if (!sameList) MediaController.getInstance().playMessage(savedMusicList.list.get(0));
+                                showDialog(new AudioPlayerAlert(getContext(), getResourceProvider()));
+                            }
+                        });
+                    }
                     break;
             }
         }
@@ -14363,6 +14451,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 return VIEW_TYPE_COLORFUL_TEXT;
             } else if (position == infoHeaderRowEmpty || position == infoEndRowEmpty) {
                 return VIEW_TYPE_HEADER_EMPTY;
+            } else if (position == musicListRow) {
+                return VIEW_TYPE_TEXT_DETAIL;
             }
             return 0;
         }

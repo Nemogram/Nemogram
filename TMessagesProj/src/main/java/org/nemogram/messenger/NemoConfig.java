@@ -111,6 +111,7 @@ public class NemoConfig {
     public static int tabletMode = TABLET_AUTO;
     public static boolean openArchiveOnPull = false;
     public static boolean hideGifts = false;
+    public static boolean musicViewAlternativeLayout = false;
     public static boolean hideBirthdayHint = false;
     public static int nameOrder = 1;
     public static boolean disableAppBarShadow = false;
@@ -184,6 +185,7 @@ public class NemoConfig {
             ignoreBlocked = preferences.getBoolean("ignoreBlocked2", false);
             tabletMode = preferences.getInt("tabletMode", TABLET_AUTO);
             hideGifts = preferences.getBoolean("hideGifts", false);
+            musicViewAlternativeLayout = preferences.getBoolean("musicViewAlternativeLayout", false);
             hideBirthdayHint = preferences.getBoolean("hideBirthdayHint", false);
             nameOrder = preferences.getInt("nameOrder", 1);
             showAddToSavedMessages = preferences.getBoolean("showAddToSavedMessages", true);
@@ -1073,6 +1075,12 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext
                 .getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putString("searchBarPlaceholder", searchBarPlaceholder).apply();
+    }
+
+    public static void toggleMusicViewAlternativeLayout() {
+        musicViewAlternativeLayout = !musicViewAlternativeLayout;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("musicViewAlternativeLayout", musicViewAlternativeLayout).apply();
     }
 
     public static int getNotificationColor() {

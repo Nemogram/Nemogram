@@ -367,6 +367,8 @@
     <string name="SearchBarPlaceholder">Текст в строке поиска</string>
     <string name="SearchBarPlaceholderHide">Скрыть текст в строке поиска</string>
     <string name="SearchBarPlaceholderEmpty">Пусто</string>
+    <string name="MusicViewAlternativeLayout">Альтернативное отображение музыки</string>
+    <string name="ProfileMusicLabel">Музыка</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>
 </resources>

@@ -371,6 +371,8 @@
     <string name="SearchBarPlaceholder">Search bar placeholder</string>
     <string name="SearchBarPlaceholderHide">Hide search bar placeholder</string>
     <string name="SearchBarPlaceholderEmpty">Empty</string>
+    <string name="MusicViewAlternativeLayout">Alternative music view</string>
+    <string name="ProfileMusicLabel">Music</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

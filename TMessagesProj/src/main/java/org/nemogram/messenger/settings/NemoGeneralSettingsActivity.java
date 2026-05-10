@@ -38,6 +38,7 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
     private final int silenceNonContactsRow = rowId++;
 
     private final int hideGiftsRow = rowId++;
+    private final int musicViewAlternativeLayoutRow = rowId++;
     private final int nameOrderRow = rowId++;
     private final int idTypeRow = rowId++;
 
@@ -134,6 +135,7 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.UserColorTabProfile)));
         items.add(UItem.asCheck(hideGiftsRow, LocaleController.getString(R.string.HideGifts)).slug("hideGifts").setChecked(NemoConfig.hideGifts));
+        items.add(UItem.asCheck(musicViewAlternativeLayoutRow, LocaleController.getString(R.string.MusicViewAlternativeLayout)).slug("musicViewAlternativeLayout").setChecked(NemoConfig.musicViewAlternativeLayout));
         items.add(TextSettingsCellFactory.of(nameOrderRow, LocaleController.getString(R.string.NameOrder), switch (NemoConfig.nameOrder) {
             case 2 -> LocaleController.getString(R.string.LastFirst);
             default -> LocaleController.getString(R.string.FirstLast);
@@ -177,6 +179,12 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
             ((TextCheckCell) view).setChecked(NemoConfig.hideGifts);
         }
         parentLayout.rebuildFragments(INavigationLayout.REBUILD_FLAG_REBUILD_ONLY_LAST);
+        } else if (id == musicViewAlternativeLayoutRow) {
+            NemoConfig.toggleMusicViewAlternativeLayout();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.musicViewAlternativeLayout);
+            }
+            parentLayout.rebuildFragments(INavigationLayout.REBUILD_FLAG_REBUILD_ONLY_LAST);
         } else if (id == nameOrderRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             ArrayList<Integer> types = new ArrayList<>();
