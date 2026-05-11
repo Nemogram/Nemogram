@@ -35,6 +35,7 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
     private final int autoTranslateRow = rowId++;
 
     private final int accentAsNotificationColorRow = rowId++;
+    private final int useStockNotificationIconRow = rowId++;
     private final int silenceNonContactsRow = rowId++;
 
     private final int hideGiftsRow = rowId++;
@@ -130,6 +131,7 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.Notifications)));
         items.add(UItem.asCheck(accentAsNotificationColorRow, LocaleController.getString(R.string.AccentAsNotificationColor)).slug("accentAsNotificationColor").setChecked(NemoConfig.accentAsNotificationColor));
+        items.add(UItem.asCheck(useStockNotificationIconRow, LocaleController.getString(R.string.UseStockNotificationIcon)).slug("useStockNotificationIcon").setChecked(NemoConfig.useStockNotificationIcon));
         items.add(UItem.asCheck(silenceNonContactsRow, LocaleController.getString(R.string.SilenceNonContacts)).slug("silenceNonContacts").setChecked(NemoConfig.silenceNonContacts));
         items.add(UItem.asShadow(LocaleController.getString(R.string.SilenceNonContactsAbout)));
 
@@ -245,6 +247,11 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
             NemoConfig.toggleAccentAsNotificationColor();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.accentAsNotificationColor);
+            }
+        } else if (id == useStockNotificationIconRow) {
+            NemoConfig.toggleUseStockNotificationIcon();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.useStockNotificationIcon);
             }
         } else if (id == silenceNonContactsRow) {
             NemoConfig.toggleSilenceNonContacts();

@@ -369,6 +369,7 @@
     <string name="SearchBarPlaceholderEmpty">Пусто</string>
     <string name="MusicViewAlternativeLayout">Альтернативное отображение музыки</string>
     <string name="ProfileMusicLabel">Музыка</string>
+    <string name="UseStockNotificationIcon">\"Telegram\" значок уведомлений</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>
 </resources>
