@@ -448,6 +448,7 @@ public class ChatActivity extends BaseFragment implements
     private RadialProgressView progressBar;
     private ActionBarMenuItem.Item addContactItem;
     private ActionBarMenuItem.Item clearHistoryItem;
+    private ActionBarMenuItem.Item scrollToFirstMessageItem;
     private ActionBarMenuItem.Item viewAsTopics;
     private ActionBarMenuItem.Item closeTopicItem;
     private ActionBarMenuItem.Item openForumItem;
@@ -1609,6 +1610,7 @@ public class ChatActivity extends BaseFragment implements
     private final static int show_pinned = 90;
     private final static int delete_history = 91;
     private final static int recent_actions = 92;
+    private final static int scroll_to_first_message = 93;
 
     private final static int bot_help = 30;
     private final static int bot_settings = 31;
@@ -3977,6 +3979,8 @@ public class ChatActivity extends BaseFragment implements
                     showDialog(AlertsCreator.createTTLAlert(getParentActivity(), currentEncryptedChat, themeDelegate).create());
                 } else if (id == delete_history) {
                     getMessageHelper().createDeleteHistoryAlert(ChatActivity.this, currentChat, forumTopic, mergeDialogId, themeDelegate);
+                } else if (id == scroll_to_first_message) {
+                    scrollToMessageId(1, 0, false, 0, true, 0);
                 } else if (id == clear_history || id == delete_chat || id == auto_delete_timer) {
                     if (getParentActivity() == null) {
                         return;
@@ -4585,6 +4589,7 @@ public class ChatActivity extends BaseFragment implements
             if (currentUser != null && currentUser.self && getDialogId() != UserObject.VERIFY) {
                 headerItem.lazilyAddSubItem(add_shortcut, R.drawable.msg_home, LocaleController.getString(R.string.AddShortcut));
             }
+            scrollToFirstMessageItem = headerItem.lazilyAddSubItem(scroll_to_first_message, R.drawable.msg_go_up, LocaleController.getString(R.string.ScrollToFirstMessage));
             if (!isTopic && !ChatObject.isMonoForum(currentChat)) {
                 clearHistoryItem = headerItem.lazilyAddSubItem(clear_history, R.drawable.msg_clear, LocaleController.getString(R.string.ClearHistory));
             }

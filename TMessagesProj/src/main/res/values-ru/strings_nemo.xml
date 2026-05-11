@@ -370,6 +370,7 @@
     <string name="MusicViewAlternativeLayout">Альтернативное отображение музыки</string>
     <string name="ProfileMusicLabel">Музыка</string>
     <string name="UseStockNotificationIcon">\"Telegram\" значок уведомлений</string>
+    <string name="ScrollToFirstMessage">К первому сообщению</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>
 </resources>
