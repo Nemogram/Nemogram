@@ -331,6 +331,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     public boolean hasStories = false;
     public boolean hasOnlySlefStories = false;
     private boolean animateToHasStories = false;
+    private boolean isScrollingUp = false;
     private float scrollYOffset;
     private boolean actionModeFullyShowed;
     private int actionModeAdditionalHeight;
@@ -965,12 +966,14 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         } else if (newTranslation > 0) {
                             newTranslation = 0;
                         }
-                        DialogsActivity.this.setScrollY(newTranslation);
+                        if (!isScrollingUp || !NemoConfig.hideSearchBarOnScroll) {
+                            DialogsActivity.this.setScrollY(newTranslation);
+                        }
                     } else {
-                        DialogsActivity.this.setScrollY(0);
+                        if (!isScrollingUp || !NemoConfig.hideSearchBarOnScroll) {
+                            DialogsActivity.this.setScrollY(0);
+                        }
                     }
-                } else {
-                    DialogsActivity.this.setScrollY(-getMaxScrollYOffset());
                 }
             }
             final int actionBarHeight = getActionBarFullHeight();
@@ -4195,7 +4198,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                                 if (hasStories && (viewPage.scroller.isRunning() || dialogStoriesCell.isExpanded()) && !rightSlidingDialogContainer.hasFragment() && !fixScrollYAfterArchiveOpened) {
                                     canScrollDy += dp(DialogStoriesCell.HEIGHT_IN_DP);
                                 }
-                                if ((viewPage.scroller.isRunning() || dialogStoriesCell.isExpanded()) && !rightSlidingDialogContainer.hasFragment() && !fixScrollYAfterArchiveOpened) {
+                                if (!rightSlidingDialogContainer.hasFragment() && !fixScrollYAfterArchiveOpened) {
                                     canScrollDy += getIdleSearchFieldHeight();
                                 }
                                 int positiveDy = Math.abs(dy);
@@ -4445,7 +4448,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             viewPage.itemTouchhelper = new ItemTouchHelper(viewPage.swipeController);
             viewPage.itemTouchhelper.attachToRecyclerView(viewPage.listView);
 
-            viewPage.listView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            viewPage.listView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
                 private boolean wasManualScroll;
 
@@ -4550,20 +4553,27 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         }
                         float currentTranslation = scrollYOffset;
                         float newTranslation = currentTranslation - dy;
-                        boolean applyScrollY = NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_NORMAL
-                                && NemoConfig.hideSearchBarOnScroll;
+                        boolean applyScrollY = !shouldHideHomeSearchField() && NemoConfig.hideSearchBarOnScroll;
                         invalidateScrollY = true;
+                        isScrollingUp = dy < 0;
                         if (fragmentView != null) {
                             fragmentView.invalidate();
                         }
-                        if (applyScrollY) {
+                        if (applyScrollY && dy > 0) {
                             int maxScrollYOffset = getMaxScrollYOffset();
-                            if (!(filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE && !bottomFilterTabs() && animatorFilterTabsVisible.getValue())) {
-                                maxScrollYOffset = getIdleSearchFieldHeight();
+                            if (filterTabsView == null || filterTabsView.getVisibility() != View.VISIBLE || bottomFilterTabs() || !animatorFilterTabsVisible.getValue()) {
+                                maxScrollYOffset = Math.min(maxScrollYOffset, getIdleSearchFieldHeight());
                             }
                             if (newTranslation < -maxScrollYOffset) {
                                 newTranslation = -maxScrollYOffset;
                             } else if (newTranslation > 0) {
+                                newTranslation = 0;
+                            }
+                            if (newTranslation != currentTranslation) {
+                                setScrollY(newTranslation);
+                            }
+                        } else if (applyScrollY && dy < 0 && scrollYOffset < 0) {
+                            if (newTranslation > 0) {
                                 newTranslation = 0;
                             }
                             if (newTranslation != currentTranslation) {
@@ -5730,23 +5740,20 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     }
 
     private int getMaxScrollYOffset() {
-        int offset = 0;
-        if (hasStories) {
-            offset += dp(DialogStoriesCell.HEIGHT_IN_DP);
-        }
-        if (NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_NORMAL
-                && NemoConfig.hideSearchBarOnScroll) {
+        int offset = getMaxScrollYOffsetWithoutSearch();
+        if (!shouldHideHomeSearchField() && NemoConfig.hideSearchBarOnScroll) {
             offset += dp(SEARCH_FIELD_HEIGHT);
         }
         return offset;
     }
 
-    private boolean shouldShowIdleSearchField() {
-        return NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_NORMAL;
+    private boolean shouldHideHomeSearchField() {
+        return NemoConfig.searchBarStyle != NemoConfig.SEARCH_BAR_NORMAL
+                && searchString == null;
     }
 
     private int getIdleSearchFieldHeight() {
-        return shouldShowIdleSearchField() ? dp(SEARCH_FIELD_HEIGHT) : 0;
+        return shouldHideHomeSearchField() ? 0 : dp(SEARCH_FIELD_HEIGHT);
     }
 
     public boolean isStarsSubscriptionHintVisible() {
@@ -13563,16 +13570,18 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
 
         final int maxScrollWithoutSearch = getMaxScrollYOffsetWithoutSearch();
-        final float alphaByScrollOffset = shouldShowIdleSearchField()
-                ? 1f - MathUtils.clamp((-scrollYOffset - maxScrollWithoutSearch) / dp(SEARCH_FIELD_HEIGHT), 0, 1)
-                : 0f;
+        final float alphaByScrollOffset = 1f - MathUtils.clamp(
+                (-scrollYOffset - maxScrollWithoutSearch) / dp(SEARCH_FIELD_HEIGHT), 0, 1);
+        final boolean hideHomeSearchField = shouldHideHomeSearchField();
 
         final float actionModeVisible = Math.max(progressToActionMode, animatorActionModeVisible.getFloatValue());
         final float searchFieldVisible = animatorSearchVisible.getFloatValue();
 
         final float factor0 = isSupportSearch() ? 1 : 0;
         final float factor1 = (1f - actionModeVisible) * (1f - animatorDoneButtonVisible.getFloatValue());
-        final float factor2 = Math.max(searchFieldVisible, alphaByScrollOffset * (1f - getRightSlidingProgress()));
+        final float factor2 = hideHomeSearchField
+                ? searchFieldVisible
+                : Math.max(searchFieldVisible, alphaByScrollOffset * (1f - getRightSlidingProgress()));
 
         final float alpha = factor0 * factor1 * factor2;
 

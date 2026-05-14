@@ -277,7 +277,7 @@ public class NemoConfig {
             disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", false);
             autoCheckUpdates = preferences.getBoolean("autoCheckUpdates", true);
             searchBarStyle = preferences.getInt("searchBarStyle", SEARCH_BAR_NORMAL);
-            hideSearchBarOnScroll = preferences.getBoolean("hideSearchBarOnScroll", false);
+            hideSearchBarOnScroll = preferences.getBoolean("hideSearchBarOnScroll", true);
             hideSearchBarPlaceholder = preferences.getBoolean("hideSearchBarPlaceholder", false);
             searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
 
