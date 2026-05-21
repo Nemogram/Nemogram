@@ -37155,10 +37155,31 @@ public class ChatActivity extends BaseFragment implements
                         return ChatActivity.this.getSideMenuWidth();
                     }
                 };
+            } else if (viewType == -1) {
+                view = new View(mContext);
+                view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 0));
+                return new RecyclerListView.Holder(view);
+            } else {
+                view = new ChatMessageCell(mContext, currentAccount, true, sharedResources, themeDelegate);
+                ChatMessageCell chatMessageCell = (ChatMessageCell) view;
+                chatMessageCell.setResourcesProvider(themeDelegate);
+                chatMessageCell.shouldCheckVisibleOnScreen = false;
+                chatMessageCell.setDelegate(new ChatMessageCellDelegate());
+                chatMessageCell.draftAnimationsPool = botDraftAnimationsPool;
+                if (currentEncryptedChat == null) {
+                    chatMessageCell.setAllowAssistant(true);
+                }
             }
-            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-            return new RecyclerListView.Holder(view);
-        }
+
+            if (view != null) {
+                 view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                return new RecyclerListView.Holder(view);
+            } else {
+                view = new View(mContext);
+                view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 0));
+                 return new RecyclerListView.Holder(view);
+            }
+         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
