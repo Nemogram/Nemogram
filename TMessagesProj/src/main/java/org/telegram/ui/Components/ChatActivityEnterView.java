@@ -11161,7 +11161,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (emojiView != null) {
             return;
         }
-        emojiView = new EmojiView(parentFragment, allowAnimatedEmoji, dialog_id == UserConfig.getInstance(currentAccount).getClientUserId(), true, true, getContext(), true, info, sizeNotifierLayout, shouldDrawBackground, resourcesProvider, emojiViewFrozen, windowInsetsInAppController != null) {
+        emojiView = new EmojiView(parentFragment, allowAnimatedEmoji, true, true, getContext(), true, info, sizeNotifierLayout, shouldDrawBackground, resourcesProvider, emojiViewFrozen, windowInsetsInAppController != null) {
             @Override
             public void setTranslationY(float translationY) {
                 super.setTranslationY(translationY);

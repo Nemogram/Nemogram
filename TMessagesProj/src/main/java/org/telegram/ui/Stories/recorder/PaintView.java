@@ -5260,7 +5260,7 @@ public class PaintView extends SizeNotifierFrameLayoutPhoto implements IPhotoPai
         if (emojiView != null) {
             return;
         }
-        emojiView = new EmojiView(null, true, true, false, false, getContext(), false, null, null, true, resourcesProvider, false, false);
+        emojiView = new EmojiView(null, true, false, false, getContext(), false, null, null, true, resourcesProvider, false);
         emojiView.fixBottomTabContainerTranslation = false;
         emojiView.allowEmojisForNonPremium(true);
         emojiView.setVisibility(GONE);

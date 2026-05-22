@@ -1562,15 +1562,10 @@ public class EmojiView extends FrameLayout implements
     private final BlurredBackgroundDrawableViewFactory blurredBackgroundDrawableFactory;
 
     public EmojiView(BaseFragment fragment, boolean needAnimatedEmoji, boolean needStickers, boolean needGif, final Context context, boolean needSearch, final TLRPC.ChatFull chatFull, ViewGroup parentView, boolean shouldDrawBackground, Theme.ResourcesProvider resourcesProvider, boolean frozenAtStart, boolean glassDesign) {
-        this(fragment, needAnimatedEmoji, false, needStickers, needGif, context, needSearch, chatFull, parentView, shouldDrawBackground, resourcesProvider, frozenAtStart, glassDesign);
-    }
-
-    public EmojiView(BaseFragment fragment, boolean needAnimatedEmoji, boolean needEmojisForNonPremium, boolean needStickers, boolean needGif, final Context context, boolean needSearch, final TLRPC.ChatFull chatFull, ViewGroup parentView, boolean shouldDrawBackground, Theme.ResourcesProvider resourcesProvider, boolean frozenAtStart, boolean glassDesign) {
         super(context);
         this.shouldDrawBackground = shouldDrawBackground;
         this.fragment = fragment;
-        this.allowEmojisForNonPremium = needEmojisForNonPremium;
-        this.allowAnimatedEmoji = needAnimatedEmoji && (UserConfig.getInstance(currentAccount).isPremium() || needEmojisForNonPremium);
+        this.allowAnimatedEmoji = needAnimatedEmoji;
         this.resourcesProvider = resourcesProvider;
         this.glassDesign = glassDesign;
 
@@ -1649,7 +1644,7 @@ public class EmojiView extends FrameLayout implements
         emojiTab.view = emojiContainer;
         allTabs.add(emojiTab);
 
-        if (allowAnimatedEmoji) {
+        if (needAnimatedEmoji) {
             MediaDataController.getInstance(currentAccount).checkStickers(MediaDataController.TYPE_EMOJIPACKS);
             MediaDataController.getInstance(currentAccount).checkFeaturedEmoji();
             animatedEmojiTextColorFilter = new PorterDuffColorFilter(getThemedColor(Theme.key_featuredStickers_addButton), PorterDuff.Mode.SRC_IN);
@@ -1849,7 +1844,7 @@ public class EmojiView extends FrameLayout implements
             }
         });
 
-        emojiTabs = new EmojiTabsStrip(context, resourcesProvider, true, false, true, allowAnimatedEmoji, 0, fragment != null ? () -> {
+        emojiTabs = new EmojiTabsStrip(context, resourcesProvider, true, false, true, needAnimatedEmoji, 0, fragment != null ? () -> {
             if (delegate != null) {
                 delegate.onEmojiSettingsClick(emojiAdapter.frozenEmojiPacks);
             }
@@ -7784,15 +7779,13 @@ public class EmojiView extends FrameLayout implements
             }
             ArrayList<Integer> prevRowHashCodes = new ArrayList<>(rowHashCodes);
 
-            if (!UserConfig.getInstance(currentAccount).isPremium() && allowEmojisForNonPremium) {
-                final MediaDataController mediaDataController = MediaDataController.getInstance(currentAccount);
-                ArrayList<TLRPC.StickerSetCovered> featured = mediaDataController.getFeaturedEmojiSets();
-                featuredEmojiSets.clear();
-                for (int a = 0, N = featured.size(); a < N; a++) {
-                    TLRPC.StickerSetCovered set = featured.get(a);
-                    if (!mediaDataController.isStickerPackInstalled(set.set.id) || installedEmojiSets.contains(set.set.id)) {
-                        featuredEmojiSets.add(set);
-                    }
+            final MediaDataController mediaDataController = MediaDataController.getInstance(currentAccount);
+            ArrayList<TLRPC.StickerSetCovered> featured = mediaDataController.getFeaturedEmojiSets();
+            featuredEmojiSets.clear();
+            for (int a = 0, N = featured.size(); a < N; a++) {
+                TLRPC.StickerSetCovered set = featured.get(a);
+                if (!mediaDataController.isStickerPackInstalled(set.set.id) || installedEmojiSets.contains(set.set.id)) {
+                    featuredEmojiSets.add(set);
                 }
             }
 
