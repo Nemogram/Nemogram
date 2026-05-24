@@ -11850,7 +11850,8 @@ public class ChatActivityEnterView extends FrameLayout implements
                     - AndroidUtilities.navigationBarHeight
                     - dp(11)
                     - ActionBar.getCurrentActionBarHeight()
-                    - getHeight();
+                    - getHeight()
+                    + Theme.chat_composeShadowDrawable.getIntrinsicHeight();
                 if (searchingType == 2) {
                     stickersExpandedHeight = Math.min(stickersExpandedHeight, dp(175) + (AndroidUtilities.displaySize.x > AndroidUtilities.displaySize.y ? keyboardHeightLand : keyboardHeight));
                 }
@@ -12948,7 +12949,8 @@ public class ChatActivityEnterView extends FrameLayout implements
             - AndroidUtilities.navigationBarHeight
             - dp(11)
             - ActionBar.getCurrentActionBarHeight()
-            - getHeight();
+            - getHeight()
+            + Theme.chat_composeShadowDrawable.getIntrinsicHeight();
         if (searchingType == 2) {
             newHeight = Math.min(newHeight, dp(175) + origHeight);
         }
@@ -13073,7 +13075,8 @@ public class ChatActivityEnterView extends FrameLayout implements
                 - AndroidUtilities.navigationBarHeight
                 - dp(11)
                 - ActionBar.getCurrentActionBarHeight()
-                - getHeight();
+                - getHeight()
+                + Theme.chat_composeShadowDrawable.getIntrinsicHeight();
             if (searchingType == 2) {
                 stickersExpandedHeight = Math.min(stickersExpandedHeight, dp(175) + origHeight);
             }
