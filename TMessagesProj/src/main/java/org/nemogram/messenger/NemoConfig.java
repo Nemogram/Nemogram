@@ -150,7 +150,7 @@ public class NemoConfig {
     public static boolean hideBottomNavigationBar = false;
     public static boolean bottomFilterTabs = false;
     public static boolean hideFolderUnreadBadge = false;
-    public static boolean strokeOnViews = true;
+    public static boolean strokeOnViews = false;
     public static boolean disableGooeyAvatarAnimation = false;
     public static boolean filterKeywordsInChats = false;
     public static boolean filterKeywordsInChannels = false;
@@ -273,7 +273,7 @@ public class NemoConfig {
             hideBottomNavigationBar = preferences.getBoolean("hideBottomNavigationBar", false);
             bottomFilterTabs = preferences.getBoolean("bottomFilterTabs", false);
             hideFolderUnreadBadge = preferences.getBoolean("hideFolderUnreadBadge", false);
-            strokeOnViews = preferences.getBoolean("strokeOnViews", true);
+            strokeOnViews = preferences.getBoolean("strokeOnViews", false);
             disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", false);
             autoCheckUpdates = preferences.getBoolean("autoCheckUpdates", true);
             searchBarStyle = preferences.getInt("searchBarStyle", SEARCH_BAR_NORMAL);
