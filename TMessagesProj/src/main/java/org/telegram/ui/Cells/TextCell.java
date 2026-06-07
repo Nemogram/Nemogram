@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
@@ -621,11 +622,11 @@ public class TextCell extends FrameLayout {
         imageView.setPadding(dp(2), dp(2), dp(2), dp(2));
         imageView.setTranslationX(dp(LocaleController.isRTL ? 0 : -3));
         imageView.setImageResource(resId);
-        imageView.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
+        imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
 
         final boolean border = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
         SettingsActivity.SettingCell.Background drawable = new SettingsActivity.SettingCell.Background();
-        drawable.setColor(colorTop, colorBottom);
+        drawable.setColor(MonetHelper.getSettingsIconBackgroundColor(colorTop), MonetHelper.getSettingsIconBackgroundColor(colorBottom));
         drawable.setDrawBorder(border);
         imageView.setBackground(drawable);
     }
