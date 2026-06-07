@@ -12,6 +12,8 @@ import org.telegram.tgnet.TLRPC;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -67,7 +69,7 @@ public class ChatExportManager {
                 exportDir.mkdirs();
 
                 ExportWriter writer = settings.format == ExportSettings.Format.HTML
-                        ? new HtmlExportWriter(exportDir)
+                        ? new HtmlExportWriter(exportDir, account)
                         : new JsonExportWriter(exportDir);
 
                 String title = resolveTitle(account, dialogId);
@@ -137,6 +139,23 @@ public class ChatExportManager {
                     }
 
                     pageLatch.await(120, TimeUnit.SECONDS);
+
+                    // resolve custom emoji alt-text for reactions before writing
+                    if (writer instanceof HtmlExportWriter) {
+                        Set<Long> customIds = new HashSet<>();
+                        for (MessageObject msg : page) {
+                            TLRPC.TL_messageReactions r = msg.messageOwner.reactions;
+                            if (r == null) continue;
+                            for (TLRPC.ReactionCount rc : r.results) {
+                                if (rc.reaction instanceof TLRPC.TL_reactionCustomEmoji) {
+                                    customIds.add(((TLRPC.TL_reactionCustomEmoji) rc.reaction).document_id);
+                                }
+                            }
+                        }
+                        if (!customIds.isEmpty()) {
+                            ((HtmlExportWriter) writer).resolveCustomEmoji(customIds);
+                        }
+                    }
 
                     for (int i = 0; i < page.size(); i++) {
                         if (cancelled.get()) break outer;

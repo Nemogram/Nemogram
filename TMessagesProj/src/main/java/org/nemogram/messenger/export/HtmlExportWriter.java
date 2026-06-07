@@ -3,6 +3,10 @@ package org.nemogram.messenger.export;
 import org.telegram.messenger.MessageObject;
 import org.telegram.tgnet.TLRPC;
 
+import org.telegram.messenger.AndroidUtilities;
+import org.telegram.tgnet.ConnectionsManager;
+import org.telegram.tgnet.Vector;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +16,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class HtmlExportWriter implements ExportWriter {
 
@@ -35,10 +47,18 @@ public class HtmlExportWriter implements ExportWriter {
                     ".pagination{display:flex;gap:8px;align-items:center;margin-top:24px;justify-content:center}" +
                     ".pagination a{color:#5bbbf5;text-decoration:none;padding:6px 14px;border:1px solid #2b5278;border-radius:8px;font-size:13px}" +
                     ".pagination a:hover{background:#2b5278}" +
-                    ".pagination .current{color:#fff;padding:6px 14px;font-size:13px}";
+                    ".pagination .current{color:#fff;padding:6px 14px;font-size:13px}" +
+                    ".reactions{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}" +
+                    ".reaction{background:rgba(91,187,245,0.15);border:1px solid rgba(91,187,245,0.3);" +
+                    "border-radius:12px;padding:2px 8px;font-size:13px;display:inline-flex;" +
+                    "align-items:center;gap:4px;color:#5bbbf5}" +
+                    ".reaction .count{font-size:12px;color:#aaa}";
 
     private final File exportDir;
     private final File mediaDir;
+    private final int account;
+
+    private final Map<Long, String> customEmojiCache = new HashMap<>();
 
     private String chatTitle;
     private BufferedWriter writer;
@@ -48,8 +68,9 @@ public class HtmlExportWriter implements ExportWriter {
     private int totalMessages = 0;
     private int totalPages = 1;
 
-    public HtmlExportWriter(File exportDir) {
+    public HtmlExportWriter(File exportDir, int account) {
         this.exportDir = exportDir;
+        this.account = account;
         this.mediaDir = new File(exportDir, "media");
         this.mediaDir.mkdirs();
     }
@@ -97,6 +118,7 @@ public class HtmlExportWriter implements ExportWriter {
             }
 
             writer.write("<div class='date'>" + date + "</div>");
+            writer.write(buildReactionsHtml(msg));
             writer.write("</div></div>\n");
         }
 
@@ -185,6 +207,72 @@ public class HtmlExportWriter implements ExportWriter {
                 .replace(">", "&gt;")
                 .replace("'", "&#39;")
                 .replace("\"", "&quot;");
+    }
+
+    private String buildReactionsHtml(MessageObject msg) {
+        TLRPC.TL_messageReactions reactions = msg.messageOwner.reactions;
+        if (reactions == null || reactions.results == null || reactions.results.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder("<div class='reactions'>");
+        boolean any = false;
+        for (TLRPC.ReactionCount rc : reactions.results) {
+            if (rc.reaction == null) continue;
+            String emoji;
+            if (rc.reaction instanceof TLRPC.TL_reactionEmoji) {
+                emoji = esc(((TLRPC.TL_reactionEmoji) rc.reaction).emoticon);
+            } else if (rc.reaction instanceof TLRPC.TL_reactionCustomEmoji) {
+                long docId = ((TLRPC.TL_reactionCustomEmoji) rc.reaction).document_id;
+                emoji = customEmojiCache.getOrDefault(docId, "✦");
+            } else {
+                continue;
+            }
+            sb.append("<span class='reaction'>")
+                    .append(emoji)
+                    .append("<span class='count'>").append(rc.count).append("</span>")
+                    .append("</span>");
+            any = true;
+        }
+        sb.append("</div>");
+        return any ? sb.toString() : "";
+    }
+
+    public void resolveCustomEmoji(Set<Long> docIds) {
+        List<Long> toFetch = docIds.stream()
+                .filter(id -> !customEmojiCache.containsKey(id))
+                .collect(Collectors.toList());
+        if (toFetch.isEmpty()) return;
+
+        CountDownLatch latch = new CountDownLatch(1);
+        AndroidUtilities.runOnUIThread(() -> {
+            TLRPC.TL_messages_getCustomEmojiDocuments req =
+                    new TLRPC.TL_messages_getCustomEmojiDocuments();
+            req.document_id = new ArrayList<>(toFetch);
+
+            ConnectionsManager.getInstance(account).sendRequest(req, (response, error) -> {
+                if (response instanceof Vector) {
+                    for (Object obj : ((Vector) response).objects) {
+                        if (!(obj instanceof TLRPC.Document)) continue;
+                        TLRPC.Document doc = (TLRPC.Document) obj;
+                        for (TLRPC.DocumentAttribute attr : doc.attributes) {
+                            if (attr instanceof TLRPC.TL_documentAttributeCustomEmoji) {
+                                String alt = ((TLRPC.TL_documentAttributeCustomEmoji) attr).alt;
+                                if (alt != null && !alt.isEmpty()) {
+                                    customEmojiCache.put(doc.id, alt);
+                                }
+                            }
+                        }
+                    }
+                }
+                latch.countDown();
+            });
+        });
+
+        try {
+            latch.await(15, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private void copyFile(File src, File dst) throws IOException {
