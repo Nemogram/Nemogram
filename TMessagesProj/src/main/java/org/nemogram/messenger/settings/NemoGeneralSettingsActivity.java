@@ -47,6 +47,8 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
     private final int askBeforeCallRow = rowId++;
     private final int openArchiveOnPullRow = rowId++;
     private final int hideBirthdayHintRow = rowId++;
+    private final int alwaysShowDownloadIconRow = rowId++;
+
     private CharSequence getTranslationProvider() {
         var providers = Translator.getProviders();
         var names = providers.first;
@@ -154,6 +156,7 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
         items.add(UItem.asCheck(askBeforeCallRow, LocaleController.getString(R.string.AskBeforeCalling)).slug("askBeforeCall").setChecked(NemoConfig.askBeforeCall));
         items.add(UItem.asCheck(openArchiveOnPullRow, LocaleController.getString(R.string.OpenArchiveOnPull)).slug("openArchiveOnPull").setChecked(NemoConfig.openArchiveOnPull));
         items.add(UItem.asCheck(hideBirthdayHintRow, LocaleController.getString(R.string.HideBirthdayHint)).slug("hideBirthdayHint").setChecked(NemoConfig.hideBirthdayHint));
+        items.add(UItem.asCheck(alwaysShowDownloadIconRow, LocaleController.getString(R.string.AlwaysShowDownloadIcon)).slug("alwaysShowDownloadIcon").setChecked(NemoConfig.alwaysShowDownloadIcon));
         items.add(UItem.asShadow(null));
     }
 
@@ -309,6 +312,11 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
                 ((TextCheckCell) view).setChecked(NemoConfig.hideBirthdayHint);
             }
             showRestartBulletin();
+        } else if (id == alwaysShowDownloadIconRow) {
+            NemoConfig.toggleAlwaysShowDownloadIcon();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.alwaysShowDownloadIcon);
+            }
         }
     }
 

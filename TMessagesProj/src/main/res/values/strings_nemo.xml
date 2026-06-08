@@ -375,6 +375,7 @@
     <string name="ProfileMusicLabel">Music</string>
     <string name="UseStockNotificationIcon">\"Telegram\" notification icon</string>
     <string name="ScrollToFirstMessage">Scroll to first message</string>
+    <string name="AlwaysShowDownloadIcon">Always show download icon</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
