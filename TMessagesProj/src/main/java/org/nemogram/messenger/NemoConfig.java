@@ -151,6 +151,7 @@ public class NemoConfig {
     public static boolean bottomFilterTabs = false;
     public static boolean hideFolderUnreadBadge = false;
     public static boolean strokeOnViews = false;
+    public static boolean legacyInputPanel = false;
     public static boolean disableGooeyAvatarAnimation = false;
     public static boolean filterKeywordsInChats = false;
     public static boolean filterKeywordsInChannels = false;
@@ -275,6 +276,7 @@ public class NemoConfig {
             bottomFilterTabs = preferences.getBoolean("bottomFilterTabs", false);
             hideFolderUnreadBadge = preferences.getBoolean("hideFolderUnreadBadge", false);
             strokeOnViews = preferences.getBoolean("strokeOnViews", false);
+            legacyInputPanel = preferences.getBoolean("legacyInputPanel", false);
             disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", false);
             autoCheckUpdates = preferences.getBoolean("autoCheckUpdates", true);
             searchBarStyle = preferences.getInt("searchBarStyle", SEARCH_BAR_NORMAL);
@@ -426,6 +428,14 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("strokeOnViews", strokeOnViews);
+        editor.apply();
+    }
+
+    public static void toggleLegacyInputPanel() {
+        legacyInputPanel = !legacyInputPanel;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("legacyInputPanel", legacyInputPanel);
         editor.apply();
     }
 

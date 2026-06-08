@@ -5,6 +5,7 @@ import static org.telegram.messenger.AndroidUtilities.lerp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
@@ -27,6 +29,7 @@ import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.ScaleStateListAnimator;
 import org.telegram.ui.Components.blur3.BlurredBackgroundDrawableViewFactory;
+import org.telegram.ui.Components.blur3.drawable.BlurredBackgroundDrawable;
 import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundColorProvider;
 import org.telegram.ui.Components.chat.buttons.ChatActivityBlurredRoundButton;
 
@@ -42,6 +45,29 @@ public class ChatActivityActionsButtonsLayout extends LinearLayout {
     private final ButtonHolder replyButton = new ButtonHolder();
     private final ButtonHolder selectButton = new ButtonHolder();
     private final ButtonHolder forwardButton = new ButtonHolder();
+    private BlurredBackgroundDrawable backgroundDrawable;
+    private FrameLayout leftLayout;
+
+    public void setBackgroundDrawable(BlurredBackgroundDrawable drawable) {
+        this.backgroundDrawable = drawable;
+        backgroundDrawable.setRadius(dp(NemoConfig.legacyInputPanel ? 0 : 22));
+        backgroundDrawable.setPadding(dp(0));
+    }
+
+    public void setButtonsHeight(int heightDp) {
+        ((LinearLayout.LayoutParams) leftLayout.getLayoutParams()).height = dp(heightDp);
+        ((LinearLayout.LayoutParams) forwardButton.optionsView.getLayoutParams()).height = dp(heightDp);
+        requestLayout();
+    }
+
+    @Override
+    protected void dispatchDraw(@NonNull Canvas canvas) {
+        if (backgroundDrawable != null) {
+            backgroundDrawable.setBounds(0, 0, getMeasuredWidth(), getMeasuredHeight());
+            backgroundDrawable.draw(canvas);
+        }
+        super.dispatchDraw(canvas);
+    }
 
     public ChatActivityActionsButtonsLayout(@NonNull Context context,
                                             Theme.ResourcesProvider resourcesProvider,
@@ -54,18 +80,33 @@ public class ChatActivityActionsButtonsLayout extends LinearLayout {
             context, blurredBackgroundDrawableViewFactory, colorProvider, resourcesProvider
         );
         replyButton.button.setOnClickListener(v -> {});
-        ScaleStateListAnimator.apply(replyButton.button, .065f, 2f);
+        if (NemoConfig.legacyInputPanel) {
+            replyButton.button.setDrawBackground(false);
+            replyButton.button.setBackground(null);
+        } else {
+            ScaleStateListAnimator.apply(replyButton.button, .065f, 2f);
+        }
 
         selectButton.button = ChatActivityBlurredRoundButton.create(
                 context, blurredBackgroundDrawableViewFactory, colorProvider, resourcesProvider
         );
         selectButton.button.setOnClickListener(v -> {});
-        ScaleStateListAnimator.apply(selectButton.button, .065f, 2f);
+        if (NemoConfig.legacyInputPanel) {
+            selectButton.button.setDrawBackground(false);
+            selectButton.button.setBackground(null);
+        } else {
+            ScaleStateListAnimator.apply(selectButton.button, .065f, 2f);
+        }
 
         forwardButton.button = ChatActivityBlurredRoundButton.create(
             context, blurredBackgroundDrawableViewFactory, colorProvider, resourcesProvider
         );
-        ScaleStateListAnimator.apply(forwardButton.button, .065f, 2f);
+        if (NemoConfig.legacyInputPanel) {
+            forwardButton.button.setDrawBackground(false);
+            forwardButton.button.setBackground(null);
+        } else {
+            ScaleStateListAnimator.apply(forwardButton.button, .065f, 2f);
+        }
 
         addTextView(replyButton, LocaleController.getString(R.string.Reply), R.drawable.input_reply, false);
         addTextView(selectButton, LocaleController.getString(R.string.Select), R.drawable.ic_select_between, false);
@@ -74,7 +115,7 @@ public class ChatActivityActionsButtonsLayout extends LinearLayout {
         setOrientation(HORIZONTAL);
         setClipChildren(false);
 
-        var leftLayout = new FrameLayout(context);
+        leftLayout = new FrameLayout(context);
         leftLayout.addView(replyButton.button, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         leftLayout.addView(selectButton.button, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(leftLayout, LayoutHelper.createLinear(0, 56, 1f, 1, 0, -1, 0));
@@ -198,8 +239,8 @@ public class ChatActivityActionsButtonsLayout extends LinearLayout {
 
     private void checkHolderPositionsAndVisibility(ButtonHolder holder) {
         final float visibility = totalVisibilityFactor * holder.visibilityAnimator.getFloatValue();
-        final float offsetY = -dp(54) * (1f - visibility);
-        float offsetX = getMeasuredWidth() / 2f * (1f - AnimatorUtils.DECELERATE_INTERPOLATOR.getInterpolation(visibility));
+        final float offsetY = NemoConfig.legacyInputPanel ? 0 : -dp(54) * (1f - visibility);
+        float offsetX = NemoConfig.legacyInputPanel ? 0 : getMeasuredWidth() / 2f * (1f - AnimatorUtils.DECELERATE_INTERPOLATOR.getInterpolation(visibility));
         if (holder == replyButton || holder == selectButton) {
             offsetX *= -1;
         }

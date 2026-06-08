@@ -5114,7 +5114,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 }
             };
             writeButton.setCircleSize(dp(52), dp(38));
-            writeButton.setCirclePadding(dp(7), dp(8));
+            writeButton.setCirclePadding(dp(7), NemoConfig.legacyInputPanel ? dp(0) : dp(8));
             writeButton.newCounterPos = true;
             contentView.addView(writeButton, LayoutHelper.createFrame(110, 50, Gravity.RIGHT | Gravity.BOTTOM));
             writeButton.setScrimViewBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));

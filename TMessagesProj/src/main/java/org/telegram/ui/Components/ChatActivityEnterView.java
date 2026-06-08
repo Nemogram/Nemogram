@@ -2612,14 +2612,15 @@ public class ChatActivityEnterView extends FrameLayout implements
         };
         textFieldContainer.setClipChildren(false);
         textFieldContainer.setClipToPadding(false);
-        textFieldContainer.setPadding(0, dp(1), 0, 0);
+        final int legacyExtraPadding = NemoConfig.legacyInputPanel ? Math.max(0, (getBaseInputHeight() - dp(44)) / 2) : 0;
+        textFieldContainer.setPadding(0, dp(1) + legacyExtraPadding, 0, legacyExtraPadding);
         addView(textFieldContainer, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.BOTTOM, 0, 1, 0, 0));
 
         FrameLayout frameLayout = messageEditTextContainer = new FrameLayout(context) {
             @Override
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-                final int height = Math.max(dp(44), getMeasuredHeight());
+                final int height = Math.max(getBaseInputHeight(), getMeasuredHeight());
                 if (animatorInputFieldHeight.getFactor() > 0) {
                     animatorInputFieldHeight.animateTo(height);
                 } else {
@@ -6227,7 +6228,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         textFieldContainer.setLayoutParams(layoutParams);
 
         resizeForTopViewLastShow = show;
-        setMinimumHeight(dp(44) + (show ? topView.getLayoutParams().height : 0));
+        setMinimumHeight(getBaseInputHeight() + (show ? topView.getLayoutParams().height : 0));
         if (stickersExpanded) {
             if (searchingType == 0) {
                 setStickersExpanded(false, true, false);
@@ -14871,6 +14872,12 @@ public class ChatActivityEnterView extends FrameLayout implements
         return target ?
             currentIslandTotalHeightTarget:
             currentIslandTotalHeight;
+    }
+
+    public static final int LEGACY_PANEL_HEIGHT_DP = 50;
+
+    public static int getBaseInputHeight() {
+        return dp(NemoConfig.legacyInputPanel ? LEGACY_PANEL_HEIGHT_DP : 44);
     }
 
     protected void onChangedIslandTotalHeight(float newTotalHeight) {

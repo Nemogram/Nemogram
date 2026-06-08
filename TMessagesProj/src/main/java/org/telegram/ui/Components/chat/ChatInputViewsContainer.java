@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.blur3.BlurredBackgroundWithFadeDrawable;
 import org.telegram.ui.Components.blur3.drawable.BlurredBackgroundDrawable;
@@ -26,8 +27,11 @@ import org.telegram.ui.Components.inset.WindowInsetsProvider;
 public class ChatInputViewsContainer extends FrameLayout {
     public static final int INPUT_BUBBLE_RADIUS = 22;
     public static final int INPUT_KEYBOARD_RADIUS = 29;
-
     public static final int INPUT_BUBBLE_BOTTOM = 9;
+
+    public static int INPUT_BUBBLE_RADIUS() { return !NemoConfig.legacyInputPanel ? INPUT_BUBBLE_RADIUS : 0; }
+    public static int INPUT_KEYBOARD_RADIUS() { return !NemoConfig.legacyInputPanel ? INPUT_KEYBOARD_RADIUS : 0; }
+    public static int INPUT_BUBBLE_BOTTOM() { return !NemoConfig.legacyInputPanel ? INPUT_BUBBLE_BOTTOM : 0; }
 
     private WindowInsetsProvider windowInsetsProvider;
 
@@ -78,14 +82,14 @@ public class ChatInputViewsContainer extends FrameLayout {
     private BlurredBackgroundDrawable underKeyboardBackgroundDrawable;
     public void setInputIslandBubbleDrawable(BlurredBackgroundDrawable drawable) {
         blurredBackgroundDrawable = drawable;
-        blurredBackgroundDrawable.setPadding(dp(7));
-        blurredBackgroundDrawable.setRadius(dp(INPUT_BUBBLE_RADIUS));
+        blurredBackgroundDrawable.setPadding(dp(!NemoConfig.legacyInputPanel ? 7 : 0));
+        blurredBackgroundDrawable.setRadius(dp(INPUT_BUBBLE_RADIUS()));
     }
 
     public void setUnderKeyboardBackgroundDrawable(BlurredBackgroundDrawable drawable) {
         underKeyboardBackgroundDrawable = drawable;
         underKeyboardBackgroundDrawable.enableInAppKeyboardOptimization();
-        underKeyboardBackgroundDrawable.setRadius(dp(INPUT_KEYBOARD_RADIUS), dp(INPUT_KEYBOARD_RADIUS), 0, 0);
+        underKeyboardBackgroundDrawable.setRadius(dp(INPUT_KEYBOARD_RADIUS()), dp(INPUT_KEYBOARD_RADIUS()), 0, 0);
         underKeyboardBackgroundDrawable.setThickness(dp(32));
         underKeyboardBackgroundDrawable.setIntensity(0.4f);
     }
@@ -134,11 +138,11 @@ public class ChatInputViewsContainer extends FrameLayout {
     private void checkBlurredHeight(boolean force) {
         checkViewsPositions();
 
-        final int blurredHeight = inputBubbleHeightRound + dp(INPUT_BUBBLE_BOTTOM) + Math.round(maxBottomInset);
+        final int blurredHeight = inputBubbleHeightRound + dp(INPUT_BUBBLE_BOTTOM()) + Math.round(maxBottomInset);
         if (currentBlurredHeight != blurredHeight || force) {
             currentBlurredHeight = blurredHeight;
 
-            final int r = dp(INPUT_KEYBOARD_RADIUS);
+            final int r = dp(INPUT_KEYBOARD_RADIUS());
             tmpRectF.set(0, getMeasuredHeight() - imeBottomInset, getMeasuredWidth(), getMeasuredHeight());
             underKeyboardPath.rewind();
             underKeyboardPath.addRoundRect(tmpRectF, new float[] {r, r, r, r, 0, 0, 0, 0}, Path.Direction.CW);
@@ -177,12 +181,12 @@ public class ChatInputViewsContainer extends FrameLayout {
                     rightBottomRadius = bottomRight == null ? 0 : bottomRight.getRadius();
                 }
             }
-            underKeyboardBackgroundDrawable.setRadius(dp(INPUT_KEYBOARD_RADIUS), dp(INPUT_KEYBOARD_RADIUS), rightBottomRadius, leftBottomRadius, true);
+            underKeyboardBackgroundDrawable.setRadius(dp(INPUT_KEYBOARD_RADIUS()), dp(INPUT_KEYBOARD_RADIUS()), rightBottomRadius, leftBottomRadius, true);
         }
     }
 
     private void checkViewsPositions() {
-        inputIslandBubbleContainer.setTranslationY(-maxBottomInset - dp(INPUT_BUBBLE_BOTTOM));
+        inputIslandBubbleContainer.setTranslationY(-maxBottomInset - dp(INPUT_BUBBLE_BOTTOM()));
         inAppKeyboardBubbleContainer.setTranslationY(inAppKeyboardBubbleContainer.getMeasuredHeight() - imeBottomInset);
     }
 
@@ -200,8 +204,6 @@ public class ChatInputViewsContainer extends FrameLayout {
             }
         }
     }
-
-
 
     /* */
 
@@ -231,7 +233,7 @@ public class ChatInputViewsContainer extends FrameLayout {
     }
 
     public float getInputBubbleBottom() {
-        return getMeasuredHeight() - maxBottomInset - dp(INPUT_BUBBLE_BOTTOM);
+        return getMeasuredHeight() - maxBottomInset - dp(INPUT_BUBBLE_BOTTOM());
     }
 
     @Override
@@ -254,7 +256,7 @@ public class ChatInputViewsContainer extends FrameLayout {
             0,
             getMeasuredHeight() - (int) imeBottomInset,
             getMeasuredWidth(),
-            Math.max(getMeasuredHeight(), getMeasuredHeight() - (int) imeBottomInset + dp(INPUT_KEYBOARD_RADIUS * 2))
+            Math.max(getMeasuredHeight(), getMeasuredHeight() - (int) imeBottomInset + dp(INPUT_KEYBOARD_RADIUS() * 2))
         );
 
         final int blurTop = getMeasuredHeight() - currentBlurredHeight;
@@ -265,7 +267,7 @@ public class ChatInputViewsContainer extends FrameLayout {
             getMeasuredWidth() - Math.round(inputBubbleOffsetRight),
             inputBubbleHeightRound
         );
-        tmpRect.inset(0, -dp(7));
+        if (!NemoConfig.legacyInputPanel) tmpRect.inset(0, -dp(7));
         tmpRect.offset(0, blurTop + (int) bubbleInputTranlationY);
 
         blurredBackgroundDrawable.setBounds(tmpRect);
@@ -293,10 +295,6 @@ public class ChatInputViewsContainer extends FrameLayout {
 
         return result;
     }
-
-
-
-
 
     private BlurredBackgroundWithFadeDrawable backgroundWithFadeDrawable;
 
@@ -339,7 +337,6 @@ public class ChatInputViewsContainer extends FrameLayout {
             invalidate(0, Math.max(0, Math.min(oldBound, newBound)), getMeasuredWidth(), getMeasuredHeight());
         }
     }
-
 
     private boolean captured;
 

@@ -48,6 +48,19 @@ public class ChatActivityBlurredRoundButton extends FrameLayout implements Facto
     private @Nullable ImageView loadingIndicatorView;
     private CircularProgressDrawable loadingIndicatorDrawable;
     private Theme.ResourcesProvider resourcesProvider;
+    private boolean drawBackground = true;
+    private int rippleRadiusDp = 22;
+
+    public void setDrawBackground(boolean draw) {
+        this.drawBackground = draw;
+    }
+
+    public void setRippleRadius(int radiusDp) {
+        rippleRadiusDp = radiusDp;
+        final int color = Theme.getColor(Theme.key_glass_defaultIcon, resourcesProvider);
+        int pressedColor = Theme.multAlpha(color, .15f);
+        setBackground(Theme.createInsetRoundRectDrawable(pressedColor, dp(rippleRadiusDp), dp(6)));
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -57,10 +70,11 @@ public class ChatActivityBlurredRoundButton extends FrameLayout implements Facto
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        backgroundDrawable.draw(canvas);
+        if (drawBackground && backgroundDrawable != null) {
+            backgroundDrawable.draw(canvas);
+        }
         super.draw(canvas);
     }
-
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         super.dispatchDraw(canvas);
@@ -123,6 +137,12 @@ public class ChatActivityBlurredRoundButton extends FrameLayout implements Facto
         backgroundDrawable = drawable;
         backgroundDrawable.setPadding(dp(CLICK_ZONE_MARGIN));
         backgroundDrawable.setRadius(dp(BUTTON_SIZE / 2f));
+    }
+
+    public void setCornerRadius(float radiusDp) {
+        if (backgroundDrawable != null) {
+            backgroundDrawable.setRadius(dp(radiusDp));
+        }
     }
 
     public void showLoading(boolean loading, boolean animated) {
@@ -209,9 +229,10 @@ public class ChatActivityBlurredRoundButton extends FrameLayout implements Facto
 
         final int color = Theme.getColor(Theme.key_glass_defaultIcon, resourcesProvider);
         setIconColor(Theme.getColor(Theme.key_glass_defaultIcon, resourcesProvider));
-        int rad = dp(22);
-        int pressedColor = Theme.multAlpha(color, .15f);
-        setBackground(Theme.createInsetRoundRectDrawable(pressedColor, rad, dp(6)));
+        if (drawBackground) {
+            int pressedColor = Theme.multAlpha(color, .15f);
+            setBackground(Theme.createInsetRoundRectDrawable(pressedColor, dp(rippleRadiusDp), dp(6)));
+        }
     }
 
     private void checkUi_IconViewVisibility() {

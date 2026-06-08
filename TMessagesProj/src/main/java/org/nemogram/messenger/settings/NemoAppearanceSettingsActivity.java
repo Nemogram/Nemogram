@@ -31,6 +31,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int disableNumberRoundingRow = rowId++;
     private final int hideBottomNavigationBarRow = rowId++;
     private final int disableGooeyAvatarAnimationRow = rowId++;
+    private final int legacyInputPanelRow = rowId++;
     private final int tabletModeRow = rowId++;
     private final int searchBarStyleRow = rowId++;
 
@@ -73,6 +74,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asCheck(disableNumberRoundingRow, LocaleController.getString(R.string.DisableNumberRounding), "4.8K -> 4777").slug("disableNumberRounding").setChecked(NemoConfig.disableNumberRounding));
         items.add(UItem.asCheck(hideBottomNavigationBarRow, LocaleController.getString(R.string.HideBottomNavigationBar)).setChecked(NemoConfig.hideBottomNavigationBar).slug("hideBottomNavigationBar"));
         items.add(UItem.asCheck(disableGooeyAvatarAnimationRow, LocaleController.getString(R.string.DisableGooeyAvatarAnimation)).setChecked(NemoConfig.disableGooeyAvatarAnimation).slug("disableGooeyAvatarAnimation"));
+        items.add(UItem.asCheck(legacyInputPanelRow, LocaleController.getString(R.string.LegacyInputPanel)).setChecked(NemoConfig.legacyInputPanel).slug("legacyInputPanel"));
         items.add(TextSettingsCellFactory.of(tabletModeRow, LocaleController.getString(R.string.TabletMode), switch (NemoConfig.tabletMode) {
             case NemoConfig.TABLET_AUTO -> LocaleController.getString(R.string.TabletModeAuto);
             case NemoConfig.TABLET_ENABLE -> LocaleController.getString(R.string.Enable);
@@ -223,6 +225,11 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             }
         } else if (id == searchBarStyleRow) {
             presentFragment(new SearchBarStyleActivity());
+        } else if (id == legacyInputPanelRow) {
+            NemoConfig.toggleLegacyInputPanel();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.legacyInputPanel);
+            }
         }
     }
 

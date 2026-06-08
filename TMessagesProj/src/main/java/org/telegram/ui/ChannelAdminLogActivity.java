@@ -1503,8 +1503,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
         bottomOverlayChat2.setTranslationY(-AndroidUtilities.navigationBarHeight);
         bottomOverlayChat2.showButton(ChatActivityChannelButtonsLayout.BUTTON_RECENT_ACTIONS_INFO, true, false);
         bottomOverlayChat2.setupDrawableForContainer();
-        contentView.addView(bottomOverlayChat2, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 56, Gravity.BOTTOM, 54, 0, 0, (44 - 56) / 2 + 9));
-
+        contentView.addView(bottomOverlayChat2, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, !NemoConfig.legacyInputPanel ? 56 : 44, Gravity.BOTTOM, !NemoConfig.legacyInputPanel ? 54 : 0, 0, 0, !NemoConfig.legacyInputPanel ? (44 - 56) / 2 + 9 : 0));
         bottomOverlayChatText = new TextView(context);
         bottomOverlayChatText.setOnClickListener(view -> {
             if (getParentActivity() == null) {

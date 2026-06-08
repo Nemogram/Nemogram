@@ -139,6 +139,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.nemogram.messenger.forward.ForwardContext;
 import org.nemogram.messenger.forward.SendOptionsMenuLayout;
+import org.nemogram.messenger.NemoConfig;
 
 public class ShareAlert extends BottomSheet implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1424,7 +1425,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
                 });
                 ScaleStateListAnimator.apply(linkCopyButton);
 
-                containerView.addView(pickerBottom, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44 + 7 + 7, Gravity.LEFT | Gravity.BOTTOM)); // (video_timestamp != null ? 0 : 11);
+                containerView.addView(pickerBottom, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, NemoConfig.legacyInputPanel ? ChatActivityEnterView.LEGACY_PANEL_HEIGHT_DP : (44 + 7 + 7), Gravity.LEFT | Gravity.BOTTOM)); // (video_timestamp != null ? 0 : 11);
 
                 LinearLayout sharesLayout = null;
                 int rightMargin = 11;
@@ -1496,7 +1497,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
                     }
                 });
                 pickerBottomLayout.addView(pickerTextView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.FILL));
-                containerView.addView(pickerBottom, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44 + 7 + 7, Gravity.FILL_HORIZONTAL | Gravity.BOTTOM));
+                containerView.addView(pickerBottom, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, NemoConfig.legacyInputPanel ? ChatActivityEnterView.LEGACY_PANEL_HEIGHT_DP : (44 + 7 + 7), Gravity.FILL_HORIZONTAL | Gravity.BOTTOM));
 
                 if (sendingMessageObjects != null && sendingMessageObjects.size() > 0 && sendingMessageObjects.get(0).messageOwner != null && sendingMessageObjects.get(0).messageOwner.forwards > 0) {
                     final MessageObject messageObject = sendingMessageObjects.get(0);
@@ -1764,7 +1765,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
             }
         };
         writeButton.setCircleSize(dp(52), dp(38));
-        writeButton.setCirclePadding(dp(1), dp(6));
+        writeButton.setCirclePadding(dp(1), NemoConfig.legacyInputPanel ? dp(0) : dp(6));
         writeButton.newCounterPos = true;
         writeButtonContainer.addView(writeButton, LayoutHelper.createFrameMatchParent());
         writeButton.setOnClickListener(v -> sendInternal(true));
@@ -1809,7 +1810,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
                 timestampFrameLayout.addView(shadow, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, darkTheme ? 0.66f : 1.0f / AndroidUtilities.density, Gravity.FILL_HORIZONTAL | Gravity.TOP));
             }
 
-            containerView.addView(timestampFrameLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44 + 7 + 7, Gravity.LEFT | Gravity.BOTTOM));
+            containerView.addView(timestampFrameLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, NemoConfig.legacyInputPanel ? ChatActivityEnterView.LEGACY_PANEL_HEIGHT_DP : (44 + 7 + 7), Gravity.LEFT | Gravity.BOTTOM));
 
             if (pickerBottom == null) {
                 timestampFrameLayout.setAlpha(0.0f);
@@ -1827,29 +1828,29 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
 
         emojiViewChildBg = iBlur3FactoryFrostedLiquidGlass.create(sizeNotifierFrameLayout, BlurredBackgroundProviderImpl.inputFieldShareAlert(resourcesProvider));
         emojiViewChildBg.enableInAppKeyboardOptimization();
-        emojiViewChildBg.setRadius(dp(29), dp(29), 0, 0);
+        emojiViewChildBg.setRadius(NemoConfig.legacyInputPanel ? 0 : dp(29), NemoConfig.legacyInputPanel ? 0 : dp(29), 0, 0);
         emojiViewChildBg.setThickness(dp(32));
         emojiViewChildBg.setIntensity(0.4f);
 
         captionContainerBg = iBlur3FactoryLiquidGlass.create(frameLayout2, BlurredBackgroundProviderImpl.inputFieldShareAlert(resourcesProvider));
-        captionContainerBg.setRadius(dp(22));
-        captionContainerBg.setPadding(dp(9));
-        frameLayout2.setPadding(dp(9), dp(7), dp(9), dp(7));
+        captionContainerBg.setRadius(NemoConfig.legacyInputPanel ? 0 : dp(22));
+        captionContainerBg.setPadding(dp(NemoConfig.legacyInputPanel ? 0 : 9));
+        frameLayout2.setPadding(dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 7), dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 7));
 
         if (pickerBottomLayout != null) {
             BlurredBackgroundDrawable d = iBlur3FactoryLiquidGlass.create(pickerBottomLayout, BlurredBackgroundProviderImpl.inputFieldShareAlert(resourcesProvider));
-            d.setPadding(dp(9));
-            d.setRadius(dp(22));
+            d.setPadding(dp(NemoConfig.legacyInputPanel ? 0 : 9));
+            d.setRadius(NemoConfig.legacyInputPanel ? 0 : dp(22));
             pickerBottomLayout.setBackground(d);
-            pickerBottomLayout.setPadding(dp(9), dp(9), dp(9), dp(9));
+            pickerBottomLayout.setPadding(dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 9));
         }
 
         if (timestampFrameLayout != null) {
             BlurredBackgroundDrawable d = iBlur3FactoryLiquidGlass.create(timestampFrameLayout, BlurredBackgroundProviderImpl.inputFieldShareAlert(resourcesProvider));
-            d.setPadding(dp(9));
-            d.setRadius(dp(22));
+            d.setPadding(dp(NemoConfig.legacyInputPanel ? 0 : 9));
+            d.setRadius(NemoConfig.legacyInputPanel ? 0 : dp(22));
             timestampFrameLayout.setBackground(d);
-            timestampFrameLayout.setPadding(dp(9), dp(9), dp(9), dp(9));
+            timestampFrameLayout.setPadding(dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 9), dp(NemoConfig.legacyInputPanel ? 0 : 9));
         }
 
         updateSelectedCount(0);

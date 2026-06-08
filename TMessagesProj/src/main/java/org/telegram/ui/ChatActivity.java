@@ -8096,8 +8096,7 @@ public class ChatActivity extends BaseFragment implements
         chatActivityEnterView.setViewParentForEmoji(chatInputInAppContainer);
         checkSendButtonBlockedByTyping(false);
 
-        chatInputBubbleContainer.addView(chatActivityEnterView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.BOTTOM, 7, 0, 7, 0));
-
+        chatInputBubbleContainer.addView(chatActivityEnterView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.BOTTOM, !NemoConfig.legacyInputPanel ? 7 : 0, 0, !NemoConfig.legacyInputPanel ? 7 : 0, 0));
         int chatListIndex = contentView.indexOfChild(chatListView);
         chatListIndex = chatListIndex < 0 ? contentView.getChildCount() : (chatListIndex + 1);
 
@@ -8116,6 +8115,11 @@ public class ChatActivity extends BaseFragment implements
         }
 
         actionsButtonsLayout = new ChatActivityActionsButtonsLayout(context, resourceProvider, blurredBackgroundColorProvider, glassBackgroundDrawableFactory);
+        if (NemoConfig.legacyInputPanel) {
+            actionsButtonsLayout.setButtonsHeight(ChatActivityEnterView.LEGACY_PANEL_HEIGHT_DP);
+            actionsButtonsLayout.setBackgroundDrawable(glassBackgroundDrawableFactory.create(actionsButtonsLayout).setColorProvider(blurredBackgroundColorProvider));
+        }
+
         actionsButtonsLayout.setSelectButtonOnClickListener(v -> {
             ArrayList<Integer> ids = new ArrayList<>();
             for (int a = 1; a >= 0; a--) {
@@ -8160,9 +8164,9 @@ public class ChatActivity extends BaseFragment implements
             updateSelectedMessageReactions();
         });
         bottomViewsVisibilityController.setViewVisible(MESSAGE_ACTION_CONTAINER, false, false);
-        actionsButtonsLayout.setPadding(0, dp(56), 0, 0);
+        actionsButtonsLayout.setPadding(0, NemoConfig.legacyInputPanel ? 0 : dp(56), 0, 0);
         actionsButtonsLayout.setClipToPadding(false);
-        chatInputBubbleContainer.addView(actionsButtonsLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 106, Gravity.BOTTOM));
+        chatInputBubbleContainer.addView(actionsButtonsLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT,NemoConfig.legacyInputPanel ? LayoutHelper.WRAP_CONTENT : 106,Gravity.BOTTOM));
         chatActivityEnterView.setSuggestionButtonVisible(ChatObject.isMonoForum(currentChat), false);
 
         chatActivityEnterTopView = new ChatActivityEnterTopView(context) {
@@ -8387,7 +8391,7 @@ public class ChatActivity extends BaseFragment implements
         bottomOverlay.setFocusable(true);
         bottomOverlay.setFocusableInTouchMode(true);
         bottomOverlay.setClickable(true);
-        chatInputBubbleContainer.addView(bottomOverlay, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44, Gravity.BOTTOM, 7, 0, 7, 0));
+        chatInputBubbleContainer.addView(bottomOverlay, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44, Gravity.BOTTOM, !NemoConfig.legacyInputPanel ? 7 : 0, 0, !NemoConfig.legacyInputPanel ? 7 : 0, 0));
 
         bottomOverlayText = new TextView(context);
         bottomOverlayText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
@@ -8410,6 +8414,9 @@ public class ChatActivity extends BaseFragment implements
         bottomChannelButtonsLayout.setVisibility(View.INVISIBLE);
         bottomChannelButtonsLayout.setClipChildren(false);
         bottomChannelButtonsLayout.setAccentColor(getThemedColor(Theme.key_featuredStickers_addButton));
+        if (!NemoConfig.legacyInputPanel) {
+            bottomChannelButtonsLayout.setupDrawableForContainer();
+        }
         bottomChannelButtonsLayout.setButtonOnClickListener(ChatActivityChannelButtonsLayout.BUTTON_SEARCH, v -> {
             openSearchWithText(isSupportedTags() ? "" : null);
         });
@@ -8471,11 +8478,10 @@ public class ChatActivity extends BaseFragment implements
             }
         });
         bottomChannelButtonsLayout.setOnButtonsTotalWidthChanged((l, r) -> {
-            chatInputViewsContainer.setInputBubbleOffsets(l, r);
+            chatInputViewsContainer.setInputBubbleOffsets(!NemoConfig.legacyInputPanel ? l : 0, !NemoConfig.legacyInputPanel ? r : 0);
         });
 
-        chatInputBubbleContainer.addView(bottomChannelButtonsLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 56, Gravity.BOTTOM, 0, 0, 0, (44 - 56) / 2));
-
+        chatInputBubbleContainer.addView(bottomChannelButtonsLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, !NemoConfig.legacyInputPanel ? 56 : ChatActivityEnterView.LEGACY_PANEL_HEIGHT_DP, Gravity.BOTTOM, 0, 0, 0, !NemoConfig.legacyInputPanel ? (44 - 56) / 2 : 0));
         bottomOverlayStartButton = new TextView(context) {
             CellFlickerDrawable cellFlickerDrawable;
 
@@ -10951,13 +10957,13 @@ public class ChatActivity extends BaseFragment implements
             float baseTranslationY2 = -windowInsetsStateHolder.getAnimatedMaxBottomInset()
                 - chatInputViewsContainer.getInputBubbleHeight()
                 - getTopicTabsSideSize(TopicsTabsView.Position.BOTTOM)
-                - dp(ChatInputViewsContainer.INPUT_BUBBLE_BOTTOM + 4);
+                - dp(ChatInputViewsContainer.INPUT_BUBBLE_BOTTOM() + 4);
             sideControlsButtonsLayout.setTranslationY(baseTranslationY2);
         }
 
         if (suggestEmojiPanel != null) {
             float baseTranslationY2 = -windowInsetsStateHolder.getAnimatedMaxBottomInset()
-                - dp(ChatInputViewsContainer.INPUT_BUBBLE_BOTTOM + 7);
+                - dp(ChatInputViewsContainer.INPUT_BUBBLE_BOTTOM() + 7);
             suggestEmojiPanel.setTranslationY(baseTranslationY2);
         }
     }
@@ -12150,7 +12156,7 @@ public class ChatActivity extends BaseFragment implements
         if (isInsideContainer) {
             paddingBottom = AndroidUtilities.navigationBarHeight;
         } else {
-            paddingBottom = blurredViewBottomOffset + dp(9 + 7)
+            paddingBottom = blurredViewBottomOffset + dp(!NemoConfig.legacyInputPanel ? 9 + 7 : 7)
                 + inputIslandHeightCurrent
                 + getTopicTabsSideSize(TopicsTabsView.Position.BOTTOM)
                 + windowInsetsStateHolder.getAnimatedMaxBottomInset();
@@ -46406,7 +46412,7 @@ public class ChatActivity extends BaseFragment implements
     private void checkUi_botMenuPosition() {
         final float margin = windowInsetsStateHolder.getAnimatedMaxBottomInset()
             + getTopicTabsSideSize(TopicsTabsView.Position.BOTTOM)
-            + (chatInputViewsContainer.getInputBubbleHeight() + dp(9 + 6));
+            + (chatInputViewsContainer.getInputBubbleHeight() + dp(NemoConfig.legacyInputPanel ? 6 : 9 + 6));
 
         if (chatActivityEnterView != null && chatActivityEnterView.botCommandsMenuContainer != null) {
             chatActivityEnterView.botCommandsMenuContainer.setTranslationY(-margin);
@@ -46429,10 +46435,11 @@ public class ChatActivity extends BaseFragment implements
     /* */
 
     private float calculateInputIslandHeight(boolean target) {
+        final float baseInputHeight = ChatActivityEnterView.getBaseInputHeight();
         final float enterViewIslandHeight = Math.max(
-            chatActivityEnterView != null ? chatActivityEnterView.getIslandTotalHeight(target): 0, dp(44));
+            chatActivityEnterView != null ? chatActivityEnterView.getIslandTotalHeight(target): 0, baseInputHeight);
 
-        final float defaultIslandHeight = dp(44);
+        final float defaultIslandHeight = baseInputHeight;
         final float enterViewFactor;
         float visibility;
         float pollAddVisibility;
@@ -46448,7 +46455,7 @@ public class ChatActivity extends BaseFragment implements
         }
 
         if (!hideBottomButton() && !isInsideContainer && !isInPreviewMode()) {
-            return lerp(Math.max(lerp(defaultIslandHeight, enterViewIslandHeight, enterViewFactor) * visibility, dp(44)), -dp(7), pollAddVisibility);
+            return lerp(Math.max(lerp(defaultIslandHeight, enterViewIslandHeight, enterViewFactor) * visibility, baseInputHeight), -dp(7), pollAddVisibility);
         } else {
             return lerp(defaultIslandHeight, enterViewIslandHeight, enterViewFactor) * visibility;
         }

@@ -376,6 +376,7 @@
     <string name="UseStockNotificationIcon">\"Telegram\" notification icon</string>
     <string name="ScrollToFirstMessage">Scroll to first message</string>
     <string name="AlwaysShowDownloadIcon">Always show download icon</string>
+    <string name="LegacyInputPanel">Legacy input panel</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

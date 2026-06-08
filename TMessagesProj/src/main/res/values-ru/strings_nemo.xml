@@ -372,6 +372,7 @@
     <string name="UseStockNotificationIcon">\"Telegram\" значок уведомлений</string>
     <string name="ScrollToFirstMessage">К первому сообщению</string>
     <string name="AlwaysShowDownloadIcon">Всегда показывать иконку загрузки</string>
+    <string name="LegacyInputPanel">Классическая панель ввода</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

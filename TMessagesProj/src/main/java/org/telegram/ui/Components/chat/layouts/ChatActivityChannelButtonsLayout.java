@@ -16,10 +16,12 @@ import android.widget.FrameLayout;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.messenger.utils.ViewOutlineProviderImpl;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.ChatActivityEnterView;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.ScaleStateListAnimator;
@@ -81,9 +83,10 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
         this.resourcesProvider = resourcesProvider;
 
         container = new FrameLayout(context);
-        container.setClipToOutline(true);
-        container.setOutlineProvider(ViewOutlineProviderImpl.boundsWithPaddingRoundRect(0, dp(22)));
-        addView(container, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44, Gravity.CENTER_VERTICAL));
+        container.setClipChildren(false);
+        container.setClipToOutline(!NemoConfig.legacyInputPanel);
+        container.setOutlineProvider(ViewOutlineProviderImpl.boundsWithPaddingRoundRect(0, dp(!NemoConfig.legacyInputPanel ? 22 : 0)));
+        addView(container, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, NemoConfig.legacyInputPanel ? ChatActivityEnterView.LEGACY_PANEL_HEIGHT_DP : 44, Gravity.CENTER_VERTICAL));
     }
 
     public void updateColors() {
@@ -124,6 +127,9 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
                 buttonIcons[buttonId],
                 48
             );
+            button.setCornerRadius(!NemoConfig.legacyInputPanel ? 22 : 0);
+            button.setDrawBackground(!NemoConfig.legacyInputPanel);
+            button.setRippleRadius(22);
 
             if (buttonId == BUTTON_GIFT) {
                 button.setContentDescription(getString(R.string.ProfileActionsGift));
@@ -135,14 +141,14 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
                 button.setContentDescription(getString(R.string.BroadcastGroupInfo));
             }
 
-            ScaleStateListAnimator.apply(button, .13f, 2f);
+            if (!NemoConfig.legacyInputPanel) ScaleStateListAnimator.apply(button, .13f, 2f);
             button.setVisibility(GONE);
             button.setOnClickListener(v -> {
                 if (onClickListeners[buttonId] != null) {
                     onClickListeners[buttonId].onClick(v);
                 }
             });
-            addView(button, LayoutHelper.createFrame(56, 56));
+            addView(button, LayoutHelper.createFrame(56, 56, Gravity.CENTER_VERTICAL));
 
             buttonHolders[buttonId] = new ButtonHolder(button, visibilityAnimator);
             checkButtonsPositionsAndVisibility();
@@ -155,8 +161,8 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
     public void setupDrawableForContainer() {
         containerDrawable = blurredBackgroundDrawableViewFactory.create(this)
             .setColorProvider(colorProvider)
-            .setRadius(dp(22))
-            .setPadding(dp(6));
+            .setRadius(dp(!NemoConfig.legacyInputPanel ? 22 : 0))
+            .setPadding(dp(!NemoConfig.legacyInputPanel ? 6 : 0));
     }
 
     public boolean isButtonVisible(final int buttonId) {
@@ -263,13 +269,13 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
     private float totalWidthLeft, totalWidthRight;
 
     private void checkContainerPaddings(boolean canRequestLayout) {
-        int paddingLeft = dp(7), paddingRight = dp(7);
+        int paddingLeft = dp(!NemoConfig.legacyInputPanel ? 7 : 0), paddingRight = dp(!NemoConfig.legacyInputPanel ? 7 : 0);
         for (final int buttonId : buttonsOrderLeft) {
             final ButtonHolder holder = buttonHolders[buttonId];
             if (holder == null) {
                 continue;
             }
-            paddingLeft += holder.visibilityAnimator.getValue() ? dp(44 + 10) : 0;
+            paddingLeft += holder.visibilityAnimator.getValue() ? dp(!NemoConfig.legacyInputPanel ? 44 + 10 : 44) : 0;
         }
 
         for (final int buttonId : buttonsOrderRight) {
@@ -277,7 +283,7 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
             if (holder == null) {
                 continue;
             }
-            paddingRight += holder.visibilityAnimator.getValue() ? dp(44 + 10) : 0;
+            paddingRight += holder.visibilityAnimator.getValue() ? dp(!NemoConfig.legacyInputPanel ? 44 + 10 : 44) : 0;
         }
 
         final MarginLayoutParams lp = (MarginLayoutParams) container.getLayoutParams();
@@ -313,8 +319,8 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
                 continue;
             }
 
-            final float width = holder.visibilityAnimator.getFloatValue() * dp(44 + 10);    // width + margin
-            holder.button.setTranslationX(dp(1) + totalWidthLeft);
+            final float width = holder.visibilityAnimator.getFloatValue() * dp(!NemoConfig.legacyInputPanel ? 44 + 10 : 44);    // width + margin
+            holder.button.setTranslationX(!NemoConfig.legacyInputPanel ? dp(1) + totalWidthLeft : totalWidthLeft);
             totalWidthLeft += width;
         }
 
@@ -324,18 +330,17 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
                 continue;
             }
 
-            final float width = holder.visibilityAnimator.getFloatValue() * dp(44 + 10);    // width + margin
-            holder.button.setTranslationX(getMeasuredWidth() - holder.button.getMeasuredWidth() - dp(1) - totalWidthRight);
+            final float width = holder.visibilityAnimator.getFloatValue() * dp(!NemoConfig.legacyInputPanel ? 44 + 10 : 44);    // width + margin
+            holder.button.setTranslationX(getMeasuredWidth() - holder.button.getMeasuredWidth() - (!NemoConfig.legacyInputPanel ? dp(1) : 0) - totalWidthRight);
             totalWidthRight += width;
         }
 
-        if (totalVisibilityFactor < 1) {
+        if (!NemoConfig.legacyInputPanel && totalVisibilityFactor < 1) {
             for (final int buttonId : buttonsOrderLeft) {
                 final ButtonHolder holder = buttonHolders[buttonId];
                 if (holder == null) {
                     continue;
                 }
-
                 holder.button.setTranslationX(holder.button.getTranslationX() - totalWidthLeft * (1 - totalVisibilityFactor));
             }
 
@@ -344,7 +349,6 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
                 if (holder == null) {
                     continue;
                 }
-
                 holder.button.setTranslationX(holder.button.getTranslationX() + totalWidthRight * (1 - totalVisibilityFactor));
             }
 
@@ -413,11 +417,16 @@ public class ChatActivityChannelButtonsLayout extends FrameLayout implements Fac
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, View child, long drawingTime) {
-        if (child == container && containerDrawable != null) {
-            tmpRect.set(
-                totalWidthLeft + dp(1), 0,
-                getMeasuredWidth() - dp(1) - totalWidthRight,
-                getMeasuredHeight());
+        if (child == container && containerDrawable != null
+                && (NemoConfig.legacyInputPanel || animatorWrappingButton.getFloatValue() > 0)) {
+            if (!NemoConfig.legacyInputPanel) {
+                tmpRect.set(
+                    totalWidthLeft + dp(1), 0,
+                    getMeasuredWidth() - dp(1) - totalWidthRight,
+                    getMeasuredHeight());
+            } else {
+                tmpRect.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
+            }
 
             tmpRect.round(AndroidUtilities.rectTmp2);
             containerDrawable.setBounds(AndroidUtilities.rectTmp2);

@@ -17,6 +17,8 @@ import androidx.core.graphics.ColorUtils;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.ui.ActionBar.Theme;
 
+import org.nemogram.messenger.NemoConfig;
+
 public class UnreadCounterTextView extends View {
 
     private int currentCounter;
@@ -192,16 +194,27 @@ public class UnreadCounterTextView extends View {
         if (getParent() != null) {
             int contentWidth = getMeasuredWidth();
             int x = (getMeasuredWidth() - contentWidth) / 2;
-            if (rippleColor != Theme.getColor(textColorKey, getResourceProvider()) || selectableBackground == null) {
-                selectableBackground = Theme.createSimpleSelectorCircleDrawable(AndroidUtilities.dp(60), 0, ColorUtils.setAlphaComponent(rippleColor = Theme.getColor(textColorKey, getResourceProvider()), 26));
-                selectableBackground.setCallback(this);
+            if (NemoConfig.legacyInputPanel) {
+                if (rippleColor != Theme.getColor(textColorKey, getResourceProvider()) || selectableBackground == null) {
+                    selectableBackground = Theme.createSimpleSelectorRoundRectDrawable(0, 0, ColorUtils.setAlphaComponent(rippleColor = Theme.getColor(textColorKey, getResourceProvider()), 26));
+                    selectableBackground.setCallback(this);
+                }
+                View containerView = (View) getParent();
+                View panelView = containerView.getParent() instanceof View ? (View) containerView.getParent() : null;
+                if (panelView != null) {
+                    selectableBackground.setBounds((int) -containerView.getX(), (int) -containerView.getY(), (int) (-containerView.getX() + panelView.getMeasuredWidth()), (int) (-containerView.getY() + panelView.getMeasuredHeight()));
+                } else {
+                    selectableBackground.setBounds(0, 0, getMeasuredWidth(), getMeasuredHeight());
+                }
+            } else {
+                if (rippleColor != Theme.getColor(textColorKey, getResourceProvider()) || selectableBackground == null) {
+                    selectableBackground = Theme.createSimpleSelectorCircleDrawable(AndroidUtilities.dp(60), 0, ColorUtils.setAlphaComponent(rippleColor = Theme.getColor(textColorKey, getResourceProvider()), 26));
+                    selectableBackground.setCallback(this);
+                }
+                int start = (getLeft() + x) <= 0 ? x - AndroidUtilities.dp(20) : x;
+                int end = x + contentWidth > ((View) getParent()).getMeasuredWidth() ? x + contentWidth + AndroidUtilities.dp(20) : x + contentWidth;
+                selectableBackground.setBounds(start, getMeasuredHeight() / 2 - contentWidth / 2, end, getMeasuredHeight() / 2 + contentWidth / 2);
             }
-            int start = (getLeft() + x) <= 0 ? x - AndroidUtilities.dp(20) : x;
-            int end = x + contentWidth > ((View) getParent()).getMeasuredWidth() ? x + contentWidth + AndroidUtilities.dp(20) : x + contentWidth;
-            selectableBackground.setBounds(
-                    start, getMeasuredHeight() / 2 - contentWidth / 2,
-                    end, getMeasuredHeight() / 2 + contentWidth / 2
-            );
             selectableBackground.draw(canvas);
         }
         if (textLayout != null) {

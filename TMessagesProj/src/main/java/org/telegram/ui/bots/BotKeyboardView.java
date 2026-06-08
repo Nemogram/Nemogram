@@ -224,7 +224,7 @@ public class BotKeyboardView extends LinearLayout implements InAppKeyboardInsetV
         }
 
         public void updateColors() {
-            final int br = dp(ChatInputViewsContainer.INPUT_KEYBOARD_RADIUS - BORDER_MARGIN);
+            final int br = dp(ChatInputViewsContainer.INPUT_KEYBOARD_RADIUS() - BORDER_MARGIN);
             final int dr = dp(11);
 
             int color = getThemedColor(Theme.key_chat_botKeyboardButtonBackground);
