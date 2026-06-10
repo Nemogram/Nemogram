@@ -773,7 +773,7 @@ public class ProfileActionsView extends View {
                     out.add(getOrCreate(KEY_REPORT));
                 } else {
                     insertIfAvailable(out, KEY_STORY);
-                    insertIfNotAvailable(out, KEY_LEAVE, KEY_STORY);
+                    // insertIfNotAvailable(out, KEY_LEAVE, KEY_STORY);
                 }
                 break;
             case MODE_GROUP:
@@ -791,7 +791,7 @@ public class ProfileActionsView extends View {
                     insertIfAvailable(out, KEY_VOICE_CHAT);
                     insertIfNotAvailable(out, KEY_STREAM, KEY_VOICE_CHAT);
                     insertIfAvailable(out, KEY_STORY);
-                    insertIfAvailable(out, KEY_LEAVE);
+                    // insertIfAvailable(out, KEY_LEAVE);
                 }
                 break;
             case MODE_BOT:
