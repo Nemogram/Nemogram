@@ -33,6 +33,7 @@ import org.nemogram.messenger.helpers.remote.UpdateHelper;
 
 public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
 
+    private final int moreHapticFeedbacksRow = rowId++;
     private final int downloadSpeedBoostRow = rowId++;
     private final int keepFormattingRow = rowId++;
     private final int autoInlineBotRow = rowId++;
@@ -49,6 +50,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(LocaleController.getString(R.string.Experiment)));
+        items.add(UItem.asCheck(moreHapticFeedbacksRow, LocaleController.getString(R.string.MoreHapticFeedback)).slug("moreHapticFeedbacks").setChecked(NemoConfig.moreHapticFeedbacks));
         if (!MessagesController.getInstance(currentAccount).getfileExperimentalParams) {
             items.add(TextSettingsCellFactory.of(downloadSpeedBoostRow, LocaleController.getString(R.string.DownloadSpeedBoost), switch (NemoConfig.downloadSpeedBoost) {
                 case NemoConfig.BOOST_NONE ->
@@ -177,6 +179,11 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
             NemoConfig.toggleShowRPCError();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.showRPCError);
+            }
+        } else if (id == moreHapticFeedbacksRow) {
+            NemoConfig.toggleMoreHapticFeedbacks();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.moreHapticFeedbacks);
             }
         } else if (id == downloadSpeedBoostRow) {
             ArrayList<String> arrayList = new ArrayList<>();

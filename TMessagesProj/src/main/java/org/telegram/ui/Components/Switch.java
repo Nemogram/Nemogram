@@ -27,11 +27,13 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.util.StateSet;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import androidx.annotation.Keep;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.BaseCell;
@@ -282,6 +284,9 @@ public class Switch extends View {
             isChecked = checked;
             if (attachedToWindow && animated) {
                 animateToCheckedState(checked);
+                if (NemoConfig.moreHapticFeedbacks) {
+                    performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                }
             } else {
                 cancelCheckAnimator();
                 setProgress(checked ? 1.0f : 0.0f);

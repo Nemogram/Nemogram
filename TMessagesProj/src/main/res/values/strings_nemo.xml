@@ -377,6 +377,7 @@
     <string name="ScrollToFirstMessage">Scroll to first message</string>
     <string name="AlwaysShowDownloadIcon">Always show download icon</string>
     <string name="LegacyInputPanel">Legacy input panel</string>
+    <string name="MoreHapticFeedback">More haptic feedback</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

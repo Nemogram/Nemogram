@@ -162,6 +162,7 @@ public class NemoConfig {
     public static boolean hideSearchBarPlaceholder = false;
     public static String searchBarPlaceholder = "";
     public static boolean alwaysShowDownloadIcon = false;
+    public static boolean moreHapticFeedbacks = false;
 
     public static boolean shouldNOTTrustMe = false;
 
@@ -284,6 +285,7 @@ public class NemoConfig {
             hideSearchBarPlaceholder = preferences.getBoolean("hideSearchBarPlaceholder", false);
             searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
             alwaysShowDownloadIcon = preferences.getBoolean("alwaysShowDownloadIcon", false);
+            moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
 
             LensHelper.checkLensSupportAsync();
 
@@ -1110,6 +1112,15 @@ public class NemoConfig {
         editor.putBoolean("alwaysShowDownloadIcon", alwaysShowDownloadIcon);
         editor.apply();
     }
+
+    public static void toggleMoreHapticFeedbacks() {
+        moreHapticFeedbacks = !moreHapticFeedbacks;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("moreHapticFeedbacks", moreHapticFeedbacks);
+        editor.apply();
+    }
+
     public static int getNotificationColor() {
         if (accentAsNotificationColor) {
             int color = 0;
