@@ -533,7 +533,7 @@ public class ProfileActionsView extends View {
     }
 
     public float getRoundRadius() {
-        return dp(16);
+        return dp(28);
     }
 
     private Action hit = null;
@@ -1076,7 +1076,7 @@ public class ProfileActionsView extends View {
         int iconTranslationY = 0;
         float iconScale = 1f;
 
-        RippleDrawable rippleDrawable = (RippleDrawable) Theme.AdaptiveRipple.createRect(0, Theme.multAlpha(Theme.getColor(Theme.key_windowBackgroundWhite), 0.45f), 16);
+        RippleDrawable rippleDrawable = (RippleDrawable) Theme.AdaptiveRipple.createRect(0, Theme.multAlpha(Theme.getColor(Theme.key_windowBackgroundWhite), 0.45f), 28);
         LoadingDrawable loadingDrawable;
         boolean isLoading;
         boolean supportsLoading;
