@@ -3276,10 +3276,10 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
     }
 
     public void setSections() {
-        setSections(dp(12), dp(16), false);
+        setSections(dp(12), dp(22), false);
     }
     public void setSections(boolean topPadding) {
-        setSections(dp(12), dp(16), topPadding);
+        setSections(dp(12), dp(22), topPadding);
     }
     public void setSections(int padding, float roundRadius, boolean topPadding) {
         setSections(
