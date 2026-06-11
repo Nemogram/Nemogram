@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Аутоматски паузирај видео</string>
     <string name="AutoPauseVideoAbout">Паузирати видео када закључате екран/пребаците се на позадину.</string>
     <string name="DisableProximityEvents">Онемогући проксималне догађаје</string>
-    <string name="MapDriftingFix">Поправка мапе за Кину</string>
     <string name="VoiceEnhancements">Побољшања гласа</string>
     <string name="VoiceEnhancementsAbout">Сузбијање шума и нормализација гласа</string>
     <string name="DisableInstantCamera">Онемогући инстант камеру</string>

@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Αυτόματη παύση βίντεο</string>
     <string name="AutoPauseVideoAbout">Όταν κλειδώνει η οθόνη/εναλλαγή στο παρασκήνιο.</string>
     <string name="DisableProximityEvents">Απεν/ποίηση συμβάντων Εγγύτητας</string>
-    <string name="MapDriftingFix">Διόρθ. χάρτη για ηπειρωτική Κίνα</string>
     <string name="VoiceEnhancements">Βελτιώσεις φωνής</string>
     <string name="VoiceEnhancementsAbout">Μείωση θορύβου και ισορροπία φωνής</string>
     <string name="DisableInstantCamera">Απεν/ποίηση άμεσης κάμερας</string>

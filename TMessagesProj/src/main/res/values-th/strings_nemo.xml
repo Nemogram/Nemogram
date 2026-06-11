@@ -82,7 +82,6 @@
     <string name="AutoPauseVideo">หยุดวิดีโออัตโนมัติ</string>
     <string name="AutoPauseVideoAbout">เมื่อล็อคหน้าจอ/สลับไปที่พื้นหลัง</string>
     <string name="DisableProximityEvents">ปิดใช้งานเหตุการณ์ความใกล้</string>
-    <string name="MapDriftingFix">แก้ไขปัญหาการเลื่อนแผนที่ในจีนแผ่นดินใหญ่</string>
     <string name="VoiceEnhancements">การปรับปรุงเสียง</string>
     <string name="VoiceEnhancementsAbout">การลดเสียงรบกวนและการทำให้เสียงเป็นปกติ</string>
     <string name="DisableInstantCamera">ปิดใช้งานกล้องถ่ายภาพ</string>

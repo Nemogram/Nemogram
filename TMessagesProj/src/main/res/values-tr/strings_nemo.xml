@@ -78,7 +78,6 @@
     <string name="AutoPauseVideo">Videoyu otomatik durdurun</string>
     <string name="AutoPauseVideoAbout">Kilit ekranı/arka plana geçildiğinde.</string>
     <string name="DisableProximityEvents">Yakınlık olaylarını devre dışı bırak</string>
-    <string name="MapDriftingFix">Çin Anakarası için harita sürüklenme düzeltmesi</string>
     <string name="VoiceEnhancements">Ses geliştirmeleri</string>
     <string name="VoiceEnhancementsAbout">Gürültü Engelleme ve Ses Normalleştirme</string>
     <string name="DisableInstantCamera">Anında kamerayı devre dışı bırakın </string>

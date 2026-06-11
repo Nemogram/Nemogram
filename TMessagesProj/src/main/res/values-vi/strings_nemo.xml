@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Tự động tạm dừng video</string>
     <string name="AutoPauseVideoAbout">Khi khóa màn hình/chuyển sang nền.</string>
     <string name="DisableProximityEvents">Vô hiệu hóa các sự kiện lân cận</string>
-    <string name="MapDriftingFix">Sửa lỗi bản đồ bị lệch của Trung Quốc đại lục</string>
     <string name="VoiceEnhancements">Cải tiến giọng nói</string>
     <string name="VoiceEnhancementsAbout">Khử tiếng ồn và bình thường hóa giọng nói</string>
     <string name="DisableInstantCamera">Vô hiệu máy ảnh tức thì</string>

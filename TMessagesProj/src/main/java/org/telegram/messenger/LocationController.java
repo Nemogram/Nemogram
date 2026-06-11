@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.nemogram.messenger.NemoConfig;
-import org.nemogram.messenger.location.NemoLocationSource;
 
 @SuppressLint("MissingPermission")
 public class LocationController extends BaseController implements NotificationCenter.NotificationCenterDelegate, ILocationServiceProvider.IAPIConnectionCallbacks, ILocationServiceProvider.IAPIOnConnectionFailedListener {
@@ -527,9 +526,6 @@ public class LocationController extends BaseController implements NotificationCe
     private void setLastKnownLocation(Location location) {
         if (location != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && (SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos()) / 1000000000 > 60 * 5) {
             return;
-        }
-        if (NemoConfig.mapDriftingFix && location != null) {
-            NemoLocationSource.transform(location);
         }
         lastKnownLocation = location;
         if (lastKnownLocation != null) {

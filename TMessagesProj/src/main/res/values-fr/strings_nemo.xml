@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Pause automatique de la vidéo</string>
     <string name="AutoPauseVideoAbout">Au verrouillage de l\'écran ou si l\'app bascule en arrière-plan.</string>
     <string name="DisableProximityEvents">Désactiver les événements de proximité</string>
-    <string name="MapDriftingFix">Correction de la dérive de carte pour la Chine continentale</string>
     <string name="VoiceEnhancements">Améliorations vocales</string>
     <string name="VoiceEnhancementsAbout">Suppression du bruit et normalisation vocale</string>
     <string name="DisableInstantCamera">Désactiver la caméra instantanée</string>

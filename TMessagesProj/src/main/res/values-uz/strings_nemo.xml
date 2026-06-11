@@ -77,7 +77,6 @@
     <string name="AutoPauseVideo">Videoni avtomatik to\'xtatish</string>
     <string name="AutoPauseVideoAbout">Ekran qulflanganda/fonga o\'tish.</string>
     <string name="DisableProximityEvents">Yaqinlashganda o\'chishni o\'chirib qo\'ying</string>
-    <string name="MapDriftingFix">Xitoy Materiki uchun xaritada driftingni tuzatish</string>
     <string name="VoiceEnhancements">Ovozni yaxshilash</string>
     <string name="VoiceEnhancementsAbout">Shovqinni bostirish va ovozni normallashtirish</string>
     <string name="DisableInstantCamera">Tezkor kamerani o\'chirish</string>

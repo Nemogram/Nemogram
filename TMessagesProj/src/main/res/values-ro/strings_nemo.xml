@@ -82,7 +82,6 @@
     <string name="AutoPauseVideo">Oprire automată video</string>
     <string name="AutoPauseVideoAbout">Când se blochează ecranul/comută la fundal.</string>
     <string name="DisableProximityEvents">Dezactivare evenimente de proximitate</string>
-    <string name="MapDriftingFix">Remedierea în derivă a hărții pentru Mainland China</string>
     <string name="VoiceEnhancements">Îmbunătățiri pentru voce</string>
     <string name="VoiceEnhancementsAbout">Suprimare zgomot si normalizare voce</string>
     <string name="DisableInstantCamera">Dezactivează camera instantanee</string>

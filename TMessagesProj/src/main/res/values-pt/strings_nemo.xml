@@ -82,7 +82,6 @@
     <string name="AutoPauseVideo">Pausar vídeo automaticamente</string>
     <string name="AutoPauseVideoAbout">Quando bloquear tela/alternar para segundo plano.</string>
     <string name="DisableProximityEvents">Desativar eventos de proximidade</string>
-    <string name="MapDriftingFix">Correção de deriva no mapa para a China continental</string>
     <string name="VoiceEnhancements">Melhoramentos de voz</string>
     <string name="VoiceEnhancementsAbout">Supressão de Ruído e Normalização da Voz</string>
     <string name="DisableInstantCamera">Desativar câmera instantânea</string>

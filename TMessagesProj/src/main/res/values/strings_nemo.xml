@@ -84,7 +84,6 @@
     <string name="AutoPauseVideoAbout">When lock screen/switch to background.</string>
     <string name="DisableProximityEvents">Disable proximity events</string>
     <string name="Page1Message2">Nemogram is an **unofficial** messaging app\nthat uses Telegram\'s API.</string>
-    <string name="MapDriftingFix">Map drifting fix for Mainland China</string>
     <string name="VoiceEnhancements">Voice enhancements</string>
     <string name="VoiceEnhancementsAbout">Noise Suppression and Voice Normalization</string>
     <string name="DisableInstantCamera">Disable instant camera</string>

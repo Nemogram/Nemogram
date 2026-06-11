@@ -80,7 +80,6 @@
     <string name="AutoPauseVideo">إيقاف تلقائي للفيديو</string>
     <string name="AutoPauseVideoAbout">عند إطفاء الشاشة أو التنقل بين التطبيقات.</string>
     <string name="DisableProximityEvents">إيقاف مستشعرات الجسم</string>
-    <string name="MapDriftingFix">تصليح الخرائط للصين</string>
     <string name="VoiceEnhancements">تحسينات صوتية</string>
     <string name="VoiceEnhancementsAbout">قمع الضوضاء وتطبيع الصوت</string>
     <string name="DisableInstantCamera">إيقاف الكاميرا الفورية</string>

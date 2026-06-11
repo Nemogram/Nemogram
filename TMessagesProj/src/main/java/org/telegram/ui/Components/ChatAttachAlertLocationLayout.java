@@ -110,7 +110,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.nemogram.messenger.NemoConfig;
-import org.nemogram.messenger.location.NemoLocationSource;
 
 public class ChatAttachAlertLocationLayout extends ChatAttachAlert.AttachAlertLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1620,9 +1619,6 @@ public class ChatAttachAlertLocationLayout extends ChatAttachAlert.AttachAlertLa
             for (int i = providers.size() - 1; i >= 0; i--) {
                 l = lm.getLastKnownLocation(providers.get(i));
                 if (l != null) {
-                    if (NemoConfig.mapDriftingFix) {
-                        NemoLocationSource.transform(l);
-                    }
                     break;
                 }
             }

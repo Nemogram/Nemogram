@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Аўта-паўза відэа</string>
     <string name="AutoPauseVideoAbout">Спыняць прайграванне відэа пры блакаванні экрана ці згортванні прыкладання.</string>
     <string name="DisableProximityEvents">Адключыць датчык набліжэння</string>
-    <string name="MapDriftingFix">Выпраўленне карт для Кітая</string>
     <string name="VoiceEnhancements">Паляпшэнне голасу</string>
     <string name="VoiceEnhancementsAbout">Шумападаўленне і нармалізацыя голасу</string>
     <string name="DisableInstantCamera">Адключыць убудаваную камеру</string>

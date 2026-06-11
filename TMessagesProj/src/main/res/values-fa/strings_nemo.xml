@@ -82,7 +82,6 @@
     <string name="AutoPauseVideo">مکث خودکار ویدیو</string>
     <string name="AutoPauseVideoAbout">وقتی صفحه قفل است/به پس‌زمینه برود.</string>
     <string name="DisableProximityEvents">غیرفعال کردن رویدادهای مجاورت</string>
-    <string name="MapDriftingFix">اصلاح نقشه رانش برای سرزمین اصلی چین</string>
     <string name="VoiceEnhancements">تقویت صدا</string>
     <string name="VoiceEnhancementsAbout">حذف نویز و عادی سازی صدا</string>
     <string name="DisableInstantCamera">غیرفعال کردن دوربین فوری</string>

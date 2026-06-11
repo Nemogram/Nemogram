@@ -75,7 +75,6 @@
     <string name="AutoPauseVideo">वीडियो ऑटो पॉज</string>
     <string name="AutoPauseVideoAbout">जब लॉक स्क्रीन होगी/बैकग्राउंड को जायेगा।</string>
     <string name="DisableProximityEvents">प्रॉक्सिमिटी इवेंट्स डिसेबल करें</string>
-    <string name="MapDriftingFix">मुख्यभूमि चीन के लिए मैप ड्रिफ्टिंग फिक्स</string>
     <string name="VoiceEnhancements">आवाज़ को इन्हैंस करें</string>
     <string name="VoiceEnhancementsAbout">शोर दमन और आवाज सामान्यीकरण</string>
     <string name="DisableInstantCamera">इंस्टेंट कैमरा को डिसेबल करें</string>

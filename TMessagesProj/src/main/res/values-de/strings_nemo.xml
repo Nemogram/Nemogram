@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Videos automatisch pausieren</string>
     <string name="AutoPauseVideoAbout">Beim sperren/wechseln in den Hintergrund.</string>
     <string name="DisableProximityEvents">Näherungssensor deaktivieren</string>
-    <string name="MapDriftingFix">Kartendrifting-Fix für China</string>
     <string name="VoiceEnhancements">Stimmenverbesserungen</string>
     <string name="VoiceEnhancementsAbout">Rauschunterdrückung und Stimmnormalisierung</string>
     <string name="DisableInstantCamera">Sofortkamera deaktivieren</string>

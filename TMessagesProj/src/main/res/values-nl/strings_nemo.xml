@@ -81,7 +81,6 @@
     <string name="AutoPauseVideo">Video automatisch pauzeren</string>
     <string name="AutoPauseVideoAbout">Bij vergrendelen van het scherm/overschakelen naar de achtergrond.</string>
     <string name="DisableProximityEvents">Nabijheidssensor deactiveren</string>
-    <string name="MapDriftingFix">Oplossen van kaartafwijkingen voor het vasteland van China</string>
     <string name="VoiceEnhancements">Stemverbetering</string>
     <string name="VoiceEnhancementsAbout">Ruisonderdrukking en stemnormalisatie</string>
     <string name="DisableInstantCamera">Instant camera uitschakelen</string>

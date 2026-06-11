@@ -118,7 +118,6 @@ public class NemoConfig {
     public static boolean mediaPreview = true;
     public static boolean autoPauseVideo = true;
     public static boolean disableProximityEvents = false;
-    public static boolean mapDriftingFix = false;
     public static boolean voiceEnhancements = false;
     public static boolean disableInstantCamera = false;
     public static boolean tryToOpenAllLinksInIV = false;
@@ -218,7 +217,6 @@ public class NemoConfig {
             idType = preferences.getInt("idType", ID_TYPE_API);
             autoPauseVideo = preferences.getBoolean("autoPauseVideo", true);
             disableProximityEvents = preferences.getBoolean("disableProximityEvents", false);
-            mapDriftingFix = preferences.getBoolean("mapDriftingFix", userMcc == 460);
             voiceEnhancements = preferences.getBoolean("voiceEnhancements", false);
             disableInstantCamera = preferences.getBoolean("disableInstantCamera", false);
             tryToOpenAllLinksInIV = preferences.getBoolean("tryToOpenAllLinksInIV", false);
@@ -888,14 +886,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("disableProximityEvents", disableProximityEvents);
-        editor.apply();
-    }
-
-    public static void toggleMapDriftingFix() {
-        mapDriftingFix = !mapDriftingFix;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("mapDriftingFix", mapDriftingFix);
         editor.apply();
     }
 

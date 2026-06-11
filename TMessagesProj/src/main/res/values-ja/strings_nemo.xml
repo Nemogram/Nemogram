@@ -81,7 +81,6 @@
     <string name="AutoPauseVideoAbout">ロック画面/バックグラウンドに切り替えた際に動画を一時停止します。</string>
     <string name="DisableProximityEvents">近接センサーを無効化</string>
     <string name="Page1Message2">NemogramはTelegramのAPIを使用している**非公式の**メッセージアプリです。</string>
-    <string name="MapDriftingFix">中国本土の地図のズレを修正</string>
     <string name="VoiceEnhancements">ノイズリダクション</string>
     <string name="VoiceEnhancementsAbout">ノイズの抑制と音声の正規化をします。</string>
     <string name="DisableInstantCamera">インスタントカメラを無効化</string>

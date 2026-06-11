@@ -73,7 +73,6 @@
     <string name="AutoPauseVideo">Auto pause video</string>
     <string name="AutoPauseVideoAbout">Når skærmlås/skift til baggrund.</string>
     <string name="DisableProximityEvents">Deaktiver nærhedshændelser</string>
-    <string name="MapDriftingFix">Kort drivende fix for fastlandet Kina</string>
     <string name="VoiceEnhancements">Stemmeforbedringer</string>
     <string name="VoiceEnhancementsAbout">Støjundertrykkelse og stemmenormalisering</string>
     <string name="DisableInstantCamera">Deaktivér øjeblikkeligt kamera</string>

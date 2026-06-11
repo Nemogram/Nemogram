@@ -80,7 +80,6 @@
     <string name="AutoPauseVideo">Авто-пауза видео</string>
     <string name="AutoPauseVideoAbout">Останавливать воспроизведение видео при блокировке экрана или сворачивании приложения.</string>
     <string name="DisableProximityEvents">Отключить датчик приближения</string>
-    <string name="MapDriftingFix">Исправление карт для Китая</string>
     <string name="VoiceEnhancements">Улучшение голоса</string>
     <string name="VoiceEnhancementsAbout">Шумоподавление и нормализация голоса</string>
     <string name="DisableInstantCamera">Отключить встроенную камеру</string>

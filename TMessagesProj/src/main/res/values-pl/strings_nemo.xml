@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Automatycznie pauzuj wideo</string>
     <string name="AutoPauseVideoAbout">Po zablokowaniu ekranu/przejściu w tło.</string>
     <string name="DisableProximityEvents">Wyłącz usługi oparte na lokalizacji</string>
-    <string name="MapDriftingFix">Poprawka na dryfowanie map dla Chin kontynentalnych</string>
     <string name="VoiceEnhancements">Wzmocnienie głosu</string>
     <string name="VoiceEnhancementsAbout">Tłumienie hałasu i normalizacja głosu</string>
     <string name="DisableInstantCamera">Wyłącz natychmiastową kamerę</string>

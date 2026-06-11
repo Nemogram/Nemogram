@@ -82,7 +82,6 @@
     <string name="AutoPauseVideo">Videó automatikus megállítása</string>
     <string name="AutoPauseVideoAbout">A képernyő lezárásakor/háttérre váltáskor.</string>
     <string name="DisableProximityEvents">Közelségi semények letiltása</string>
-    <string name="MapDriftingFix">A térképsodródás javítása Kínában</string>
     <string name="VoiceEnhancements">Hangjavítások</string>
     <string name="VoiceEnhancementsAbout">Zajszűrés és hangnormalizálás</string>
     <string name="DisableInstantCamera">Azonnali kamera letiltása</string>

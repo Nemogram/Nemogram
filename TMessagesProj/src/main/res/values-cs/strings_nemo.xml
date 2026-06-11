@@ -77,7 +77,6 @@
     <string name="AutoPauseVideo">Авто зупинення відео</string>
     <string name="AutoPauseVideoAbout">При заблокованому екрані/фоновий режим.</string>
     <string name="DisableProximityEvents">Вимкнути безконтактні події</string>
-    <string name="MapDriftingFix">Виправлення дрейфу карти у Материковому Китаї</string>
     <string name="VoiceEnhancements">Покращення голосу</string>
     <string name="VoiceEnhancementsAbout">Усунення шуму та нормалізація голосу</string>
     <string name="DisableInstantCamera">Вимкнути миттєву камеру</string>

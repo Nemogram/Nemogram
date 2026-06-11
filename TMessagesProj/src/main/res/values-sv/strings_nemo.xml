@@ -73,7 +73,6 @@
     <string name="AutoPauseVideo">Pausa video automatiskt</string>
     <string name="AutoPauseVideoAbout">När du låser skärmen/växlar till bakgrunden.</string>
     <string name="DisableProximityEvents">Inaktivera närhetshändelser</string>
-    <string name="MapDriftingFix">Fix för kartförjutning för Kinas fastland</string>
     <string name="VoiceEnhancements">Förbättring av röst</string>
     <string name="VoiceEnhancementsAbout">Ljuddämpning och normalisering av röst</string>
     <string name="DisableInstantCamera">Inaktivera snabbkameran</string>

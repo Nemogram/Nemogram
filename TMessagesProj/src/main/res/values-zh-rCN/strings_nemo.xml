@@ -80,7 +80,6 @@
     <string name="AutoPauseVideoAbout">当锁定屏幕/切换到后台时。</string>
     <string name="DisableProximityEvents">禁用距离传感器事件</string>
     <string name="Page1Message2">Nemogram 是使用 Telegram API\n的**非官方**应用</string>
-    <string name="MapDriftingFix">地图定位漂移修复</string>
     <string name="VoiceEnhancements">语音增强</string>
     <string name="VoiceEnhancementsAbout">噪声抑制和语音归一化</string>
     <string name="DisableInstantCamera">禁用即时相机</string>

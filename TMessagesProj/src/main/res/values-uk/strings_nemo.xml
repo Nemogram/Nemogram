@@ -79,7 +79,6 @@
     <string name="AutoPauseVideo">Автоматичне призупинення відео</string>
     <string name="AutoPauseVideoAbout">При вимкненні екрана/переході у фон.</string>
     <string name="DisableProximityEvents">Вимкнути датчик наближення</string>
-    <string name="MapDriftingFix">Виправлення мап для Китаю</string>
     <string name="VoiceEnhancements">Покращення голосу</string>
     <string name="VoiceEnhancementsAbout">Зменшення шуму та нормалізація голосу</string>
     <string name="DisableInstantCamera">Вимкнути миттєву камеру</string>
