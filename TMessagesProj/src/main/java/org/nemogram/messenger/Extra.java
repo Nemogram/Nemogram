@@ -1,11 +1,9 @@
 package org.nemogram.messenger;
 
-import org.lsposed.lsparanoid.Obfuscate;
 import org.telegram.messenger.BuildConfig;
 
 import org.nemogram.messenger.helpers.UserHelper;
 
-@Obfuscate
 public class Extra {
 
     public static int APP_ID = BuildConfig.API_ID;

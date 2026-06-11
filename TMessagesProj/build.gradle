@@ -3,7 +3,6 @@ import java.nio.file.Paths
 
 plugins {
     id 'com.android.library'
-    id 'org.lsposed.lsparanoid'
 }
 
 configurations.configureEach {
@@ -80,11 +79,6 @@ dependencies {
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.1'
     implementation 'org.apache.commons:commons-text:1.15.0'
     }
-
-lsparanoid {
-    seed = 7436
-    variantFilter = { variant -> variant.buildType == "release" }
-}
 
 android {
     sourceSets.main.jniLibs.srcDirs = ['./jni/']
