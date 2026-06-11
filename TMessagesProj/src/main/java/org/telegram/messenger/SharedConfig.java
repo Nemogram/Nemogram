@@ -355,20 +355,6 @@ public class SharedConfig {
     public static boolean isFloatingDebugActive;
     public static LiteMode liteMode;
 
-    private static final int[] LOW_SOC = {
-            -1775228513, // EXYNOS 850
-            802464304,  // EXYNOS 7872
-            802464333,  // EXYNOS 7880
-            802464302,  // EXYNOS 7870
-            2067362118, // MSM8953
-            2067362060, // MSM8937
-            2067362084, // MSM8940
-            2067362241, // MSM8992
-            2067362117, // MSM8952
-            2067361998, // MSM8917
-            -1853602818 // SDM439
-    };
-
     static {
         loadConfig();
     }
@@ -1694,30 +1680,6 @@ public class SharedConfig {
         int cpuCount = ConnectionsManager.CPU_COUNT;
         int memoryClass = ((ActivityManager) ApplicationLoader.applicationContext.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && Build.SOC_MODEL != null) {
-            int hash = Build.SOC_MODEL.toUpperCase().hashCode();
-            for (int i = 0; i < LOW_SOC.length; ++i) {
-                if (LOW_SOC[i] == hash) {
-                    return PERFORMANCE_CLASS_LOW;
-                }
-            }
-        }
-
-        int totalCpuFreq = 0;
-        int freqResolved = 0;
-        for (int i = 0; i < cpuCount; i++) {
-            try {
-                RandomAccessFile reader = new RandomAccessFile(String.format(Locale.ENGLISH, "/sys/devices/system/cpu/cpu%d/cpufreq/cpuinfo_max_freq", i), "r");
-                String line = reader.readLine();
-                if (line != null) {
-                    totalCpuFreq += Utilities.parseInt(line) / 1000;
-                    freqResolved++;
-                }
-                reader.close();
-            } catch (Throwable ignore) {}
-        }
-        int maxCpuFreq = freqResolved == 0 ? -1 : (int) Math.ceil(totalCpuFreq / (float) freqResolved);
-
         long ram = -1;
         try {
             ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
@@ -1727,27 +1689,22 @@ public class SharedConfig {
 
         int performanceClass;
         if (
-            androidVersion < 21 ||
-            cpuCount <= 2 ||
-            memoryClass <= 100 ||
-            cpuCount <= 4 && maxCpuFreq != -1 && maxCpuFreq <= 1250 ||
-            cpuCount <= 4 && maxCpuFreq <= 1600 && memoryClass <= 128 && androidVersion <= 21 ||
-            cpuCount <= 4 && maxCpuFreq <= 1300 && memoryClass <= 128 && androidVersion <= 24 ||
-            ram != -1 && ram < 2L * 1024L * 1024L * 1024L
+            cpuCount <= 4 ||
+            memoryClass <= 128 ||
+            ram != -1 && ram < 3L * 1024L * 1024L * 1024L
         ) {
             performanceClass = PERFORMANCE_CLASS_LOW;
         } else if (
             cpuCount < 8 ||
             memoryClass <= 160 ||
-            maxCpuFreq != -1 && maxCpuFreq <= 2055 ||
-            maxCpuFreq == -1 && cpuCount == 8 && androidVersion <= 23
+            ram != -1 && ram < 4L * 1024L * 1024L * 1024L
         ) {
             performanceClass = PERFORMANCE_CLASS_AVERAGE;
         } else {
             performanceClass = PERFORMANCE_CLASS_HIGH;
         }
         if (BuildVars.LOGS_ENABLED) {
-            FileLog.d("device performance info selected_class = " + performanceClass + " (cpu_count = " + cpuCount + ", freq = " + maxCpuFreq + ", memoryClass = " + memoryClass + ", android version " + androidVersion + ", manufacture " + Build.MANUFACTURER + ", screenRefreshRate=" + AndroidUtilities.screenRefreshRate + ", screenMaxRefreshRate=" + AndroidUtilities.screenMaxRefreshRate + ")");
+            FileLog.d("device performance info selected_class = " + performanceClass + " (cpu_count = " + cpuCount + ", ram = " + ram + ", memoryClass = " + memoryClass + ", android version " + androidVersion + ", manufacture " + Build.MANUFACTURER + ", screenRefreshRate=" + AndroidUtilities.screenRefreshRate + ", screenMaxRefreshRate=" + AndroidUtilities.screenMaxRefreshRate + ")");
         }
 
         return performanceClass;
