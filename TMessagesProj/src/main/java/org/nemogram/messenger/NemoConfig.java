@@ -13,6 +13,7 @@ import org.nemogram.messenger.translator.TranslatorApps;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.FileLog;
+import org.telegram.messenger.SharedConfig;
 import org.telegram.ui.ActionBar.Theme;
 
 import java.util.ArrayList;
@@ -268,7 +269,7 @@ public class NemoConfig {
             hideFolderUnreadBadge = preferences.getBoolean("hideFolderUnreadBadge", false);
             strokeOnViews = preferences.getBoolean("strokeOnViews", false);
             legacyInputPanel = preferences.getBoolean("legacyInputPanel", false);
-            disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", false);
+            disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", SharedConfig.getDevicePerformanceClass() <= SharedConfig.PERFORMANCE_CLASS_AVERAGE);
             autoCheckUpdates = preferences.getBoolean("autoCheckUpdates", true);
             searchBarStyle = preferences.getInt("searchBarStyle", SEARCH_BAR_NORMAL);
             hideSearchBarOnScroll = preferences.getBoolean("hideSearchBarOnScroll", true);
