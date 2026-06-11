@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -34,6 +35,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
@@ -1053,10 +1055,11 @@ public class DataUsage2Activity extends BaseFragment {
 
                 final boolean border = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
                 SettingsActivity.SettingCell.Background drawable = new SettingsActivity.SettingCell.Background();
-                drawable.setColor(imageColorTop, imageColorBottom);
+                drawable.setColor(MonetHelper.getSettingsIconBackgroundColor(imageColorTop), MonetHelper.getSettingsIconBackgroundColor(imageColorBottom));
                 drawable.setDrawBorder(border);
                 imageView.setBackground(drawable);
                 imageView.setImageResource(imageResId);
+                imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
             }
 
             textView.setText(title);
