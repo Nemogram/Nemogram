@@ -173,8 +173,6 @@
     <string name="ShowRPCError">Izcept visas RPC kļūdas</string>
     <string name="ShowRPCErrorException">Izņēmumi: %s</string>
     <string name="SoonRemovedOption">Šī eksperimentālā opcija drīzumā tiks noņemta un iespējota pēc noklusējuma, ja jums rodas problēmas ar šo opciju, lūdzu, **ziņojiet mums**.</string>
-    <string name="TabletMode">Planšetdatora režīms</string>
-    <string name="TabletModeAuto">Auto</string>
     <string name="DeleteAllFromSelfDone">Visi jūsu ziņojumi tiek dzēsti</string>
     <string name="UnknownNemoSettingsOption">Šādas opcijas Nemo iestatījumi nav.</string>
     <string name="Translated">tulkojums</string>

@@ -168,8 +168,6 @@
     <string name="ShowRPCError">Toast alle RPC fejl</string>
     <string name="ShowRPCErrorException">Undtagelser: %s</string>
     <string name="SoonRemovedOption">Denne eksperimentelle indstilling vil snart blive fjernet og aktiveret som standard, hvis du har problemer med denne indstilling, bedes du **rapportere til os**.</string>
-    <string name="TabletMode">Tablet-tilstand</string>
-    <string name="TabletModeAuto">Auto</string>
     <string name="DeleteAllFromSelfDone">Alle dine beskeder er slettet</string>
     <string name="UnknownNemoSettingsOption">Der er ikke en sådan indstillingsmulighed for Nemo.</string>
     <string name="Translated">oversat</string>

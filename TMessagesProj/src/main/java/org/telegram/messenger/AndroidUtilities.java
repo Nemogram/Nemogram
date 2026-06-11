@@ -2965,9 +2965,6 @@ public class AndroidUtilities {
     }
 
     public static boolean isTabletForce() {
-        if (NemoConfig.tabletMode != NemoConfig.TABLET_AUTO) {
-            return NemoConfig.tabletMode == NemoConfig.TABLET_ENABLE;
-        }
         return ApplicationLoader.applicationContext != null && ApplicationLoader.applicationContext.getResources().getBoolean(R.bool.isTablet);
     }
 

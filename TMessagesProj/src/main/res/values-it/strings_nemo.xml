@@ -180,8 +180,6 @@
     <string name="ShowRPCError">Mostra tutti gli errori RPC con notifica toast</string>
     <string name="ShowRPCErrorException">Eccezioni: %s</string>
     <string name="SoonRemovedOption">Questa opzione sperimentale sarà presto rimossa e abilitata di default, se hai problemi con questa opzione, per favore **segnalacelo**.</string>
-    <string name="TabletMode">Modalità tablet</string>
-    <string name="TabletModeAuto">Auto</string>
     <string name="DeleteAllFromSelfDone">Tutti i tuoi messaggi sono stati cancellati</string>
     <string name="UnknownNemoSettingsOption">Non esiste questa opzione nelle impostazioni Nemo.</string>
     <string name="Translated">tradotto</string>

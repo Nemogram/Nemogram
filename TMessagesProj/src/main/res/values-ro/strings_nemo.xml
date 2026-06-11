@@ -180,8 +180,6 @@
     <string name="ShowRPCError">Toast toate erorile RPC</string>
     <string name="ShowRPCErrorException">Erori: %s</string>
     <string name="SoonRemovedOption">Această opțiune experimentală va fi eliminată și activată implicit în curând, dacă aveți probleme cu această opțiune, vă rugăm **să ne-o raportați**.</string>
-    <string name="TabletMode">Modul tabletă</string>
-    <string name="TabletModeAuto">Implicit</string>
     <string name="DeleteAllFromSelfDone">Toate mesajele dumneavoastră sunt șterse</string>
     <string name="UnknownNemoSettingsOption">Nu există o astfel de opţiune de Setări Nemo.</string>
     <string name="Translated">tradus</string>

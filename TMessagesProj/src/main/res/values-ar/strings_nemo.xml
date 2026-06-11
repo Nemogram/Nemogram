@@ -179,8 +179,6 @@
     <string name="ShowRPCError">نخب جميع أخطاء RPC</string>
     <string name="ShowRPCErrorException">استثناءات: %s</string>
     <string name="SoonRemovedOption">ستتم إزالة هذا الخيار التجريبي وتمكينه افتراضيًا قريبًا ، إذا كنت تواجه مشكلات مع هذا الخيار ، فيرجى ** إبلاغنا **.</string>
-    <string name="TabletMode">وضع الكمبيوتر اللوحي</string>
-    <string name="TabletModeAuto">وضع الكمبيوتر اللوحي تلقائي</string>
     <string name="DeleteAllFromSelfDone">كل رسائلك حُذفت</string>
     <string name="UnknownNemoSettingsOption">لا يوجد خِيار لإعدادات نكو من هذا القبيل.</string>
     <string name="Translated">تمت التَّرْجَمَة</string>

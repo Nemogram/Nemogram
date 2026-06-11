@@ -175,8 +175,6 @@
     <string name="ShowRPCError">Barcha RPC xatolarini ko\'rsatish</string>
     <string name="ShowRPCErrorException">Istisnolar: %s</string>
     <string name="SoonRemovedOption">Tez orada bu eksperimental opsiya oʻchiriladi va sukut boʻyicha yoqiladi, agar sizda ushbu parametr bilan bogʻliq muammo boʻlsa, **bizga xabar bering**.</string>
-    <string name="TabletMode">Ekran rejimi</string>
-    <string name="TabletModeAuto">Avto</string>
     <string name="DeleteAllFromSelfDone">Barcha xabarlaringiz o\'chirib tashlandi</string>
     <string name="UnknownNemoSettingsOption">Boshqa Nemo sozlamalari mavjud emas.</string>
     <string name="Translated">tarjima qilindi</string>

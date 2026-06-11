@@ -180,8 +180,6 @@
     <string name="ShowRPCError">توست تمام خطاهای RPC</string>
     <string name="ShowRPCErrorException">استثنائات: %s</string>
     <string name="SoonRemovedOption">این گزینه آزمایشی به زودی حذف و به طور پیش فرض فعال می شود، اگر با این گزینه مشکل دارید، لطفاً **به ما گزارش دهید**.</string>
-    <string name="TabletMode">حالت تبلت</string>
-    <string name="TabletModeAuto">خودکار</string>
     <string name="DeleteAllFromSelfDone">حذف تمامی پیام های شما</string>
     <string name="UnknownNemoSettingsOption">گزینه تنظیمات نکو وجود ندارد.</string>
     <string name="Translated">ترجمه شده</string>

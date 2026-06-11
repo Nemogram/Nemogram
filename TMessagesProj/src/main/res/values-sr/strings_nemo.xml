@@ -177,8 +177,6 @@
     <string name="ShowRPCError">Искачуће обавештење за све RPC грешке</string>
     <string name="ShowRPCErrorException">Изузеци: %s</string>
     <string name="SoonRemovedOption">Ова експериментална опција ће ускоро бити уклоњена и подразумевано омогућена. Ако имате проблема са овом опцијом, **пријавите нам**.</string>
-    <string name="TabletMode">Режим таблета</string>
-    <string name="TabletModeAuto">Аутоматски</string>
     <string name="DeleteAllFromSelfDone">Све ваше поруке су избрисане</string>
     <string name="UnknownNemoSettingsOption">Не постоји таква опција у Nemo подешавањима.</string>
     <string name="Translated">преведено</string>

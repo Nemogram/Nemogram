@@ -177,8 +177,6 @@
     <string name="ShowRPCError">Alle RPC Fehler anstoßen</string>
     <string name="ShowRPCErrorException">Ausnahmen: %s</string>
     <string name="SoonRemovedOption">Diese ausprobierende Option wird in Kürze entfernt und standardmäßig aktiviert, wenn Du Probleme mit dieser Option hast, bitte **an uns melden**.</string>
-    <string name="TabletMode">Tabletbetrieb</string>
-    <string name="TabletModeAuto">Automatisch</string>
     <string name="DeleteAllFromSelfDone">Alle deine Nachrichten sind gelöscht</string>
     <string name="UnknownNemoSettingsOption">Es gibt keine solche Nemo-Einstellungsoption.</string>
     <string name="Translated">übersetzt</string>

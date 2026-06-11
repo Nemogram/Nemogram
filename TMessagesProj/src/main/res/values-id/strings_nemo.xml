@@ -179,8 +179,6 @@
     <string name="ShowRPCError">Tampilkan semua kesalahan RPC menggunakan toast</string>
     <string name="ShowRPCErrorException">Pengecualian: %s</string>
     <string name="SoonRemovedOption">Opsi eksperimental ini akan segera dihapus dan diaktifkan secara default, jika Anda mengalami masalah dengan opsi ini, silakan **laporkan kepada kami**.</string>
-    <string name="TabletMode">Mode tablet</string>
-    <string name="TabletModeAuto">Otomatis</string>
     <string name="DeleteAllFromSelfDone">Semua pesan Anda telah dihapus</string>
     <string name="UnknownNemoSettingsOption">There is no such Nemo Settings option.</string>
     <string name="Translated">diterjemahkan</string>

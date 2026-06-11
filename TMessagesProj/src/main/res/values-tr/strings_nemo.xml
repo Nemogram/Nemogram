@@ -175,8 +175,6 @@
     <string name="ShowRPCError">Tüm RPC hatalarını kaldır</string>
     <string name="ShowRPCErrorException">İstisnalar: %s</string>
     <string name="SoonRemovedOption">Bu deneysel seçenek yakında kaldırılacak ve varsayılan olarak etkinleştirilecektir, bu seçenekle ilgili sorun yaşıyorsanız, lütfen **bize bildirin**.</string>
-    <string name="TabletMode">Tablet modu</string>
-    <string name="TabletModeAuto">Otomatik</string>
     <string name="DeleteAllFromSelfDone">Tüm mesajlarınız silindi</string>
     <string name="UnknownNemoSettingsOption">Böyle bir Nemo Ayarlar seçeneği yok.</string>
     <string name="Translated">çevrildi</string>

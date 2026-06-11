@@ -178,8 +178,6 @@
     <string name="ShowRPCError">Всплывающие уведомления обо всех ошибках RPC</string>
     <string name="ShowRPCErrorException">Исключения: %s</string>
     <string name="SoonRemovedOption">Это экспериментальный параметр скоро будет удалён и включён по умолчанию. Если у вас есть проблемы с этим параметром, пожалуйста **сообщите нам**.</string>
-    <string name="TabletMode">Режим планшета</string>
-    <string name="TabletModeAuto">Автоматически</string>
     <string name="DeleteAllFromSelfDone">Все ваши сообщения удалены</string>
     <string name="UnknownNemoSettingsOption">Такого параметра Nemo нет.</string>
     <string name="Translated">переведено</string>

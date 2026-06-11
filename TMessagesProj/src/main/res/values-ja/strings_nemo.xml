@@ -179,8 +179,6 @@
     <string name="ShowRPCError">すべてのRPCエラーをトースト</string>
     <string name="ShowRPCErrorException">例外: %s</string>
     <string name="SoonRemovedOption">この試験的なオプションはまもなく削除され、デフォルトで有効になります。このオプションに問題がある場合は、**私たちに報告してください。**</string>
-    <string name="TabletMode">タブレットモード</string>
-    <string name="TabletModeAuto">自動</string>
     <string name="DeleteAllFromSelfDone">あなたが送信したすべてのメッセージが削除されました</string>
     <string name="UnknownNemoSettingsOption">このようなNemogramの設定オプションはありません。</string>
     <string name="Translated">翻訳済み</string>

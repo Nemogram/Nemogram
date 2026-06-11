@@ -164,8 +164,6 @@
     <string name="CopyID">Kopiera ID</string>
     <string name="ShowRPCErrorException">Undantag: %s</string>
     <string name="SoonRemovedOption">Det här experimentella alternativet kommer snart att tas bort och aktiveras som standard, om du har problem med det här alternativet, vänligen **rapportera till oss**.</string>
-    <string name="TabletMode">Surfplatteläget</string>
-    <string name="TabletModeAuto">Automatiskt</string>
     <string name="DeleteAllFromSelfDone">Alla dina meddelanden är raderade</string>
     <string name="UnknownNemoSettingsOption">Det finns inget sådant alternativ för Nemo-inställningar.</string>
     <string name="Translated">översatt</string>

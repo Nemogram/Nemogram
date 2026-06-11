@@ -177,8 +177,6 @@
     <string name="ShowRPCError">Wyskakująca wiadomość dla wszystkich błędów RPC</string>
     <string name="ShowRPCErrorException">Wyjątki: %s</string>
     <string name="SoonRemovedOption">Ta eksperymentalna opcja zostanie wkrótce usunięta i włączona domyślnie. Jeśli masz problemy z tą opcją, **zgłoś się do nas**.</string>
-    <string name="TabletMode">Tryb tabletu</string>
-    <string name="TabletModeAuto">Automatyczny</string>
     <string name="DeleteAllFromSelfDone">Wszystkie twoje wiadomości zostały usunięte</string>
     <string name="UnknownNemoSettingsOption">Nie ma takiej opcji w ustawieniach Nemo.</string>
     <string name="Translated">przetłumaczone</string>

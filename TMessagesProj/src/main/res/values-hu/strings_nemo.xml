@@ -181,8 +181,6 @@
     <string name="ShowRPCError">Minden RPC hibáról toast értesítő</string>
     <string name="ShowRPCErrorException">Kivételek: %s</string>
     <string name="SoonRemovedOption">Ezt a kísérleti opciót hamarosan eltávolítjuk és alapértelmezetten bekapcsolásra kerül, ha problémái vannak ezzel az opcióval, kérjük **írjon nekünk**.</string>
-    <string name="TabletMode">Tablet üzemmód</string>
-    <string name="TabletModeAuto">Automata</string>
     <string name="DeleteAllFromSelfDone">Az összes üzenete törlődik</string>
     <string name="UnknownNemoSettingsOption">Nincs ilyen Nemo Beállítások opció.</string>
     <string name="Translated">lefordítva</string>

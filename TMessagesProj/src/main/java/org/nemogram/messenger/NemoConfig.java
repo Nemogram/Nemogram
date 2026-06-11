@@ -46,10 +46,6 @@ public class NemoConfig {
     public static final int DOUBLE_TAP_ACTION_REPEAT = 5;
     public static final int DOUBLE_TAP_ACTION_EDIT = 6;
 
-    public static final int TABLET_AUTO = 0;
-    public static final int TABLET_ENABLE = 1;
-    public static final int TABLET_DISABLE = 2;
-
     public static final int SEARCH_BAR_NORMAL  = 0;
     public static final int SEARCH_BAR_COMPACT = 1;
 
@@ -108,7 +104,6 @@ public class NemoConfig {
     public static boolean showQrCode = false;
     public static boolean showOpenIn = false;
 
-    public static int tabletMode = TABLET_AUTO;
     public static boolean openArchiveOnPull = false;
     public static boolean hideGifts = false;
     public static boolean musicViewAlternativeLayout = false;
@@ -186,7 +181,6 @@ public class NemoConfig {
             SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
             preferIPv6 = preferences.getBoolean("preferIPv6", false);
             ignoreBlocked = preferences.getBoolean("ignoreBlocked2", false);
-            tabletMode = preferences.getInt("tabletMode", TABLET_AUTO);
             hideGifts = preferences.getBoolean("hideGifts", false);
             musicViewAlternativeLayout = preferences.getBoolean("musicViewAlternativeLayout", false);
             hideBirthdayHint = preferences.getBoolean("hideBirthdayHint", false);
@@ -674,14 +668,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("ignoreBlocked2", ignoreBlocked);
-        editor.apply();
-    }
-
-    public static void setTabletMode(int mode) {
-        tabletMode = mode;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("tabletMode", tabletMode);
         editor.apply();
     }
 

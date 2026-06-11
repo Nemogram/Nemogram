@@ -178,8 +178,6 @@
     <string name="ShowRPCError">顯示所有 RPC 錯誤</string>
     <string name="ShowRPCErrorException">例外：%s</string>
     <string name="SoonRemovedOption">此實驗性選項很快就會被刪除並預設啟用，如果您對此選項有問題，請**向我們報告**。</string>
-    <string name="TabletMode">平板電腦模式</string>
-    <string name="TabletModeAuto">自動</string>
     <string name="DeleteAllFromSelfDone">您的所有訊息都已刪除</string>
     <string name="UnknownNemoSettingsOption">沒有這樣的喵設定選項。</string>
     <string name="Translated">已翻譯</string>

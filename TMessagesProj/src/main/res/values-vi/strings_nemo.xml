@@ -177,8 +177,6 @@
     <string name="ShowRPCError">Toast tất cả các lỗi RPC</string>
     <string name="ShowRPCErrorException">Ngoại lệ: %s</string>
     <string name="SoonRemovedOption">Tùy chọn thử nghiệm này sẽ sớm được loại bỏ và được bật theo mặc định, nếu bạn gặp sự cố với tùy chọn này, vui lòng **báo cáo cho chúng tôi**.</string>
-    <string name="TabletMode">Chế độ máy tính bảng</string>
-    <string name="TabletModeAuto">Tự động</string>
     <string name="DeleteAllFromSelfDone">Đã xoá toàn bộ tin nhắn</string>
     <string name="UnknownNemoSettingsOption">Không có tùy chọn Cài đặt Nemo như vậy.</string>
     <string name="Translated">đã dịch</string>

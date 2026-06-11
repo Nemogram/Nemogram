@@ -180,8 +180,6 @@
     <string name="ShowRPCError">แสดงข้อความแจ้งเตือนสำหรับทุกข้อผิดพลาดของ RPC</string>
     <string name="ShowRPCErrorException">ข้อยกเว้น: %s</string>
     <string name="SoonRemovedOption">ตัวเลือกทดลองนี้จะถูกลบออกและเปิดใช้งานตามค่าเริ่มต้นในเร็วๆ นี้ หากคุณประสบปัญหาเกี่ยวกับตัวเลือกนี้ โปรด **รายงานให้เราทราบ**</string>
-    <string name="TabletMode">โหมดแท็บเล็ต</string>
-    <string name="TabletModeAuto">อัตโนมัติ</string>
     <string name="DeleteAllFromSelfDone">ข้อความทั้งหมดของคุณถูกลบออกแล้ว</string>
     <string name="UnknownNemoSettingsOption">ไม่มีตัวเลือกการตั้งค่า Nemo ดังกล่าว</string>
     <string name="Translated">แปลแล้ว</string>

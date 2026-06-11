@@ -3,7 +3,6 @@ package org.nemogram.messenger.settings;
 import android.content.Context;
 import android.view.View;
 
-import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
@@ -13,7 +12,6 @@ import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.Components.UniversalRecyclerView;
-import org.telegram.ui.LaunchActivity;
 
 import java.util.ArrayList;
 
@@ -32,7 +30,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int hideBottomNavigationBarRow = rowId++;
     private final int disableGooeyAvatarAnimationRow = rowId++;
     private final int legacyInputPanelRow = rowId++;
-    private final int tabletModeRow = rowId++;
     private final int searchBarStyleRow = rowId++;
 
     private final int hideStoriesRow = rowId++;
@@ -75,11 +72,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asCheck(hideBottomNavigationBarRow, LocaleController.getString(R.string.HideBottomNavigationBar)).setChecked(NemoConfig.hideBottomNavigationBar).slug("hideBottomNavigationBar"));
         items.add(UItem.asCheck(disableGooeyAvatarAnimationRow, LocaleController.getString(R.string.DisableGooeyAvatarAnimation)).setChecked(NemoConfig.disableGooeyAvatarAnimation).slug("disableGooeyAvatarAnimation"));
         items.add(UItem.asCheck(legacyInputPanelRow, LocaleController.getString(R.string.LegacyInputPanel)).setChecked(NemoConfig.legacyInputPanel).slug("legacyInputPanel"));
-        items.add(TextSettingsCellFactory.of(tabletModeRow, LocaleController.getString(R.string.TabletMode), switch (NemoConfig.tabletMode) {
-            case NemoConfig.TABLET_AUTO -> LocaleController.getString(R.string.TabletModeAuto);
-            case NemoConfig.TABLET_ENABLE -> LocaleController.getString(R.string.Enable);
-            default -> LocaleController.getString(R.string.Disable);
-        }).slug("tabletMode"));
         items.add(TextSettingsCellFactory.of(searchBarStyleRow,
                 LocaleController.getString(R.string.SearchBarStyle),
                 LocaleController.getString(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT
@@ -114,25 +106,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     @Override
     protected void onItemClick(UItem item, View view, int position, float x, float y) {
         var id = item.id;
-        if (id == tabletModeRow) {
-            ArrayList<String> arrayList = new ArrayList<>();
-            ArrayList<Integer> types = new ArrayList<>();
-            arrayList.add(LocaleController.getString(R.string.TabletModeAuto));
-            types.add(NemoConfig.TABLET_AUTO);
-            arrayList.add(LocaleController.getString(R.string.Enable));
-            types.add(NemoConfig.TABLET_ENABLE);
-            arrayList.add(LocaleController.getString(R.string.Disable));
-            types.add(NemoConfig.TABLET_DISABLE);
-            PopupHelper.show(arrayList, LocaleController.getString(R.string.TabletMode), types.indexOf(NemoConfig.tabletMode), getParentActivity(), view, i -> {
-                NemoConfig.setTabletMode(types.get(i));
-                item.textValue = arrayList.get(i);
-                listView.adapter.notifyItemChanged(position, PARTIAL);
-                AndroidUtilities.resetTabletFlag();
-                if (getParentActivity() instanceof LaunchActivity) {
-                    ((LaunchActivity) getParentActivity()).invalidateTabletMode();
-                }
-            }, resourcesProvider);
-        } else if (id == emojiSetsRow) {
+        if (id == emojiSetsRow) {
             presentFragment(new NemoEmojiSettingsActivity());
         } else if (id == disableNumberRoundingRow) {
             NemoConfig.toggleDisableNumberRounding();
