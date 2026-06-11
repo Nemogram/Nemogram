@@ -19,6 +19,7 @@ import org.nemogram.messenger.settings.NemoExperimentalSettingsActivity;
 import org.nemogram.messenger.settings.NemoGeneralSettingsActivity;
 import org.nemogram.messenger.settings.NemoPasscodeSettingsActivity;
 import org.nemogram.messenger.settings.NemoKeywordFilterActivity;
+import org.nemogram.messenger.settings.NemoStickerSettingsActivity;
 import org.nemogram.messenger.settings.SearchBarStyleActivity;
 
 public class SettingsHelper {
@@ -62,6 +63,10 @@ public class SettingsHelper {
                 case "keywordfilter":
                 case "kf":
                     fragment = new NemoKeywordFilterActivity();
+                    break;
+                case "stickers":
+                case "s":
+                    fragment = new NemoStickerSettingsActivity();
                     break;
                 case "searchbarstyle":
                 case "sbs":

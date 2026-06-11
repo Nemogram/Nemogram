@@ -374,6 +374,7 @@
     <string name="AlwaysShowDownloadIcon">Всегда показывать иконку загрузки</string>
     <string name="LegacyInputPanel">Классическая панель ввода</string>
     <string name="MoreHapticFeedback">Более выраженная тактильная обратная связь</string>
+    <string name="StickersAndGifs">Стикеры и GIF</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

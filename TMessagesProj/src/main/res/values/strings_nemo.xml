@@ -378,6 +378,7 @@
     <string name="AlwaysShowDownloadIcon">Always show download icon</string>
     <string name="LegacyInputPanel">Legacy input panel</string>
     <string name="MoreHapticFeedback">More haptic feedback</string>
+    <string name="StickersAndGifs">Stickers and GIF</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
