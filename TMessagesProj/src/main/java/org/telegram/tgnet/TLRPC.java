@@ -49,7 +49,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.nemogram.messenger.helpers.WebAppHelper;
 
 public class TLRPC {
 
@@ -62931,7 +62930,6 @@ public class TLRPC {
         }
 
         protected void writeAttachPath(OutputSerializedData stream) {
-            if (stream instanceof WebAppHelper.CleanSerializedData) return;
             if (ApplicationLoader.isAndroidTestEnvironment()) {
                 return;
             }

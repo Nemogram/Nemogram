@@ -324,7 +324,6 @@ import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.MessageHelper;
 import org.nemogram.messenger.helpers.QrHelper;
 import org.nemogram.messenger.helpers.EmojiHelper;
-import org.nemogram.messenger.helpers.WebAppHelper;
 import org.nemogram.messenger.streaming.MediaStreamingProvider;
 import org.nemogram.messenger.translator.Translator;
 import org.nemogram.messenger.translator.TranslatorSettingsPopupWrapper;

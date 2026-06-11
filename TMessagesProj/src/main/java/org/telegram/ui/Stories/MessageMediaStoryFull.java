@@ -8,8 +8,6 @@ import org.telegram.tgnet.OutputSerializedData;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_stories;
 
-import org.nemogram.messenger.helpers.WebAppHelper;
-
 public class MessageMediaStoryFull extends TLRPC.TL_messageMediaStory {
 
     public static int constructor = 0xc79aee1d;
@@ -23,10 +21,6 @@ public class MessageMediaStoryFull extends TLRPC.TL_messageMediaStory {
     }
 
     public void serializeToStream(OutputSerializedData stream) {
-        if (stream instanceof WebAppHelper.CleanSerializedData) {
-            super.serializeToStream(stream);
-            return;
-        }
         stream.writeInt32(constructor);
         stream.writeInt64(user_id);
         stream.writeInt32(id);
