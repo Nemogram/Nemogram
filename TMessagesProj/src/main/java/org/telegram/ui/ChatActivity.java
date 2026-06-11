@@ -1202,7 +1202,6 @@ public class ChatActivity extends BaseFragment implements
     public final static int OPTION_COPY_PHOTO = 86;
     public final static int OPTION_SAVE_TO_GALLERY_STICKER = 87;
     public final static int OPTION_DETAILS = 89;
-    public final static int OPTION_PRPR = 91;
     public final static int OPTION_CLEAR_FILE = 92;
     public final static int OPTION_SAVE_MESSAGE = 93;
     public final static int OPTION_REPEAT = 94;
@@ -34099,23 +34098,6 @@ public class ChatActivity extends BaseFragment implements
             } case OPTION_DETAILS: {
                 presentFragment(new MessageDetailsActivity(selectedObject));
                 break;
-            } case OPTION_PRPR: {
-                if (checkSlowMode(chatActivityEnterView.getSendButton())) {
-                    return;
-                }
-                TLRPC.User user = getMessagesController().getUser(selectedObject.messageOwner.from_id.user_id);
-                if (user.username != null) {
-                    getSendMessagesHelper().sendMessage(SendMessagesHelper.SendMessageParams.of("/prpr@" + user.username, dialog_id, selectedObject, threadMessageObject, null, false,
-                            null, null, null, true, 0, 0, null, false));
-                } else {
-                    SpannableString spannableString = new SpannableString("/prpr@" + user.first_name);
-                    spannableString.setSpan(new URLSpanUserMention(Long.toString(user.id), 1), 6, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    CharSequence[] cs = new CharSequence[]{spannableString};
-                    ArrayList<TLRPC.MessageEntity> entities = getMediaDataController().getEntities(cs, true);
-                    getSendMessagesHelper().sendMessage(SendMessagesHelper.SendMessageParams.of(spannableString.toString(), dialog_id, selectedObject, threadMessageObject, null, false,
-                            entities, null, null, true, 0, 0, null, false));
-                }
-                break;
             } case OPTION_CLEAR_FILE: {
                 if (Build.VERSION.SDK_INT >= 23 && (Build.VERSION.SDK_INT <= 28 || BuildVars.NO_SCOPED_STORAGE) && getParentActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     getParentActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 4);
@@ -46230,11 +46212,6 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
                 if (chatMode != MODE_SCHEDULED) {
-                    if (NemoConfig.showPrPr && allowChatActions && selectedObject.isFromUser() && !UserObject.isUserSelf(currentUser) && !ChatObject.isMonoForum(currentChat)) {
-                        items.add(LocaleController.getString(R.string.Prpr));
-                        options.add(OPTION_PRPR);
-                        icons.add(R.drawable.msg_prpr);
-                    }
                     if (NemoConfig.showQrCode && selectedObject.isPhoto()) {
                         items.add(LocaleController.getString(R.string.QrCode));
                         options.add(OPTION_QR);

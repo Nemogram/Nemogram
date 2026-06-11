@@ -141,14 +141,13 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
         items.add(TextCheckbox2CellFactory.of(messageMenuRow + 2, LocaleController.getString(R.string.NoQuoteForward)).slug("showNoQuoteForward").setChecked(NemoConfig.showNoQuoteForward));
         items.add(TextCheckbox2CellFactory.of(messageMenuRow + 3, LocaleController.getString(R.string.AddToSavedMessages)).slug("showAddToSavedMessages").setChecked(NemoConfig.showAddToSavedMessages));
         items.add(TextCheckbox2CellFactory.of(messageMenuRow + 4, LocaleController.getString(R.string.Repeat)).slug("showRepeat").setChecked(NemoConfig.showRepeat));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 5, LocaleController.getString(R.string.Prpr)).slug("showPrPr").setChecked(NemoConfig.showPrPr));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 6, LocaleController.getString(R.string.TranslateMessage)).slug("showTranslate").setChecked(NemoConfig.showTranslate));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 7, LocaleController.getString(R.string.ReportChat)).slug("showReport").setChecked(NemoConfig.showReport));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 8, LocaleController.getString(R.string.MessageDetails)).slug("showMessageDetails").setChecked(NemoConfig.showMessageDetails));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 9, LocaleController.getString(R.string.CopyPhoto)).slug("showCopyPhoto").setChecked(NemoConfig.showCopyPhoto));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 10, LocaleController.getString(R.string.SetReminder)).slug("showSetReminder").setChecked(NemoConfig.showSetReminder));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 11, LocaleController.getString(R.string.QrCode)).slug("showQrCode").setChecked(NemoConfig.showQrCode));
-        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 12, LocaleController.getString(R.string.OpenInExternalApp)).slug("showOpenIn").setChecked(NemoConfig.showOpenIn));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 5, LocaleController.getString(R.string.TranslateMessage)).slug("showTranslate").setChecked(NemoConfig.showTranslate));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 6, LocaleController.getString(R.string.ReportChat)).slug("showReport").setChecked(NemoConfig.showReport));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 7, LocaleController.getString(R.string.MessageDetails)).slug("showMessageDetails").setChecked(NemoConfig.showMessageDetails));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 8, LocaleController.getString(R.string.CopyPhoto)).slug("showCopyPhoto").setChecked(NemoConfig.showCopyPhoto));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 9, LocaleController.getString(R.string.SetReminder)).slug("showSetReminder").setChecked(NemoConfig.showSetReminder));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 10, LocaleController.getString(R.string.QrCode)).slug("showQrCode").setChecked(NemoConfig.showQrCode));
+        items.add(TextCheckbox2CellFactory.of(messageMenuRow + 11, LocaleController.getString(R.string.OpenInExternalApp)).slug("showOpenIn").setChecked(NemoConfig.showOpenIn));
         items.add(UItem.asShadow(null));
     }
 
@@ -307,27 +306,24 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
                 NemoConfig.toggleShowRepeat();
                 cell.setChecked(NemoConfig.showRepeat);
             } else if (menuPosition == 4) {
-                NemoConfig.toggleShowPrPr();
-                cell.setChecked(NemoConfig.showPrPr);
-            } else if (menuPosition == 5) {
                 NemoConfig.toggleShowTranslate();
                 cell.setChecked(NemoConfig.showTranslate);
-            } else if (menuPosition == 6) {
+            } else if (menuPosition == 5) {
                 NemoConfig.toggleShowReport();
                 cell.setChecked(NemoConfig.showReport);
-            } else if (menuPosition == 7) {
+            } else if (menuPosition == 6) {
                 NemoConfig.toggleShowMessageDetails();
                 cell.setChecked(NemoConfig.showMessageDetails);
-            } else if (menuPosition == 8) {
+            } else if (menuPosition == 7) {
                 NemoConfig.toggleShowCopyPhoto();
                 cell.setChecked(NemoConfig.showCopyPhoto);
-            } else if (menuPosition == 9) {
+            } else if (menuPosition == 8) {
                 NemoConfig.toggleShowSetReminder();
                 cell.setChecked(NemoConfig.showSetReminder);
-            } else if (menuPosition == 10) {
+            } else if (menuPosition == 9) {
                 NemoConfig.toggleShowQrCode();
                 cell.setChecked(NemoConfig.showQrCode);
-            } else if (menuPosition == 11) {
+            } else if (menuPosition == 10) {
                 NemoConfig.toggleShowOpenIn();
                 cell.setChecked(NemoConfig.showOpenIn);
             }

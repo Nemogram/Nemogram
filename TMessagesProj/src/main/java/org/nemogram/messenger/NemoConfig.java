@@ -94,7 +94,6 @@ public class NemoConfig {
     public static boolean showAddToSavedMessages = true;
     public static boolean showSetReminder = false;
     public static boolean showReport = false;
-    public static boolean showPrPr = false;
     public static boolean showDeleteDownloadedFile = false;
     public static boolean showMessageDetails = false;
     public static boolean showTranslate = true;
@@ -188,7 +187,6 @@ public class NemoConfig {
             showAddToSavedMessages = preferences.getBoolean("showAddToSavedMessages", true);
             showSetReminder = preferences.getBoolean("showSetReminder", false);
             showReport = preferences.getBoolean("showReport", false);
-            showPrPr = preferences.getBoolean("showPrPr", false);
             showDeleteDownloadedFile = preferences.getBoolean("showDeleteDownloadedFile", false);
             showMessageDetails = preferences.getBoolean("showMessageDetails", false);
             showTranslate = preferences.getBoolean("showTranslate", true);
@@ -620,14 +618,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("showReport", showReport);
-        editor.apply();
-    }
-
-    public static void toggleShowPrPr() {
-        showPrPr = !showPrPr;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("showPrPr", showPrPr);
         editor.apply();
     }
 
