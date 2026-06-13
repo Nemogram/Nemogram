@@ -556,6 +556,7 @@ public class LocaleController {
     public HashMap<String, LocaleInfo> languagesDict = new HashMap<>();
 
     private ArrayList<LocaleInfo> otherLanguages = new ArrayList<>();
+    private boolean additionalLanguagesLoaded;
 
     private static volatile LocaleController Instance = null;
     public static LocaleController getInstance() {
@@ -700,9 +701,67 @@ public class LocaleController {
         languagesDict.put(localeInfo.getKey(), localeInfo);
         languagesDict.put("ja", localeInfo);
 
+        systemDefaultLocale = Locale.getDefault();
+        is24HourFormat = DateFormat.is24HourFormat(ApplicationLoader.applicationContext);
+        LocaleInfo currentInfo = null;
+        boolean override = false;
+        String lang = null;
+
+        try {
+            SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+            lang = preferences.getString("language", null);
+            if (lang != null) {
+                ensureAdditionalLanguagesLoaded(false);
+            }
+            if (lang != null) {
+                currentInfo = getLanguageFromDict(lang);
+                if (currentInfo != null) {
+                    override = true;
+                }
+            }
+
+            if (currentInfo == null && systemDefaultLocale.getLanguage() != null) {
+                currentInfo = getLanguageFromDict(systemDefaultLocale.getLanguage());
+            }
+            if (currentInfo == null) {
+                currentInfo = getLanguageFromDict(getLocaleString(systemDefaultLocale));
+                if (currentInfo == null) {
+                    currentInfo = getLanguageFromDict("en");
+                }
+            }
+
+            applyLanguage(currentInfo, override, true, UserConfig.selectedAccount);
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+
+        if (!additionalLanguagesLoaded) {
+            AndroidUtilities.runOnUIThread(() -> ensureAdditionalLanguagesLoaded(true));
+        }
+
+        try {
+            IntentFilter timezoneFilter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
+            if (Build.VERSION.SDK_INT >= 33) {
+                ApplicationLoader.applicationContext.registerReceiver(new TimeZoneChangedReceiver(), timezoneFilter, Context.RECEIVER_NOT_EXPORTED);
+            } else {
+                ApplicationLoader.applicationContext.registerReceiver(new TimeZoneChangedReceiver(), timezoneFilter);
+            }
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+
+        AndroidUtilities.runOnUIThread(() -> currentSystemLocale = getSystemLocaleStringIso639());
+    }
+
+    private void ensureAdditionalLanguagesLoaded(boolean loadRemote) {
+        if (additionalLanguagesLoaded) {
+            return;
+        }
+        additionalLanguagesLoaded = true;
+
         loadOtherLanguages();
-        if (remoteLanguages.isEmpty()) {
-            AndroidUtilities.runOnUIThread(() -> loadRemoteLanguages(UserConfig.selectedAccount));
+        if (loadRemote && remoteLanguages.isEmpty()) {
+            loadRemoteLanguages(UserConfig.selectedAccount);
         }
 
         for (int a = 0; a < otherLanguages.size(); a++) {
@@ -739,49 +798,6 @@ public class LocaleController {
                 languagesDict.put(locale.getKey(), locale);
             }
         }
-
-        systemDefaultLocale = Locale.getDefault();
-        is24HourFormat = DateFormat.is24HourFormat(ApplicationLoader.applicationContext);
-        LocaleInfo currentInfo = null;
-        boolean override = false;
-
-        try {
-            SharedPreferences preferences = MessagesController.getGlobalMainSettings();
-            String lang = preferences.getString("language", null);
-            if (lang != null) {
-                currentInfo = getLanguageFromDict(lang);
-                if (currentInfo != null) {
-                    override = true;
-                }
-            }
-
-            if (currentInfo == null && systemDefaultLocale.getLanguage() != null) {
-                currentInfo = getLanguageFromDict(systemDefaultLocale.getLanguage());
-            }
-            if (currentInfo == null) {
-                currentInfo = getLanguageFromDict(getLocaleString(systemDefaultLocale));
-                if (currentInfo == null) {
-                    currentInfo = getLanguageFromDict("en");
-                }
-            }
-
-            applyLanguage(currentInfo, override, true, UserConfig.selectedAccount);
-        } catch (Exception e) {
-            FileLog.e(e);
-        }
-
-        try {
-            IntentFilter timezoneFilter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-            if (Build.VERSION.SDK_INT >= 33) {
-                ApplicationLoader.applicationContext.registerReceiver(new TimeZoneChangedReceiver(), timezoneFilter, Context.RECEIVER_NOT_EXPORTED);
-            } else {
-                ApplicationLoader.applicationContext.registerReceiver(new TimeZoneChangedReceiver(), timezoneFilter);
-            }
-        } catch (Exception e) {
-            FileLog.e(e);
-        }
-
-        AndroidUtilities.runOnUIThread(() -> currentSystemLocale = getSystemLocaleStringIso639());
     }
 
     public static String getLanguageFlag(String countryCode) {
@@ -1410,9 +1426,7 @@ public class LocaleController {
                 FileLog.d("reloadLastFile=false");
             }
             if (!isLoadingRemote) {
-                if (init) {
-                    AndroidUtilities.runOnUIThread(() -> NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.reloadInterface));
-                } else {
+                if (!init) {
                     NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.reloadInterface);
                 }
                 RestrictedLanguagesSelectActivity.invalidateRestrictedLanguages();
