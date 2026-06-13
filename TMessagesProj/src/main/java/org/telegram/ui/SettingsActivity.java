@@ -1138,8 +1138,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             iconBackground.setColor(iconColorTop, iconColorBottom);
             iconView.setImageResource(icon);
             titleView.setText(title);
-            subtitleView.setVisibility((twoLines = !TextUtils.isEmpty(subtitle)) ? View.VISIBLE : View.GONE);
-            subtitleView.setText(subtitle);
+            twoLines = false;
+            subtitleView.setVisibility(View.GONE);
+            subtitleView.setText(null);
             valueView.setVisibility(!TextUtils.isEmpty(value) ? View.VISIBLE : View.GONE);
             valueView.setText(value);
 
