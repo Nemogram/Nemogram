@@ -8989,13 +8989,10 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     namesOffset -= dp(1);
                 }
                 if (!reactionsLayoutInBubble.isSmall) {
-                    reactionsLayoutInBubble.measure(maxWidth - dp(24), Gravity.LEFT);
+                    reactionsLayoutInBubble.measure(backgroundWidth - dp(24), Gravity.LEFT);
                     if (!reactionsLayoutInBubble.isEmpty) {
                         reactionsLayoutInBubble.totalHeight = reactionsLayoutInBubble.height + dp(12);
                         measureTime(messageObject);
-                        if (reactionsLayoutInBubble.width > backgroundWidth) {
-                            backgroundWidth = reactionsLayoutInBubble.width;
-                        }
                         if (reactionsLayoutInBubble.lastLineX + timeWidth + dp(24) > backgroundWidth) {
                             reactionsLayoutInBubble.totalHeight += dp(12);
                             reactionsLayoutInBubble.positionOffsetY -= dp(12);
