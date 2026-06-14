@@ -819,7 +819,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
             }
         } else if (id == NotificationCenter.fileLoaded) {
             String path = (String) args[0];
-            if (SharedConfig.isAppUpdateAvailable()) {
+            if (SharedConfig.isAppUpdateAvailable() && SharedConfig.pendingAppUpdate.document instanceof TLRPC.TL_document) {
                 String name = FileLoader.getAttachFileName(SharedConfig.pendingAppUpdate.document);
                 if (name.equals(path) && updateLayout != null) {
                     updateLayout.updateAppUpdateViews(currentAccount, true);
@@ -827,7 +827,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
             }
         } else if (id == NotificationCenter.fileLoadFailed) {
             String path = (String) args[0];
-            if (SharedConfig.isAppUpdateAvailable()) {
+            if (SharedConfig.isAppUpdateAvailable() && SharedConfig.pendingAppUpdate.document instanceof TLRPC.TL_document) {
                 String name = FileLoader.getAttachFileName(SharedConfig.pendingAppUpdate.document);
                 if (name.equals(path) && updateLayout != null) {
                     updateLayout.updateAppUpdateViews(currentAccount, true);

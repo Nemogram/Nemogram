@@ -759,7 +759,12 @@ public class SharedConfig {
     }
 
     public static boolean isAppUpdateAvailable() {
-        if (pendingAppUpdate == null || pendingAppUpdate.document == null || !ApplicationLoader.isStandaloneBuild()) {
+        if (pendingAppUpdate == null || !ApplicationLoader.isStandaloneBuild()) {
+            return false;
+        }
+        boolean hasDocument = pendingAppUpdate.document instanceof TLRPC.TL_document;
+        boolean hasUrl = !TextUtils.isEmpty(pendingAppUpdate.url);
+        if (!hasDocument && !hasUrl) {
             return false;
         }
         int currentVersion;
@@ -774,6 +779,9 @@ public class SharedConfig {
     }
 
     public static boolean setNewAppVersionAvailable(TLRPC.TL_help_appUpdate update) {
+        if (update != null && !(update.document instanceof TLRPC.TL_document) && TextUtils.isEmpty(update.url)) {
+            update = null;
+        }
         //String updateVersionString = null;
         int versionCode = 0;
         try {

@@ -20,6 +20,8 @@ import org.telegram.messenger.ImageLoader;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
+import org.telegram.messenger.browser.Browser;
+import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.IUpdateLayout;
 
@@ -45,7 +47,7 @@ public class UpdateLayout extends IUpdateLayout {
 
     public void updateFileProgress(Object[] args) {
         if (updateTextView == null || args == null) return;
-        if (SharedConfig.isAppUpdateAvailable()) {
+        if (SharedConfig.isAppUpdateAvailable() && SharedConfig.pendingAppUpdate.document instanceof TLRPC.TL_document) {
             String location = (String) args[0];
             String fileName = FileLoader.getAttachFileName(SharedConfig.pendingAppUpdate.document);
             if (fileName != null && fileName.equals(location)) {
@@ -69,6 +71,12 @@ public class UpdateLayout extends IUpdateLayout {
         sideMenuContainer.addView(updateLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44, Gravity.LEFT | Gravity.BOTTOM));
         updateLayout.setOnClickListener(v -> {
             if (!SharedConfig.isAppUpdateAvailable()) {
+                return;
+            }
+            if (!(SharedConfig.pendingAppUpdate.document instanceof TLRPC.TL_document)) {
+                if (SharedConfig.pendingAppUpdate.url != null) {
+                    Browser.openUrl(activity, SharedConfig.pendingAppUpdate.url);
+                }
                 return;
             }
             if (updateLayoutIcon.getIcon() == MediaActionDrawable.ICON_DOWNLOAD) {
@@ -128,6 +136,23 @@ public class UpdateLayout extends IUpdateLayout {
         }
         if (SharedConfig.isAppUpdateAvailable()) {
             createUpdateUI(currentAccount);
+
+            if (!(SharedConfig.pendingAppUpdate.document instanceof TLRPC.TL_document)) {
+                updateLayoutIcon.setIcon(MediaActionDrawable.ICON_UPDATE, true, animated);
+                setUpdateText(LocaleController.getString(R.string.AppUpdateNow), animated);
+                updateSizeTextView.setText(null, animated);
+                if (updateLayout.getTag() != null) {
+                    return;
+                }
+                updateLayout.setVisibility(View.VISIBLE);
+                updateLayout.setTag(1);
+                if (animated) {
+                    updateLayout.animate().translationY(0).setInterpolator(CubicBezierInterpolator.EASE_OUT).setListener(null).setDuration(180).start();
+                } else {
+                    updateLayout.setTranslationY(0);
+                }
+                return;
+            }
 
             String fileName = FileLoader.getAttachFileName(SharedConfig.pendingAppUpdate.document);
             File path = FileLoader.getInstance(currentAccount).getPathToAttach(SharedConfig.pendingAppUpdate.document, true);
