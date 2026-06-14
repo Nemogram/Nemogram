@@ -1,6 +1,7 @@
 package org.nemogram.messenger.helpers.remote;
 
 import android.content.pm.PackageInfo;
+import android.os.Build;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class UpdateHelper {
 
@@ -75,13 +77,21 @@ public class UpdateHelper {
 
                 JSONArray assets = json.optJSONArray("assets");
                 if (assets != null) {
+                    JSONObject bestAsset = null;
+                    int bestScore = Integer.MIN_VALUE;
                     for (int i = 0; i < assets.length(); i++) {
                         JSONObject asset = assets.getJSONObject(i);
                         String name = asset.optString("name", "");
                         if (name.endsWith(".apk")) {
-                            update.url = asset.getString("browser_download_url");
-                            break;
+                            int score = scoreApkAsset(name);
+                            if (score > bestScore) {
+                                bestScore = score;
+                                bestAsset = asset;
+                            }
                         }
+                    }
+                    if (bestAsset != null) {
+                        update.url = bestAsset.getString("browser_download_url");
                     }
                 }
 
@@ -142,5 +152,39 @@ public class UpdateHelper {
 
     public interface Delegate {
         void onTLResponse(TLRPC.TL_help_appUpdate res, String error);
+    }
+
+    private static int scoreApkAsset(String assetName) {
+        String name = assetName.toLowerCase(Locale.US);
+        int score = 0;
+
+        String[] supportedAbis = Build.SUPPORTED_ABIS;
+        for (int i = 0; i < supportedAbis.length; i++) {
+            String abi = supportedAbis[i];
+            if (abi == null || abi.isEmpty()) {
+                continue;
+            }
+            int abiScore = scoreAbiMatch(name, abi.toLowerCase(Locale.US));
+            if (abiScore > 0) {
+                score += abiScore - i * 10;
+                break;
+            }
+        }
+
+        if (score == 0 && name.contains("universal")) {
+            score = 100;
+        }
+
+        return score;
+    }
+
+    private static int scoreAbiMatch(String assetName, String abi) {
+        return switch (abi) {
+            case "arm64-v8a" -> assetName.contains("arm64-v8a") || assetName.contains("arm64") || assetName.contains("aarch64") ? 400 : 0;
+            case "armeabi-v7a" -> assetName.contains("armeabi-v7a") || assetName.contains("armv7") || assetName.contains("armeabi") ? 350 : 0;
+            case "x86_64" -> assetName.contains("x86_64") ? 300 : 0;
+            case "x86" -> assetName.contains("x86") && !assetName.contains("x86_64") ? 250 : 0;
+            default -> 0;
+        };
     }
 }
