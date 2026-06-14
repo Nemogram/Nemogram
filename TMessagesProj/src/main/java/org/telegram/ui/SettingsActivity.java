@@ -1368,7 +1368,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 getString("DebugMenuClearMediaCache", R.string.DebugMenuClearMediaCache),
                 getString(R.string.DebugMenuCallSettings),
                 null,
-                BuildVars.DEBUG_PRIVATE_VERSION || ApplicationLoader.isStandaloneBuild() || ApplicationLoader.isBetaBuild() ? getString("DebugMenuCheckAppUpdate", R.string.DebugMenuCheckAppUpdate) : null,
                 getString("DebugMenuReadAllDialogs", R.string.DebugMenuReadAllDialogs),
                 BuildVars.DEBUG_PRIVATE_VERSION ? SharedConfig.disableVoiceAudioEffects ? "Enable voip audio effects" : "Disable voip audio effects" : null,
                 BuildVars.DEBUG_PRIVATE_VERSION ? "Clean app update" : null,
@@ -1475,22 +1474,20 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 VoIPHelper.showCallDebugSettings(getParentActivity());
             } else if (which == 8) { // ?
                 SharedConfig.toggleRoundCamera16to9();
-            } else if (which == 9) { // Check app update
-                ((LaunchActivity) getParentActivity()).checkAppUpdate(true, null);
-            } else if (which == 10) { // Read all chats
+            } else if (which == 9) { // Read all chats
                 getMessagesStorage().readAllDialogs(-1);
-            } else if (which == 11) { // Voip audio effects
+            } else if (which == 10) { // Voip audio effects
                 SharedConfig.toggleDisableVoiceAudioEffects();
-            } else if (which == 12) { // Clean app update
+            } else if (which == 11) { // Clean app update
                 SharedConfig.pendingAppUpdate = null;
                 SharedConfig.saveConfig();
                 NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.appUpdateAvailable);
-            } else if (which == 13) { // Reset suggestions
+            } else if (which == 12) { // Reset suggestions
                 Set<String> suggestions = getMessagesController().pendingSuggestions;
                 suggestions.add("VALIDATE_PHONE_NUMBER");
                 suggestions.add("VALIDATE_PASSWORD");
                 getNotificationCenter().postNotificationName(NotificationCenter.newSuggestionsAvailable);
-            } else if (which == 14) { // WebView Cache
+            } else if (which == 13) { // WebView Cache
                 ApplicationLoader.applicationContext.deleteDatabase("webview.db");
                 ApplicationLoader.applicationContext.deleteDatabase("webviewCache.db");
                 WebStorage.getInstance().deleteAllData();
@@ -1500,14 +1497,14 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     webView.destroy();
                 } catch (Exception e) {
                 }
-            } else if (which == 15) {
+            } else if (which == 14) {
                 CookieManager cookieManager = CookieManager.getInstance();
                 cookieManager.removeAllCookies(null);
                 cookieManager.flush();
-            } else if (which == 16) { // WebView debug
+            } else if (which == 15) { // WebView debug
                 SharedConfig.toggleDebugWebView();
                 Toast.makeText(getParentActivity(), getString(SharedConfig.debugWebView ? R.string.DebugMenuWebViewDebugEnabled : R.string.DebugMenuWebViewDebugDisabled), Toast.LENGTH_SHORT).show();
-            } else if (which == 17) { // Tablet mode
+            } else if (which == 16) { // Tablet mode
                 SharedConfig.toggleForceDisableTabletMode();
                 Activity activity = getParentActivity();
                 if (activity != null) {
@@ -1517,9 +1514,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     activity.startActivity(intent); // Start the launch activity
                 }
                 System.exit(0);
-            } else if (which == 18) {
+            } else if (which == 17) {
                 FloatingDebugController.setActive((LaunchActivity) getParentActivity(), !FloatingDebugController.isActive());
-            } else if (which == 19) {
+            } else if (which == 18) {
                 getMessagesController().loadAppConfig();
                 TLRPC.TL_help_dismissSuggestion req = new TLRPC.TL_help_dismissSuggestion();
                 req.suggestion = "VALIDATE_PHONE_NUMBER";
@@ -1532,7 +1529,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         getMessagesController().loadAppConfig();
                     });
                 });
-            } else if (which == 20) {
+            } else if (which == 19) {
                 int cpuCount = ConnectionsManager.CPU_COUNT;
                 int memoryClass = ((ActivityManager) ApplicationLoader.applicationContext.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
                 long minFreqSum = 0, minFreqCount = 0;

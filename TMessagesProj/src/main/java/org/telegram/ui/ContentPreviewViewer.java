@@ -1709,7 +1709,7 @@ public class ContentPreviewViewer {
         centerImage.setLayerNum(Integer.MAX_VALUE);
         effectImage.setCurrentAccount(currentAccount);
         effectImage.setLayerNum(Integer.MAX_VALUE);
-        if (parentActivity == activity) {
+        if (parentActivity == activity && windowView != null && containerView != null) {
             return;
         }
         parentActivity = activity;
@@ -1802,6 +1802,22 @@ public class ContentPreviewViewer {
         effectImage.setAspectFit(true);
         effectImage.setInvalidateAll(true);
         effectImage.setParentView(containerView);
+    }
+
+    private void releaseWindowViews() {
+        if (windowView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(windowView, null);
+            windowView.removeAllViews();
+        }
+        if (containerView != null) {
+            containerView.setOnTouchListener(null);
+            containerView.removeAllViews();
+        }
+        centerImage.setParentView(null);
+        effectImage.setParentView(null);
+        containerView = null;
+        windowView = null;
+        parentActivity = null;
     }
 
     public void setFocusable(boolean focusable) {
@@ -2060,9 +2076,10 @@ public class ContentPreviewViewer {
                 WindowManager wm = (WindowManager) parentActivity.getSystemService(Context.WINDOW_SERVICE);
                 wm.removeViewImmediate(windowView);
             }
-            windowView = null;
         } catch (Exception e) {
             FileLog.e(e);
+        } finally {
+            releaseWindowViews();
         }
         Instance = null;
         NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.startAllHeavyOperations, 8);
@@ -2237,6 +2254,8 @@ public class ContentPreviewViewer {
                     }
                 } catch (Exception e) {
                     FileLog.e(e);
+                } finally {
+                    releaseWindowViews();
                 }
             }
         }
