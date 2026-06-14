@@ -2,7 +2,6 @@
 <resources>
     <string name="NemoSettings">Мама</string>
     <string name="MessageMenu">Инетик</string>
-    <string name="HidePhone">Спрятать телефончик</string>
     <string name="DeleteAllFromSelf">Удалить для котов</string>
     <string name="IgnoreBlocked">Блок</string>
     <string name="Connection">Инетик</string>

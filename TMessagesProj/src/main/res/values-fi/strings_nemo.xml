@@ -2,7 +2,6 @@
 <resources>
     <string name="NemoSettings">Nemo Asetukset</string>
     <string name="MessageMenu">Viestivalikko</string>
-    <string name="HidePhone">Piilota puhelinnumeroni</string>
     <string name="DeleteAllFromSelf">Poista myös viestini</string>
     <string name="DeleteAllFromSelfAlert">Varoitus! Tämä **poistaa kaikki viestit sinulta** tässä keskustelussa **kaikille** osallistujille.</string>
     <string name="Connection">Yhteys</string>
