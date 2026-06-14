@@ -330,6 +330,7 @@ public class SharedConfig {
 
     public static TLRPC.TL_help_appUpdate pendingAppUpdate;
     public static int pendingAppUpdateBuildVersion;
+    public static long lastUpdateAttemptTime;
     public static long lastUpdateCheckTime;
 
     public static boolean hasEmailLogin;
@@ -467,6 +468,7 @@ public class SharedConfig {
                 } else {
                     editor.remove("appUpdate");
                 }
+                editor.putLong("appUpdateAttemptTime", lastUpdateAttemptTime);
                 editor.putLong("appUpdateCheckTime", lastUpdateCheckTime);
 
                 editor.apply();
@@ -534,7 +536,8 @@ public class SharedConfig {
             } else {
                 passcodeSalt = new byte[0];
             }
-            lastUpdateCheckTime = preferences.getLong("appUpdateCheckTime", System.currentTimeMillis());
+            lastUpdateAttemptTime = preferences.getLong("appUpdateAttemptTime", 0);
+            lastUpdateCheckTime = preferences.getLong("appUpdateCheckTime", 0);
             try {
                 String update = preferences.getString("appUpdate", null);
                 if (update != null) {

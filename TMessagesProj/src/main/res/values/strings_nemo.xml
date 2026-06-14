@@ -96,6 +96,7 @@
     <string name="ProviderDeepLTranslate">DeepL Translate</string>
     <string name="Halloween">Halloween</string>
     <string name="CheckUpdate">Check for update</string>
+    <string name="AutoCheckUpdatesInterval">Update check interval</string>
     <string name="LastUpdateFormatted">Last successfully checked %1$s.</string>
     <string name="LastUpdateDateFormatted">Last successfully checked on %1$s.</string>
     <string name="LastUpdateRecently">Last successfully checked just now.</string>

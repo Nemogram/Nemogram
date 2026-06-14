@@ -5971,14 +5971,21 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             });
             return;
         }
-        if (!force && Math.abs(System.currentTimeMillis() - SharedConfig.lastUpdateCheckTime) < MessagesController.getInstance(0).updateCheckDelay * 1000) {
+        long autoCheckIntervalMs = Math.max(1, NemoConfig.autoCheckUpdatesIntervalHours) * 60L * 60L * 1000L;
+        if (!force && Math.abs(System.currentTimeMillis() - SharedConfig.lastUpdateAttemptTime) < autoCheckIntervalMs) {
             return;
+        }
+        if (!force) {
+            SharedConfig.lastUpdateAttemptTime = System.currentTimeMillis();
+            SharedConfig.saveConfig();
         }
         final int accountNum = currentAccount;
         UpdateHelper.getInstance().checkNewVersionAvailable((res, error) -> {
-            SharedConfig.lastUpdateCheckTime = System.currentTimeMillis();
-            SharedConfig.saveConfig();
             AndroidUtilities.runOnUIThread(() -> {
+                if (error == null) {
+                    SharedConfig.lastUpdateCheckTime = System.currentTimeMillis();
+                    SharedConfig.saveConfig();
+                }
                 if (res != null) {
                     SharedConfig.setNewAppVersionAvailable(res);
                     if (res.can_not_skip) {

@@ -43,6 +43,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
 
     private final int checkUpdateRow = rowId++;
     private final int autoCheckUpdatesRow = rowId++;
+    private final int autoCheckUpdatesIntervalRow = rowId++;
 
     private final int deleteAccountRow = rowId++;
 
@@ -71,6 +72,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
         if (getParentActivity() instanceof LaunchActivity) {
             items.add(TextDetailSettingsCellFactory.of(checkUpdateRow, LocaleController.getString(R.string.CheckUpdate), UpdateHelper.formatDateUpdate(SharedConfig.lastUpdateCheckTime)).slug("checkUpdate"));
             items.add(UItem.asCheck(autoCheckUpdatesRow, LocaleController.getString(R.string.AutoCheckUpdates)).slug("autoCheckUpdates").setChecked(NemoConfig.autoCheckUpdates));
+            items.add(TextSettingsCellFactory.of(autoCheckUpdatesIntervalRow, LocaleController.getString(R.string.AutoCheckUpdatesInterval), formatAutoCheckInterval(NemoConfig.autoCheckUpdatesIntervalHours)).slug("autoCheckUpdatesInterval"));
             items.add(UItem.asShadow(null));
         }
 
@@ -230,7 +232,26 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.autoCheckUpdates);
             }
+        } else if (id == autoCheckUpdatesIntervalRow) {
+            ArrayList<String> arrayList = new ArrayList<>();
+            ArrayList<Integer> intervals = new ArrayList<>();
+            for (int hours : new int[]{1, 3, 6, 12, 24}) {
+                arrayList.add(formatAutoCheckInterval(hours));
+                intervals.add(hours);
+            }
+            PopupHelper.show(arrayList, LocaleController.getString(R.string.AutoCheckUpdatesInterval), intervals.indexOf(NemoConfig.autoCheckUpdatesIntervalHours), getParentActivity(), view, i -> {
+                NemoConfig.setAutoCheckUpdatesIntervalHours(intervals.get(i));
+                item.textValue = arrayList.get(i);
+                listView.adapter.notifyItemChanged(position, PARTIAL);
+            }, resourcesProvider);
         }
+    }
+
+    private String formatAutoCheckInterval(int hours) {
+        if (hours == 24) {
+            return LocaleController.getString(R.string.MessageScheduledRepeatOptionDaily);
+        }
+        return LocaleController.formatPluralString("Hours", hours);
     }
 
     @Override

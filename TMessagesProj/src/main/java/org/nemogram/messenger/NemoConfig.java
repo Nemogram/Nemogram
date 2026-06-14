@@ -152,6 +152,7 @@ public class NemoConfig {
     public static boolean spoilerKeywordsInChats = false;
     public static boolean spoilerKeywordsInChannels = false;
     public static boolean autoCheckUpdates = true;
+    public static int autoCheckUpdatesIntervalHours = 6;
     public static boolean hideSearchBarOnScroll = true;
     public static boolean hideSearchBarPlaceholder = false;
     public static String searchBarPlaceholder = "";
@@ -271,6 +272,7 @@ public class NemoConfig {
             legacyInputPanel = preferences.getBoolean("legacyInputPanel", false);
             disableGooeyAvatarAnimation = preferences.getBoolean("disableGooeyAvatarAnimation", SharedConfig.getDevicePerformanceClass() <= SharedConfig.PERFORMANCE_CLASS_AVERAGE);
             autoCheckUpdates = preferences.getBoolean("autoCheckUpdates", true);
+            autoCheckUpdatesIntervalHours = preferences.getInt("autoCheckUpdatesIntervalHours", 6);
             searchBarStyle = preferences.getInt("searchBarStyle", SEARCH_BAR_NORMAL);
             hideSearchBarOnScroll = preferences.getBoolean("hideSearchBarOnScroll", true);
             hideSearchBarPlaceholder = preferences.getBoolean("hideSearchBarPlaceholder", false);
@@ -1030,6 +1032,12 @@ public class NemoConfig {
         autoCheckUpdates = !autoCheckUpdates;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("autoCheckUpdates", autoCheckUpdates).apply();
+    }
+
+    public static void setAutoCheckUpdatesIntervalHours(int hours) {
+        autoCheckUpdatesIntervalHours = hours;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putInt("autoCheckUpdatesIntervalHours", autoCheckUpdatesIntervalHours).apply();
     }
 
     public static void setSearchBarStyle(int style) {

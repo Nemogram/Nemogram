@@ -92,6 +92,7 @@
     <string name="ProviderDeepLTranslate">DeepL переводчик</string>
     <string name="Halloween">Хэллоуин</string>
     <string name="CheckUpdate">Проверить наличие обновлений</string>
+    <string name="AutoCheckUpdatesInterval">Интервал проверки обновлений</string>
     <string name="LastUpdateFormatted">Последняя проверка была %1$s.</string>
     <string name="LastUpdateDateFormatted">Последняя успешная проверка была %1$s.</string>
     <string name="LastUpdateRecently">Последняя успешная проверка была сейчас.</string>
