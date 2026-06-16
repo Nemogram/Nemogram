@@ -285,13 +285,20 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
         updateColors();
     }
 
+    private boolean isWhiteBackground;
+
+    public void setWhiteBackground() {
+        isWhiteBackground = true;
+        updateColors();
+    }
+
     @Override
     public void updateColors() {
         final boolean isDark = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
         int radius = getSearchBarStyle() == NemoConfig.SEARCH_BAR_MATERIAL ? 26 : 20;
         bg = isSectionBackground ?
                 Theme.createRoundRectDrawableShadowed(dp(radius), getThemedColor(Theme.key_windowBackgroundWhite)) :
-                Theme.createRoundRectDrawable(dp(radius), getThemedColor(Theme.key_windowBackgroundWhiteBlackText, isDark ? 0.07f : 0.05f));
+                Theme.createRoundRectDrawable(dp(radius), isWhiteBackground ? getThemedColor(Theme.key_windowBackgroundWhite) : getThemedColor(Theme.key_windowBackgroundWhiteBlackText, isDark ? 0.07f : 0.05f));
         searchIcon.setColorFilter(getThemedColor(Theme.key_windowBackgroundWhiteBlackText, 0.6f), PorterDuff.Mode.MULTIPLY);
         closeIcon.setColorFilter(getThemedColor(Theme.key_windowBackgroundWhiteBlackText, 0.6f), PorterDuff.Mode.MULTIPLY);
         closeIcon.setBackground(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector), 1, dp(17)));

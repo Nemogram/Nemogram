@@ -1055,7 +1055,7 @@ public class QrActivity extends BaseFragment {
                 }
                 if (contentBitmap != null) {
                     canvas.drawBitmap(contentBitmap, 0f, 0f, bitmapGradientPaint);
-                    gradientDrawable.updateAnimation(true);
+                    gradientDrawable.updateAnimation();
                 } else {
                     drawLoading(canvas);
                 }
