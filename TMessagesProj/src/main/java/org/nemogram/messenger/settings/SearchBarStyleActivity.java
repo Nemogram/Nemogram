@@ -34,6 +34,7 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
     private final int styleHeaderRow = rowId++;
     private final int normalStyleRow = rowId++;
     private final int compactStyleRow = rowId++;
+    private final int materialStyleRow = rowId++;
     private final int styleShadowRow = rowId++;
     private final int placeholderHeaderRow = rowId++;
     private final int emptyPlaceholderRow = rowId++;
@@ -76,6 +77,10 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
                         LocaleController.getString(R.string.SearchBarStyleCompact))
                 .setChecked(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT)
                 .slug("searchBarStyleCompact"));
+        items.add(UItem.asRadio(materialStyleRow,
+                        LocaleController.getString(R.string.SearchBarStyleMaterial))
+                .setChecked(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_MATERIAL)
+                .slug("searchBarStyleMaterial"));
         items.add(UItem.asShadow(styleShadowRow, null));
 
         items.add(UItem.asHeader(placeholderHeaderRow,
@@ -115,6 +120,12 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
         } else if (id == compactStyleRow) {
             if (NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT) return;
             NemoConfig.setSearchBarStyle(NemoConfig.SEARCH_BAR_COMPACT);
+            refreshAllRows();
+            showRestartBulletin();
+
+        } else if (id == materialStyleRow) {
+            if (NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_MATERIAL) return;
+            NemoConfig.setSearchBarStyle(NemoConfig.SEARCH_BAR_MATERIAL);
             refreshAllRows();
             showRestartBulletin();
 
@@ -178,6 +189,7 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
         listView.adapter.updateWithoutNotify();
         notifyItemChanged(normalStyleRow);
         notifyItemChanged(compactStyleRow);
+        notifyItemChanged(materialStyleRow);
         notifyItemChanged(emptyPlaceholderRow);
         notifyItemChanged(placeholderRow);
         notifyItemChanged(hideOnScrollRow);
@@ -202,8 +214,12 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
         private final Theme.ResourcesProvider rp;
         private final FrameLayout searchBarRow;
         private final ImageView compactIcon;
+        private final ImageView back;
+        private final TextView tvTitle;
+        private final ImageView moreOptionsIcon;
         private final LinearLayout dialogsContainer;
         private final TextView placeholder;
+        private final FrameLayout materialFieldBg;
 
         SearchBarPreviewCell(Context context, Theme.ResourcesProvider resourcesProvider) {
             super(context);
@@ -218,6 +234,8 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
             addView(inner, LayoutHelper.createFrame(
                     LayoutHelper.MATCH_PARENT, CARD_HEIGHT_NORMAL_DP));
 
+            int fieldColor = ColorUtils.blendARGB(Theme.getColor(Theme.key_actionBarDefault, rp), Color.WHITE, 0.15f);
+
             var abBg = new FrameLayout(context);
             abBg.setBackgroundColor(Theme.getColor(Theme.key_actionBarDefault, rp));
             inner.addView(abBg, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));
@@ -227,6 +245,7 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
             back.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultIcon, rp));
             abBg.addView(back, LayoutHelper.createFrame(24, 24,
                     Gravity.CENTER_VERTICAL | Gravity.START, 8, 0, 0, 0));
+            this.back = back;
 
             var tvTitle = new TextView(context);
             tvTitle.setText(LocaleController.getString(R.string.SearchBarStylePreviewTitle));
@@ -236,6 +255,7 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
             abBg.addView(tvTitle, LayoutHelper.createFrame(
                     LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
                     Gravity.CENTER_VERTICAL | Gravity.START, 48, 0, 0, 0));
+            this.tvTitle = tvTitle;
 
             compactIcon = new ImageView(context);
             compactIcon.setImageResource(R.drawable.outline_header_search);
@@ -244,6 +264,23 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
             abBg.addView(compactIcon, LayoutHelper.createFrame(24, 24,
                     Gravity.CENTER_VERTICAL | Gravity.END, 0, 0, 12, 0));
 
+            materialFieldBg = new FrameLayout(context);
+            materialFieldBg.setBackground(
+                    Theme.createRoundRectDrawable(AndroidUtilities.dp(18), fieldColor));
+            materialFieldBg.setVisibility(GONE);
+            var materialFieldIcon = new ImageView(context);
+            materialFieldIcon.setImageResource(R.drawable.outline_header_search);
+            materialFieldIcon.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultSearch, rp));
+            materialFieldBg.addView(materialFieldIcon, LayoutHelper.createFrame(
+                    18, 18, Gravity.CENTER_VERTICAL | Gravity.START, 10, 0, 0, 0));
+            var materialMoreOptions = new ImageView(context);
+            materialMoreOptions.setImageResource(R.drawable.ic_ab_other);
+            materialMoreOptions.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultSearch, rp));
+            materialFieldBg.addView(materialMoreOptions, LayoutHelper.createFrame(
+                    24, 24, Gravity.CENTER_VERTICAL | Gravity.END, 0, 0, 10, 0));
+            abBg.addView(materialFieldBg, LayoutHelper.createFrame(
+                    LayoutHelper.MATCH_PARENT, 36, Gravity.CENTER_VERTICAL, 8, 0, 8, 0));
+
             searchBarRow = new FrameLayout(context);
             searchBarRow.setBackgroundColor(Theme.getColor(Theme.key_actionBarDefault, rp));
             searchBarRow.setPadding(
@@ -251,8 +288,6 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
                     AndroidUtilities.dp(8), AndroidUtilities.dp(6));
 
             var fieldBg = new FrameLayout(context);
-            int fieldColor = ColorUtils.blendARGB(
-                    Theme.getColor(Theme.key_actionBarDefault, rp), Color.WHITE, 0.15f);
             fieldBg.setBackground(
                     Theme.createRoundRectDrawable(AndroidUtilities.dp(18), fieldColor));
 
@@ -268,7 +303,14 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
             placeholder.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 14);
             fieldBg.addView(placeholder, LayoutHelper.createFrame(
                     LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                    Gravity.CENTER_VERTICAL | Gravity.START, 36, 0, 8, 0));
+                    Gravity.CENTER_VERTICAL | Gravity.START, 36, 0, 40, 0));
+
+            moreOptionsIcon = new ImageView(context);
+            moreOptionsIcon.setImageResource(R.drawable.ic_ab_other);
+            moreOptionsIcon.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultSearch, rp));
+            moreOptionsIcon.setVisibility(GONE);
+            fieldBg.addView(moreOptionsIcon, LayoutHelper.createFrame(
+                    24, 24, Gravity.CENTER_VERTICAL | Gravity.END, 0, 0, 10, 0));
 
             searchBarRow.addView(fieldBg,
                     LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 36));
@@ -316,9 +358,15 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
 
         void update() {
             boolean compact = NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT;
+            boolean material = NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_MATERIAL;
 
             compactIcon.setVisibility(compact ? VISIBLE : GONE);
-            searchBarRow.setVisibility(compact ? GONE : VISIBLE);
+            searchBarRow.setVisibility(compact || material ? GONE : VISIBLE);
+
+            back.setVisibility(material ? GONE : VISIBLE);
+            tvTitle.setVisibility(material ? GONE : VISIBLE);
+            moreOptionsIcon.setVisibility(material ? VISIBLE : GONE);
+            materialFieldBg.setVisibility(material ? VISIBLE : GONE);
 
             if (NemoConfig.hideSearchBarPlaceholder) {
                 placeholder.setText("");
@@ -328,12 +376,12 @@ public class SearchBarStyleActivity extends BaseNemoSettingsActivity {
                         : NemoConfig.searchBarPlaceholder);
             }
 
-            buildFakeDialogs(compact ? 4 : 3);
+            buildFakeDialogs(compact || material ? 4 : 3);
 
-            int targetDp = compact ? CARD_HEIGHT_COMPACT_DP : CARD_HEIGHT_NORMAL_DP;
-            var lp = getChildAt(0).getLayoutParams();
-            lp.height = AndroidUtilities.dp(targetDp);
-            getChildAt(0).setLayoutParams(lp);
+            int targetDp = compact || material ? CARD_HEIGHT_COMPACT_DP : CARD_HEIGHT_NORMAL_DP;
+            var lp2 = getChildAt(0).getLayoutParams();
+            lp2.height = AndroidUtilities.dp(targetDp);
+            getChildAt(0).setLayoutParams(lp2);
         }
     }
 }

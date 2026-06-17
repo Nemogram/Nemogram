@@ -76,6 +76,8 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
                 LocaleController.getString(R.string.SearchBarStyle),
                 LocaleController.getString(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT
                         ? R.string.SearchBarStyleCompact
+                        : NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_MATERIAL
+                        ? R.string.SearchBarStyleMaterial
                         : R.string.SearchBarStyleNormal)
         ).slug("searchBarStyle"));
         items.add(UItem.asShadow(null));

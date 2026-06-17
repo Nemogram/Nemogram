@@ -47,8 +47,9 @@ public class NemoConfig {
     public static final int DOUBLE_TAP_ACTION_REPEAT = 5;
     public static final int DOUBLE_TAP_ACTION_EDIT = 6;
 
-    public static final int SEARCH_BAR_NORMAL  = 0;
+    public static final int SEARCH_BAR_NORMAL = 0;
     public static final int SEARCH_BAR_COMPACT = 1;
+    public static final int SEARCH_BAR_MATERIAL = 2;
 
     public static final int BOOST_NONE = 0;
     public static final int BOOST_AVERAGE = 1;

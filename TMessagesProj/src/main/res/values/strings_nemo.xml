@@ -259,6 +259,7 @@
     <string name="SearchBarStyle">Search bar style</string>
     <string name="SearchBarStyleNormal">Normal</string>
     <string name="SearchBarStyleCompact">Compact</string>
+    <string name="SearchBarStyleMaterial">Material</string>
     <string name="HideSearchBarOnScroll">Hide on scroll</string>
     <string name="SearchBarStylePreviewTitle">Preview</string>
     <string name="Placeholder">Placeholder</string>

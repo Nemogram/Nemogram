@@ -255,6 +255,7 @@
     <string name="SearchBarStyle">Стиль строки поиска</string>
     <string name="SearchBarStyleNormal">Обычный</string>
     <string name="SearchBarStyleCompact">Компактный</string>
+    <string name="SearchBarStyleMaterial">Material</string>
     <string name="HideSearchBarOnScroll">Скрывать при прокрутке</string>
     <string name="SearchBarStylePreviewTitle">Превью</string>
     <string name="Placeholder">Плейсхолдер</string>

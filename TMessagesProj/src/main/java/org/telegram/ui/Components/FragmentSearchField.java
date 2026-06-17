@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.AnimationNotificationsLocker;
 import org.telegram.messenger.LocaleController;
@@ -59,10 +60,12 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
     private final FactorAnimator animatorSearchFiltersWidth = new FactorAnimator(ANIMATOR_ID_SEARCH_FILTERS_WIDTH, this, AnimatorUtils.DECELERATE_INTERPOLATOR, 280);
 
     private final Theme.ResourcesProvider resourcesProvider;
+    private int searchBarStyleOverride = -1;
 
     private final ImageView searchIcon;
     private final ImageView closeIcon;
     private final LinearLayout additionalIconsLayout;
+    private View rightIcon;
     private boolean closeButtonForcedVisible;
     public final EditTextBoldCursor editText;
     private BlurredBackgroundDrawable blurredBackgroundDrawable;
@@ -174,8 +177,29 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
         updateColors();
     }
 
+    private int getSearchBarStyle() {
+        return searchBarStyleOverride >= 0 ? searchBarStyleOverride : NemoConfig.searchBarStyle;
+    }
+
+    public void setSearchBarStyleOverride(int style) {
+        if (searchBarStyleOverride == style) {
+            return;
+        }
+        searchBarStyleOverride = style;
+        updateColors();
+    }
+
     public void addAdditionalIcon(View icon) {
         additionalIconsLayout.addView(icon);
+    }
+
+    public void addRightIcon(View icon) {
+        rightIcon = icon;
+        addView(icon, LayoutHelper.createFrame(48, 48, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT), 0, 0, 4, 0));
+        FrameLayout.LayoutParams lpAdditional = (FrameLayout.LayoutParams) additionalIconsLayout.getLayoutParams();
+        lpAdditional.rightMargin = dp(52);
+        additionalIconsLayout.setLayoutParams(lpAdditional);
+        checkUi_editTextPaddings();
     }
 
     private Drawable bg;
@@ -205,7 +229,8 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
     }
 
     public void setupBlurredBackground(BlurredBackgroundDrawable drawable) {
-        drawable.setRadius(dp(20));
+        int radius = getSearchBarStyle() == NemoConfig.SEARCH_BAR_MATERIAL ? 26 : 20;
+        drawable.setRadius(dp(radius));
         drawable.setPadding(dp(4));
         blurredBackgroundDrawable = drawable;
     }
@@ -263,9 +288,10 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
     @Override
     public void updateColors() {
         final boolean isDark = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
+        int radius = getSearchBarStyle() == NemoConfig.SEARCH_BAR_MATERIAL ? 26 : 20;
         bg = isSectionBackground ?
-            Theme.createRoundRectDrawableShadowed(dp(20), getThemedColor(Theme.key_windowBackgroundWhite)) :
-            Theme.createRoundRectDrawable(dp(20), getThemedColor(Theme.key_windowBackgroundWhiteBlackText, isDark ? 0.07f : 0.05f));
+                Theme.createRoundRectDrawableShadowed(dp(radius), getThemedColor(Theme.key_windowBackgroundWhite)) :
+                Theme.createRoundRectDrawable(dp(radius), getThemedColor(Theme.key_windowBackgroundWhiteBlackText, isDark ? 0.07f : 0.05f));
         searchIcon.setColorFilter(getThemedColor(Theme.key_windowBackgroundWhiteBlackText, 0.6f), PorterDuff.Mode.MULTIPLY);
         closeIcon.setColorFilter(getThemedColor(Theme.key_windowBackgroundWhiteBlackText, 0.6f), PorterDuff.Mode.MULTIPLY);
         closeIcon.setBackground(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector), 1, dp(17)));
@@ -285,6 +311,14 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
                 }
                 view.setBackground(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector), 1, dp(17)));
             }
+        }
+
+        if (rightIcon instanceof ActionBarMenuItem) {
+            final ActionBarMenuItem item = (ActionBarMenuItem) rightIcon;
+            if (item.getIconView() != null) {
+                item.getIconView().setColorFilter(getThemedColor(Theme.key_windowBackgroundWhiteBlackText, 0.6f), PorterDuff.Mode.MULTIPLY);
+            }
+            rightIcon.setBackground(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector), 1, dp(17)));
         }
 
         for (int i = 0, N = searchFilterLayout.getChildCount(); i < N; i++) {
@@ -313,6 +347,10 @@ public class FragmentSearchField extends FrameLayout implements FactorAnimator.T
     public void setCloseButtonVisible(boolean visible) {
         closeButtonForcedVisible = visible;
         checkCloseButtonVisible();
+    }
+
+    public void setSearchHint(CharSequence hint) {
+        editText.setHint(hint);
     }
 
     private void checkCloseButtonVisible() {

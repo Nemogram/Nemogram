@@ -982,11 +982,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         } else if (newTranslation > 0) {
                             newTranslation = 0;
                         }
-                        if (!isScrollingUp || !NemoConfig.hideSearchBarOnScroll) {
+                        if (!isScrollingUp || !NemoConfig.hideSearchBarOnScroll || isMaterialSearchBarStyle()) {
                             DialogsActivity.this.setScrollY(newTranslation);
                         }
                     } else {
-                        if (!isScrollingUp || !NemoConfig.hideSearchBarOnScroll) {
+                        if (!isScrollingUp || !NemoConfig.hideSearchBarOnScroll || isMaterialSearchBarStyle()) {
                             DialogsActivity.this.setScrollY(0);
                         }
                     }
@@ -1005,7 +1005,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 if (searchAnimationProgress == 1f) {
                     actionBarSearchPaint.setColor(getThemedColor(Theme.key_windowBackgroundWhite));
                 } else if (searchAnimationProgress == 0) {
-                    if (fragmentSearchField != null) {
+                    if (fragmentSearchField != null && !isMaterialSearchBarStyle()) {
                         fragmentSearchField.setTranslationY(scrollYOffset + getSearchFieldAdditionOffset());
                     }
                 }
@@ -1020,7 +1020,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         blurBounds.set(0, top, getMeasuredWidth(), top + actionBarHeight - dp(2 * searchAnimationProgress));
                         drawBlurRect(canvas, 0, blurBounds, actionBarSearchPaint, true);
                     }
-                    if (fragmentSearchField != null) {
+                    if (fragmentSearchField != null && !isMaterialSearchBarStyle()) {
                         fragmentSearchField.setTranslationY(top + actionBarHeight - (actionBar.getHeight() + (filterTabsView != null ? filterTabsView.getMeasuredHeight() : 0)) + getSearchFieldAdditionOffset());
                     }
                 }
@@ -1052,7 +1052,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 if (filterTabsView != null && filterTabsView.getVisibility() == View.VISIBLE && !bottomFilterTabs()) {
                     tabsYOffset -= (1f - animatorFilterTabsVisible.getFloatValue()) * filterTabsView.getMeasuredHeight();
                 }
-                if (fragmentSearchField != null) {
+                if (fragmentSearchField != null && !isMaterialSearchBarStyle()) {
                     fragmentSearchField.setTranslationY(lerp(scrollYOffset + tabsYOffset, -dp(hasStories ? DialogStoriesCell.HEIGHT_IN_DP : 0), rightSlidingProgress) + getSearchFieldAdditionOffset());
                 }
                 float rightFragmentOffset = 0;
@@ -1070,11 +1070,15 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 viewPages[0].setTranslationY(rightFragmentOffset - addH);
             } else {
                 if (fragmentSearchField != null) {
-                    fragmentSearchField.setTranslationY(lerp(
+                    if (isMaterialSearchBarStyle()) {
+                        fragmentSearchField.setTranslationY(0);
+                    } else {
+                        fragmentSearchField.setTranslationY(lerp(
                             scrollYOffset + tabsYOffset + storiesOverscroll - dp(4),
                             -dp(SEARCH_FIELD_HEIGHT + (hasStories ? DialogStoriesCell.HEIGHT_IN_DP : 0)),
                             searchAnimationProgress
-                    ));
+                        ));
+                    }
                 }
             }
             updateContextViewPosition();
@@ -1289,7 +1293,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         // childTop -= dp(4);
                     }
                     if (child == fragmentSearchField) {
-                        childTop += dp(2);
+                        if (isMaterialSearchBarStyle()) {
+                            childTop = AndroidUtilities.statusBarHeight;
+                        } else {
+                            childTop += dp(2);
+                        }
                     }
                 } else if (child == searchViewPager) {
                     childTop = -dp(ADDITIONAL_LIST_HEIGHT_DP);
@@ -1594,7 +1602,19 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
     }
 
+    private int getEffectiveSearchBarStyle() {
+        if (onlySelect && NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_MATERIAL) {
+            return NemoConfig.SEARCH_BAR_COMPACT;
+        }
+        return NemoConfig.searchBarStyle;
+    }
+
+    private boolean isMaterialSearchBarStyle() {
+        return getEffectiveSearchBarStyle() == NemoConfig.SEARCH_BAR_MATERIAL;
+    }
+
     private float getSearchFieldAdditionOffset() {
+        if (isMaterialSearchBarStyle()) return 0;
         return -lerp(dp(4), dp(SEARCH_FIELD_HEIGHT), animatorSearchVisible.getFloatValue());
     }
 
@@ -3154,13 +3174,22 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     @Override
     public void setTitleOverlayText(String title, int titleId, Runnable action) {
-        super.setTitleOverlayText(title, titleId, action);
-        if (actionBar != null && selectAnimatedEmojiDialog != null && selectAnimatedEmojiDialog.getContentView() instanceof SelectAnimatedEmojiDialog) {
-            SimpleTextView textView = actionBar.getTitleTextView();
-            ((SelectAnimatedEmojiDialog) selectAnimatedEmojiDialog.getContentView()).setScrimDrawable(textView != null && textView.getRightDrawable() == statusDrawable ? statusDrawable : null, textView);
+        if (!isMaterialSearchBarStyle()) {
+            super.setTitleOverlayText(title, titleId, action);
+            if (actionBar != null && selectAnimatedEmojiDialog != null && selectAnimatedEmojiDialog.getContentView() instanceof SelectAnimatedEmojiDialog) {
+                SimpleTextView textView = actionBar.getTitleTextView();
+                ((SelectAnimatedEmojiDialog) selectAnimatedEmojiDialog.getContentView()).setScrimDrawable(textView != null && textView.getRightDrawable() == statusDrawable ? statusDrawable : null, textView);
+            }
         }
         if (dialogStoriesCell != null) {
             dialogStoriesCell.setTitleOverlayText(title, titleId);
+        }
+        if (isMaterialSearchBarStyle() && fragmentSearchField != null) {
+            if (title != null) {
+                fragmentSearchField.setSearchHint(LocaleController.getString(title, titleId));
+            } else {
+                checkUi_searchFieldHint();
+            }
         }
     }
 
@@ -3253,16 +3282,37 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 return super.dispatchTouchEvent(ev);
             }
         };
+        fragmentSearchField.setSearchBarStyleOverride(getEffectiveSearchBarStyle());
         fragmentSearchField.setPadding(dp(4), dp(4), dp(4), dp(4));
         fragmentSearchField.setPivotX(0);
         fragmentSearchField.setPivotY(0);
         if (initialDialogsType == DIALOGS_TYPE_DEFAULT) {
+            optionsItem = menu.addItem(4, R.drawable.ic_ab_other);
+            optionsItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
+            optionsItem.setOnClickListener(v -> {
+                getContactsController().loadGlobalPrivacySetting();
+                showItemOptions();
+            });
+            optionsItem.setOnLongClickListener(v -> {
+                getContactsController().loadGlobalPrivacySetting();
+                showItemOptions();
+                return true;
+            });
+
             speedItem = menu.addItem(-47, R.drawable.avd_speed);
-            AndroidUtilities.removeFromParent(speedItem);
             speedItem.setOnClickListener(v -> showDialog(new PremiumFeatureBottomSheet(DialogsActivity.this, PremiumPreviewFragment.PREMIUM_FEATURE_DOWNLOAD_SPEED, true)));
 
-            fragmentSearchField.addAdditionalIcon(speedItem);
-            fragmentSearchField.updateColors();
+            if (isMaterialSearchBarStyle()) {
+                AndroidUtilities.removeFromParent(optionsItem);
+                AndroidUtilities.removeFromParent(speedItem);
+                fragmentSearchField.addAdditionalIcon(speedItem);
+                fragmentSearchField.addRightIcon(optionsItem);
+                fragmentSearchField.updateColors();
+            } else {
+                AndroidUtilities.removeFromParent(speedItem);
+                fragmentSearchField.addAdditionalIcon(speedItem);
+                fragmentSearchField.updateColors();
+            }
         }
 
         fragmentSearchField.setCloseButtonOnClickListener(() -> {
@@ -3404,19 +3454,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         });
         fragmentSearchFieldWatcher.setDoNotCloseAfterFieldEmpty();
 
-        if (initialDialogsType == DIALOGS_TYPE_DEFAULT) {
-            optionsItem = menu.addItem(4, R.drawable.ic_ab_other);
-            optionsItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
-            optionsItem.setOnClickListener(v -> {
-                getContactsController().loadGlobalPrivacySetting();
-                showItemOptions();
-            });
-            optionsItem.setOnLongClickListener(v -> {
-                getContactsController().loadGlobalPrivacySetting();
-                showItemOptions();
-                return true;
-            });
-        }
+
 
         searchItem.setSearchFieldHint(getString(R.string.Search));
         searchItem.setContentDescription(getString(R.string.Search));
@@ -3463,18 +3501,22 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
             actionBar.setBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));
         } else {
-            if (searchString != null || folderId != 0) {
+            boolean isMaterialStyle = isMaterialSearchBarStyle();
+            if ((searchString != null || folderId != 0) && !(isMaterialStyle && folderId != 0)) {
                 actionBar.setBackButtonDrawable(backDrawable = new BackDrawable(false));
             }
             if (folderId != 0) {
                 actionBar.setTitle(getString(R.string.ArchivedChats));
-            } else {
+                if (isMaterialStyle && actionBar.getTitleTextView() != null) {
+                    actionBar.getTitleTextView().setVisibility(View.INVISIBLE);
+                }
+            } else if (!isMaterialStyle) {
                 statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
                 statusDrawable.center = true;
                 actionBar.setTitle(TypefaceHelper.getTitleText(), statusDrawable);
                 updateStatus(UserConfig.getInstance(currentAccount).getCurrentUser(), false);
             }
-            if (folderId == 0) {
+            if (folderId == 0 && !isMaterialStyle) {
                 actionBar.setSupportsHolidayImage(true);
             }
         }
@@ -4524,7 +4566,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         }
                         float currentTranslation = scrollYOffset;
                         float newTranslation = currentTranslation - dy;
-                        boolean applyScrollY = !shouldHideHomeSearchField() && NemoConfig.hideSearchBarOnScroll;
+                        boolean applyScrollY = !shouldHideHomeSearchField() && NemoConfig.hideSearchBarOnScroll && !isMaterialSearchBarStyle();
                         invalidateScrollY = true;
                         isScrollingUp = dy < 0;
                         if (fragmentView != null) {
@@ -5332,7 +5374,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             contentView.addView(animatedStatusView, LayoutHelper.createFrame(20, 20, Gravity.LEFT | Gravity.TOP));
         }
         if (fragmentSearchField != null) {
-            contentView.addView(fragmentSearchField, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.TOP, 7, -2, 7, 0));
+            int fieldHeight = isMaterialSearchBarStyle() ? 56 : 48;
+            contentView.addView(fragmentSearchField, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, fieldHeight, Gravity.TOP, 7, -2, 7, 0));
         }
 
 
@@ -5555,7 +5598,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 if (actionBar.getTitleTextView() != null) {
                     actionBar.getTitleTextView().setAlpha(1f - progress);
-                    if (actionBar.getTitleTextView().getAlpha() > 0) {
+                    if (actionBar.getTitleTextView().getAlpha() > 0
+                            && !isMaterialSearchBarStyle()) {
                         actionBar.getTitleTextView().setVisibility(View.VISIBLE);
                     }
                 }
@@ -5726,18 +5770,19 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     private int getMaxScrollYOffset() {
         int offset = getMaxScrollYOffsetWithoutSearch();
-        if (!shouldHideHomeSearchField() && NemoConfig.hideSearchBarOnScroll) {
+        if (!shouldHideHomeSearchField() && NemoConfig.hideSearchBarOnScroll && !isMaterialSearchBarStyle()) {
             offset += dp(SEARCH_FIELD_HEIGHT);
         }
         return offset;
     }
 
     private boolean shouldHideHomeSearchField() {
-        return NemoConfig.searchBarStyle != NemoConfig.SEARCH_BAR_NORMAL
+        return getEffectiveSearchBarStyle() == NemoConfig.SEARCH_BAR_COMPACT
                 && searchString == null;
     }
 
     private int getIdleSearchFieldHeight() {
+        if (isMaterialSearchBarStyle()) return 0;
         return shouldHideHomeSearchField() ? 0 : dp(SEARCH_FIELD_HEIGHT);
     }
 
@@ -12604,6 +12649,14 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         if (StoryRecorder.isVisible() || (getLastStoryViewer() != null && getLastStoryViewer().isFullyVisible())) {
             animated = false;
         }
+        if (isMaterialSearchBarStyle()) {
+            if (hasStories || animateToHasStories) {
+                hasStories = false;
+                animateToHasStories = false;
+                dialogStoriesCell.setVisibility(View.GONE);
+            }
+            return;
+        }
         boolean onlySelfStories = !isArchive() && getStoriesController().hasOnlySelfStories();
         boolean newVisibility;
         if (isArchive()) {
@@ -13867,9 +13920,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         final boolean hideHomeSearchField = shouldHideHomeSearchField();
 
         final float actionModeVisible = Math.max(progressToActionMode, animatorActionModeVisible.getFloatValue());
-        final float searchFieldVisible = animatorSearchVisible.getFloatValue();
+        final boolean allowMaterialSearchField = true;
+        final float searchFieldVisible = allowMaterialSearchField ? animatorSearchVisible.getFloatValue() : 0f;
 
-        final float factor0 = isSupportSearch() ? 1 : 0;
+        final float factor0 = isSupportSearch() && allowMaterialSearchField ? 1 : 0;
         final float factor1 = (1f - actionModeVisible) * (1f - animatorDoneButtonVisible.getFloatValue());
         final float factor2 = hideHomeSearchField
                 ? searchFieldVisible
@@ -13946,7 +14000,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         final float factor1 = 1f - animatorSearchVisible.getFloatValue();
         final float factor2 = 1f - getRightSlidingProgress();
         final float factor3 = 1f - animatorDoneButtonVisible.getFloatValue();
-        final float factor = factor0 * factor1 * factor2 * factor3;
+        final float factor4 = isMaterialSearchBarStyle() ? 0 : 1;
+        final float factor = factor0 * factor1 * factor2 * factor3 * factor4;
         FragmentFloatingButton.setAnimatedVisibility(downloadsItem, factor);
     }
 
