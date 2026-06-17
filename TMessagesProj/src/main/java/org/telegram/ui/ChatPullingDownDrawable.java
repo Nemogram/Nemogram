@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AccountInstance;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.DialogObject;
@@ -271,14 +272,14 @@ public class ChatPullingDownDrawable implements NotificationCenter.NotificationC
                 str1 = LocaleController.getString(R.string.SwipeToGoNextChannel);
                 str2 = LocaleController.getString(R.string.ReleaseToGoNextChannel);
             }
-            layout1Width = (int) textPaint2.measureText(str1);
-            layout1Width = Math.min(layout1Width, lastWidth - AndroidUtilities.dp(60));
-            layout1 = new StaticLayout(str1, textPaint2, layout1Width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+            if (NemoConfig.hideChannelBottomButtons && !recommendedChannel) {
+                str1 = str2 = null;
+            }
+            layout1Width = str1 != null ? (int) Math.min(textPaint2.measureText(str1), lastWidth - AndroidUtilities.dp(60)) : 0;
+            layout1 = str1 != null ? new StaticLayout(str1, textPaint2, layout1Width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false) : null;
 
-
-            layout2Width = (int) textPaint2.measureText(str2);
-            layout2Width = Math.min(layout2Width, lastWidth - AndroidUtilities.dp(60));
-            layout2 = new StaticLayout(str2, textPaint2, layout2Width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+            layout2Width = str2 != null ? (int) Math.min(textPaint2.measureText(str2), lastWidth - AndroidUtilities.dp(60)) : 0;
+            layout2 = str2 != null ? new StaticLayout(str2, textPaint2, layout2Width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false) : null;
 
 
             float cx = lastWidth / 2f;
