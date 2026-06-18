@@ -3807,7 +3807,14 @@ public class ChatActivity extends BaseFragment implements
 
         actionBar.setAddToContainer(false);
         actionBar.setCastShadows(false);
-        actionBar.setBackground(null);
+        if (NemoConfig.legacyChatActionBar) {
+            actionBar.setBackgroundColor(getThemedColor(Theme.key_actionBarDefault));
+        } else {
+            actionBar.setBackground(null);
+        }
+        if (parentLayout != null && parentLayout.getParentActivity() != null) {
+            parentLayout.setHeaderShadow(NemoConfig.disableAppBarShadow ? null : parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
+        }
         // actionBar.setOccupyStatusBar(false);
         if (inPreviewMode) {
             actionBar.setBackButtonDrawable(null);
@@ -4299,7 +4306,9 @@ public class ChatActivity extends BaseFragment implements
                 openSearchWithText(isSupportedTags() ? "" : null);
             }
         };
-        avatarContainer.setGlassMode();
+        if (!NemoConfig.legacyChatActionBar) {
+            avatarContainer.setGlassMode();
+        }
         avatarContainer.allowShorterStatus = true;
         avatarContainer.premiumIconHiddable = true;
         avatarContainer.allowDrawStories = dialog_id < 0 && !isTopic;
@@ -4704,7 +4713,11 @@ public class ChatActivity extends BaseFragment implements
 
         contentView.setOccupyStatusBar(!inBubbleMode && !isInsideContainer && !inPreviewMode);
 
-        actionBar.setupGlass(glassBackgroundDrawableFactory, blurredBackgroundColorProvider);
+        if (NemoConfig.legacyChatActionBar) {
+            actionBar.setupLegacyChatBlurBackground(glassBackgroundDrawableFactory, blurredBackgroundColorProvider);
+        } else {
+            actionBar.setupGlass(glassBackgroundDrawableFactory, blurredBackgroundColorProvider);
+        }
         //actionBar.setChatAvatarContainer(avatarContainer);
         //avatarContainer.setActionBar(actionBar);
 
@@ -12374,7 +12387,7 @@ public class ChatActivity extends BaseFragment implements
         }
 
         if (topPanelLayout != null) {
-            topPanelLayout.setTranslationY(ty - dp(5) - getTopicTabsSideSize(TopicsTabsView.Position.TOP) * getHashtagTabsShownT());
+            topPanelLayout.setTranslationY(ty - dp(5) + (NemoConfig.legacyChatActionBar ? dp(4) : 0) - getTopicTabsSideSize(TopicsTabsView.Position.TOP) * getHashtagTabsShownT());
         }
     }
 
@@ -44781,6 +44794,10 @@ public class ChatActivity extends BaseFragment implements
             } else {
                 color = Theme.getColor(Theme.key_actionBarActionModeDefault, null, true);
             }
+            return ColorUtils.calculateLuminance(color) > 0.7f;
+        }
+        if (NemoConfig.legacyChatActionBar) {
+            int color = getThemedColor(Theme.key_actionBarDefault);
             return ColorUtils.calculateLuminance(color) > 0.7f;
         }
         if (actionBar == null) {

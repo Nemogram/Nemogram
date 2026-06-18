@@ -30,6 +30,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int hideBottomNavigationBarRow = rowId++;
     private final int disableGooeyAvatarAnimationRow = rowId++;
     private final int legacyInputPanelRow = rowId++;
+    private final int legacyChatActionBarRow = rowId++;
     private final int searchBarStyleRow = rowId++;
 
     private final int hideStoriesRow = rowId++;
@@ -72,6 +73,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asCheck(hideBottomNavigationBarRow, LocaleController.getString(R.string.HideBottomNavigationBar)).setChecked(NemoConfig.hideBottomNavigationBar).slug("hideBottomNavigationBar"));
         items.add(UItem.asCheck(disableGooeyAvatarAnimationRow, LocaleController.getString(R.string.DisableGooeyAvatarAnimation)).setChecked(NemoConfig.disableGooeyAvatarAnimation).slug("disableGooeyAvatarAnimation"));
         items.add(UItem.asCheck(legacyInputPanelRow, LocaleController.getString(R.string.LegacyInputPanel)).setChecked(NemoConfig.legacyInputPanel).slug("legacyInputPanel"));
+        items.add(UItem.asCheck(legacyChatActionBarRow, LocaleController.getString(R.string.LegacyChatActionBar)).setChecked(NemoConfig.legacyChatActionBar).slug("legacyChatActionBar"));
         items.add(TextSettingsCellFactory.of(searchBarStyleRow,
                 LocaleController.getString(R.string.SearchBarStyle),
                 LocaleController.getString(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT
@@ -206,6 +208,12 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.legacyInputPanel);
             }
+        } else if (id == legacyChatActionBarRow) {
+            NemoConfig.toggleLegacyChatActionBar();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.legacyChatActionBar);
+            }
+            parentLayout.rebuildAllFragmentViews(false, false);
         }
     }
 

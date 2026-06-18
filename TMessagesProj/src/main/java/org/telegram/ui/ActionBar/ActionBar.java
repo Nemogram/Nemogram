@@ -91,6 +91,7 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
     private Drawable glassDrawable;
     private Drawable glassDrawableBack;
     private Drawable glassDrawableMenu;
+    private Drawable legacyChatGlassDrawable;
     private INavigationLayout.BackButtonState backButtonState = INavigationLayout.BackButtonState.BACK;
     public ImageView backButtonImageView;
     private BackupImageView avatarSearchImageView;
@@ -197,7 +198,37 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
         this.chatAvatarContainer = chatAvatarContainer;
     }
 
+    private void resetGlassDecor() {
+        if (blurredBackground && contentView != null) {
+            contentView.blurBehindViews.remove(this);
+        }
+        blurredBackground = false;
+        contentView = null;
+
+        glassMode = false;
+        glassDrawable = null;
+        glassDrawableBack = null;
+        glassDrawableMenu = null;
+        legacyChatGlassDrawable = null;
+
+        if (menu != null) {
+            menu.setTranslationX(0);
+            menu.setGlassMode(false);
+            menu.requestLayout();
+        }
+        if (actionMode != null) {
+            actionMode.setTranslationX(0);
+            actionMode.setGlassMode(false);
+            actionMode.requestLayout();
+        }
+        if (backButtonImageView != null) {
+            backButtonImageView.setTranslationX(0);
+        }
+        invalidate();
+    }
+
     public void setupGlass(BlurredBackgroundDrawableViewFactory factory, BlurredBackgroundColorProvider colorProvider) {
+        resetGlassDecor();
         setBackground(null);
         setClipChildren(false);
         glassMode = true;
@@ -2056,6 +2087,15 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
         setBackground(null);
     }
 
+    public void setupLegacyChatBlurBackground(BlurredBackgroundDrawableViewFactory factory, BlurredBackgroundColorProvider colorProvider) {
+        resetGlassDecor();
+        legacyChatGlassDrawable = factory.create(this)
+            .setColorProvider(colorProvider)
+            .setRadius(0)
+            .setPadding(0);
+        setBackground(null);
+    }
+
     private boolean doNotDrawChild;
 
     public void setSkipDrawChild(boolean skip) {
@@ -2130,6 +2170,11 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
 
         final int t = getHeight() - (getCurrentActionBarHeight() + s) / 2 - p;
         final int b = t + s + p * 2;
+
+        if (legacyChatGlassDrawable != null) {
+            legacyChatGlassDrawable.setBounds(0, 0, getWidth(), getHeight());
+            legacyChatGlassDrawable.draw(canvas);
+        }
 
         if (glassDrawable != null) {
             final int menuWidthWithPadding = menuWidth > 0 ? (menuWidth + p) : 0;

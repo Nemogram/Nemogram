@@ -635,16 +635,14 @@ public class ActionBarMenu extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (glassMode) {
-            for (int a = 0, N = getChildCount(); a < N; a++) {
-                final View view = getChildAt(a);
-                if (view instanceof ActionBarMenuItem) {
-                    final ViewGroup.LayoutParams lp = view.getLayoutParams();
-                    if (lp instanceof MarginLayoutParams) {
-                        MarginLayoutParams mlp = (MarginLayoutParams) lp;
-                        mlp.leftMargin = -dp(5);
-                        mlp.rightMargin = -dp(5);
-                    }
+        for (int a = 0, N = getChildCount(); a < N; a++) {
+            final View view = getChildAt(a);
+            if (view instanceof ActionBarMenuItem) {
+                final ViewGroup.LayoutParams lp = view.getLayoutParams();
+                if (lp instanceof MarginLayoutParams) {
+                    MarginLayoutParams mlp = (MarginLayoutParams) lp;
+                    mlp.leftMargin = glassMode ? -dp(5) : 0;
+                    mlp.rightMargin = glassMode ? -dp(5) : 0;
                 }
             }
         }

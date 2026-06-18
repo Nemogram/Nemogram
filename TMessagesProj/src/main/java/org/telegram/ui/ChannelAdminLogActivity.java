@@ -927,7 +927,14 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
 
         actionBar.setAddToContainer(false);
         actionBar.setCastShadows(false);
-        actionBar.setBackground(null);
+        if (NemoConfig.legacyChatActionBar) {
+            actionBar.setBackgroundColor(getThemedColor(Theme.key_actionBarDefault));
+        } else {
+            actionBar.setBackground(null);
+        }
+        if (parentLayout != null && parentLayout.getParentActivity() != null) {
+            parentLayout.setHeaderShadow(NemoConfig.disableAppBarShadow ? null : parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
+        }
         actionBar.setOccupyStatusBar(!AndroidUtilities.isTablet());
         actionBar.setBackButtonDrawable(new BackDrawable(false));
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
@@ -940,7 +947,9 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
         });
 
         avatarContainer = new ChatAvatarContainer(context, null, false);
-        avatarContainer.setGlassMode();
+        if (!NemoConfig.legacyChatActionBar) {
+            avatarContainer.setGlassMode();
+        }
         avatarContainer.setOccupyStatusBar(!AndroidUtilities.isTablet());
         actionBar.addView(avatarContainer, 0, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.TOP | Gravity.LEFT, 54, 0, 52, 0));
 
@@ -1162,7 +1171,11 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
 
         contentView.setOccupyStatusBar(!AndroidUtilities.isTablet());
         contentView.setBackgroundImage(Theme.getCachedWallpaper(), Theme.isWallpaperMotion());
-        actionBar.setupGlass(glassBackgroundDrawableFactory, BlurredBackgroundProviderImpl.topPanelChatActivity(resourceProvider));
+        if (NemoConfig.legacyChatActionBar) {
+            actionBar.setupLegacyChatBlurBackground(glassBackgroundDrawableFactory, BlurredBackgroundProviderImpl.topPanelChatActivity(resourceProvider));
+        } else {
+            actionBar.setupGlass(glassBackgroundDrawableFactory, BlurredBackgroundProviderImpl.topPanelChatActivity(resourceProvider));
+        }
         emptyViewContainer = new FrameLayout(context);
         emptyViewContainer.setVisibility(View.INVISIBLE);
         contentView.addView(emptyViewContainer, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));

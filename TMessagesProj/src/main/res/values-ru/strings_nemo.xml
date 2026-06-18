@@ -268,6 +268,7 @@
     <string name="ScrollToFirstMessage">К первому сообщению</string>
     <string name="AlwaysShowDownloadIcon">Всегда показывать иконку загрузки</string>
     <string name="LegacyInputPanel">Классическая панель ввода</string>
+    <string name="LegacyChatActionBar">Классический верхний бар чата</string>
     <string name="MoreHapticFeedback">Более выраженная тактильная обратная связь</string>
     <string name="StickersAndGifs">Стикеры и GIF</string>
 

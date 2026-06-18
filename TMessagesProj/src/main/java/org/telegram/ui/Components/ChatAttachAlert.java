@@ -114,6 +114,7 @@ import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.utils.GradientProtectionDrawable;
 import org.telegram.messenger.utils.RectFMergeBounding;
 import org.telegram.messenger.utils.ViewOutlineProviderImpl;
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
@@ -4052,7 +4053,11 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
         passcodeView = new PasscodeView(context);
         containerView.addView(passcodeView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
 
-        actionBar.setupGlass(iBlur3FactoryLiquidGlass, BlurredBackgroundProviderImpl.attachMenuActionBar(resourcesProvider));
+        if (NemoConfig.legacyChatActionBar) {
+            actionBar.setupLegacyChatBlurBackground(iBlur3FactoryLiquidGlass, BlurredBackgroundProviderImpl.attachMenuActionBar(resourcesProvider));
+        } else {
+            actionBar.setupGlass(iBlur3FactoryLiquidGlass, BlurredBackgroundProviderImpl.attachMenuActionBar(resourcesProvider));
+        }
         animatorCurrentVisibleLayout.replace((long) LAYOUT_TYPE_PHOTO, false);
     }
 
