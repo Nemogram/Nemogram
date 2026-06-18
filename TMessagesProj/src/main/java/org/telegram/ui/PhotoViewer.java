@@ -19953,7 +19953,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             @Override
             public void onAnimationEnd(Animator animation) {
                 imageMoveAnimation = null;
-                containerView.invalidate();
+                if (containerView != null) {
+                    containerView.invalidate();
+                }
             }
         });
         imageMoveAnimation.start();
@@ -19970,7 +19972,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     @Keep
     public void setAnimationValue(float value) {
         animationValue = value;
-        containerView.invalidate();
+        if (containerView != null) {
+            containerView.invalidate();
+        }
         invalidateBlur();
     }
 
