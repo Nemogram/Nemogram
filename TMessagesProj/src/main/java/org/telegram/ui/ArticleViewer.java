@@ -2742,6 +2742,36 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
             for (int a = 0; a < tableTextPaints.size(); a++) {
                 updateFontEntry(tableTextPaints.keyAt(a), tableTextPaints.valueAt(a), typefaceNormal, typefaceBoldItalic, typefaceBold, typefaceItalic);
             }
+            for (int a = 0; a < titleTextPaints.size(); a++) {
+                updateFontEntry(titleTextPaints.keyAt(a), titleTextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < subtitleTextPaints.size(); a++) {
+                updateFontEntry(subtitleTextPaints.keyAt(a), subtitleTextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < headerTextPaints.size(); a++) {
+                updateFontEntry(headerTextPaints.keyAt(a), headerTextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < subheaderTextPaints.size(); a++) {
+                updateFontEntry(subheaderTextPaints.keyAt(a), subheaderTextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < heading1TextPaints.size(); a++) {
+                updateFontEntry(heading1TextPaints.keyAt(a), heading1TextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < heading2TextPaints.size(); a++) {
+                updateFontEntry(heading2TextPaints.keyAt(a), heading2TextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < heading3TextPaints.size(); a++) {
+                updateFontEntry(heading3TextPaints.keyAt(a), heading3TextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < heading4TextPaints.size(); a++) {
+                updateFontEntry(heading4TextPaints.keyAt(a), heading4TextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < heading5TextPaints.size(); a++) {
+                updateFontEntry(heading5TextPaints.keyAt(a), heading5TextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
+            for (int a = 0; a < heading6TextPaints.size(); a++) {
+                updateFontEntry(heading6TextPaints.keyAt(a), heading6TextPaints.valueAt(a), typefaceBold, typefaceBoldItalic, typefaceBold, typefaceBoldItalic);
+            }
         }
 
         private void updateFontEntry(int flags, TextPaint paint, Typeface typefaceNormal, Typeface typefaceBoldItalic, Typeface typefaceBold, Typeface typefaceItalic) {
@@ -3393,7 +3423,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                     paint.setTypeface(AndroidUtilities.bold());
                 } else if (parent.selectedFont == 1 || parentBlock instanceof TL_iv.pageBlockTitle || parentBlock instanceof TL_iv.pageBlockKicker || parentBlock instanceof TL_iv.pageBlockHeader || parentBlock instanceof TL_iv.pageBlockSubtitle || parentBlock instanceof TL_iv.pageBlockSubheader || isHeadingBlock(parentBlock)) {
                     if (parentBlock instanceof TL_iv.pageBlockTitle || parentBlock instanceof TL_iv.pageBlockHeader || parentBlock instanceof TL_iv.pageBlockSubtitle || parentBlock instanceof TL_iv.pageBlockSubheader || isHeadingBlock(parentBlock)) {
-                        paint.setTypeface(AndroidUtilities.getTypeface("fonts/mw_bold.ttf"));
+                        paint.setTypeface(parent.selectedFont == 1 ? Typeface.create("serif", Typeface.BOLD) : AndroidUtilities.bold());
                     } else {
                         if ((flags & TEXT_FLAG_MEDIUM) != 0 && (flags & TEXT_FLAG_ITALIC) != 0) {
                             paint.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
