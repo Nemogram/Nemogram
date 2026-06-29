@@ -11312,7 +11312,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             orientationEventListener = null;
         }
 
-        videoPreviewFrame.close();
+        if (videoPreviewFrame != null) {
+            videoPreviewFrame.close();
+        }
         toggleMiniProgress(false, false);
         pipAvailable = false;
         playerInjected = false;
