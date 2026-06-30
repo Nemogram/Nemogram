@@ -5713,9 +5713,18 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     lastTime = currentProgress;
                     String timeString = AndroidUtilities.formatShortDuration(currentProgress, (int) duration);
                     String ext = FileLoader.getDocumentExtension(documentAttach);
-                    timeString = String.format("%s %s%s", timeString, AndroidUtilities.formatFileSize(documentAttach.size), ext.isEmpty() ? "" : " " + ext.toUpperCase(Locale.ROOT));
-                    int timeWidth = (int) Math.ceil(Theme.chat_audioTimePaint.measureText(timeString));
-                    durationLayout = new StaticLayout(timeString, Theme.chat_audioTimePaint, timeWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                    if (ext.length() > 4) ext = ext.substring(0, 4);
+                    String sizeString = AndroidUtilities.formatFileSize(documentAttach.size);
+                    int availWidth = backgroundWidth - dp(76 + 10) - timeWidth;
+                    String withExt = timeString + " " + sizeString + (ext.isEmpty() ? "" : " " + ext.toUpperCase(Locale.ROOT));
+                    String withSizeOnly = timeString + " " + sizeString;
+                    if (Theme.chat_audioTimePaint.measureText(withExt) <= availWidth) {
+                        timeString = withExt;
+                    } else if (Theme.chat_audioTimePaint.measureText(withSizeOnly) <= availWidth) {
+                        timeString = withSizeOnly;
+                    }
+                    int measuredTimeWidth = (int) Math.ceil(Theme.chat_audioTimePaint.measureText(timeString));
+                    durationLayout = new StaticLayout(timeString, Theme.chat_audioTimePaint, measuredTimeWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
                 }
             }
             if (needInvalidate) {
@@ -12767,6 +12776,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         } else if (MessageObject.isMusicDocument(documentAttach)) {
             documentAttachType = DOCUMENT_ATTACH_TYPE_MUSIC;
 
+            int originalMaxWidth = maxWidth;
             maxWidth = maxWidth - dp(92);
             if (maxWidth < 0) {
                 maxWidth = dp(100);
@@ -12801,6 +12811,17 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 }
             }
             int durationWidth = (int) Math.ceil(Theme.chat_audioTimePaint.measureText(AndroidUtilities.formatShortDuration((int) duration, (int) duration)));
+            measureTime(messageObject);
+            String ext = FileLoader.getDocumentExtension(documentAttach);
+            if (ext.length() > 4) ext = ext.substring(0, 4);
+            String progressStr = AndroidUtilities.formatShortDuration((int) duration, (int) duration)
+                    + " " + AndroidUtilities.formatFileSize(documentAttach.size)
+                    + (ext.isEmpty() ? "" : " " + ext.toUpperCase(Locale.ROOT));
+            int progressWidth = (int) Math.ceil(Theme.chat_audioTimePaint.measureText(progressStr));
+            int minWidthForProgress = dp(76) + progressWidth + dp(16) + timeWidth;
+            if (backgroundWidth < minWidthForProgress) {
+                backgroundWidth = Math.min(originalMaxWidth, minWidthForProgress);
+            }
             widthBeforeNewTimeLine = backgroundWidth - dp(10 + 76) - durationWidth;
             availableTimeWidth = backgroundWidth - dp(28);
             return durationWidth;
