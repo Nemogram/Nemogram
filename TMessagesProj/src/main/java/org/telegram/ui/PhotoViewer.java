@@ -14868,9 +14868,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             if (!newMessageObject.isQuickReply() && !newMessageObject.isSponsored() && newMessageObject.messageOwner != null) {
                 subtitle = LocaleController.formatDateAudio(newMessageObject.messageOwner.date, false);
                 if (newMessageObject.messageOwner.media != null) {
-                    if (newMessageObject.messageOwner.media.document != null) {
+                    if (newMessageObject.messageOwner.media.document != null && newMessageObject.messageOwner.media.document.dc_id > 0) {
                         subtitle = String.format(Locale.US, "%s, DC%d", subtitle, newMessageObject.messageOwner.media.document.dc_id);
-                    } else if (newMessageObject.messageOwner.media.photo != null) {
+                    } else if (newMessageObject.messageOwner.media.photo != null && newMessageObject.messageOwner.media.photo.dc_id > 0) {
                         subtitle = String.format(Locale.US, "%s, DC%d", subtitle, newMessageObject.messageOwner.media.photo.dc_id);
                     }
                 }
