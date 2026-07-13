@@ -7715,6 +7715,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         pickerViewSendButton.setOnLongClickListener(view -> {
             if (placeProvider != null && !placeProvider.allowSendingSubmenu()) return false;
             if (sendPhotoType == SELECT_TYPE_STICKER) return false;
+            if (sendPhotoType == SELECT_TYPE_AVATAR) return false;
             final boolean isStoryViewer = parentFragment != null && parentFragment.getLastStoryViewer() != null;
             if (parentChatActivity != null && parentChatActivity.isInScheduleMode()) return false;
             if (parentChatActivity == null && !isStoryViewer && placeProvider == null) return false;
@@ -7733,7 +7734,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
 
             Object currentObject = imagesArrLocals.get(currentIndex);
-            boolean canSpoiler = !parentChatActivity.isSecretChat() && currentObject instanceof MediaController.PhotoEntry;
+            boolean canSpoiler = (parentChatActivity == null || !parentChatActivity.isSecretChat()) && currentObject instanceof MediaController.PhotoEntry;
             boolean spoilerEnabled = false;
             if (canSpoiler) {
                 MediaController.PhotoEntry entry = (MediaController.PhotoEntry) currentObject;
