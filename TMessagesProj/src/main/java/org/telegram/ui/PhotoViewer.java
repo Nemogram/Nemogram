@@ -13544,6 +13544,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     }
 
     private void toggleMiniProgress(final boolean show, final boolean animated) {
+        if (miniProgressView == null) {
+            return;
+        }
         AndroidUtilities.cancelRunOnUIThread(miniProgressShowRunnable);
         if (animated) {
             toggleMiniProgressInternal(show);
