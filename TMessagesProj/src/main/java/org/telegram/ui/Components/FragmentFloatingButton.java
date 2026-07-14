@@ -161,12 +161,12 @@ public class FragmentFloatingButton extends FrameLayout implements FactorAnimato
             int pressedColor = Theme.getColor(Theme.key_listSelector, resourcesProvider);
             setBackground(Theme.createInsetRoundRectDrawable(pressedColor, rad, dp(6)));
         } else {
-            imageView.setColorFilter(Theme.getColor(Theme.key_chats_actionIcon, resourcesProvider), PorterDuff.Mode.SRC_IN);
-            progressView.setProgressColor(Theme.getColor(Theme.key_chats_actionIcon, resourcesProvider));
-            setBackground(Theme.createSimpleSelectorCircleDrawable(dp(48),
-                Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider),
-                Theme.getColor(Theme.key_featuredStickers_addButtonPressed, resourcesProvider)
-            ));
+            final int iconColor = Theme.getActiveTheme().isMonet() ? Theme.getColor(Theme.key_chat_outMenu) : Theme.getColor(Theme.key_chats_actionIcon, resourcesProvider);
+            imageView.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+            progressView.setProgressColor(iconColor);
+            final int bgColor = Theme.getActiveTheme().isMonet() ? Theme.getColor(Theme.key_chat_outBubble) : Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider);
+            final int bgColorPressed = Theme.getActiveTheme().isMonet() ? Theme.getColor(Theme.key_chat_outBubble) : Theme.getColor(Theme.key_featuredStickers_addButtonPressed, resourcesProvider);
+            setBackground(Theme.createSimpleSelectorCircleDrawable(dp(48), bgColor, bgColorPressed));
         }
     }
 
