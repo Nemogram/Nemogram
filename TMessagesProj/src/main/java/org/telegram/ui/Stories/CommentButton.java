@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
@@ -65,12 +66,12 @@ public class CommentButton extends FrameLayout {
 
         commentImage = new ImageView(context);
         commentImage.setImageResource(R.drawable.menu_comments);
-        commentImage.setColorFilter(new PorterDuffColorFilter(0xFFD2D3D4, PorterDuff.Mode.SRC_IN));
+        commentImage.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(0xFFD2D3D4), PorterDuff.Mode.SRC_IN));
         layout.addView(commentImage, LayoutHelper.createFrame(20, 20, Gravity.CENTER));
 
         arrowImage = new ImageView(context);
         arrowImage.setImageResource(R.drawable.menu_comments_arrow);
-        arrowImage.setColorFilter(new PorterDuffColorFilter(0xFFD2D3D4, PorterDuff.Mode.SRC_IN));
+        arrowImage.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(0xFFD2D3D4), PorterDuff.Mode.SRC_IN));
         layout.addView(arrowImage, LayoutHelper.createFrame(20, 20, Gravity.CENTER));
         arrowImage.setPivotX(dp(10.27f));
         arrowImage.setPivotY(dp(9.58f));

@@ -87,6 +87,7 @@ import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.AnimationNotificationsLocker;
 import org.telegram.messenger.ApplicationLoader;
@@ -3083,7 +3084,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         rotateButton.setContentDescription(getString(R.string.AccDescrSwitchCamera));
         rotateButton.setImageResource(R.drawable.stream_flip);
         rotateButton.setScaleType(ImageView.ScaleType.CENTER);
-        rotateButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
+        rotateButton.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.MULTIPLY));
         rotateButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
         navbarContainer.addView(rotateButton, LayoutHelper.createFrame(24, 24, Gravity.LEFT | Gravity.CENTER_VERTICAL, 20, 0, 20, 4));
         flashViews.add(rotateButton);
@@ -3105,7 +3106,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         liveSettingsButton.setContentDescription(getString(R.string.LiveStorySettings));
         liveSettingsButton.setImageResource(R.drawable.stream_settings);
         liveSettingsButton.setScaleType(ImageView.ScaleType.CENTER);
-        liveSettingsButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
+        liveSettingsButton.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.MULTIPLY));
         liveSettingsButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
         navbarContainer.addView(liveSettingsButton, LayoutHelper.createFrame(24, 24, Gravity.RIGHT | Gravity.CENTER_VERTICAL, 20, 0, 20, 4));
         flashViews.add(liveSettingsButton);

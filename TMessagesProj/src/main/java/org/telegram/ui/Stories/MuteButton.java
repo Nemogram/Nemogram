@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.Theme;
@@ -72,7 +73,7 @@ public class MuteButton extends FrameLayout {
         image.setScaleType(ImageView.ScaleType.CENTER);
         image.setScaleX(0.75f);
         image.setScaleY(0.75f);
-        image.setColorFilter(new PorterDuffColorFilter(0xFFD2D3D4, PorterDuff.Mode.SRC_IN));
+        image.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(0xFFD2D3D4), PorterDuff.Mode.SRC_IN));
         layout.addView(image, LayoutHelper.createFrame(40, 40, Gravity.CENTER));
 
         setMuted(false, false);
@@ -127,7 +128,7 @@ public class MuteButton extends FrameLayout {
             filledBackgroundView.setAlpha(1.0f - mutedT);
             filledBackgroundView.setScaleX(1.0f - mutedT);
             filledBackgroundView.setScaleY(1.0f - mutedT);
-            image.setColorFilter(new PorterDuffColorFilter(ColorUtils.blendARGB(0xFFFFFFFF, 0xFFD2D3D4, mutedT), PorterDuff.Mode.SRC_IN));
+            image.setColorFilter(new PorterDuffColorFilter(getIconColor(), PorterDuff.Mode.SRC_IN));
             layout.invalidate();
         } else {
             animator = ValueAnimator.ofFloat(mutedT, muted ? 1.0f : 0.0f);
@@ -137,13 +138,21 @@ public class MuteButton extends FrameLayout {
                 filledBackgroundView.setAlpha(1.0f - mutedT);
                 filledBackgroundView.setScaleX(1.0f - mutedT);
                 filledBackgroundView.setScaleY(1.0f - mutedT);
-                image.setColorFilter(new PorterDuffColorFilter(ColorUtils.blendARGB(0xFFFFFFFF, 0xFFD2D3D4, mutedT), PorterDuff.Mode.SRC_IN));
+                image.setColorFilter(new PorterDuffColorFilter(getIconColor(), PorterDuff.Mode.SRC_IN));
                 layout.invalidate();
             });
             animator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
             animator.setDuration(420);
             animator.start();
         }
+    }
+
+    private int getIconColor() {
+        return ColorUtils.blendARGB(
+            MonetHelper.getSettingsIconForegroundColor(0xFFFFFFFF),
+            MonetHelper.getSettingsIconForegroundColor(0xFFD2D3D4),
+            mutedT
+        );
     }
 
 
