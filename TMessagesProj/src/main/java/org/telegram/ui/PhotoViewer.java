@@ -11319,7 +11319,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         toggleMiniProgress(false, false);
         pipAvailable = false;
         playerInjected = false;
-        if (pipItem.isEnabled()) {
+        if (pipItem != null && pipItem.isEnabled()) {
             pipItem.setEnabled(false);
             pipItem.animate().alpha(0.5f).setDuration(175).withEndAction(null).start();
         }
@@ -11347,7 +11347,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
             videoTextureView = null;
         }
-        blurManager.resetBitmap();
+        if (blurManager != null) {
+            blurManager.resetBitmap();
+        }
         if (videoSurfaceView != null) {
             videoSurfaceView = null;
         }
@@ -11358,7 +11360,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (!onClose && !inPreview && !requestingPreview) {
             setVideoPlayerControlVisible(false, true);
         }
-        photoProgressViews[0].resetAlphas();
+        if (photoProgressViews[0] != null) {
+            photoProgressViews[0].resetAlphas();
+        }
     }
 
     private void setVideoPlayerControlVisible(boolean visible, boolean animated) {
