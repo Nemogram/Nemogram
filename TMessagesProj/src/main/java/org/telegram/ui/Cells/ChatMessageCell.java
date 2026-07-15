@@ -12787,7 +12787,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             if (songLayout.getLineCount() > 0) {
                 songX = -(int) Math.ceil(songLayout.getLineLeft(0));
                 int songLayoutWidth = (int) songLayout.getLineWidth(0);
-                if (songLayoutWidth + dp(92 + 12) > backgroundWidth) {
+                if (currentPosition == null && songLayoutWidth + dp(92 + 12) > backgroundWidth) {
                     backgroundWidth = songLayoutWidth + dp(92 + 12);
                 }
             }
@@ -12797,7 +12797,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             if (performerLayout.getLineCount() > 0) {
                 performerX = -(int) Math.ceil(performerLayout.getLineLeft(0));
                 int performerLayoutWidth = (int) performerLayout.getLineWidth(0);
-                if (performerLayoutWidth + dp(92 + 12) > backgroundWidth) {
+                if (currentPosition == null && performerLayoutWidth + dp(92 + 12) > backgroundWidth) {
                     backgroundWidth = performerLayoutWidth + dp(92 + 12);
                 }
             }
