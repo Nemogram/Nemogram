@@ -33643,7 +33643,19 @@ public class ChatActivity extends BaseFragment implements
         var messageText = transcription ? messageObject.messageOwner.voiceTranscription : messageObject.messageOwner.message;
         var entities = transcription ? null : messageObject.messageOwner.entities;
         if (NemoConfig.transType != NemoConfig.TRANS_TYPE_NEMO || messageObject.isSponsored()) {
-            if (!messageObject.isPoll()) {
+            if (messageObject.type == MessageObject.TYPE_ARTICLE) {
+                TranslateAlert2.showAlert(
+                        getParentActivity(), this, currentAccount,
+                        getMessagesController().getInputPeer(dialog_id),
+                        messageObject.getId(), sourceLanguage,
+                        Translator.getCurrentTargetLanguage(),
+                        messageObject.messageOwner.rich_message,
+                        isPeerNoForwards() || messageObject.messageOwner.noforwards,
+                        link -> {
+                            didPressMessageUrl(link, false, selectedObject, null);
+                            return true;
+                        }, null);
+            } else if (!messageObject.isPoll()) {
                 Translator.showTranslateDialog(getParentActivity(), messageText, entities, isPeerNoForwards() || messageObject.messageOwner.noforwards, this, link -> {
                     didPressMessageUrl(link, false, selectedObject, null);
                     return true;
@@ -33658,6 +33670,32 @@ public class ChatActivity extends BaseFragment implements
             return;
         }
         getMessageHelper().resetMessageContent(dialog_id, messageObject, false, true);
+        if (messageObject.type == MessageObject.TYPE_ARTICLE) {
+            var toLang = Translator.getCurrentTargetLanguage();
+            var req = new TLRPC.TL_messages_translateRichMessage();
+            req.flags |= TLObject.FLAG_0;
+            req.peer = getMessagesController().getInputPeer(messageObject.getDialogId());
+            req.id = new ArrayList<>();
+            req.id.add(messageObject.getId());
+            req.to_lang = toLang;
+
+            getConnectionsManager().sendRequestTyped(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
+                if (res != null) {
+                    var rich = res.result.get(0);
+                    messageObject.messageOwner.translatedToLanguage = toLang;
+                    messageObject.messageOwner.translatedText = null;
+                    messageObject.messageOwner.translatedVoiceTranscription = null;
+                    messageObject.messageOwner.translatedPoll = null;
+                    messageObject.messageOwner.translatedRichMessage = rich;
+                    getMessagesStorage().updateMessageCustomParams(messageObject.getDialogId(), messageObject.messageOwner);
+                    getMessageHelper().resetMessageContent(dialog_id, messageObject, true);
+                } else if (err != null) {
+                    Translator.handleTranslationError(getParentActivity(), err.text, () -> translateMessage(messageObject, cell, sourceLanguage), themeDelegate);
+                    getMessageHelper().resetMessageContent(dialog_id, messageObject, false, false);
+                }
+            }));
+            return;
+        }
         var pollText = messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaPoll poll ? TranslateController.PollText.fromPoll(poll) : null;
         Translator.translate(messageText, entities, pollText, sourceLanguage, null, new Translator.TranslateCallBack() {
             @Override
