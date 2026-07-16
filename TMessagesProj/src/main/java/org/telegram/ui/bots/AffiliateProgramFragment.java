@@ -7,6 +7,7 @@ import static org.telegram.ui.Components.Premium.boosts.cells.selector.SelectorU
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
@@ -648,7 +650,7 @@ public class AffiliateProgramFragment extends GradientHeaderActivity implements 
             this.resourcesProvider = resourcesProvider;
 
             imageView = new ImageView(context);
-            imageView.setColorFilter(new PorterDuffColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_IN));
+            imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
             imageView.setScaleType(ImageView.ScaleType.CENTER);
             addView(imageView, imageViewLayoutParams = LayoutHelper.createFrame(28, 28, Gravity.LEFT | Gravity.TOP, 17, 14.33f, 0, 0));
 
@@ -686,7 +688,7 @@ public class AffiliateProgramFragment extends GradientHeaderActivity implements 
 
         public void set(int color, int iconResId, CharSequence title, CharSequence text) {
             imageView.setImageResource(iconResId);
-            imageView.setBackground(Theme.createRoundRectDrawable(dp(9), color));
+            imageView.setBackground(Theme.createRoundRectDrawable(dp(9), MonetHelper.getSettingsIconBackgroundColor(color)));
 
             titleView.setText(title);
             if (TextUtils.isEmpty(text)) {
