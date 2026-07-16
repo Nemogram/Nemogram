@@ -245,7 +245,7 @@ public class CaptionStory extends CaptionContainerView {
     private final Drawable roundDrawable;
     {
         whitePaint.setColor(0xFFFFFFFF);
-        roundPaint.setColor(0xFF1A9CFF);
+        roundPaint.setColor(Theme.getColor(Theme.key_chat_recordedVoiceBackground, resourcesProvider));
 
         tinyWaveDrawable.minRadius = dp(47);
         tinyWaveDrawable.maxRadius = dp(55);

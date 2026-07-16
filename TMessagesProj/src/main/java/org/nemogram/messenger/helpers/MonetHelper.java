@@ -106,6 +106,17 @@ public class MonetHelper {
         }
     }
 
+
+    // used for screens that always render on a fixed palette regardless of the applied theme
+    @SuppressLint("NewApi")
+    public static int getAccentColor(int original) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && Theme.getActiveTheme().isMonet()) {
+            return Theme.getColor(Theme.key_featuredStickers_addButton);
+        } else {
+            return original;
+        }
+    }
+
     private static final String ACTION_OVERLAY_CHANGED = "android.intent.action.OVERLAY_CHANGED";
     private static final OverlayChangeReceiver overlayChangeReceiver = new OverlayChangeReceiver();
 

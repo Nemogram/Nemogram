@@ -3083,7 +3083,7 @@ public class StoryPrivacyBottomSheet extends BottomSheet implements Notification
         }
 
         public void setRedCheckbox(boolean red) {
-            checkBox.setColor(red ? Theme.key_color_red : Theme.key_dialogRoundCheckBox, Theme.key_checkboxDisabled, Theme.key_dialogRoundCheckBoxCheck);
+            checkBox.setColor(Theme.key_dialogRoundCheckBox, Theme.key_checkboxDisabled, Theme.key_dialogRoundCheckBoxCheck);
         }
 
         public void setChecked(boolean checked, boolean animated) {

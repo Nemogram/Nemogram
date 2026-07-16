@@ -56,8 +56,15 @@ public class PreviewButtons extends FrameLayout {
     private String shareText;
     private boolean shareArrow = true;
 
+    private final Theme.ResourcesProvider resourcesProvider;
+
     public PreviewButtons(Context context) {
+        this(context, null);
+    }
+
+    public PreviewButtons(Context context, Theme.ResourcesProvider resourcesProvider) {
         super(context);
+        this.resourcesProvider = resourcesProvider;
 
         shadowView = new View(context);
         shadowView.setBackground(new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[] { 0x66000000, 0x00000000 }));
@@ -230,12 +237,14 @@ public class PreviewButtons extends FrameLayout {
             super(context);
             this.arrow = withArrow;
 
+            final int buttonTextColor = Theme.getColor(Theme.key_featuredStickers_buttonText, resourcesProvider);
+
 //            buttonPaint.setColor(0xffffffff);
-            buttonPaint.setColor(0xff199cff);
+            buttonPaint.setColor(Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider));
             darkenPaint.setColor(0x60000000);
 
             textPaint.setTextSize(dp(13));
-            textPaint.setColor(0xffffffff);
+            textPaint.setColor(buttonTextColor);
             textPaint.setTypeface(AndroidUtilities.bold());
 //            textPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
 
@@ -243,7 +252,7 @@ public class PreviewButtons extends FrameLayout {
             if (withArrow) {
                 SpannableString arrow = new SpannableString(">");
                 Drawable arrowDrawable = getResources().getDrawable(R.drawable.attach_arrow_right).mutate();
-                arrowDrawable.setColorFilter(new PorterDuffColorFilter(0xffffffff, PorterDuff.Mode.SRC_IN));
+                arrowDrawable.setColorFilter(new PorterDuffColorFilter(buttonTextColor, PorterDuff.Mode.SRC_IN));
                 arrowDrawable.setBounds(0, 0, dp(12), dp(12));
                 arrow.setSpan(new ImageSpan(arrowDrawable, ImageSpan.ALIGN_CENTER), 0, arrow.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 

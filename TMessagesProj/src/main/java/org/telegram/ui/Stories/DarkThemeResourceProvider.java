@@ -10,6 +10,7 @@ import android.util.SparseIntArray;
 
 import androidx.core.graphics.ColorUtils;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.ui.ActionBar.Theme;
 
 import java.util.HashSet;
@@ -134,7 +135,7 @@ public class DarkThemeResourceProvider implements Theme.ResourcesProvider {
         sparseIntArray.put(Theme.key_color_red, -832444);
         sparseIntArray.put(Theme.key_checkbox, -12692893);
         sparseIntArray.put(Theme.key_checkboxDisabled, 0xff626262);
-        sparseIntArray.put(Theme.key_dialogRoundCheckBoxCheck, 0xffffffff);
+        sparseIntArray.put(Theme.key_dialogRoundCheckBoxCheck, Color.BLACK);
         sparseIntArray.put(Theme.key_dialogButtonSelector, 436207615);
         sparseIntArray.put(Theme.key_groupcreate_spanBackground, -13816531);
         sparseIntArray.put(Theme.key_groupcreate_spanDelete, 0xffffffff);
@@ -168,7 +169,7 @@ public class DarkThemeResourceProvider implements Theme.ResourcesProvider {
 
         sparseIntArray.put(Theme.key_radioBackgroundChecked, -10177041);
         sparseIntArray.put(Theme.key_checkboxDisabled, -12237499);
-        sparseIntArray.put(Theme.key_checkboxCheck, 0xFFFFFFFF);
+        sparseIntArray.put(Theme.key_checkboxCheck, Color.BLACK);
 
         sparseIntArray.put(Theme.key_avatar_backgroundSaved, 0xFF5CADF6);
         sparseIntArray.put(Theme.key_avatar_background2Saved, 0xFF408BCF);
@@ -191,11 +192,41 @@ public class DarkThemeResourceProvider implements Theme.ResourcesProvider {
 
     }
 
+    private static boolean isMonetAccentKey(int key) {
+        return key == Theme.key_featuredStickers_addButton
+                || key == Theme.key_switchTrackChecked
+                || key == Theme.key_dialogRoundCheckBox
+                || key == Theme.key_dialogRadioBackgroundChecked
+                || key == Theme.key_dialogTextBlue2
+                || key == Theme.key_windowBackgroundWhiteBlueHeader
+                || key == Theme.key_dialogButton
+                || key == Theme.key_windowBackgroundWhiteInputField
+                || key == Theme.key_windowBackgroundWhiteInputFieldActivated
+                || key == Theme.key_groupcreate_cursor
+                || key == Theme.key_dialogTextLink
+                || key == Theme.key_chat_messageLinkIn
+                || key == Theme.key_chat_editMediaButton
+                || key == Theme.key_player_progress
+                || key == Theme.key_radioBackgroundChecked
+                || key == Theme.key_progressCircle
+                || key == Theme.key_chat_emojiPanelStickerPackSelectorLine;
+    }
+
     @Override
     public int getColor(int key) {
         int index = sparseIntArray.indexOfKey(key);
         if (index >= 0) {
-            return sparseIntArray.valueAt(index);
+            int value = sparseIntArray.valueAt(index);
+            if (key == Theme.key_chat_recordedVoiceBackground) {
+                return Theme.getColor(key);
+            }
+            if (key == Theme.key_dialogRoundCheckBoxCheck || key == Theme.key_checkboxCheck) {
+                return MonetHelper.getSettingsIconForegroundColor(value);
+            }
+            if (isMonetAccentKey(key)) {
+                return MonetHelper.getAccentColor(value);
+            }
+            return value;
         }
 
         if (!debugUnknownKeys.contains(key)) {
