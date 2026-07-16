@@ -26,6 +26,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
+import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -43,6 +44,7 @@ import android.view.RoundedCorner;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -69,6 +71,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.utils.ViewOutlineProviderImpl;
+import org.telegram.ui.ChatActivity;
 import org.telegram.ui.Components.AnimatedFloat;
 import org.telegram.ui.Components.BackButtonMenu;
 import org.telegram.ui.EmptyBaseFragment;
@@ -932,10 +935,8 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                     currFragment.setNavigationBarColor(ColorUtils.blendARGB(currNavigationBarColor, prevNavigationBarColor, ratio));
                 }
             }
-            if (currFragment != null && !currFragment.inPreviewMode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !SharedConfig.noStatusBar) {
-                int oldStatusBarColor = prevFragment.hasForceLightStatusBar() ? Color.TRANSPARENT : prevFragment.isLightStatusBar() ? AndroidUtilities.LIGHT_STATUS_BAR_OVERLAY : AndroidUtilities.DARK_STATUS_BAR_OVERLAY;
-                int newStatusBarColor = currFragment.hasForceLightStatusBar() ? Color.TRANSPARENT : currFragment.isLightStatusBar() ? AndroidUtilities.LIGHT_STATUS_BAR_OVERLAY : AndroidUtilities.DARK_STATUS_BAR_OVERLAY;
-                parentActivity.getWindow().setStatusBarColor(ColorUtils.blendARGB(newStatusBarColor, oldStatusBarColor, ratio));
+            if (currFragment != null && !currFragment.inPreviewMode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                AndroidUtilities.setLightStatusBar(parentActivity, ratio < 0.5f ? prevFragment.isLightStatusBar() : currFragment.isLightStatusBar());
             }
         }
     }
@@ -2095,7 +2096,35 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
         containerView.setTranslationY(0);
 
         if (preview) {
-            fragmentView.setOutlineProvider(ViewOutlineProviderImpl.boundsWithPaddingRoundRect(0, dp(menu == null ? 24 : 12)));
+            if (fragment instanceof ChatActivity) {
+                if (menu != null) {
+                    fragmentView.setOutlineProvider(new ViewOutlineProvider() {
+                        private final Path path = new Path();
+
+                        @Override
+                        public void getOutline(View view, Outline outline) {
+                            final float rTop = dp(29);
+                            final float rBottom = dp(12);
+                            final float[] radii = new float[] {
+                                rTop, rTop, rTop, rTop,
+                                rBottom, rBottom, rBottom, rBottom
+                            };
+
+                            path.rewind();
+                            path.addRoundRect(0, 0, view.getWidth(), view.getHeight(), radii, Path.Direction.CW);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                outline.setPath(path);
+                            } else {
+                                outline.setConvexPath(path);
+                            }
+                        }
+                    });
+                } else {
+                    fragmentView.setOutlineProvider(ViewOutlineProviderImpl.boundsWithPaddingRoundRect(0, dp(29)));
+                }
+            } else {
+                fragmentView.setOutlineProvider(ViewOutlineProviderImpl.boundsWithPaddingRoundRect(0, dp(menu == null ? 24 : 12)));
+            }
             fragmentView.setClipToOutline(true);
             fragmentView.setElevation(dp(4));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -3507,7 +3536,18 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
 
     private void dispatchApplyWindowInsetsInternal(View child, WindowInsetsCompat insets) {
         if (isLayersLayout) {
-            ViewCompat.dispatchApplyWindowInsets(child, WindowInsetsCompat.CONSUMED);
+            if (child instanceof LayoutContainer && ((LayoutContainer) child).isSupportEdgeToEdge) {
+                final int imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+                final View parent = getParent() instanceof View ? (View) getParent() : null;
+                final int bottomGap = parent != null ? Math.max(0, parent.getHeight() - getBottom()) : 0;
+                final int imeOverlap = Math.max(0, imeBottom - bottomGap);
+                final WindowInsetsCompat layersInsets = new WindowInsetsCompat.Builder(WindowInsetsCompat.CONSUMED)
+                    .setInsets(WindowInsetsCompat.Type.ime(), Insets.of(0, 0, 0, imeOverlap))
+                    .build();
+                ViewCompat.dispatchApplyWindowInsets(child, layersInsets);
+            } else {
+                ViewCompat.dispatchApplyWindowInsets(child, WindowInsetsCompat.CONSUMED);
+            }
             return;
         }
 
