@@ -13,7 +13,10 @@ import static org.telegram.messenger.AndroidUtilities.dp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.ui.ActionBar.Theme;
@@ -88,10 +92,11 @@ public class PollCreateCheckCell extends FrameLayout {
 
         final boolean border = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
         SettingsActivity.SettingCell.Background drawable = new SettingsActivity.SettingCell.Background();
-        drawable.setColor(color.top, color.bottom);
+        drawable.setColor(MonetHelper.getSettingsIconBackgroundColor(color.top), MonetHelper.getSettingsIconBackgroundColor(color.bottom));
         drawable.setDrawBorder(border);
         imageView.setBackground(drawable);
         imageView.setImageResource(iconResId);
+        imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
         checkBox.setChecked(checked, 0, animationsEnabled);
         multilineValueTextView.setText(value);
         checkBox.setContentDescription(text);
