@@ -11366,6 +11366,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     }
 
     private void setVideoPlayerControlVisible(boolean visible, boolean animated) {
+        if (bottomLayout == null || videoPlayerControlFrameLayout == null) {
+            videoPlayerControlVisible = visible;
+            return;
+        }
         if (videoPlayerControlVisible != visible) {
 
             if (visible) {
@@ -19215,6 +19219,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     }
 
     public void destroyPhotoViewer() {
+        if (bottomLayout == null && windowView == null) {
+            clearStaticInstanceReference();
+            return;
+        }
         if (PipVideoOverlay.isVisible()) {
             PipVideoOverlay.dismiss();
         }
