@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Використовуйте тривожний код, щоб вийти з облікових записів, якщо щось піде не так.</string>
     <string name="HideTimeOnSticker">Приховати час на наліпках</string>
     <string name="TranslatorShowOriginal">З початковим текстом</string>
-    <string name="Markdown">Позначка</string>
-    <string name="MarkdownEnableByDefault">Ввімкнено за замовчуванням</string>
-    <string name="MarkdownParser">Аналізатор</string>
-    <string name="MarkdownParseLinks">Аналізувати посилання</string>
-    <string name="MarkdownAbout">Редагуйте текст у повідомленні, використовуючи markdown: ^1**жирний**^1, ^2__курсив__^2, ^3~~закреслений~~^3, ^4`моноширинний`^4, ^5||прихований||^5, ^6текст^7url^8.</string>
-    <string name="MarkdownAbout2">Редагуйте текст у повідомленні, використовуючи markdown: ^1**жирний**^1, ^2__курсив__^2, ^3~~закреслений~~^3, ^4`моноширинний`^4, ^5||прихований||^5.</string>
     <string name="ClearRecentChats">Очистити недавні чати</string>
     <string name="ClearRecentChatAlert">Ви хочете очистити свої останні чати?</string>
     <string name="DownloadSpeedBoost">Збільшення швидкості завантаження</string>

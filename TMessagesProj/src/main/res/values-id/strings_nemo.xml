@@ -153,12 +153,6 @@
     <string name="PasscodePanicCodeAbout">Gunakan kode panik untuk logout dari akun jika terjadi kesalahan.</string>
     <string name="HideTimeOnSticker">Sembunyikan jam pada stiker</string>
     <string name="TranslatorShowOriginal">Dengan teks asli</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Aktifkan secara default</string>
-    <string name="MarkdownParser">Pengurai</string>
-    <string name="MarkdownParseLinks">Mengurai tautan</string>
-    <string name="MarkdownAbout">Edit teks pada pesan menggunakan markdown: ^1**tebal**^1, ^2__miring__^2, ^3~~coret~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6teks^7url^8.</string>
-    <string name="MarkdownAbout2">Edit teks pada pesan menggunakan markdown: ^1**tebal**^1, ^2__miring__^2, ^3~~coret~~^3, ^4`monospace`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Hapus obrolan terbaru</string>
     <string name="ClearRecentChatAlert">Apakah Anda ingin menghapus obrolan terbaru Anda?</string>
     <string name="DownloadSpeedBoost">Peningkatan kecepatan unduh</string>

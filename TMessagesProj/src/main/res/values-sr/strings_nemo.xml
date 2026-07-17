@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Користите паник кôд за одјаву налога, ако дође до грешке.</string>
     <string name="HideTimeOnSticker">Сакриј време на налепницама</string>
     <string name="TranslatorShowOriginal">Са оригиналним текстом</string>
-    <string name="Markdown">Ознаке</string>
-    <string name="MarkdownEnableByDefault">Подразумевано омогући</string>
-    <string name="MarkdownParser">Рашчлањивач</string>
-    <string name="MarkdownParseLinks">Рашчлани везе</string>
-    <string name="MarkdownAbout">Уредите текст у порукама користећи означавање: ^1**подебљано**^1, ^2__курзив__^2, ^3~~прецртано~~^3, ^4`моноразмак`^4, ^5||спојлер||^5, ^6текст^7url^8.</string>
-    <string name="MarkdownAbout2">Уредите текст у порукама користећи означавање: ^1**подебљано**^1, ^2__курзив__^2, ^3~~прецртано~~^3, ^4`моноразмак`^4, ^5||спојлер||^5.</string>
     <string name="ClearRecentChats">Чишћење недавних ћаскања</string>
     <string name="ClearRecentChatAlert">Желите ли да очистите ваша недавна ћаскања?</string>
     <string name="DownloadSpeedBoost">Повећање брзине преузимања</string>

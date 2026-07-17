@@ -147,12 +147,6 @@
     <string name="PasscodePanicCodeAbout">Izmantojiet panikas kodu, lai atteiktos no kontiem, ja kaut kas notiek nepareizi.</string>
     <string name="HideTimeOnSticker">Slēpt laiku uz uzlīmēm</string>
     <string name="TranslatorShowOriginal">Ar oriģinālo tekstu</string>
-    <string name="Markdown">Atzīmēšana</string>
-    <string name="MarkdownEnableByDefault">Ieslēgt pēc noklusējuma</string>
-    <string name="MarkdownParser">Parseris</string>
-    <string name="MarkdownParseLinks">Izanalizēt saites</string>
-    <string name="MarkdownAbout">Rediģējiet tekstu ziņojumos, izmantojot iezīmēšanu: ^1**bold**^1, ^2__italic__^2, ^3~~strickhrough~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6text^7url^8.</string>
-    <string name="MarkdownAbout2">Rediģējiet tekstu ziņojumos, izmantojot iezīmēšanu: ^1**bold**^1, ^2__italic__^2, ^3~~strickhrough~~^3, ^4`monospace`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Notīrīt pēdējās tērzēšanas sarunas</string>
     <string name="ClearRecentChatAlert">Vai vēlaties notīrīt pēdējās tērzēšanas sarunas?</string>
     <string name="DownloadSpeedBoost">Lejupielādes ātruma palielināšana</string>

@@ -151,12 +151,6 @@
     <string name="PasscodePanicCodeAbout">استخدم رمز الطوارئ لتسجيل الخروج من الحسابات إذا حدث خطأ ما.</string>
     <string name="HideTimeOnSticker">إخفاء الوقت على الملصقات</string>
     <string name="TranslatorShowOriginal">مع النص الأصلي</string>
-    <string name="Markdown">مارك داون</string>
-    <string name="MarkdownEnableByDefault">تفعيل بشكل افتراضي</string>
-    <string name="MarkdownParser">محلل</string>
-    <string name="MarkdownParseLinks">تحليل الروابط</string>
-    <string name="MarkdownAbout">تعديل النص في الرسائل باستخدام الـ الترميز: ^1**بالنبط الثقيل**^1، ^2__مائل__^2و ^3و~~يتوسطه خط~~^3و ^4`أحادية الفضاء`^4و ^5||المفسد||^5و ^6نص^7رابط^8.</string>
-    <string name="MarkdownAbout2">تعديل النص في الرسائل باستخدام الـ الترميز: ^1**بالنبط الثقيل**^1، ^2__مائل__^2و ^3و~~يتوسطه خط~~^3و ^4`أحادية الفضاء`^4و ^5||المفسد||^5و نص رابط.</string>
     <string name="ClearRecentChats">مسح المحادثات الحديثة</string>
     <string name="ClearRecentChatAlert">هل تريد مسح المحادثات الحديثة؟</string>
     <string name="DownloadSpeedBoost">زيادة سرعة التحميل</string>

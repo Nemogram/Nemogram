@@ -147,12 +147,6 @@
     <string name="PasscodePanicCodeAbout">कुछ गलत होने पर खातों को लॉग आउट करने के लिए पैनिक कोड का उपयोग करें।</string>
     <string name="HideTimeOnSticker">स्टिकर मैसेज पर से समय हटाएं</string>
     <string name="TranslatorShowOriginal">मूल टेक्स्ट के साथ</string>
-    <string name="Markdown">मार्कडाउन</string>
-    <string name="MarkdownEnableByDefault">बाय डिफॉल्ट चालू करें</string>
-    <string name="MarkdownParser">पार्सर</string>
-    <string name="MarkdownParseLinks">पार्स लिंक्स</string>
-    <string name="MarkdownAbout">मार्कडाउन का उपयोग करके संदेशों में टेक्स्ट संपादित करें: ^1**bold**^1, ^2__italic__^2, ^3~~strikethrough~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6text^7url^8</string>
-    <string name="MarkdownAbout2">मार्कडाउन का उपयोग करके संदेशों में टेक्स्ट संपादित करें: ^1**bold**^1, ^2__italic__^2, ^3~~strikethrough~~^3, ^4`monospace`^4, ^5||spoiler||^5</string>
     <string name="ClearRecentChats">हाल की चैट्स साफ करें</string>
     <string name="ClearRecentChatAlert">क्या आप अपनी हाल की चैट साफ़ करना चाहते हैं?</string>
     <string name="DownloadSpeedBoost">डाउनलोड की स्पीड बूस्ट करें</string>

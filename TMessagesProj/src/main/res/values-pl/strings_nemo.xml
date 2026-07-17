@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Użyj kodu paniki, aby wylogować się z kont, jeśli coś pójdzie nie tak.</string>
     <string name="HideTimeOnSticker">Ukryj czas na naklejkach</string>
     <string name="TranslatorShowOriginal">Z oryginalnym tekstem</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Domyślnie włączone</string>
-    <string name="MarkdownParser">Analizator</string>
-    <string name="MarkdownParseLinks">Analizuj linki</string>
-    <string name="MarkdownAbout">Edytuj tekst w wiadomościach używając markdown: ^1**pogrubienie**^1, ^2__kursywa__^2, ^3~~przekreślenie~~^3, ^4`stała szerokość`^4, ^5||spoiler||^5, ^6tekst^7url^8.</string>
-    <string name="MarkdownAbout2">Edytuj tekst w wiadomościach używając markdown: ^1**pogrubienie**^1, ^2__kursywa__^2, ^3~~przekreślenie~~^3, ^4`stała szerokość`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Wyczyść ostatnie czaty</string>
     <string name="ClearRecentChatAlert">Czy chcesz wyczyścić swoje ostatnie czaty?</string>
     <string name="DownloadSpeedBoost">Zwiększenie szybkości pobierania</string>

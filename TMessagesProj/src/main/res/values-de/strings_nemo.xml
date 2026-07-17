@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Verwende den Panikcode, um Konten abzumelden, wenn etwas schief läuft.</string>
     <string name="HideTimeOnSticker">Zeit auf Stickern ausblenden</string>
     <string name="TranslatorShowOriginal">Mit Originaltext</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Standardmäßig einschalten</string>
-    <string name="MarkdownParser">Parser (Zerleger)</string>
-    <string name="MarkdownParseLinks">Links zerlegen</string>
-    <string name="MarkdownAbout">Text in Nachrichten mit Markdown bearbeiten: ^1**fett**^1, ^2__kursiv__^2, ^3~~durchgestrichen~~^3, ^4`Festbreite`^4, ^5||Spoiler||^5, ^6Text^7URL^8.</string>
-    <string name="MarkdownAbout2">Text in Nachrichten mit Markdown bearbeiten: ^1**fett**^1, ^2__kursiv__^2, ^3~~durchgestrichen~~^3, ^4`Festbreite`^4, ^5||Spoiler||^5</string>
     <string name="ClearRecentChats">Kürzliche Chats löschen</string>
     <string name="ClearRecentChatAlert">Willst du deine kürzlichen Chats löschen?</string>
     <string name="DownloadSpeedBoost">Erhöhung der Downloadgeschwindigkeit</string>

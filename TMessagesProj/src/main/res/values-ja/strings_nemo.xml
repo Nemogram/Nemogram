@@ -152,12 +152,6 @@
     <string name="PasscodePanicCodeAbout">何か問題が発生した場合は、パニックコードを使用してアカウントからログアウトできます。</string>
     <string name="HideTimeOnSticker">ステッカーに時刻を表示しない</string>
     <string name="TranslatorShowOriginal">訳文と原文の両方を表示</string>
-    <string name="Markdown">マークダウン</string>
-    <string name="MarkdownEnableByDefault">デフォルトで有効</string>
-    <string name="MarkdownParser">解析</string>
-    <string name="MarkdownParseLinks">リンクの解析</string>
-    <string name="MarkdownAbout">マークダウンでメッセージのテキスト装飾: ^1**太字**^1, ^2__斜体__^2, ^3~~取り消し線~~^3, ^4`等幅`^4, ^5||スポイラー||^5, ^6テキスト^7URL^8</string>
-    <string name="MarkdownAbout2">マークダウンでメッセージのテキスト装飾: ^1**太字**^1, ^2__斜体__^2, ^3~~取り消し線~~^3, ^4`等幅`^4, ^5||スポイラー||^5</string>
     <string name="ClearRecentChats">最近のチャットを消去</string>
     <string name="ClearRecentChatAlert">最近のチャットを消去しますか？</string>
     <string name="DownloadSpeedBoost">ダウンロード速度の向上</string>

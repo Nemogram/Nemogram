@@ -148,12 +148,6 @@
     <string name="PasscodePanicCodeAbout">Bir şeyler ters giderse hesaplardan çıkış yapmak için acil kodu kullanın.</string>
     <string name="HideTimeOnSticker">Çıkartmalarda zamanı gizle</string>
     <string name="TranslatorShowOriginal">Orijinal metin ile</string>
-    <string name="Markdown">Biçimlendirme</string>
-    <string name="MarkdownEnableByDefault">Varsayılan olarak etkinleştir</string>
-    <string name="MarkdownParser">Ayrıştırıcı</string>
-    <string name="MarkdownParseLinks">Bağlantıları ayrıştır</string>
-    <string name="MarkdownAbout">Markdown kullanarak mesajlardaki metni düzenleyin: ^1**kalın**^1, ^2__italik__^2, ^3~~üstü çizili~~^3, ^4`kod`^4, ^5||spoiler||^5, ^6metin^7bağlantı^8.</string>
-    <string name="MarkdownAbout2">Markdown kullanarak mesajlardaki metni düzenleyin: ^1**kalın**^1, ^2__italik__^2, ^3~~üstü çizili~~^3, ^4`kod`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Son sohbetleri temizle</string>
     <string name="ClearRecentChatAlert">Son sohbetlerinizi temizlemek istediğinizden emin misiniz?</string>
     <string name="DownloadSpeedBoost">İndirme hızını arttır</string>

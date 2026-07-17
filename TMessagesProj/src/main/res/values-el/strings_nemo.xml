@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Χρησιμοποιήστε τον κωδικό πανικού για να αποσυνδεθείτε από λογαριασμούς εάν κάτι πάει στραβά.</string>
     <string name="HideTimeOnSticker">Απόκρυψη χρόνου στα αυτοκόλλητα</string>
     <string name="TranslatorShowOriginal">Προβολή &amp; του Αρχικού κειμένου</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Ενεργοποίηση από προεπιλογή</string>
-    <string name="MarkdownParser">Αναλυτής</string>
-    <string name="MarkdownParseLinks">Ανάλυση συνδέσμων</string>
-    <string name="MarkdownAbout">Επεξεργ. κειμένου σε μηνύμ. markdown: ^1**bold**^1, ^2__italic__^2, ^3~~strikethrough~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6text^7url^8.</string>
-    <string name="MarkdownAbout2">Επεξεργ. κειμένου σε μηνύμ. markdown: ^1**bold**^1, ^2__italic__^2, ^3~~strikethrough~~^3, ^4`monospace`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Εκκαθάριση πρόσφατων συνομιλιών</string>
     <string name="ClearRecentChatAlert">Θέλετε να διαγράψετε τις πρόσφατες συνομιλίες σας;</string>
     <string name="DownloadSpeedBoost">Αύξηση ταχύτητας λήψης</string>

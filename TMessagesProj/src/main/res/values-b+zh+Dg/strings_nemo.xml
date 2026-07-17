@@ -151,12 +151,6 @@
     <string name="PasscodePanicCodeAbout">如果出现问题，使用紧急代码退出登录账户。</string>
     <string name="HideTimeOnSticker">隐藏贴纸上的时间</string>
     <string name="TranslatorShowOriginal">显示原文</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">默认启用</string>
-    <string name="MarkdownParser">解析器</string>
-    <string name="MarkdownParseLinks">解析链接</string>
-    <string name="MarkdownAbout">使用 Markdown 来编辑消息中的文本：^1**粗体**^1, ^2__斜体__^2, ^3~~删除线~~^3, ^4`等宽`^4, ^5||黑幕||^5, ^6文本^7网址^8。</string>
-    <string name="MarkdownAbout2">使用 Markdown 来编辑消息中的文本：^1**粗体**^1, ^2__斜体__^2, ^3~~删除线~~^3, ^4`等宽`^4, ^5||黑幕||^5。</string>
     <string name="ClearRecentChats">清除最近对话</string>
     <string name="ClearRecentChatAlert">您确定要清除您的最近对话吗？</string>
     <string name="DownloadSpeedBoost">下载速度提升</string>

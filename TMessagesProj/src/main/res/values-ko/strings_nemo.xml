@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">문제가 발생하면 패닉 코드를 사용하여 계정을 로그아웃합니다.</string>
     <string name="HideTimeOnSticker">스티커에서 시간 제거</string>
     <string name="TranslatorShowOriginal">원본 텍스트와 함께</string>
-    <string name="Markdown">마크다운</string>
-    <string name="MarkdownEnableByDefault">기본적으로 활성화</string>
-    <string name="MarkdownParser">파서</string>
-    <string name="MarkdownParseLinks">링크 파싱</string>
-    <string name="MarkdownAbout">마크다운을 사용하여 메시지의 텍스트 편집: ^1**굵게**^1,^2__기울기__^2,^3~~중간선~~^3,^4`모노스페이스`^4,^5||스포일러||^5,^6텍스트^7url^8.</string>
-    <string name="MarkdownAbout2">마크다운을 사용하여 메시지의 텍스트 편집: ^1**굵게**^1,^2__기울기__^2,^3~~중간선~~^3,^4`모노스페이스`^4,^5||스포일러||^5.</string>
     <string name="ClearRecentChats">최근 대화 삭제</string>
     <string name="ClearRecentChatAlert">최근 대화를 삭제 하시겠습니까?</string>
     <string name="DownloadSpeedBoost">다운로드 속도 향상</string>

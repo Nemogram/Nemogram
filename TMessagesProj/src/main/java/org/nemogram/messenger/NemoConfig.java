@@ -124,11 +124,8 @@ public class NemoConfig {
     public static boolean disableJumpToNextChannel = false;
     public static boolean disableVoiceMessageAutoPlay = false;
     public static boolean unmuteVideosWithVolumeButtons = true;
-    public static boolean disableMarkdownByDefault = false;
     public static boolean hideTimeOnSticker = false;
     public static boolean showOriginal = true;
-    public static boolean newMarkdownParser = true;
-    public static boolean markdownParseLinks = true;
     public static boolean hideStories = false;
     public static boolean quickForward = false;
     public static boolean reducedColors = false;
@@ -240,12 +237,9 @@ public class NemoConfig {
             filterKeywordsInChannels = preferences.getBoolean("filterKeywordsInChannels", false);
             spoilerKeywordsInChats = preferences.getBoolean("spoilerKeywordsInChats", false);
             spoilerKeywordsInChannels = preferences.getBoolean("spoilerKeywordsInChannels", false);
-            disableMarkdownByDefault = preferences.getBoolean("disableMarkdownByDefault", false);
             showRPCError = preferences.getBoolean("showRPCError", false);
             hideTimeOnSticker = preferences.getBoolean("hideTimeOnSticker", false);
             showOriginal = preferences.getBoolean("showOriginal", true);
-            newMarkdownParser = preferences.getBoolean("newMarkdownParser", true);
-            markdownParseLinks = preferences.getBoolean("markdownParseLinks", true);
             downloadSpeedBoost = preferences.getInt("downloadSpeedBoost2", BOOST_NONE);
             showQrCode = preferences.getBoolean("showQrCode", false);
             showOpenIn = preferences.getBoolean("showOpenIn", false);
@@ -361,14 +355,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("externalTranslationProvider", externalTranslationProvider);
-        editor.apply();
-    }
-
-    public static void setNewMarkdownParser(boolean newParser) {
-        newMarkdownParser = newParser;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("newMarkdownParser", newMarkdownParser);
         editor.apply();
     }
 
@@ -576,22 +562,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("showOriginal", showOriginal);
-        editor.apply();
-    }
-
-    public static void toggleMarkdownParseLinks() {
-        markdownParseLinks = !markdownParseLinks;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("markdownParseLinks", markdownParseLinks);
-        editor.apply();
-    }
-
-    public static void toggleDisableMarkdownByDefault() {
-        disableMarkdownByDefault = !disableMarkdownByDefault;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("disableMarkdownByDefault", disableMarkdownByDefault);
         editor.apply();
     }
 

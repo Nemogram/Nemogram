@@ -153,12 +153,6 @@
     <string name="PasscodePanicCodeAbout">ใช้รหัสฉุกเฉินเพื่อออกจากบัญชีหากมีสิ่งผิดปกติเกิดขึ้น</string>
     <string name="HideTimeOnSticker">ซ่อนเวลาบนสติ๊กเกอร์</string>
     <string name="TranslatorShowOriginal">พร้อมข้อความต้นฉบับ</string>
-    <string name="Markdown">มาร์กดาวน์</string>
-    <string name="MarkdownEnableByDefault">เปิดใช้งานตามค่าเริ่มต้น</string>
-    <string name="MarkdownParser">พาร์เซอร์</string>
-    <string name="MarkdownParseLinks">การแยกวิเคราะห์ลิงก์</string>
-    <string name="MarkdownAbout">แก้ไขข้อความในข้อความโดยใช้มาร์กดาวน์: ^1**ตัวหนา**^1, ^2__ตัวเอียง__^2, ^3~~ขีดฆ่า~~^3, ^4`โมโนสเปซ`^4, ^5||สปอยล์||^5, ^6ข้อความ^7ยูอาร์แอล^8.</string>
-    <string name="MarkdownAbout2">แก้ไขข้อความในข้อความโดยใช้มาร์กดาวน์: ^1**ตัวหนา**^1, ^2__ตัวเอียง__^2, ^3~~ขีดฆ่า~~^3, ^4`โมโนสเปซ`^4, ^5||สปอยล์||^5.</string>
     <string name="ClearRecentChats">ล้างการแชทล่าสุด</string>
     <string name="ClearRecentChatAlert">คุณต้องการล้างการแชทล่าสุดของคุณใช่ไหม?</string>
     <string name="DownloadSpeedBoost">เพิ่มความเร็วในการดาวน์โหลด</string>

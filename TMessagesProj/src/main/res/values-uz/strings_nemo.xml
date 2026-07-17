@@ -149,12 +149,6 @@
     <string name="PasscodePanicCodeAbout">Agar biror narsa noto\'g\'ri bo\'lsa, hisoblardan chiqish uchun vahima kodidan foydalaning.</string>
     <string name="HideTimeOnSticker">Stikerda vatni yashirish</string>
     <string name="TranslatorShowOriginal">Haqiqiy matn bilan</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Odatiy qilish</string>
-    <string name="MarkdownParser">Tahlil qiluvchi</string>
-    <string name="MarkdownParseLinks">Havolalarni tahlil qilish</string>
-    <string name="MarkdownAbout">Belgilashdan foydalanib xabarlardagi matnni tahrirlang: ^1**qalin**^1, ^2__egilgan__^2, ^3~~chiziqli~~^3, ^4`monospace`^4, ^5||yashirin||^5, ^6matn^7havola^8.</string>
-    <string name="MarkdownAbout2">Xabarlardagi matnni markdown yordamida tahrirlang: ^1**qalin**^1, ^2__egilgan__^2, ^3~~chiziqli~~^3, ^4`monospace`^4, ^5||yashirin||^5.</string>
     <string name="ClearRecentChats">So\'nngi suhbatlarni tozalash</string>
     <string name="ClearRecentChatAlert">Oxirgi suhbatlaringizni tozalamoqchimisiz?</string>
     <string name="DownloadSpeedBoost">Yuklab olish tezligini oshirish</string>

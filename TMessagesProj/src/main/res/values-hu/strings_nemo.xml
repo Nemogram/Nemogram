@@ -154,12 +154,6 @@
     <string name="PasscodePanicCodeAbout">Pánikkódot használata a fiókok kijelentkezéséhez, ha valami baj történik.</string>
     <string name="HideTimeOnSticker">Idő elrejtése a matricákon</string>
     <string name="TranslatorShowOriginal">Eredeti szöveggel</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Alapértelmezetten engedélyezve</string>
-    <string name="MarkdownParser">Elemző</string>
-    <string name="MarkdownParseLinks">Linkek elemzése</string>
-    <string name="MarkdownAbout">Szöveg szerkesztése üzenetekben a követekezők segítségével: ^1**félkövér**^1, ^2__dőlt__^2, ^3~~áthúzott~~^3, ^4`egységes karakterhossz`^4, ^5||spoiler||^5, ^6szüveg^7urlcím^8.</string>
-    <string name="MarkdownAbout2">Szöveg szerkesztése az üzenetekben a következők használatával: ^1**félkövér**^1, ^2__dőlt__^2, ^3~~áthúzott~~^3, ^4`egységes karakterhossz`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Legutóbbi csevegések törlése</string>
     <string name="ClearRecentChatAlert">Szeretné törölni a legutóbbi csevegéseket?</string>
     <string name="DownloadSpeedBoost">Letöltési sebesség növelése</string>

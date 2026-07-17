@@ -118,12 +118,6 @@
     <string name="PasscodePanicCodeAbout">Gebruik de paniekcode om accounts uit te loggen als er iets misgaat.</string>
     <string name="HideTimeOnSticker">Tijd verbergen op stickers</string>
     <string name="TranslatorShowOriginal">Met oorspronkelijke tekst</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Standaard inschakelen</string>
-    <string name="MarkdownParser">Verwerker</string>
-    <string name="MarkdownParseLinks">Koppelingen verwerken</string>
-    <string name="MarkdownAbout">Bewerk tekst in berichten met behulp van markdown: ^1**vet**^1, ^2__cursief__^2, ^3~~doorhalen~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6tekst^7url^8.</string>
-    <string name="MarkdownAbout2">Bewerk tekst in berichten met behulp van markdown: ^1**vet**^1, ^2__cursief__^2, ^3~~doorhalen~~^3, ^4`monospace`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Recente chats wissen</string>
     <string name="ClearRecentChatAlert">Wil je je recente chats wissen?</string>
     <string name="DownloadSpeedBoost">Snelheidsboost tijdens downloaden</string>

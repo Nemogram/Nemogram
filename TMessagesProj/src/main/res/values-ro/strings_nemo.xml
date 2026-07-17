@@ -153,12 +153,6 @@
     <string name="PasscodePanicCodeAbout">Folosiți codul de panică pentru a deconecta conturile în cazul în care ceva nu merge bine.</string>
     <string name="HideTimeOnSticker">Ascunde timpul pentru stickere</string>
     <string name="TranslatorShowOriginal">Cu textul original</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Activat în mod implicit</string>
-    <string name="MarkdownParser">Parser</string>
-    <string name="MarkdownParseLinks">Analizează link-urile</string>
-    <string name="MarkdownAbout">Editează textul în mesajele folosind marcajul: ^1**bold**^1, ^2__italic__^2, ^3~~strikethrough~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6text^7url^8.</string>
-    <string name="MarkdownAbout2">Editați textul în mesaje folosind marcajul: ^1**bold**^1, ^2__italic__^2, ^3~~strikethrough~~^3, ^4`monospace`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Curăță conversațiile recente</string>
     <string name="ClearRecentChatAlert">Doriți să vă ștergeți conversațiile recente?</string>
     <string name="DownloadSpeedBoost">Creșterea vitezei de descărcare</string>

@@ -151,12 +151,6 @@
     <string name="PasscodePanicCodeAbout">如果出現問題，請使用緊急代碼登出帳戶。</string>
     <string name="HideTimeOnSticker">在貼圖上隱藏時間</string>
     <string name="TranslatorShowOriginal">顯示原文</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">預設啟用</string>
-    <string name="MarkdownParser">解析器</string>
-    <string name="MarkdownParseLinks">解析連結</string>
-    <string name="MarkdownAbout">使用標記編輯訊息中的文字：^1**粗體**^1、^2__斜體__^2、^3~~刪除線~~^3、^4`等寬字體`^4、^5||劇透||^5、 ^6文本^7網址^8。</string>
-    <string name="MarkdownAbout2">使用標記編輯訊息中的文字：^1**粗體**^1、^2__斜體__^2、^3~~刪除線~~^3、^4`等寬字體`^4、^5||劇透||^5。</string>
     <string name="ClearRecentChats">清除最近聊天記錄</string>
     <string name="ClearRecentChatAlert">您想清除最近聊天記錄嗎？</string>
     <string name="DownloadSpeedBoost">下載速度提升</string>

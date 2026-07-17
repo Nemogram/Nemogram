@@ -149,12 +149,6 @@
     <string name="PasscodePanicCodeAbout">Utilice el código de emergencia para salir de las cuentas si algo va mal.</string>
     <string name="HideTimeOnSticker">Ocultar tiempo en los stickers</string>
     <string name="TranslatorShowOriginal">Con texto original</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Activar por defecto</string>
-    <string name="MarkdownParser">Análisis</string>
-    <string name="MarkdownParseLinks">Analizar enlaces</string>
-    <string name="MarkdownAbout">Editar el texto en los mensajes usando markdown: ^1**negrita**^1, ^2__cursiva__^2, ^3~~tachado~~^3, ^4`monoespaciado`^4, ^5||spoiler||^5, ^6texto^7enlace^8.</string>
-    <string name="MarkdownAbout2">Editar el texto en los mensajes usando markdown: ^1**negrita**^1, ^2__cursiva__^2, ^3~~tachado~~^3, ^4`monoespaciado`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Borrar chats recientes</string>
     <string name="ClearRecentChatAlert">¿Quieres borrar tus chats recientes?</string>
     <string name="DownloadSpeedBoost">Potenciar velocidad de descarga</string>

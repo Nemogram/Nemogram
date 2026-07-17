@@ -73,8 +73,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.nemogram.messenger.NemoConfig;
-
 public class EditTextBoldCursor extends EditTextEffects {
 
     private static Field mEditor;
@@ -165,7 +163,7 @@ public class EditTextBoldCursor extends EditTextEffects {
 
     private static Method canUndoMethod;
     private static Method canRedoMethod;
-    public static boolean disableMarkdown = NemoConfig.disableMarkdownByDefault;
+    public static boolean disableMarkdown = false;
     private boolean showDisableMarkdown = false;
 
     static {

@@ -152,12 +152,6 @@
     <string name="PasscodePanicCodeAbout">Используйте тревожный код для выхода из всех аккаунтов, если что-то пойдёт не так.</string>
     <string name="HideTimeOnSticker">Скрывать время отправки на стикерах</string>
     <string name="TranslatorShowOriginal">Отображать исходный текст</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Включить по умолчанию</string>
-    <string name="MarkdownParser">Синтаксический анализатор</string>
-    <string name="MarkdownParseLinks">Синтаксический анализатор ссылок</string>
-    <string name="MarkdownAbout">Изменяйте текст сообщений, используя markdown: ^1**жирный**^1, ^2__курсив__^2, ^3~~зачёркнутый~~^3, ^4`моноширинный`^4, ^5||скрытый||^5, ^6текст^7url^8.</string>
-    <string name="MarkdownAbout2">Изменяйте текст сообщений, используя markdown: ^1**жирный**^1, ^2__курсив__^2, ^3~~зачёркнутый~~^3, ^4`моноширинный`^4, ^5||скрытый||^5.</string>
     <string name="ClearRecentChats">Очистить недавно просмотренные</string>
     <string name="ClearRecentChatAlert">Вы хотите очистить список недавно просмотренных?</string>
     <string name="DownloadSpeedBoost">Ускорение скачивания</string>

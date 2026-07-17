@@ -1,7 +1,6 @@
 package org.nemogram.messenger.settings;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -21,7 +20,6 @@ import org.telegram.ui.Components.UniversalAdapter;
 import java.util.ArrayList;
 
 import org.nemogram.messenger.NemoConfig;
-import org.nemogram.messenger.helpers.EntitiesHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.helpers.VoiceEnhancementsHelper;
 import org.nemogram.messenger.helpers.WhisperHelper;
@@ -42,11 +40,6 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
 
     private final int transcribeProviderRow = rowId++;
     private final int cfCredentialsRow = rowId++;
-
-    private final int markdownEnableRow = rowId++;
-    private final int markdownParserRow = rowId++;
-    private final int markdownParseLinksRow = rowId++;
-    private final int markdown2Row = rowId++;
 
     private final int voiceEnhancementsRow = rowId++;
     private final int rearVideoMessagesRow = rowId++;
@@ -114,14 +107,6 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
         }).slug("transcribeProvider"));
         items.add(TextSettingsCellFactory.of(cfCredentialsRow, LocaleController.getString(R.string.CloudflareCredentials), "").slug("cfCredentials"));
         items.add(UItem.asShadow(LocaleController.formatString(R.string.TranscribeProviderDesc, LocaleController.getString(R.string.TranscribeProviderWorkersAI))));
-
-        items.add(UItem.asHeader(LocaleController.getString(R.string.Markdown)));
-        items.add(UItem.asCheck(markdownEnableRow, LocaleController.getString(R.string.MarkdownEnableByDefault)).slug("markdownEnable").setChecked(!NemoConfig.disableMarkdownByDefault));
-        items.add(TextSettingsCellFactory.of(markdownParserRow, LocaleController.getString(R.string.MarkdownParser), NemoConfig.newMarkdownParser ? "Nekogram" : "Telegram").slug("markdownParser"));
-        if (NemoConfig.newMarkdownParser) {
-            items.add(UItem.asCheck(markdownParseLinksRow, LocaleController.getString(R.string.MarkdownParseLinks)).slug("markdownParseLinks").setChecked(NemoConfig.markdownParseLinks));
-        }
-        items.add(UItem.asShadow(markdown2Row, TextUtils.expandTemplate(EntitiesHelper.parseMarkdown(NemoConfig.newMarkdownParser && NemoConfig.markdownParseLinks ? LocaleController.getString(R.string.MarkdownAbout) : LocaleController.getString(R.string.MarkdownAbout2)), "**", "__", "~~", "`", "||", "[", "](", ")")));
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.SharedMediaTab2)));
         if (VoiceEnhancementsHelper.isAvailable()) {
@@ -285,11 +270,6 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
             builder.setOnPreDismissListener(dialog -> listView.adapter.notifyItemChanged(position, PARTIAL));
             builder.setNegativeButton(LocaleController.getString(R.string.OK), null);
             builder.show();
-        } else if (id == markdownEnableRow) {
-            NemoConfig.toggleDisableMarkdownByDefault();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(!NemoConfig.disableMarkdownByDefault);
-            }
         } else if (id > messageMenuRow) {
             TextCheckbox2Cell cell = ((TextCheckbox2Cell) view);
             int menuPosition = id - messageMenuRow - 1;
@@ -332,32 +312,6 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.voiceEnhancements);
             }
-        } else if (id == markdownParserRow) {
-            ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add("Nekogram");
-            arrayList.add("Telegram");
-            boolean oldParser = NemoConfig.newMarkdownParser;
-            PopupHelper.show(arrayList, LocaleController.getString(R.string.MarkdownParser), NemoConfig.newMarkdownParser ? 0 : 1, getParentActivity(), view, i -> {
-                NemoConfig.setNewMarkdownParser(i == 0);
-                item.textValue = arrayList.get(i);
-                listView.adapter.notifyItemChanged(position, PARTIAL);
-                if (oldParser != NemoConfig.newMarkdownParser) {
-                    if (oldParser) {
-                        notifyItemRemoved(markdownParseLinksRow);
-                        updateRows();
-                    } else {
-                        updateRows();
-                        notifyItemInserted(markdownParseLinksRow);
-                    }
-                    notifyItemChanged(markdown2Row);
-                }
-            }, resourcesProvider);
-        } else if (id == markdownParseLinksRow) {
-            NemoConfig.toggleMarkdownParseLinks();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NemoConfig.markdownParseLinks);
-            }
-            notifyItemChanged(markdown2Row);
         } else if (id == quickForwardRow) {
             NemoConfig.toggleQuickForward();
             if (view instanceof TextCheckCell) {

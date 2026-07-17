@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Скарыстайце трывожны код, каб выйсці з усіх уліковых запісаў, калі нешта пойдзе не так.</string>
     <string name="HideTimeOnSticker">Адключыць час у стыкераў</string>
     <string name="TranslatorShowOriginal">Арыгінальны тэкст</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Уключыць па змаўчанні</string>
-    <string name="MarkdownParser">Сінтаксічны аналізатар</string>
-    <string name="MarkdownParseLinks">Сінтаксічны аналізатар спасылак</string>
-    <string name="MarkdownAbout">Змяняйце тэкст паведамленняў, карыстаючыся, markdown: ^1**тоўсты**^1, ^2__курсіў__^2, ^3~~закрэслены~~^3, ^4`монашырынны`^4, ^5||ухаваны||^5, ^6тэкст^7url^8.</string>
-    <string name="MarkdownAbout2">Змяняйце тэкст паведамленняў, карыстаючыся markdown: ^1**тлусты**^1, ^2__курсіў__^2, ^3~~закрэслены~~^3, ^4`монашырынны`^4, ^5||ухаваны||^5.</string>
     <string name="ClearRecentChats">Астатнія апошнія чаты</string>
     <string name="ClearRecentChatAlert">Вы хочаце ачысціць спіс нядаўняе прагледжаных?</string>
     <string name="DownloadSpeedBoost">Павелічэнне хуткасці загрузкі</string>

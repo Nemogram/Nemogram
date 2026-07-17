@@ -150,12 +150,6 @@
     <string name="PasscodePanicCodeAbout">Sử dụng mã panic để đăng xuất tài khoản nếu có sự cố.</string>
     <string name="HideTimeOnSticker">Ẩn thời gian trên nhãn dán</string>
     <string name="TranslatorShowOriginal">Với văn bản gốc</string>
-    <string name="Markdown">Markdown</string>
-    <string name="MarkdownEnableByDefault">Bật theo mặc định</string>
-    <string name="MarkdownParser">Trình phân tích cú pháp</string>
-    <string name="MarkdownParseLinks">Phân tích cú pháp liên kết</string>
-    <string name="MarkdownAbout">Chỉnh sửa văn bản trong tin nhắn bằng cách sử dụng markdown: ^1**in đậm**^1, ^2__in nghiêng__^2, ^3~~gạch ngang~~^3, ^4`monospace`^4, ^5||spoiler||^5, ^6text^7url^8.</string>
-    <string name="MarkdownAbout2">Chỉnh sửa văn bản trong tin nhắn bằng cách sử dụng markdown: ^1**in đậm**^1, ^2__in nghiêng__^2, ^3~~gạch ngang~~^3, ^4`monospace`^4, ^5||spoiler||^5.</string>
     <string name="ClearRecentChats">Xóa các cuộc trò chuyện gần đây</string>
     <string name="ClearRecentChatAlert">Bạn có muốn xóa các cuộc trò chuyện gần đây không?</string>
     <string name="DownloadSpeedBoost">Tăng tốc tải xuống</string>
