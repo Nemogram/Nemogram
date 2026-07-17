@@ -108,7 +108,6 @@ public class NemoConfig {
     public static boolean openArchiveOnPull = false;
     public static boolean hideGifts = false;
     public static boolean musicViewAlternativeLayout = false;
-    public static boolean hideBirthdayHint = false;
     public static int nameOrder = 1;
     public static boolean disableAppBarShadow = false;
     public static boolean mediaPreview = true;
@@ -183,7 +182,6 @@ public class NemoConfig {
             ignoreBlocked = preferences.getBoolean("ignoreBlocked2", false);
             hideGifts = preferences.getBoolean("hideGifts", false);
             musicViewAlternativeLayout = preferences.getBoolean("musicViewAlternativeLayout", false);
-            hideBirthdayHint = preferences.getBoolean("hideBirthdayHint", false);
             nameOrder = preferences.getInt("nameOrder", 1);
             showAddToSavedMessages = preferences.getBoolean("showAddToSavedMessages", true);
             showSetReminder = preferences.getBoolean("showSetReminder", false);
@@ -649,12 +647,6 @@ public class NemoConfig {
         hideGifts = !hideGifts;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("hideGifts", hideGifts).apply();
-    }
-
-    public static void toggleHideBirthdayHint() {
-        hideBirthdayHint = !hideBirthdayHint;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        preferences.edit().putBoolean("hideBirthdayHint", hideBirthdayHint).apply();
     }
 
     public static void setNameOrder(int order) {

@@ -232,7 +232,6 @@
     <string name="MessageHidden">Message hidden</string>
     <string name="AutoCheckUpdates">Auto-check for updates</string>
     <string name="HideGifts">Hide gifts tab</string>
-    <string name="HideBirthdayHint">Hide birthday setup hint</string>
     <string name="HideAiButton">Hide AI editor button</string>
     <string name="ExportChat">Export chat history</string>
     <string name="ExportChatFormat">Format</string>

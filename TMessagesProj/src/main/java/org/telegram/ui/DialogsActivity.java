@@ -6281,8 +6281,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             });
             StarsController.getInstance(currentAccount).loadStarGifts();
         } else if (
+            false &&
             folderId == 0 && communityId == 0 &&
-            !NemoConfig.hideBirthdayHint &&
             MessagesController.getInstance(currentAccount).pendingSuggestions.contains("BIRTHDAY_SETUP") &&
             getMessagesController().getUserFull(getUserConfig().getClientUserId()) != null &&
             getMessagesController().getUserFull(getUserConfig().getClientUserId()).birthday == null
