@@ -46,7 +46,6 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
     private final int disabledInstantCameraRow = rowId++;
     private final int askBeforeCallRow = rowId++;
     private final int openArchiveOnPullRow = rowId++;
-    private final int alwaysShowDownloadIconRow = rowId++;
 
     private CharSequence getTranslationProvider() {
         var providers = Translator.getProviders();
@@ -154,8 +153,6 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
         items.add(UItem.asCheck(disabledInstantCameraRow, LocaleController.getString(R.string.DisableInstantCamera)).slug("disabledInstantCamera").setChecked(NemoConfig.disableInstantCamera));
         items.add(UItem.asCheck(askBeforeCallRow, LocaleController.getString(R.string.AskBeforeCalling)).slug("askBeforeCall").setChecked(NemoConfig.askBeforeCall));
         items.add(UItem.asCheck(openArchiveOnPullRow, LocaleController.getString(R.string.OpenArchiveOnPull)).slug("openArchiveOnPull").setChecked(NemoConfig.openArchiveOnPull));
-        items.add(UItem.asCheck(alwaysShowDownloadIconRow, LocaleController.getString(R.string.AlwaysShowDownloadIcon)).slug("alwaysShowDownloadIcon").setChecked(NemoConfig.alwaysShowDownloadIcon));
-        items.add(UItem.asShadow(null));
     }
 
     @Override
@@ -304,11 +301,6 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
                 item.textValue = getTranslatorExternalApp();
                 listView.adapter.notifyItemChanged(position, PARTIAL);
             }, resourcesProvider);
-        } else if (id == alwaysShowDownloadIconRow) {
-            NemoConfig.toggleAlwaysShowDownloadIcon();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NemoConfig.alwaysShowDownloadIcon);
-            }
         }
     }
 

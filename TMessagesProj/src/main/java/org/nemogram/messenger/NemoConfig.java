@@ -154,7 +154,6 @@ public class NemoConfig {
     public static boolean hideSearchBarOnScroll = true;
     public static boolean hideSearchBarPlaceholder = false;
     public static String searchBarPlaceholder = "";
-    public static boolean alwaysShowDownloadIcon = false;
     public static boolean moreHapticFeedbacks = false;
 
     public static boolean shouldNOTTrustMe = false;
@@ -272,7 +271,6 @@ public class NemoConfig {
             hideSearchBarOnScroll = preferences.getBoolean("hideSearchBarOnScroll", true);
             hideSearchBarPlaceholder = preferences.getBoolean("hideSearchBarPlaceholder", false);
             searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
-            alwaysShowDownloadIcon = preferences.getBoolean("alwaysShowDownloadIcon", false);
             moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
 
             LensHelper.checkLensSupportAsync();
@@ -1051,14 +1049,6 @@ public class NemoConfig {
         useStockNotificationIcon = !useStockNotificationIcon;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("useStockNotificationIcon", useStockNotificationIcon).apply();
-    }
-
-    public static void toggleAlwaysShowDownloadIcon() {
-        alwaysShowDownloadIcon = !alwaysShowDownloadIcon;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("alwaysShowDownloadIcon", alwaysShowDownloadIcon);
-        editor.apply();
     }
 
     public static void toggleMoreHapticFeedbacks() {

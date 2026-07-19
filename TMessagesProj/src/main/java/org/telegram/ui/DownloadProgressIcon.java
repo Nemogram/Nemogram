@@ -121,7 +121,7 @@ public class DownloadProgressIcon extends View implements NotificationCenter.Not
             downloadImageReceiver.draw(canvas);
         }
 
-        if (downloadDrawable.getCurrentFrame() == 0 || getAlpha() != 0) {
+        if (progress == 1f && !showCompletedIcon) {
             if (downloadDrawable.getCurrentFrame() == 0) {
                 downloadCompleteDrawable.setCurrentFrame(0, false);
                 downloadCompleteDrawable.start();
@@ -131,7 +131,6 @@ public class DownloadProgressIcon extends View implements NotificationCenter.Not
         canvas.restore();
         if (getAlpha() != 0) {
             wasDrawn = true;
-            updateProgress();
         }
     }
 
