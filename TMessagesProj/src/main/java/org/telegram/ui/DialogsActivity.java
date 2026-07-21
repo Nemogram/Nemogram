@@ -10401,18 +10401,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         if (proxyDrawable == null || doneItem != null && doneItem.getVisibility() == View.VISIBLE) {
             return;
         }
-        boolean showDownloads = false;
-        for (int i = 0; i < getDownloadController().downloadingFiles.size(); i++) {
-            if (getFileLoader().isLoadingFile(getDownloadController().downloadingFiles.get(i).getFileName())) {
-                showDownloads = true;
-                break;
-            }
-        }
-        if ((getDownloadController().hasUnviewedDownloads() || showDownloads || (downloadsItem.getVisibility() == View.VISIBLE && downloadsItem.getAlpha() == 1 && !force))) {
-            downloadsItemVisible = true;
-        } else {
-            downloadsItemVisible = false;
-        }
+        downloadsItemVisible = false;
         checkUi_itemDownloadsVisibility();
 
         final SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
