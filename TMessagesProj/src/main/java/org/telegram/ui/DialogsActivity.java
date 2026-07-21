@@ -13910,6 +13910,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
                 presentFragment(new ChatActivity(args));
             });
+            io.add(R.drawable.msg_download, getString(R.string.DownloadsTabs), () -> {
+                showSearch(true, true, true);
+                if (fragmentSearchFieldWatcher != null) {
+                    fragmentSearchFieldWatcher.toggleSearch(true);
+                }
+            });
             if (ApplicationLoader.applicationLoaderInstance != null) {
                 ApplicationLoader.applicationLoaderInstance.addItemOptions(io);
             }
