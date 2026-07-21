@@ -96,7 +96,7 @@ public class CropRotationWheel extends FrameLayout {
         });
         aspectRatioButton.setVisibility(GONE);
         aspectRatioButton.setContentDescription(LocaleController.getString(R.string.AccDescrAspectRatio));
-        addView(aspectRatioButton, LayoutHelper.createFrame(70, 64, Gravity.LEFT | Gravity.CENTER_VERTICAL));
+        addView(aspectRatioButton, LayoutHelper.createFrame(70, 64, Gravity.LEFT | Gravity.CENTER_VERTICAL, 70, 0, 0, 0));
 
         rotation90Button = new ImageView(context);
         rotation90Button.setImageResource(R.drawable.msg_photo_rotate);
@@ -120,7 +120,7 @@ public class CropRotationWheel extends FrameLayout {
     }
 
     public void setFreeform(boolean freeform) {
-        //aspectRatioButton.setVisibility(freeform ? VISIBLE : GONE);
+        aspectRatioButton.setVisibility(freeform ? VISIBLE : GONE);
     }
 
     public void setMirrored(boolean value) {
@@ -218,12 +218,29 @@ public class CropRotationWheel extends FrameLayout {
         return true;
     }
 
+    private float getSliderLeftReserve() {
+        return AndroidUtilities.dp(70) + (aspectRatioButton.getVisibility() == VISIBLE ? AndroidUtilities.dp(70) : 0);
+    }
+
+    private float getSliderRightReserve() {
+        return AndroidUtilities.dp(70);
+    }
+
+    private float getSliderCenterX(int width) {
+        return getSliderLeftReserve() + (width - getSliderLeftReserve() - getSliderRightReserve()) / 2.0f;
+    }
+
+    private float getSliderRadius(int width) {
+        return (width - getSliderLeftReserve() - getSliderRightReserve()) / 2.0f;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         int width = getWidth();
         int height = getHeight();
+        float centerX = getSliderCenterX(width);
 
         float angle = -rotation * 2;
         float delta = angle % DELTA_ANGLE;
@@ -246,25 +263,26 @@ public class CropRotationWheel extends FrameLayout {
 
         bluePaint.setAlpha(255);
 
-        tempRect.left = (width - AndroidUtilities.dp(2.5f)) / 2;
+        tempRect.left = centerX - AndroidUtilities.dp(2.5f) / 2;
         tempRect.top = (height - AndroidUtilities.dp(22)) / 2;
-        tempRect.right = (width + AndroidUtilities.dp(2.5f)) / 2;
+        tempRect.right = centerX + AndroidUtilities.dp(2.5f) / 2;
         tempRect.bottom =  (height + AndroidUtilities.dp(22)) / 2;
         canvas.drawRoundRect(tempRect, AndroidUtilities.dp(2), AndroidUtilities.dp(2), bluePaint);
 
-        float tx = (width - degreesTextPaint.measureText(degreesText)) / 2;
+        float tx = centerX - degreesTextPaint.measureText(degreesText) / 2;
         float ty = AndroidUtilities.dp(14);
         canvas.drawText(degreesText, tx, ty, degreesTextPaint);
     }
 
     protected void drawLine(Canvas canvas, int i, float delta, int width, int height, boolean center, Paint paint) {
-        int radius = (int)(width / 2.0f - AndroidUtilities.dp(70));
+        float centerX = getSliderCenterX(width);
+        float radius = getSliderRadius(width);
 
         float angle = 90 - (i * DELTA_ANGLE + delta);
         int val = (int)(radius * Math.cos(Math.toRadians(angle)));
-        int x = width / 2 + val;
+        int x = (int)(centerX + val);
 
-        float f = Math.abs(val) / (float)radius;
+        float f = Math.abs(val) / radius;
         int alpha = Math.min(255, Math.max(0, (int)((1.0f - f * f) * 255)));
 
         if (center)
