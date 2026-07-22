@@ -344,6 +344,7 @@ import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.forward.ForwardItem;
 import org.nemogram.messenger.helpers.LensHelper;
 import org.nemogram.messenger.helpers.MessageHelper;
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.nemogram.messenger.helpers.QrHelper;
 import org.nemogram.messenger.streaming.MediaStreamingProvider;
 
@@ -8114,7 +8115,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         checkImageView.setHasBorder(true);
         checkImageView.setSize(34);
         checkImageView.setCheckOffset(dp(1));
-        checkImageView.setColor(getThemedColor(Theme.key_chat_editMediaButton), 0xffffffff);
+        checkImageView.setColor(getThemedColor(Theme.key_chat_editMediaButton), MonetHelper.getSettingsIconForegroundColor(Color.WHITE));
+        checkImageView.setBorderColor(getThemedColor(Theme.key_chat_editMediaButton));
         checkImageView.setVisibility(View.GONE);
         containerView.addView(checkImageView, LayoutHelper.createFrame(34, 34, Gravity.RIGHT | Gravity.TOP, 0, rotation == Surface.ROTATION_270 || rotation == Surface.ROTATION_90 ? 61 : 71, 11, 0));
         if (isStatusBarVisible()) {
@@ -10370,7 +10372,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             pickerViewSendButton.invalidate();
         }
         if (checkImageView != null) {
-            checkImageView.setColor(getThemedColor(Theme.key_chat_editMediaButton), 0xffffffff);
+            checkImageView.setColor(getThemedColor(Theme.key_chat_editMediaButton), MonetHelper.getSettingsIconForegroundColor(Color.WHITE));
+            checkImageView.setBorderColor(getThemedColor(Theme.key_chat_editMediaButton));
         }
         PorterDuffColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         if (paintItem != null && paintItem.getColorFilter() != null) {
