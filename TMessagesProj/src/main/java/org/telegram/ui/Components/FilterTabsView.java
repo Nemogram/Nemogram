@@ -154,7 +154,7 @@ public class FilterTabsView extends FrameLayout {
             }
 
             final int counterResultWidth;
-            if (c > 0) {
+            if (!NemoConfig.hideFolderUnreadBadge && c > 0) {
                 String counterText = String.format("%d", c);
                 int counterWidth = (int) Math.ceil(textCounterPaint.measureText(counterText));
                 int countWidth = Math.max(dp(TAB_COUNTER_HEIGHT - 10), counterWidth) + dp(10);
