@@ -481,7 +481,7 @@ public class GroupCreateFinalActivity extends BaseFragment implements Notificati
         sizeNotifierFrameLayout.addView(linearLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
 
         editTextContainer = new FrameLayout(context);
-        editTextContainer.setBackground(Theme.createRoundRectDrawableShadowed(dp(16), getThemedColor(Theme.key_windowBackgroundWhite)));
+        editTextContainer.setBackground(Theme.createRoundRectDrawableShadowed(dp(22), getThemedColor(Theme.key_windowBackgroundWhite)));
         linearLayout.addView(editTextContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 9, 0, 9, 0));
 
         avatarImage = new BackupImageView(context) {
