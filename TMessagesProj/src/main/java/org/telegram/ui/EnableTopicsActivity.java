@@ -20,6 +20,7 @@ import androidx.core.graphics.ColorUtils;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.R;
 import org.telegram.messenger.Utilities;
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.BaseFragment;
@@ -187,10 +188,11 @@ public class EnableTopicsActivity extends BaseFragment {
             leftTitleLayout.addView(leftTitleUnselected, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             leftTitleBackground = new FrameLayout(context);
             leftTitleBackground.setPadding(dp(12), 0, dp(12), 0);
-            leftTitleBackground.setBackground(Theme.createRoundRectDrawable(dp(13), Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider)));
+            leftTitleBackground.setBackground(Theme.createRoundRectDrawable(dp(13), MonetHelper.getSettingsIconBackgroundColor(Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider))));
             leftTitleLayout.addView(leftTitleBackground, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 26, Gravity.CENTER));
             leftTitleSelected = TextHelper.makeTextView(context, 14, Theme.key_windowBackgroundCheckText, true);
             leftTitleSelected.setText(getString(R.string.TopicsLayoutTabs));
+            leftTitleSelected.setTextColor(MonetHelper.getSettingsIconForegroundColor(Theme.getColor(Theme.key_windowBackgroundCheckText, resourcesProvider)));
             leftTitleBackground.addView(leftTitleSelected, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             leftLayout.addView(leftTitleLayout, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 26, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 182, 0, 0));
 
@@ -208,10 +210,11 @@ public class EnableTopicsActivity extends BaseFragment {
             rightTitleLayout.addView(rightTitleUnselected, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             rightTitleBackground = new FrameLayout(context);
             rightTitleBackground.setPadding(dp(12), 0, dp(12), 0);
-            rightTitleBackground.setBackground(Theme.createRoundRectDrawable(dp(13), Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider)));
+            rightTitleBackground.setBackground(Theme.createRoundRectDrawable(dp(13), MonetHelper.getSettingsIconBackgroundColor(Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider))));
             rightTitleLayout.addView(rightTitleBackground, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 26, Gravity.CENTER));
             rightTitleSelected = TextHelper.makeTextView(context, 14, Theme.key_windowBackgroundCheckText, true);
             rightTitleSelected.setText(getString(R.string.TopicsLayoutList));
+            rightTitleSelected.setTextColor(MonetHelper.getSettingsIconForegroundColor(Theme.getColor(Theme.key_windowBackgroundCheckText, resourcesProvider)));
             rightTitleBackground.addView(rightTitleSelected, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             rightLayout.addView(rightTitleLayout, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 26, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 182, 0, 0));
 

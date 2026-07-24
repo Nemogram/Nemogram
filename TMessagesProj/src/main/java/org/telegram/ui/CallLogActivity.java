@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.DialogObject;
@@ -1658,10 +1659,11 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
 		ImageView imageView = new ImageView(context);
 		imageView.setScaleType(ImageView.ScaleType.CENTER);
 		imageView.setImageResource(R.drawable.story_link);
+		imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(0xFFFFFFFF), PorterDuff.Mode.SRC_IN));
 		imageView.setScaleX(2f);
 		imageView.setScaleY(2f);
 		circle.addView(imageView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.CENTER));
-		circle.setBackground(Theme.createCircleDrawable(dp(80), Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider)));
+		circle.setBackground(Theme.createCircleDrawable(dp(80), MonetHelper.getSettingsIconBackgroundColor(Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider))));
 		topView.addView(circle, LayoutHelper.createFrame(80, 80, Gravity.CENTER_HORIZONTAL, 0, 12, 0, 0));
 
 		final ImageView optionsView = new ImageView(context);

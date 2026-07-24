@@ -8080,8 +8080,8 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
         public View getSectionHeaderView(int section, View view) {
             if (view == null) {
                 view = new GraySectionCell(mContext, 28, resourcesProvider);
-//                ((GraySectionCell) view).setNoBackground(true);
             }
+            view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray, resourcesProvider));
             if (section == 0) {
                 view.setAlpha(0.0f);
             } else if (section < sharedMediaData[3].sections.size()) {
@@ -8100,7 +8100,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
             switch (viewType) {
                 case VIEW_TYPE_LINK_DATE:
                     view = new GraySectionCell(mContext, 28, resourcesProvider);
-//                    ((GraySectionCell) view).setNoBackground(true);
+                    view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray, resourcesProvider));
                     break;
                 case VIEW_TYPE_LINK:
                     view = new SharedLinkCell(mContext, SharedLinkCell.VIEW_TYPE_DEFAULT, resourcesProvider);
@@ -8132,6 +8132,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                     case VIEW_TYPE_LINK_DATE: {
                         MessageObject messageObject = messageObjects.get(0);
                         if (holder.itemView instanceof GraySectionCell) {
+                            holder.itemView.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray, resourcesProvider));
                             ((GraySectionCell) holder.itemView).setText(LocaleController.formatSectionDate(messageObject.messageOwner.date));
                         }
                         break;

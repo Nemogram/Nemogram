@@ -47,6 +47,7 @@ import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.utils.DrawableUtils;
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_account;
@@ -1111,13 +1112,13 @@ public class ProfileSearchCell extends BaseCell implements NotificationCenter.No
             final float x = LocaleController.isRTL ? dp(15) : getWidth() - buttonWidth - dp(15);
             final float h = dp(28);
 
-            openButtonBackgroundPaint.setColor(Theme.getColor(Theme.key_featuredStickers_addButton));
+            openButtonBackgroundPaint.setColor(MonetHelper.getSettingsIconBackgroundColor(Theme.getColor(Theme.key_featuredStickers_addButton)));
             openButtonRect.set(x, (getHeight() - h) / 2.0f, x + buttonWidth, (getHeight() + h) / 2.0f);
             canvas.save();
             final float s = openButtonBounce.getScale(.06f);
             canvas.scale(s, s, openButtonRect.centerX(), openButtonRect.centerY());
             canvas.drawRoundRect(openButtonRect, openButtonRect.height() / 2.0f, openButtonRect.height() / 2.0f, openButtonBackgroundPaint);
-            openButtonText.draw(canvas, x + dp(14), getHeight() / 2.0f, 0xFFFFFFFF, 1.0f);
+            openButtonText.draw(canvas, x + dp(14), getHeight() / 2.0f, MonetHelper.getSettingsIconForegroundColor(0xFFFFFFFF), 1.0f);
             canvas.restore();
         }
     }

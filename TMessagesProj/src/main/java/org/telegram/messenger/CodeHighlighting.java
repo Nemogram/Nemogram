@@ -128,7 +128,12 @@ public class CodeHighlighting {
 
         @Override
         public void updateDrawState(TextPaint tp) {
-            tp.setColor(Theme.getColor(getColorKey()));
+            final int outTextColor = Theme.getColor(Theme.key_chat_messageTextOut);
+            if (tp.getColor() == outTextColor) {
+                tp.setColor(outTextColor);
+            } else {
+                tp.setColor(Theme.getColor(getColorKey()));
+            }
         }
     }
 

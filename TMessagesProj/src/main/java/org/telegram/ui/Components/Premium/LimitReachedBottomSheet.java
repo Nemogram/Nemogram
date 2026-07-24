@@ -44,6 +44,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BotWebViewVibrationEffect;
 import org.telegram.messenger.ChannelBoostsController;
@@ -2013,8 +2014,9 @@ public class LimitReachedBottomSheet extends BottomSheetWithRecyclerListView imp
                 FrameLayout frameLayout = new FrameLayout(context);
                 ImageView imageView = new ImageView(context);
                 imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.large_boosts));
+                imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
                 frameLayout.addView(imageView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
-                frameLayout.setBackground(Theme.createCircleDrawable(dp(79), Theme.getColor(Theme.key_featuredStickers_addButton)));
+                frameLayout.setBackground(Theme.createCircleDrawable(dp(79), MonetHelper.getSettingsIconBackgroundColor(Theme.getColor(Theme.key_featuredStickers_addButton))));
                 addView(frameLayout, LayoutHelper.createLinear(79, 79, Gravity.CENTER_HORIZONTAL, 0, 23, 0, 0));
             }
 

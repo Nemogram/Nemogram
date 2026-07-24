@@ -685,6 +685,7 @@ public class InviteContactsActivity extends BaseFragment implements Notification
             };
             editText.setHint(LocaleController.getString(R.string.Search));
             editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            editText.setCursorColor(getThemedColor(Theme.key_windowBackgroundWhiteBlackText));
             editText.setCursorWidth(1.5f);
             editText.setInputType(editText.getInputType() | InputType.TYPE_TEXT_VARIATION_FILTER);
             editText.setSingleLine(true);

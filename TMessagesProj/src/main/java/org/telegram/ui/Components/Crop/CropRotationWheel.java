@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.LayoutHelper;
 
@@ -65,7 +66,7 @@ public class CropRotationWheel extends FrameLayout {
 
         bluePaint = new Paint();
         bluePaint.setStyle(Paint.Style.FILL);
-        bluePaint.setColor(0xff51bdf3);
+        bluePaint.setColor(MonetHelper.getAccentColor(0xff51bdf3));
         bluePaint.setAlpha(255);
         bluePaint.setAntiAlias(true);
 
