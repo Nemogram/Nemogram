@@ -753,7 +753,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         if (!getMessagesController().premiumPurchaseBlocked()) {
             items.add(SettingCell.Factory.of(16, 0xFFF38B31, 0xFFE26314, R.drawable.settings_gift, getString(R.string.SendAGift)));
         }
-        if (items.get(items.size() - 1).viewType != UniversalAdapter.VIEW_TYPE_SHADOW)
+        if (items.get(items.size() - 1).viewType != UniversalAdapter.VIEW_TYPE_SHADOW && !(BuildVars.LOGS_ENABLED || BuildVars.DEBUG_PRIVATE_VERSION))
             items.add(UItem.asShadow(null));
 
         if (BuildVars.LOGS_ENABLED || BuildVars.DEBUG_PRIVATE_VERSION) {
