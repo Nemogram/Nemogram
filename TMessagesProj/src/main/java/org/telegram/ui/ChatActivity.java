@@ -1274,6 +1274,7 @@ public class ChatActivity extends BaseFragment implements
     public final static int OPTION_SUGGESTION_ADD_OFFER = 114;
 
     public final static int OPTION_VIEW_STATISTICS = 115;
+    public final static int OPTION_REPLY_WITH_TIMECODE = 116;
 
     private final static int[] allowedNotificationsDuringChatListAnimations = new int[]{
             NotificationCenter.messagesRead,
@@ -15024,6 +15025,32 @@ public class ChatActivity extends BaseFragment implements
 
     public void showFieldPanelForReply(MessageObject messageObjectToReply) {
         showFieldPanel(true, messageObjectToReply, null, null, null, true, 0, null, false, 0, true);
+    }
+
+    private void addReplyWithTimecodeOption(MessageObject messageObject, ArrayList<CharSequence> items, ArrayList<Integer> options, ArrayList<Integer> icons) {
+        if (messageObject == null) {
+            return;
+        }
+        if (!(messageObject.isVoice() || messageObject.isRoundVideo())) {
+            return;
+        }
+        if (!getMediaController().isPlayingMessage(messageObject)) {
+            return;
+        }
+        items.add(LocaleController.getString(R.string.ReplyWithTimecode));
+        options.add(OPTION_REPLY_WITH_TIMECODE);
+        icons.add(R.drawable.menu_reply);
+    }
+
+    private String getCurrentTimecodeFor(MessageObject messageObject) {
+        if (messageObject == null || !getMediaController().isPlayingMessage(messageObject)) {
+            return null;
+        }
+        long progressMs = getMediaController().getProgressMs(messageObject);
+        if (progressMs < 0) {
+            return null;
+        }
+        return AndroidUtilities.formatShortDuration((int) (progressMs / 1000));
     }
 
     private Runnable onHideFieldPanelRunnable;
@@ -34099,6 +34126,23 @@ public class ChatActivity extends BaseFragment implements
                 }
                 break;
             }
+            case OPTION_REPLY_WITH_TIMECODE: {
+                if (selectedObject == null) {
+                    break;
+                }
+                String timecode = getCurrentTimecodeFor(selectedObject);
+                showFieldPanelForReply(selectedObject);
+                if (timecode != null && chatActivityEnterView != null) {
+                    int cursor = chatActivityEnterView.getCursorPosition();
+                    int selectionLength = chatActivityEnterView.getSelectionLength();
+                    if (cursor < 0) {
+                        cursor = 0;
+                        selectionLength = 0;
+                    }
+                    chatActivityEnterView.replaceWithText(cursor, Math.max(selectionLength, 0), timecode + " ", false);
+                }
+                break;
+            }
             case OPTION_ADD_TO_STICKERS_OR_MASKS: {
                 StickersAlert alert = new StickersAlert(getParentActivity(), this, selectedObject.getInputStickerSet(), null, bottomChannelButtonsLayout.getVisibility() != View.VISIBLE && (currentChat == null || ChatObject.canSendStickers(currentChat)) ? chatActivityEnterView : null, themeDelegate, false);
                 alert.setCalcMandatoryInsets(isKeyboardVisible());
@@ -46504,6 +46548,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.Reply));
                     options.add(OPTION_REPLY);
                     icons.add(R.drawable.menu_reply);
+                    addReplyWithTimecodeOption(selectedObject, items, options, icons);
                 }
                 if (!isThreadChat() && chatMode != MODE_SCHEDULED && primaryMessage != null && primaryMessage.hasReplies() && currentChat.megagroup && primaryMessage.canViewThread()) {
                     items.add(LocaleController.formatPluralString("ViewReplies", primaryMessage.getRepliesCount()));
@@ -46554,6 +46599,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.Reply));
                     options.add(OPTION_REPLY);
                     icons.add(R.drawable.menu_reply);
+                    addReplyWithTimecodeOption(selectedObject, items, options, icons);
                 }
             }
             if (selectedObject != null && selectedObject.messageOwner != null && currentUser != null && !UserObject.isService(currentUser.id) && (selectedObject.messageOwner.action instanceof TLRPC.TL_messageActionStarGift || selectedObject.messageOwner.action instanceof TLRPC.TL_messageActionStarGiftUnique || selectedObject.messageOwner.action instanceof TLRPC.TL_messageActionGiftPremium)) {
@@ -46605,6 +46651,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.Reply));
                     options.add(OPTION_REPLY);
                     icons.add(R.drawable.menu_reply);
+                    addReplyWithTimecodeOption(selectedObject, items, options, icons);
                 }
                 if ((selectedObject.type == MessageObject.TYPE_TEXT || selectedObject.type == MessageObject.TYPE_ARTICLE || selectedObject.isDice() || selectedObject.isAnimatedEmoji() || selectedObject.isAnimatedEmojiStickers() || getMessageCaption(selectedObject, selectedObjectGroup) != null) && (!noforwardsOrPaidMedia || isEphemeral) && !selectedObject.sponsoredCanReport) {
                     items.add(LocaleController.getString(R.string.Copy));
@@ -46996,6 +47043,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.Reply));
                     options.add(OPTION_REPLY);
                     icons.add(R.drawable.menu_reply);
+                    addReplyWithTimecodeOption(selectedObject, items, options, icons);
                 }
                 if ((selectedObject.type == MessageObject.TYPE_TEXT || selectedObject.type == MessageObject.TYPE_ARTICLE || selectedObject.isAnimatedEmoji() || selectedObject.isAnimatedEmojiStickers() || getMessageCaption(selectedObject, selectedObjectGroup) != null) && (!noforwardsOrPaidMedia || isEphemeral)) {
                     items.add(LocaleController.getString(R.string.Copy));

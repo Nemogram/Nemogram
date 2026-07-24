@@ -267,6 +267,7 @@
     <string name="LegacyChatActionBar">Legacy chat top bar</string>
     <string name="MoreHapticFeedback">More haptic feedback</string>
     <string name="StickersAndGifs">Stickers and GIF</string>
+    <string name="ReplyWithTimecode">Reply with timecode</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
