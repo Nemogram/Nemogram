@@ -3964,16 +3964,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         finishFragment();
                     }
                 } else if (id == 1) {
-                    if (getParentActivity() == null) {
-                        return;
-                    }
-                    SharedConfig.appLocked = true;
-                    SharedConfig.saveConfig();
-                    int[] position = new int[2];
-                    passcodeItem.getLocationInWindow(position);
-                    ((LaunchActivity) getParentActivity()).showPasscodeActivity(false, true, position[0] + passcodeItem.getMeasuredWidth() / 2, position[1] + passcodeItem.getMeasuredHeight() / 2, () -> passcodeItem.setAlpha(1.0f), () -> passcodeItem.setAlpha(0.0f));
-                    getNotificationsController().showNotifications();
-                    checkUi_itemPasscodeVisibility();
+                    lockApp(passcodeItem);
                 } else if (id == 3) {
                     showSearch(true, true, true);
                     fragmentSearchFieldWatcher.toggleSearch(true);
@@ -13899,6 +13890,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
                 presentFragment(new ChatActivity(args));
             });
+            if (isMaterialSearchBarStyle() && !SharedConfig.passcodeHash.isEmpty()) {
+                io.add(R.drawable.outline_header_lock_24, getString(R.string.AccDescrPasscodeLock), () -> lockApp(optionsItem));
+            }
             io.add(R.drawable.msg_download, getString(R.string.DownloadsTabs), () -> {
                 showSearch(true, true, true);
                 if (fragmentSearchFieldWatcher != null) {
@@ -14333,8 +14327,22 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         final float factor1 = 1f - animatorSearchVisible.getFloatValue();
         final float factor2 = 1f - getRightSlidingProgress();
         final float factor3 = 1f - animatorDoneButtonVisible.getFloatValue();
-        final float factor = factor0 * factor1 * factor2 * factor3;
+        final float factor4 = isMaterialSearchBarStyle() ? 0 : 1;
+        final float factor = factor0 * factor1 * factor2 * factor3 * factor4;
         FragmentFloatingButton.setAnimatedVisibility(passcodeItem, factor);
+    }
+
+    private void lockApp(View anchorView) {
+        if (getParentActivity() == null || anchorView == null) {
+            return;
+        }
+        SharedConfig.appLocked = true;
+        SharedConfig.saveConfig();
+        int[] position = new int[2];
+        anchorView.getLocationInWindow(position);
+        ((LaunchActivity) getParentActivity()).showPasscodeActivity(false, true, position[0] + anchorView.getMeasuredWidth() / 2, position[1] + anchorView.getMeasuredHeight() / 2, () -> anchorView.setAlpha(1.0f), () -> anchorView.setAlpha(0.0f));
+        getNotificationsController().showNotifications();
+        checkUi_itemPasscodeVisibility();
     }
 
     private void checkUi_itemDownloadsVisibility() {
