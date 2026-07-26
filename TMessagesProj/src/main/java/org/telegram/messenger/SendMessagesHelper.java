@@ -1898,6 +1898,10 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
     }
 
     public void sendSticker(TLRPC.Document document, String query, long peer, CharSequence caption, VideoEditedInfo videoEditedInfo, MessageObject replyToMsg, MessageObject replyToTopMsg, TL_stories.StoryItem storyItem, ChatActivity.ReplyQuote quote, MessageObject.SendAnimationData sendAnimationData, boolean notify, int scheduleDate, int scheduleRepeatPeriod, boolean updateStickersOrder, Object parentObject, String quick_reply_shortcut, int quick_reply_shortcut_id, long stars, long monoForumPeerId, MessageSuggestionParams suggestionParams, boolean invertMedia) {
+        sendSticker(document, query, peer, caption, videoEditedInfo, replyToMsg, replyToTopMsg, storyItem, quote, sendAnimationData, notify, scheduleDate, scheduleRepeatPeriod, updateStickersOrder, parentObject, quick_reply_shortcut, quick_reply_shortcut_id, stars, monoForumPeerId, suggestionParams, invertMedia, false);
+    }
+
+    public void sendSticker(TLRPC.Document document, String query, long peer, CharSequence caption, VideoEditedInfo videoEditedInfo, MessageObject replyToMsg, MessageObject replyToTopMsg, TL_stories.StoryItem storyItem, ChatActivity.ReplyQuote quote, MessageObject.SendAnimationData sendAnimationData, boolean notify, int scheduleDate, int scheduleRepeatPeriod, boolean updateStickersOrder, Object parentObject, String quick_reply_shortcut, int quick_reply_shortcut_id, long stars, long monoForumPeerId, MessageSuggestionParams suggestionParams, boolean invertMedia, boolean hasSpoiler) {
         if (document == null) {
             return;
         }
@@ -2020,6 +2024,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                     sendMessageParams.suggestionParams = suggestionParams;
                     sendMessageParams.caption = caption != null ? caption.toString() : null;
                     sendMessageParams.invert_media = invertMedia;
+                    sendMessageParams.hasMediaSpoilers = hasSpoiler;
                     sendMessage(sendMessageParams);
                 });
             });
@@ -2040,6 +2045,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
             sendMessageParams.monoForumPeer = monoForumPeerId;
             sendMessageParams.suggestionParams = suggestionParams;
             sendMessageParams.invert_media = invertMedia;
+            sendMessageParams.hasMediaSpoilers = hasSpoiler;
             sendMessage(sendMessageParams);
         }
     }

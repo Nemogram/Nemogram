@@ -268,6 +268,7 @@
     <string name="MoreHapticFeedback">More haptic feedback</string>
     <string name="StickersAndGifs">Stickers and GIF</string>
     <string name="ReplyWithTimecode">Reply with timecode</string>
+    <string name="SendWithSpoiler">Send with spoiler</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

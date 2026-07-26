@@ -177,6 +177,10 @@ public class ContentPreviewViewer {
         default void sendGif(Object gif, Object parent, boolean notify, int scheduleDate, int scheduleRepeatPeriod) {
         }
 
+        default void sendGif(Object gif, Object parent, boolean notify, int scheduleDate, int scheduleRepeatPeriod, boolean hasSpoiler) {
+            sendGif(gif, parent, notify, scheduleDate, scheduleRepeatPeriod);
+        }
+
         default void sendEmoji(TLRPC.Document emoji) {
         }
 
@@ -1067,6 +1071,11 @@ public class ContentPreviewViewer {
                     icons.add(R.drawable.msg_send);
                     actions.add(0);
                 }
+                if (currentDocument != null && delegate.needSend(currentContentType) && !delegate.isInScheduleMode()) {
+                    items.add(LocaleController.getString(R.string.SendWithSpoiler));
+                    icons.add(R.drawable.msg_spoiler);
+                    actions.add(12);
+                }
                 if (delegate.needSend(currentContentType) && !delegate.isInScheduleMode()) {
                     items.add(LocaleController.getString(R.string.SendWithoutSound));
                     icons.add(R.drawable.input_notify_off);
@@ -1115,6 +1124,8 @@ public class ContentPreviewViewer {
                     int which = (int) v.getTag();
                     if (actions.get(which) == 0) {
                         delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, true, 0, 0);
+                    } else if (actions.get(which) == 12) {
+                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, true, 0, 0, true);
                     } else if (actions.get(which) == 4) {
                         delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, false, 0, 0);
                     } else if (actions.get(which) == 1) {
