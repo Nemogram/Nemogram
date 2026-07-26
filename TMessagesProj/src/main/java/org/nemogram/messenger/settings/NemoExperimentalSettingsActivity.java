@@ -38,6 +38,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     private final int keepFormattingRow = rowId++;
     private final int autoInlineBotRow = rowId++;
     private final int forceFontWeightFallbackRow = rowId++;
+    private final int highRoundVideoBitrateRow = rowId++;
     private final int contentRestrictionRow = rowId++;
     private final int showRPCErrorRow = rowId++;
 
@@ -63,6 +64,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
         items.add(UItem.asCheck(keepFormattingRow, LocaleController.getString(R.string.TranslationKeepFormatting)).slug("keepFormatting").setChecked(NemoConfig.keepFormatting));
         items.add(UItem.asCheck(autoInlineBotRow, LocaleController.getString(R.string.AutoInlineBot), LocaleController.getString(R.string.AutoInlineBotDesc)).slug("autoInlineBot").setChecked(NemoConfig.autoInlineBot));
         items.add(UItem.asCheck(forceFontWeightFallbackRow, LocaleController.getString(R.string.ForceFontWeightFallback)).slug("forceFontWeightFallback").setChecked(NemoConfig.forceFontWeightFallback));
+        items.add(UItem.asCheck(highRoundVideoBitrateRow, LocaleController.getString(R.string.HighRoundVideoBitrate), LocaleController.getString(R.string.HighRoundVideoBitrateDesc)).slug("highRoundVideoBitrate").setChecked(NemoConfig.highRoundVideoBitrate));
         if (Extra.isDirectApp()) {
             items.add(UItem.asCheck(contentRestrictionRow, LocaleController.getString(R.string.IgnoreContentRestriction)).slug("contentRestriction").setChecked(NemoConfig.ignoreContentRestriction));
         }
@@ -210,6 +212,11 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
                 ((TextCheckCell) view).setChecked(NemoConfig.forceFontWeightFallback);
             }
             showRestartBulletin();
+        } else if (id == highRoundVideoBitrateRow) {
+            NemoConfig.toggleHighRoundVideoBitrate();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.highRoundVideoBitrate);
+            }
         } else if (id == keepFormattingRow) {
             NemoConfig.toggleKeepFormatting();
             if (view instanceof TextCheckCell) {

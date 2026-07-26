@@ -155,6 +155,7 @@ public class NemoConfig {
     public static boolean hideSearchBarPlaceholder = false;
     public static String searchBarPlaceholder = "";
     public static boolean moreHapticFeedbacks = false;
+    public static boolean highRoundVideoBitrate = true;
 
     public static boolean shouldNOTTrustMe = false;
 
@@ -272,6 +273,7 @@ public class NemoConfig {
             hideSearchBarPlaceholder = preferences.getBoolean("hideSearchBarPlaceholder", false);
             searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
             moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
+            highRoundVideoBitrate = preferences.getBoolean("highRoundVideoBitrate", true);
 
             LensHelper.checkLensSupportAsync();
 
@@ -1057,6 +1059,12 @@ public class NemoConfig {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("moreHapticFeedbacks", moreHapticFeedbacks);
         editor.apply();
+    }
+
+    public static void toggleHighRoundVideoBitrate() {
+        highRoundVideoBitrate = !highRoundVideoBitrate;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("highRoundVideoBitrate", highRoundVideoBitrate).apply();
     }
 
     public static int getNotificationColor() {

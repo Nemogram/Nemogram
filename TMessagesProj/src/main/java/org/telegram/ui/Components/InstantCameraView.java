@@ -502,6 +502,13 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
 
     private int internalPaddingBottom;
 
+    private int getRoundVideoBitrate() {
+        if (NemoConfig.highRoundVideoBitrate) {
+            return 4000 * 1024;
+        }
+        return MessagesController.getInstance(currentAccount).roundVideoBitrate * 1024;
+    }
+
     public void setInternalPadding(int padding) {
         internalPaddingBottom = padding;
         setPadding(0, 0, 0, padding);
@@ -988,7 +995,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 long endTime = videoEditedInfo.endTime >= 0 ? videoEditedInfo.endTime : videoEditedInfo.estimatedDuration;
                 videoEditedInfo.estimatedDuration = endTime - startTime;
                 videoEditedInfo.estimatedSize = Math.max(1, (long) (size * (videoEditedInfo.estimatedDuration / totalDuration)));
-                videoEditedInfo.bitrate = 1000000;
+                videoEditedInfo.bitrate = getRoundVideoBitrate();
                 if (videoEditedInfo.startTime > 0) {
                     videoEditedInfo.startTime *= 1000;
                 }
@@ -2317,7 +2324,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
 
             started = true;
             int resolution = MessagesController.getInstance(currentAccount).roundVideoSize;
-            int bitrate = MessagesController.getInstance(currentAccount).roundVideoBitrate * 1024;
+            int bitrate = getRoundVideoBitrate();
             AndroidUtilities.runOnUIThread(() -> {
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.stopAllHeavyOperations, 512);
             });

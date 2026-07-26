@@ -265,6 +265,8 @@
     <string name="StickersAndGifs">Стикеры и GIF</string>
     <string name="ReplyWithTimecode">Ответить с таймкодом</string>
     <string name="SendWithSpoiler">Отправить со спойлером</string>
+    <string name="HighRoundVideoBitrate">Высокий битрейт видеосообщений</string>
+    <string name="HighRoundVideoBitrateDesc">Записывать видеосообщения с битрейтом 4000 кбит/с вместо стандартного</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

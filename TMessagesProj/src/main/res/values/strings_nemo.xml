@@ -269,6 +269,8 @@
     <string name="StickersAndGifs">Stickers and GIF</string>
     <string name="ReplyWithTimecode">Reply with timecode</string>
     <string name="SendWithSpoiler">Send with spoiler</string>
+    <string name="HighRoundVideoBitrate">High video message bitrate</string>
+    <string name="HighRoundVideoBitrateDesc">Record round video messages at 4000 kbps instead of the default bitrate</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
