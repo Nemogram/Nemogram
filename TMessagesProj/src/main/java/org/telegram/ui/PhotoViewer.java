@@ -11388,13 +11388,16 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 final ValueAnimator anim = ValueAnimator.ofFloat(videoPlayerControlFrameLayout.getAlpha(), visible ? 1f : 0f);
                 anim.setDuration(200);
                 anim.addUpdateListener(a -> {
+                    if (videoPlayerControlFrameLayout == null) {
+                        return;
+                    }
                     final float alpha = (float) a.getAnimatedValue();
                     videoPlayerControlFrameLayout.setAlpha(alpha);
                 });
                 anim.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        if (!visible) {
+                        if (!visible && videoPlayerControlFrameLayout != null) {
                             videoPlayerControlFrameLayout.setVisibility(View.GONE);
                         }
                     }
@@ -12134,7 +12137,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
 
             @Override
             public void onUpdate() {
-                containerView.invalidate();
+                if (containerView != null) {
+                    containerView.invalidate();
+                }
             }
 
             @Override
