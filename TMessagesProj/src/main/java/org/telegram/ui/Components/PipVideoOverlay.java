@@ -314,6 +314,9 @@ public class PipVideoOverlay implements IPipSourceDelegate {
         controlsAnimator = ValueAnimator.ofFloat(show ? 0 : 1, show ? 1 : 0f).setDuration(200);
         controlsAnimator.setInterpolator(CubicBezierInterpolator.DEFAULT);
         controlsAnimator.addUpdateListener(animation -> {
+            if (controlsView == null) {
+                return;
+            }
             float value = (float) animation.getAnimatedValue();
             controlsView.setAlpha(value);
         });
@@ -422,6 +425,21 @@ public class PipVideoOverlay implements IPipSourceDelegate {
 
         cancelRewind();
         AndroidUtilities.cancelRunOnUIThread(longClickCallback);
+        AndroidUtilities.cancelRunOnUIThread(dismissControlsCallback);
+        AndroidUtilities.cancelRunOnUIThread(progressRunnable);
+        postedDismissControls = false;
+        if (controlsAnimator != null) {
+            controlsAnimator.cancel();
+            controlsAnimator = null;
+        }
+
+        contentView = null;
+        contentFrameLayout = null;
+        controlsView = null;
+        playPauseButton = null;
+        placeholderView = null;
+        pipTextureView = null;
+        seekSpeedDrawable = null;
     }
 
     public static View getInnerView() {
@@ -1022,7 +1040,9 @@ public class PipVideoOverlay implements IPipSourceDelegate {
 
             @Override
             public void invalidate() {
-                controlsView.invalidate();
+                if (controlsView != null) {
+                    controlsView.invalidate();
+                }
             }
         });
         controlsView = new FrameLayout(context) {
