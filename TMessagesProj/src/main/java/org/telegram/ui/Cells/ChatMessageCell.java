@@ -6571,6 +6571,12 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             } else {
                 mediaSpoilerEffect2.attach(this);
             }
+        } else if (currentMessageObject != null && currentMessageObject.hasMediaSpoilers() && SpoilerEffect2.supports() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_SPOILER)) {
+            mediaSpoilerEffect2 = makeSpoilerEffect();
+            if (mediaSpoilerEffect2Index != null) {
+                mediaSpoilerEffect2.reassignAttach(this, mediaSpoilerEffect2Index);
+            }
+            invalidate();
         }
         if (channelRecommendationsCell != null) {
             channelRecommendationsCell.onAttachedToWindow();
@@ -8702,7 +8708,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                     autoDownload = false;
                                 }
                                 String filter = currentPhotoObject instanceof TLRPC.TL_photoStrippedSize || "s".equals(currentPhotoObject.type) ? currentPhotoFilterThumb : currentPhotoFilter;
-                                if ((messageObject.mediaExists || autoDownload) && !currentMessageObject.isRepostPreview) {
+                                if ((messageObject.mediaExists || autoDownload) && !currentMessageObject.isRepostPreview && (!currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers)) {
                                     autoPlayingMedia = true;
                                     TLRPC.VideoSize videoSize = MessageObject.getDocumentVideoThumb(document);
                                     if (!messageObject.mediaExists && videoSize != null && (currentPhotoObject == null || currentPhotoObjectThumb == null)) {
@@ -10537,7 +10543,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 } else {
                     photoImage.setImageCoords(0, y + namesOffset + additionalTop, photoWidth, photoHeight);
                 }
-                if (messageObject.hasMediaSpoilers() && SpoilerEffect2.supports()) {
+                if (messageObject.hasMediaSpoilers() && SpoilerEffect2.supports() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_SPOILER)) {
                     if (mediaSpoilerEffect2 == null && attachedToWindow) {
                         mediaSpoilerEffect2 = makeSpoilerEffect();
                         if (mediaSpoilerEffect2Index != null) {
@@ -15189,7 +15195,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             return;
         }
 
-        if (currentMessageObject.type == MessageObject.TYPE_VIDEO) {
+        if (currentMessageObject.type == MessageObject.TYPE_VIDEO || currentMessageObject.type == MessageObject.TYPE_GIF) {
             currentMessageObject.forceUpdate = true;
             currentMessageObject.revealingMediaSpoilers = true;
             setMessageContent(currentMessageObject, currentMessagesGroup, pinnedBottom, pinnedTop, firstInChat, lastInChatList);
