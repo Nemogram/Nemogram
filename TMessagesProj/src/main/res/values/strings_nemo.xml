@@ -271,6 +271,37 @@
     <string name="SendWithSpoiler">Send with spoiler</string>
     <string name="HighRoundVideoBitrate">High video message bitrate</string>
     <string name="HighRoundVideoBitrateDesc">Record round video messages at 4000 kbps instead of the default bitrate</string>
+    <string name="PgpSettings">OpenPGP</string>
+    <string name="PgpSettingsAbout">Nemogram never sees or stores your private key. All cryptographic operations are performed by a separate OpenPGP Provider app (such as OpenKeychain) that you install and manage yourself.</string>
+    <string name="PgpProvider">OpenPGP Provider</string>
+    <string name="PgpProviderNotSelected">Not selected</string>
+    <string name="PgpProviderChoose">Choose OpenPGP Provider</string>
+    <string name="PgpProviderNoneFound">No OpenPGP Provider app found on this device.</string>
+    <string name="PgpProviderInstallOpenKeychain">Install OpenKeychain</string>
+    <string name="PgpMyKey">My key</string>
+    <string name="PgpMyKeyNotSelected">Not selected</string>
+    <string name="PgpMyKeyChoose">Choose your key in the OpenPGP Provider app</string>
+    <string name="PgpSelectProviderFirst">Select an OpenPGP Provider first</string>
+    <string name="PgpError">OpenPGP error: %1$s</string>
+    <string name="PgpChatEncryption">OpenPGP encryption</string>
+    <string name="PgpChatEncryptionAbout">When enabled, outgoing text messages in this chat are encrypted with the recipient\'s OpenPGP key before sending.</string>
+    <string name="PgpRecipientKey">Recipient\'s key ID or fingerprint</string>
+    <string name="PgpRecipientKeyHint">e.g. 0x1A2B3C4D or a full 40-character fingerprint</string>
+    <string name="PgpRecipientKeyNotSet">Not set</string>
+    <string name="PgpRecipientKeyInvalid">Enter a valid key ID or fingerprint</string>
+    <string name="PgpRecipientKeyChecking">Checking key…</string>
+    <string name="PgpRecipientKeySaved">Recipient key saved</string>
+    <string name="PgpEnableEncryptionFirst">Set a recipient key to enable encryption for this chat</string>
+    <string name="PgpEncryptedMessagePlaceholder">Encrypted message</string>
+    <string name="PgpDecrypting">Decrypting…</string>
+    <string name="PgpDecryptFailed">Could not decrypt message</string>
+    <string name="PgpEncrypting">Encrypting…</string>
+    <string name="PgpEncryptFailed">Could not encrypt message: %1$s</string>
+    <string name="PgpMenuItem">OpenPGP</string>
+    <string name="PgpTypeMessageHint">Encrypted message</string>
+    <string name="PgpResetAll">Reset OpenPGP settings</string>
+    <string name="PgpResetAllAbout">Forgets the provider, your key, and every chat\'s encryption key – all in this app only. Your actual keys inside the OpenPGP Provider app are not affected.</string>
+    <string name="PgpResetAllConfirm">This will turn off OpenPGP encryption in every chat and forget the provider and key you selected. Your keys themselves stay safe inside the OpenPGP Provider app – you can set everything up again anytime.</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

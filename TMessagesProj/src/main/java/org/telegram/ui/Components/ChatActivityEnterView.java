@@ -6743,6 +6743,15 @@ public class ChatActivityEnterView extends FrameLayout implements
                 messageEditText.setInputType(commonInputType);
             }
         }
+        long pgpHintDialogId = parentFragment != null ? parentFragment.getDialogId() : 0;
+        if (pgpHintDialogId != 0 && editingMessageObject == null && !isEditingBusinessLink()
+                && org.nemogram.messenger.pgp.PgpConfig.isDialogEncrypted(pgpHintDialogId)) {
+            SpannableStringBuilder pgpHint = new SpannableStringBuilder(" d " + getString(R.string.PgpTypeMessageHint));
+            pgpHint.setSpan(new ColoredImageSpan(R.drawable.msg_mini_lock3), 1, 2, 0);
+            messageEditText.setHintText(pgpHint, animated);
+            updateSendButtonPaid();
+            return;
+        }
         updateSendButtonPaid();
         final boolean isPostSuggestions = parentFragment != null && parentFragment.getChatMode() == ChatActivity.MODE_SUGGESTIONS && parentFragment.isSubscriberSuggestions;
         long paidMessagesStarsPrice = (parentFragment != null ? parentFragment.getMessagesController().getSendPaidMessagesStars(parentFragment.getDialogId()) : 0);
@@ -7695,6 +7704,11 @@ public class ChatActivityEnterView extends FrameLayout implements
             parentFragment.showQuoteMessageUpdate();
             return false;
         }
+        long pgpDialogId = parentFragment != null ? parentFragment.getDialogId() : 0;
+        if (pgpDialogId != 0 && text != null && text.length() != 0 && org.nemogram.messenger.pgp.PgpConfig.isDialogEncrypted(pgpDialogId)) {
+            processSendingEncryptedText(pgpDialogId, text, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return true;
+        }
         int[] emojiOnly = new int[1];
         Emoji.parseEmojis(text, emojiOnly);
         boolean hasOnlyEmoji = emojiOnly[0] > 0;
@@ -7818,6 +7832,75 @@ public class ChatActivityEnterView extends FrameLayout implements
 
     public long getSendMonoForumPeerId() {
         return parentFragment != null ? parentFragment.getSendMonoForumPeerId() : 0;
+    }
+
+    private void processSendingEncryptedText(long dialogId, CharSequence text, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        long recipientKeyId = org.nemogram.messenger.pgp.PgpConfig.getDialogKeyId(dialogId);
+        if (recipientKeyId == 0) {
+            processSendingText(text, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        CharSequence trimmed = AndroidUtilities.getTrimmedString(text);
+        if (TextUtils.isEmpty(trimmed)) {
+            return;
+        }
+        if (delegate != null && parentFragment != null && (scheduleDate != 0) == parentFragment.isInScheduleMode()) {
+            delegate.prepareMessageSending();
+        }
+        final String plainText = trimmed.toString();
+        org.nemogram.messenger.pgp.PgpServiceManager.getInstance().encrypt(new long[]{recipientKeyId}, plainText,
+                new org.nemogram.messenger.pgp.PgpServiceManager.PgpResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String armoredCipherText) {
+                        AndroidUtilities.runOnUIThread(() -> sendEncryptedMessageInternal(dialogId, armoredCipherText, notify, scheduleDate, scheduleRepeatPeriod, payStars));
+                    }
+
+                    @Override
+                    public void userInteractionRequired(android.app.PendingIntent pendingIntent) {
+                        AndroidUtilities.runOnUIThread(() -> {
+                            if (parentFragment != null && parentFragment.getParentActivity() != null) {
+                                org.nemogram.messenger.pgp.PgpServiceManager.startUserInteraction(parentFragment.getParentActivity(), pendingIntent);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        AndroidUtilities.runOnUIThread(() -> {
+                            if (parentFragment != null) {
+                                org.telegram.ui.Components.BulletinFactory.of(parentFragment)
+                                        .createErrorBulletin(LocaleController.formatString(R.string.PgpEncryptFailed, message)).show();
+                            }
+                        });
+                    }
+                });
+    }
+
+    private void sendEncryptedMessageInternal(long dialogId, String armoredCipherText, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        MessageObject replyToTopMsg = getThreadMessage();
+        if (replyToTopMsg == null && replyingTopMessage != null) {
+            replyToTopMsg = replyingTopMessage;
+        }
+        SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(
+                armoredCipherText, dialog_id, replyingMessageObject, replyToTopMsg, null, false,
+                null, null, null, notify, scheduleDate, scheduleRepeatPeriod, null, false);
+        params.quick_reply_shortcut = parentFragment != null ? parentFragment.quickReplyShortcut : null;
+        params.quick_reply_shortcut_id = parentFragment != null ? parentFragment.getQuickReplyId() : 0;
+        params.effect_id = effectId;
+        params.payStars = payStars;
+        params.monoForumPeer = getSendMonoForumPeerId();
+        params.suggestionParams = getSendMessageSuggestionParams();
+        sendButton.setEffect(effectId = 0);
+        if (parentFragment != null) {
+            parentFragment.editingMessageObject = null;
+            parentFragment.foundWebPage = null;
+            if (parentFragment.messagePreviewParams != null) {
+                parentFragment.messagePreviewParams.updateLink(currentAccount, null, "", null, null, null);
+            }
+            setWebPage(null, true);
+            parentFragment.fallbackFieldPanel();
+        }
+        SendMessagesHelper.getInstance(currentAccount).sendMessage(params);
     }
 
     public MessageSuggestionParams getSendMessageSuggestionParams() {

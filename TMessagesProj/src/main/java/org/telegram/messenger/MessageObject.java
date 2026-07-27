@@ -202,6 +202,17 @@ public class MessageObject {
     public CharSequence messageText;
     public CharSequence messageTextShort;
     public CharSequence messageTextForReply;
+
+    // openpgp support
+    public static final int PGP_DECRYPT_STATE_NONE = 0;
+    public static final int PGP_DECRYPT_STATE_DECRYPTING = 1;
+    public static final int PGP_DECRYPT_STATE_DONE = 2;
+    public static final int PGP_DECRYPT_STATE_FAILED = 3;
+    public boolean isPgpMessage;
+    public int pgpDecryptState;
+    public String pgpArmoredText;
+    public CharSequence pgpDecryptedText;
+
     public CharSequence linkDescription;
     public CharSequence caption;
     public CharSequence quizExplanation;
@@ -6078,6 +6089,21 @@ public class MessageObject {
 
         if (messageText == null) {
             messageText = "";
+        }
+
+        if (org.nemogram.messenger.pgp.PgpUtils.isArmoredMessage(messageText)) {
+            isPgpMessage = true;
+            pgpArmoredText = messageText.toString();
+            if (pgpDecryptState == PGP_DECRYPT_STATE_DONE && pgpDecryptedText != null) {
+                messageText = org.nemogram.messenger.pgp.PgpUtils.withLockPrefix(pgpDecryptedText);
+            } else if (pgpDecryptState == PGP_DECRYPT_STATE_FAILED) {
+                messageText = org.nemogram.messenger.pgp.PgpUtils.withLockPrefix(getString(R.string.PgpDecryptFailed));
+            } else {
+                messageText = org.nemogram.messenger.pgp.PgpUtils.withLockPrefix(getString(R.string.PgpDecrypting));
+                if (pgpDecryptState == PGP_DECRYPT_STATE_NONE) {
+                    org.nemogram.messenger.pgp.PgpMessageDecryptor.decryptAsync(this);
+                }
+            }
         }
 
         isEmbedVideoCached = null;

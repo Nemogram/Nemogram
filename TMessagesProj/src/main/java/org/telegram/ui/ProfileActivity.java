@@ -612,6 +612,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private final static int enable_no_forwards = 46;
     private final static int disable_no_forwards = 47;
     private final static int export_chat = 48;
+    private final static int pgp_chat = 49;
 
     private Rect rect = new Rect();
 
@@ -2589,6 +2590,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             getDialogId(),
                             getResourceProvider()
                     ).show();
+                } else if (id == pgp_chat) {
+                    org.nemogram.messenger.pgp.ui.PgpChatKeyDialog.show(ProfileActivity.this, getDialogId());
                 } else if (id == edit_contact) {
                     Bundle args = new Bundle();
                     args.putLong("user_id", userId);
@@ -12408,6 +12411,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     otherItem.addSubItem(add_shortcut, R.drawable.msg_home, LocaleController.getString(R.string.AddShortcut));
                 }
                 otherItem.addSubItem(export_chat, R.drawable.msg_saved, LocaleController.getString(R.string.ExportChat));
+                if (!isBot) {
+                    otherItem.addSubItem(pgp_chat, R.drawable.msg_secret, LocaleController.getString(R.string.PgpMenuItem));
+                }
             }
         } else if (chatId != 0) {
             TLRPC.Chat chat = getMessagesController().getChat(chatId);
@@ -13170,6 +13176,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         if (imageUpdater != null) {
             imageUpdater.onActivityResult(requestCode, resultCode, data);
         }
+        org.nemogram.messenger.pgp.PgpServiceManager.getInstance().onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

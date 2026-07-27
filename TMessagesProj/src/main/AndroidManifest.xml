@@ -103,6 +103,11 @@
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="tg"/>
         </intent>
+
+        <intent>
+            <action android:name="org.openintents.openpgp.IOpenPgpService2"/>
+        </intent>
+        <package android:name="org.sufficientlysecure.keychain"/>
     </queries>
 
     <application

@@ -267,6 +267,38 @@
     <string name="SendWithSpoiler">Отправить со спойлером</string>
     <string name="HighRoundVideoBitrate">Высокий битрейт видеосообщений</string>
     <string name="HighRoundVideoBitrateDesc">Записывать видеосообщения с битрейтом 4000 кбит/с вместо стандартного</string>
+    <!-- OpenPGP -->
+    <string name="PgpSettings">OpenPGP</string>
+    <string name="PgpSettingsAbout">Nemogram никогда не видит и не хранит ваш приватный ключ. Все криптографические операции выполняет отдельное приложение – OpenPGP-провайдер (например, OpenKeychain), которое вы устанавливаете и настраиваете самостоятельно.</string>
+    <string name="PgpProvider">OpenPGP-провайдер</string>
+    <string name="PgpProviderNotSelected">Не выбран</string>
+    <string name="PgpProviderChoose">Выберите OpenPGP-провайдер</string>
+    <string name="PgpProviderNoneFound">На устройстве не найдено ни одного OpenPGP-провайдера.</string>
+    <string name="PgpProviderInstallOpenKeychain">Установить OpenKeychain</string>
+    <string name="PgpMyKey">Мой ключ</string>
+    <string name="PgpMyKeyNotSelected">Не выбран</string>
+    <string name="PgpMyKeyChoose">Выберите свой ключ в приложении OpenPGP-провайдера</string>
+    <string name="PgpSelectProviderFirst">Сначала выберите OpenPGP-провайдер</string>
+    <string name="PgpError">Ошибка OpenPGP: %1$s</string>
+    <string name="PgpChatEncryption">Шифрование OpenPGP</string>
+    <string name="PgpChatEncryptionAbout">Если включено, исходящие текстовые сообщения в этом чате шифруются ключом получателя перед отправкой.</string>
+    <string name="PgpRecipientKey">ID или отпечаток ключа получателя</string>
+    <string name="PgpRecipientKeyHint">например, 0x1A2B3C4D или полный 40-значный отпечаток</string>
+    <string name="PgpRecipientKeyNotSet">Не задан</string>
+    <string name="PgpRecipientKeyInvalid">Введите корректный ID или отпечаток ключа</string>
+    <string name="PgpRecipientKeyChecking">Проверка ключа…</string>
+    <string name="PgpRecipientKeySaved">Ключ получателя сохранён</string>
+    <string name="PgpEnableEncryptionFirst">Укажите ключ получателя, чтобы включить шифрование для этого чата</string>
+    <string name="PgpEncryptedMessagePlaceholder">Зашифрованное сообщение</string>
+    <string name="PgpDecrypting">Расшифровка…</string>
+    <string name="PgpDecryptFailed">Не удалось расшифровать сообщение</string>
+    <string name="PgpEncrypting">Шифрование…</string>
+    <string name="PgpEncryptFailed">Не удалось зашифровать сообщение: %1$s</string>
+    <string name="PgpMenuItem">OpenPGP</string>
+    <string name="PgpTypeMessageHint">Зашифрованное сообщение</string>
+    <string name="PgpResetAll">Сбросить настройки OpenPGP</string>
+    <string name="PgpResetAllAbout">Забывает провайдера, ваш ключ и ключи всех чатов – только в этом приложении. На сами ключи внутри приложения-провайдера OpenPGP это не влияет.</string>
+    <string name="PgpResetAllConfirm">Шифрование OpenPGP будет отключено во всех чатах, а выбранные провайдер и ключ забыты. Сами ключи останутся в безопасности внутри приложения-провайдера – всё можно будет настроить заново в любой момент.</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

@@ -57,6 +57,8 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     private final int experimentRow = rowId++;
     private final int accessibilityRow = rowId++;
 
+    private final int pgpRow = rowId++;
+
     private final int channelRow = rowId++;
     private final int sourceCodeRow = rowId++;
     private final int nemoChannelRow = rowId++;
@@ -158,6 +160,9 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
         }
         items.add(UItem.asShadow(null));
 
+        items.add(UItem.asButton(pgpRow, R.drawable.msg_secret, LocaleController.getString(R.string.PgpSettings)).slug("pgp"));
+        items.add(UItem.asShadow(null));
+
         items.add(UItem.asButton(channelRow, R.drawable.msg_channel, LocaleController.getString(R.string.OfficialChannel), "@NemogramUpdates").slug("channel"));
         items.add(UItem.asButton(sourceCodeRow, R.drawable.msg_link, LocaleController.getString(R.string.ViewSourceCode), "GitHub").slug("sourceCode"));
         items.add(UItem.asShadow(null));
@@ -189,6 +194,8 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
             presentFragment(new NemoExperimentalSettingsActivity());
         } else if (id == accessibilityRow) {
             presentFragment(new AccessibilitySettingsActivity());
+        } else if (id == pgpRow) {
+            presentFragment(new org.nemogram.messenger.pgp.ui.PgpSettingsActivity());
         } else if (id == channelRow) {
             getMessagesController().openByUserName("NemogramUpdates", this, 1);
         } else if (id == nemoChannelRow) {

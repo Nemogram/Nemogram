@@ -3089,6 +3089,7 @@ public class ChatActivity extends BaseFragment implements
             .add(NotificationCenter.dialogIsTranslatable)
             .add(NotificationCenter.messageTranslated)
             .add(NotificationCenter.messageTranslating)
+            .add(NotificationCenter.messagePgpDecrypted)
             .add(NotificationCenter.onReceivedChannelDifference)
             .add(NotificationCenter.storiesUpdated)
             .add(NotificationCenter.channelRecommendationsLoaded)
@@ -24709,6 +24710,14 @@ public class ChatActivity extends BaseFragment implements
             updateMessageTranslation(messageObject, summary);
             if (args.length > 2 && (boolean) args[2]) {
                 checkTranslation(true);
+            }
+        } else if (id == NotificationCenter.messagePgpDecrypted) {
+            final MessageObject messageObject = (MessageObject) args[0];
+            if (getDialogId() != messageObject.getDialogId()) {
+                return;
+            }
+            if (chatAdapter != null) {
+                chatAdapter.updateRowWithMessageObject(messageObject, true, false);
             }
         } else if (id == NotificationCenter.messageTranslating) {
             MessageObject messageObject = (MessageObject) args[0];

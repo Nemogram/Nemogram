@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.google.mlkit:language-id:17.0.6'
     implementation 'com.android.billingclient:billing:7.1.1'
     implementation 'com.google.code.gson:gson:2.14.0'
+    implementation 'com.github.open-keychain:openpgp-api:v11'
     implementation ('com.google.guava:guava:33.6.0-android') {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
         exclude group: 'org.checkerframework', module: 'checker-compat-qual'
