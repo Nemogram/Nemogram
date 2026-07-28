@@ -1,15 +1,24 @@
 package org.nemogram.messenger.settings;
 
+import android.text.TextUtils;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.view.View;
-import android.widget.EditText;
+import android.view.View.MeasureSpec;
+import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.nemogram.messenger.NemoConfig;
+import org.telegram.messenger.AndroidUtilities;
+import org.telegram.messenger.BotWebViewVibrationEffect;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.TextCheckCell;
+import org.telegram.ui.Components.EditTextBoldCursor;
+import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
 
@@ -141,39 +150,76 @@ public class NemoKeywordFilterActivity extends BaseNemoSettingsActivity {
     }
 
     private void showAddKeywordDialog(boolean isChannel) {
-        var editText = new EditText(getParentActivity());
+        var context = getParentActivity();
+        var builder = new AlertDialog.Builder(context, resourcesProvider);
+        builder.setTitle(LocaleController.getString(R.string.AddKeyword));
+        builder.setCustomViewOffset(0);
+
+        var container = new LinearLayout(context);
+        container.setOrientation(LinearLayout.VERTICAL);
+
+        var editText = new EditTextBoldCursor(context) {
+            @Override
+            protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+                super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64), MeasureSpec.EXACTLY));
+            }
+        };
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        editText.setHint(LocaleController.getString(R.string.KeywordFilterHint));
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         editText.setFilters(new android.text.InputFilter[]{new android.text.InputFilter.LengthFilter(300)});
         editText.setTextColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
-        editText.setHintTextColor(Theme.getColor(Theme.key_dialogTextGray3, resourcesProvider));
-        editText.setBackground(Theme.createEditTextDrawable(getParentActivity(), true));
-        int padding = (int) (16 * getParentActivity().getResources().getDisplayMetrics().density);
-        editText.setPadding(padding, padding / 2, padding, padding / 2);
-        var builder = new AlertDialog.Builder(getParentActivity(), resourcesProvider);
-        builder.setTitle(LocaleController.getString(R.string.AddKeyword));
-        builder.setView(editText);
-        builder.setPositiveButton(LocaleController.getString(R.string.Add), (dialog, which) -> {
-            var keyword = editText.getText().toString().trim();
-            if (isChannel) {
-                if (!keyword.isEmpty() && !channelKeywords.contains(keyword)) {
-                    var newSet = new HashSet<>(NemoConfig.blockedKeywordsChannels != null ? NemoConfig.blockedKeywordsChannels : new HashSet<>());
-                    newSet.add(keyword);
-                    NemoConfig.saveBlockedKeywordsChannels(newSet);
-                    reloadKeywords();
-                }
-            } else {
-                if (!keyword.isEmpty() && !chatKeywords.contains(keyword)) {
-                    var newSet = new HashSet<>(NemoConfig.blockedKeywordsChats != null ? NemoConfig.blockedKeywordsChats : new HashSet<>());
-                    newSet.add(keyword);
-                    NemoConfig.saveBlockedKeywordsChats(newSet);
-                    reloadKeywords();
-                }
-            }
-        });
+        editText.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
+        editText.setHintText(LocaleController.getString(R.string.KeywordFilterHint));
+        editText.setHintColor(Theme.getColor(Theme.key_windowBackgroundWhiteHintText));
+        editText.setHeaderHintColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlueHeader, resourcesProvider));
+        editText.setSingleLine(true);
+        editText.setFocusable(true);
+        editText.setTransformHintToHeader(true);
+        editText.setLineColors(
+                Theme.getColor(Theme.key_windowBackgroundWhiteInputField, resourcesProvider),
+                Theme.getColor(Theme.key_windowBackgroundWhiteInputFieldActivated, resourcesProvider),
+                Theme.getColor(Theme.key_text_RedRegular, resourcesProvider)
+        );
+        editText.setBackground(null);
+        editText.setPadding(0, 0, 0, 0);
+        container.addView(editText, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 36, 0, 24, 12, 24, 0));
+
+        builder.setView(container);
+        builder.setPositiveButton(LocaleController.getString(R.string.Add), null);
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
         var dialog = builder.create();
-        dialog.setOnShowListener(d -> editText.requestFocus());
+        dialog.setOnShowListener(d -> {
+            editText.requestFocus();
+            var button = (TextView) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            if (button == null) {
+                return;
+            }
+            button.setOnClickListener(v -> {
+                var keyword = editText.getText().toString().trim();
+                if (TextUtils.isEmpty(keyword)) {
+                    AndroidUtilities.shakeViewSpring(editText, -6);
+                    BotWebViewVibrationEffect.APP_ERROR.vibrate();
+                    return;
+                }
+                if (isChannel) {
+                    if (!channelKeywords.contains(keyword)) {
+                        var newSet = new HashSet<>(NemoConfig.blockedKeywordsChannels != null ? NemoConfig.blockedKeywordsChannels : new HashSet<>());
+                        newSet.add(keyword);
+                        NemoConfig.saveBlockedKeywordsChannels(newSet);
+                        reloadKeywords();
+                    }
+                } else {
+                    if (!chatKeywords.contains(keyword)) {
+                        var newSet = new HashSet<>(NemoConfig.blockedKeywordsChats != null ? NemoConfig.blockedKeywordsChats : new HashSet<>());
+                        newSet.add(keyword);
+                        NemoConfig.saveBlockedKeywordsChats(newSet);
+                        reloadKeywords();
+                    }
+                }
+                dialog.dismiss();
+            });
+        });
         showDialog(dialog);
     }
 
