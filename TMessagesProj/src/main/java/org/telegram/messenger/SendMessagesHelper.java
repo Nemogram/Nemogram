@@ -2014,6 +2014,8 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                     if (bitmapFinal[0] != null && keyFinal[0] != null) {
                         ImageLoader.getInstance().putImageToCache(new BitmapDrawable(bitmapFinal[0]), keyFinal[0], false);
                     }
+                    CharSequence[] captionArr = new CharSequence[]{caption};
+                    ArrayList<TLRPC.MessageEntity> captionEntities = caption != null ? getMediaDataController().getEntities(captionArr, true) : null;
                     SendMessageParams sendMessageParams = SendMessageParams.of((TLRPC.TL_document) finalDocument, videoEditedInfo, null, peer, replyToMsg, replyToTopMsg, null, null, null, null, notify, scheduleDate, scheduleRepeatPeriod, 0, parentObject, sendAnimationData, false);
                     sendMessageParams.replyToStoryItem = storyItem;
                     sendMessageParams.replyQuote = quote;
@@ -2022,7 +2024,8 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                     sendMessageParams.payStars = stars;
                     sendMessageParams.monoForumPeer = monoForumPeerId;
                     sendMessageParams.suggestionParams = suggestionParams;
-                    sendMessageParams.caption = caption != null ? caption.toString() : null;
+                    sendMessageParams.caption = captionArr[0] != null ? captionArr[0].toString() : null;
+                    sendMessageParams.entities = captionEntities;
                     sendMessageParams.invert_media = invertMedia;
                     sendMessageParams.hasMediaSpoilers = hasSpoiler;
                     sendMessage(sendMessageParams);
