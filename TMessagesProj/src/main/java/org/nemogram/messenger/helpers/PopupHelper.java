@@ -196,7 +196,6 @@ public class PopupHelper {
             return 0;
         });
         if (accountNumbers.size() > 1) {
-            menu.addGap();
             for (int account : accountNumbers) {
                 var btn = createAccountView(account, currentAccount == account, context, resourcesProvider);
                 btn.setOnClickListener(v -> {

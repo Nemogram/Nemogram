@@ -274,14 +274,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.nemogram.messenger.BackButtonMenuRecent;
+import org.nemogram.messenger.DialogsMenuItems;
 import org.nemogram.messenger.forward.ForwardContext;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.forward.SendOptionsMenuLayout;
 import org.nemogram.messenger.helpers.PasscodeHelper;
+import org.nemogram.messenger.settings.NemoSettingsActivity;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import org.nemogram.messenger.helpers.PopupHelper;
@@ -13818,7 +13821,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             } else {
                 isCurrentThemeDark = Theme.isCurrentThemeDark();
             }
-            io.add(isCurrentThemeDark ? R.drawable.menu_day_mode_24 : R.drawable.menu_night_mode_24,
+            boolean hasArchive = NemoConfig.hideAllTab && getMessagesController().getDialogFilters().size() > 1 && getMessagesController().dialogs_dict.get(DialogObject.makeFolderDialogId(1)) != null;
+
+            LinkedHashMap<String, Runnable> menuItemActions = new LinkedHashMap<>();
+            menuItemActions.put(DialogsMenuItems.THEME, () -> io.add(isCurrentThemeDark ? R.drawable.menu_day_mode_24 : R.drawable.menu_night_mode_24,
                     getString(isCurrentThemeDark ? R.string.SwitchThemeToDay : R.string.SwitchThemeToNight), () -> {
                         if (switchingTheme) {
                             return;
@@ -13852,53 +13858,98 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         Theme.turnOffAutoNight(BulletinFactory.of(this), () -> {
                             presentFragment(new ThemeActivity(ThemeActivity.THEME_TYPE_NIGHT));
                         });
-                    });
-            io.addGap();
+                    }));
             if (NemoConfig.hideBottomNavigationBar) {
-                io.add(R.drawable.left_status_profile, getString(R.string.MyProfile), () -> {
+                menuItemActions.put(DialogsMenuItems.MY_PROFILE, () -> io.add(R.drawable.left_status_profile, getString(R.string.MyProfile), () -> {
                     Bundle args = new Bundle();
                     args.putLong("user_id", getUserConfig().getClientUserId());
                     args.putBoolean("my_profile", true);
                     presentFragment(new ProfileActivity(args));
-                });
+                }));
             }
-            boolean hasArchive = NemoConfig.hideAllTab && getMessagesController().getDialogFilters().size() > 1 && getMessagesController().dialogs_dict.get(DialogObject.makeFolderDialogId(1)) != null;
             if (hasArchive) {
-                io.add(R.drawable.msg_archive, getString(R.string.ArchivedChats), () -> {
+                menuItemActions.put(DialogsMenuItems.ARCHIVE, () -> io.add(R.drawable.msg_archive, getString(R.string.ArchivedChats), () -> {
                     Bundle args = new Bundle();
                     args.putInt("folderId", 1); // 1 is the ID of the archive folder.
                     presentFragment(new DialogsActivity(args));
-                });
+                }));
             }
-            io.add(R.drawable.outline_groups_24, getString(R.string.NewGroup), () -> {
+            menuItemActions.put(DialogsMenuItems.NEW_GROUP, () -> io.add(R.drawable.outline_groups_24, getString(R.string.NewGroup), () -> {
                 Bundle args = new Bundle();
                 presentFragment(new GroupCreateActivity(args));
-            });
+            }));
             if (NemoConfig.hideBottomNavigationBar) {
-                io.add(R.drawable.msg_contacts, getString(R.string.Contacts), () -> {
+                menuItemActions.put(DialogsMenuItems.CONTACTS, () -> io.add(R.drawable.msg_contacts, getString(R.string.Contacts), () -> {
                     Bundle args = new Bundle();
                     args.putBoolean("needPhonebook", true);
                     args.putBoolean("needFinishFragment", false);
                     presentFragment(new ContactsActivity(args));
-                });
-                io.add(R.drawable.msg_calls, getString(R.string.Calls), () -> {
+                }));
+                menuItemActions.put(DialogsMenuItems.CALLS, () -> io.add(R.drawable.msg_calls, getString(R.string.Calls), () -> {
                     presentFragment(new CallLogActivity());
-                });
+                }));
             }
-            io.add(R.drawable.outline_saved_24, getString(R.string.SavedMessages), () -> {
+            menuItemActions.put(DialogsMenuItems.SAVED_MESSAGES, () -> io.add(R.drawable.outline_saved_24, getString(R.string.SavedMessages), () -> {
                 Bundle args = new Bundle();
                 args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
                 presentFragment(new ChatActivity(args));
-            });
-            if (isMaterialSearchBarStyle() && !SharedConfig.passcodeHash.isEmpty()) {
-                io.add(R.drawable.outline_header_lock_24, getString(R.string.AccDescrPasscodeLock), () -> lockApp(optionsItem));
-            }
-            io.add(R.drawable.msg_download, getString(R.string.DownloadsTabs), () -> {
+            }));
+            menuItemActions.put(DialogsMenuItems.REPLIES, () -> io.add(R.drawable.menu_reply, getString(R.string.RepliesTitle), () -> {
+                Bundle args = new Bundle();
+                args.putLong("user_id", UserObject.REPLY_BOT);
+                presentFragment(new ChatActivity(args));
+            }));
+            menuItemActions.put(DialogsMenuItems.DOWNLOADS, () -> io.add(R.drawable.msg_download, getString(R.string.DownloadsTabs), () -> {
                 showSearch(true, true, true);
                 if (fragmentSearchFieldWatcher != null) {
                     fragmentSearchFieldWatcher.toggleSearch(true);
                 }
-            });
+            }));
+            if (isMaterialSearchBarStyle() && !SharedConfig.passcodeHash.isEmpty()) {
+                menuItemActions.put(DialogsMenuItems.PASSCODE_LOCK, () -> io.add(R.drawable.outline_header_lock_24, getString(R.string.AccDescrPasscodeLock), () -> lockApp(optionsItem)));
+            }
+            if (NemoConfig.hideBottomNavigationBar) {
+                menuItemActions.put(DialogsMenuItems.ACCOUNTS, () -> PopupHelper.fillAccountSelectorMenu(io, currentAccount, getParentActivity(), resourceProvider));
+            }
+            if (NemoConfig.hideBottomNavigationBar || getUserConfig().showCallsTab) {
+                menuItemActions.put(DialogsMenuItems.SETTINGS, () -> io.add(R.drawable.msg_settings_old, getString(R.string.Settings), () -> {
+                    presentFragment(new SettingsActivity());
+                }));
+            }
+            menuItemActions.put(DialogsMenuItems.NEMO_SETTINGS, () -> io.add(R.drawable.filled_profile_settings, getString(R.string.NemoSettings), () -> {
+                presentFragment(new NemoSettingsActivity());
+            }));
+            if (proxyMenuSubItem != null) {
+                proxyMenuSubItem.subtextView.setTextColor(getThemedColor(Theme.key_groupcreate_sectionText));
+                proxyMenuSubItem.setOnClickListener(v -> {
+                    io.dismiss();
+                    presentFragment(new ProxyListActivity());
+                });
+
+                final SharedPreferences proxyPreferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                final String proxyAddress = proxyPreferences.getString("proxy_ip", "");
+                final boolean proxyEnabled = proxyPreferences.getBoolean("proxy_enabled", false);
+                final boolean proxyVisible = proxyEnabled && !TextUtils.isEmpty(proxyAddress) || getMessagesController().blockedCountry && !SharedConfig.proxyList.isEmpty();
+
+                if (proxyVisible) {
+                    menuItemActions.put(DialogsMenuItems.PROXY, () -> {
+                        proxyMenuSubItem.updateSelectorBackground(false, false);
+                        io.add(proxyMenuSubItem);
+                    });
+                }
+            }
+
+            for (String itemId : NemoConfig.getDialogsMenuOrder()) {
+                if (NemoConfig.isDialogsMenuItemHidden(itemId)) {
+                    continue;
+                }
+                Runnable action = menuItemActions.get(itemId);
+                if (action == null) {
+                    continue;
+                }
+                action.run();
+            }
+
             if (ApplicationLoader.applicationLoaderInstance != null) {
                 ApplicationLoader.applicationLoaderInstance.addItemOptions(io);
             }
@@ -13924,35 +13975,6 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                             }
                         }, () -> BotWebViewSheet.deleteBot(currentAccount, attachMenuBot.bot_id, null));
                     }
-                }
-            }
-            if (NemoConfig.hideBottomNavigationBar || getUserConfig().showCallsTab) {
-                io.add(R.drawable.msg_settings_old, getString(R.string.Settings), () -> {
-                    presentFragment(new SettingsActivity());
-                });
-            }
-            if (NemoConfig.hideBottomNavigationBar) {
-                PopupHelper.fillAccountSelectorMenu(io, currentAccount, getParentActivity(), resourceProvider);
-            }
-
-            if (proxyMenuSubItem != null) {
-                proxyMenuSubItem.subtextView.setTextColor(getThemedColor(Theme.key_groupcreate_sectionText));
-                proxyMenuSubItem.setOnClickListener(v -> {
-                    io.dismiss();
-                    presentFragment(new ProxyListActivity());
-                });
-
-                final SharedPreferences preferences = ApplicationLoader.applicationContext
-                        .getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-
-                final String proxyAddress = preferences.getString("proxy_ip", "");
-                final boolean proxyEnabled = preferences.getBoolean("proxy_enabled", false);
-                final boolean proxyVisible = proxyEnabled && !TextUtils.isEmpty(proxyAddress)
-                        || getMessagesController().blockedCountry && !SharedConfig.proxyList.isEmpty();
-
-                if (proxyVisible) {
-                    io.addGap();
-                    io.add(proxyMenuSubItem);
                 }
             }
         }

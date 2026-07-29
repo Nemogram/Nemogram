@@ -2,6 +2,7 @@ package org.nemogram.messenger;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,6 +19,7 @@ import org.telegram.ui.ActionBar.Theme;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -162,6 +164,9 @@ public class NemoConfig {
     public static int userMcc = 0;
     public static int searchBarStyle = SEARCH_BAR_NORMAL;
 
+    public static String dialogsMenuOrder = "";
+    public static Set<String> dialogsMenuHiddenItems = new HashSet<>();
+
 
     private static boolean configLoaded;
     private static Gson gson;
@@ -274,6 +279,12 @@ public class NemoConfig {
             searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
             moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
             highRoundVideoBitrate = preferences.getBoolean("highRoundVideoBitrate", true);
+            dialogsMenuOrder = preferences.getString("dialogsMenuOrder", "");
+            if (preferences.contains("dialogsMenuHiddenItems")) {
+                dialogsMenuHiddenItems = new HashSet<>(preferences.getStringSet("dialogsMenuHiddenItems", new HashSet<>()));
+            } else {
+                dialogsMenuHiddenItems = new HashSet<>(java.util.Arrays.asList(DialogsMenuItems.NEMO_SETTINGS, DialogsMenuItems.REPLIES));
+            }
 
             LensHelper.checkLensSupportAsync();
 
@@ -353,6 +364,65 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("externalTranslationProvider", externalTranslationProvider);
+        editor.apply();
+    }
+
+    public static List<String> getDialogsMenuOrder() {
+        List<String> order = new ArrayList<>();
+        if (!TextUtils.isEmpty(dialogsMenuOrder)) {
+            for (String id : dialogsMenuOrder.split(",")) {
+                if (!TextUtils.isEmpty(id) && !order.contains(id)) {
+                    order.add(id);
+                }
+            }
+        }
+        for (String id : DialogsMenuItems.DEFAULT_ORDER) {
+            if (!order.contains(id)) {
+                order.add(id);
+            }
+        }
+        return order;
+    }
+
+    public static void saveDialogsMenuOrder(List<String> order) {
+        dialogsMenuOrder = TextUtils.join(",", order);
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("dialogsMenuOrder", dialogsMenuOrder);
+        editor.apply();
+    }
+
+    public static boolean isDialogsMenuItemHidden(String id) {
+        if (DialogsMenuItems.isLocked(id)) {
+            return false;
+        }
+        return dialogsMenuHiddenItems.contains(id);
+    }
+
+    public static void setDialogsMenuItemHidden(String id, boolean hidden) {
+        if (DialogsMenuItems.isLocked(id)) {
+            return;
+        }
+        Set<String> set = new HashSet<>(dialogsMenuHiddenItems);
+        if (hidden) {
+            set.add(id);
+        } else {
+            set.remove(id);
+        }
+        dialogsMenuHiddenItems = set;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet("dialogsMenuHiddenItems", set);
+        editor.apply();
+    }
+
+    public static void resetDialogsMenuSettings() {
+        dialogsMenuOrder = "";
+        dialogsMenuHiddenItems = new HashSet<>(java.util.Arrays.asList(DialogsMenuItems.NEMO_SETTINGS, DialogsMenuItems.REPLIES));
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("dialogsMenuOrder");
+        editor.remove("dialogsMenuHiddenItems");
         editor.apply();
     }
 

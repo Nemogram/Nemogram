@@ -302,6 +302,10 @@
     <string name="PgpResetAll">Reset OpenPGP settings</string>
     <string name="PgpResetAllAbout">Forgets the provider, your key, and every chat\'s encryption key – all in this app only. Your actual keys inside the OpenPGP Provider app are not affected.</string>
     <string name="PgpResetAllConfirm">This will turn off OpenPGP encryption in every chat and forget the provider and key you selected. Your keys themselves stay safe inside the OpenPGP Provider app – you can set everything up again anytime.</string>
+    <string name="DialogsMenuSettings">Chat list menu</string>
+    <string name="DialogsMenuSettingsInfo">Drag items to reorder. Uncheck an item to hide it from the chat list\'s ⋮ menu. \"Settings\" cannot be hidden.</string>
+    <string name="DialogsMenuSettingsResetAlertTitle">Reset menu?</string>
+    <string name="DialogsMenuSettingsResetAlertMessage">The chat list menu order and visibility will be reset to the default.</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

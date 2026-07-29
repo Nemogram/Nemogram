@@ -35,6 +35,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
 
     private final int hideStoriesRow = rowId++;
     private final int mediaPreviewRow = rowId++;
+    private final int dialogsMenuSettingsRow = rowId++;
 
     private final int hideAllTabRow = rowId++;
     private final int hideFolderUnreadBadgeRow = rowId++;
@@ -87,6 +88,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asHeader(LocaleController.getString(R.string.SavedDialogsTab)));
         items.add(UItem.asCheck(hideStoriesRow, LocaleController.getString(R.string.HideStories)).slug("hideStories").setChecked(NemoConfig.hideStories));
         items.add(UItem.asCheck(mediaPreviewRow, LocaleController.getString(R.string.MediaPreview)).slug("mediaPreview").setChecked(NemoConfig.mediaPreview));
+        items.add(UItem.asButton(dialogsMenuSettingsRow, R.drawable.msg_list, LocaleController.getString(R.string.DialogsMenuSettings)).slug("dialogsMenuSettings"));
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.Filters)));
@@ -112,6 +114,8 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         var id = item.id;
         if (id == emojiSetsRow) {
             presentFragment(new NemoEmojiSettingsActivity());
+        } else if (id == dialogsMenuSettingsRow) {
+            presentFragment(new DialogsMenuSettingsActivity());
         } else if (id == disableNumberRoundingRow) {
             NemoConfig.toggleDisableNumberRounding();
             if (view instanceof TextCheckCell) {
