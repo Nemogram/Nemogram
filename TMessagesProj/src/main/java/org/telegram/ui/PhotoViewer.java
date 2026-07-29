@@ -12259,6 +12259,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (currentEditMode == mode || (isCurrentVideo && photoProgressViews[0].backgroundState != 3) && !isCurrentVideo && (centerImage.getBitmap() == null || photoProgressViews[0].backgroundState != -1) || changeModeAnimation != null || imageMoveAnimation != null || isCaptionOpen()) {
             return;
         }
+        if (mode != EDIT_MODE_NONE && compressPhotoHint != null) {
+            compressPhotoHint.hide();
+            compressPhotoHint = null;
+        }
         if (placeProvider != null && (currentEditMode == EDIT_MODE_NONE || mode == EDIT_MODE_NONE)) {
             placeProvider.onEditModeChanged(mode != EDIT_MODE_NONE);
         }
