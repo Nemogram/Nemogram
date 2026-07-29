@@ -295,7 +295,7 @@ public class TopicCreateFragment extends BaseFragment {
             }
         });
         if (topicForEdit == null) {
-            actionBar.createMenu().addItem(CREATE_ID, LocaleController.getString(R.string.Create));
+            actionBar.createMenu().addItem(CREATE_ID, R.drawable.ic_ab_done).setContentDescription(LocaleController.getString(R.string.Create));
         } else {
             actionBar.createMenu().addItem(EDIT_ID, R.drawable.ic_ab_done);
         }
