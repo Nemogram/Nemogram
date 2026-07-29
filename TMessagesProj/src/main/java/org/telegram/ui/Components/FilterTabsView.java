@@ -1408,6 +1408,15 @@ public class FilterTabsView extends FrameLayout {
         return tabs.get(i);
     }
 
+    public int getTabIndexById(int id) {
+        for (int i = 0, N = tabs.size(); i < N; i++) {
+            if (tabs.get(i).id == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void finishAddingTabs(boolean animated) {
         listView.setItemAnimator(animated ? itemAnimator : null);
         adapter.notifyDataSetChanged();

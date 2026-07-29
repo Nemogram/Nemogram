@@ -6943,13 +6943,18 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 return;
             }
         }
-        int index = filterTabsView.getTabsCount() - 1;
         ArrayList<MessagesController.DialogFilter> filters = getMessagesController().getDialogFilters();
+        int tabId = -1;
         for (int i = 0; i < filters.size(); ++i) {
             if (filters.get(i).id == fid) {
-                index = i;
+                tabId = i;
                 break;
             }
+        }
+
+        int index = tabId >= 0 ? filterTabsView.getTabIndexById(tabId) : -1;
+        if (index < 0) {
+            index = filterTabsView.getTabsCount() - 1;
         }
 
         FilterTabsView.Tab tab = filterTabsView.getTab(index);

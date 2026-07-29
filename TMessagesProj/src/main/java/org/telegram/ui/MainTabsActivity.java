@@ -445,9 +445,17 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
         final ArrayList<MessagesController.DialogFilter> filters = getMessagesController().getDialogFilters();
         if (filters == null || filters.size() <= 1) return false;
 
+        int visibleCount = 0;
+        for (int i = 0; i < filters.size(); i++) {
+            if (filters.get(i).isDefault() && NemoConfig.hideAllTab) continue;
+            visibleCount++;
+        }
+        if (visibleCount <= 1) return false;
+
         final ItemOptions o = ItemOptions.makeOptions(this, anchor);
         for (int i = 0; i < filters.size(); i++) {
             final MessagesController.DialogFilter folder = filters.get(i);
+            if (folder.isDefault() && NemoConfig.hideAllTab) continue;
             final ActionBarMenuSubItem folderItem = new ActionBarMenuSubItem(getParentActivity(), 2, false, false, getResourceProvider());
             folderItem.setPadding(dp(18), 0, dp(18), 0);
             CharSequence title = folder.isDefault() ? getString(R.string.FilterAllChats) : folder.name;
