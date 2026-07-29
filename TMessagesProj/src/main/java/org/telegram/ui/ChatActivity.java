@@ -13347,30 +13347,9 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private void showVoiceHint(boolean hide, boolean video) {
-        if (getParentActivity() == null || fragmentView == null || hide && voiceHintTextView == null || chatMode != 0 || chatActivityEnterView == null  || chatActivityEnterView.getAudioVideoButtonContainer() == null || chatActivityEnterView.getAudioVideoButtonContainer().getVisibility() != View.VISIBLE || isInPreviewMode()) {
-            return;
-        }
-        if (voiceHintTextView == null) {
-            SizeNotifierFrameLayout frameLayout = contentView;
-            int index = frameLayout.indexOfChild(chatInputViewsContainer);
-            if (index == -1) {
-                return;
-            }
-            voiceHintTextView = new HintView(getParentActivity(), 9, themeDelegate);
-            frameLayout.addView(voiceHintTextView, index + 1,  LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 10, 0, 10, 0));
-        }
-        if (hide) {
+        if (voiceHintTextView != null) {
             voiceHintTextView.hide();
-            return;
         }
-
-        if (chatActivityEnterView.hasRecordVideo()) {
-            voiceHintTextView.setText(video ? LocaleController.getString(R.string.HoldToVideo) : LocaleController.getString(R.string.HoldToAudio));
-        } else {
-            voiceHintTextView.setText(LocaleController.getString(R.string.HoldToAudioOnly));
-        }
-
-        voiceHintTextView.showForView(chatActivityEnterView.getAudioVideoButtonContainer(), true);
     }
 
     public boolean checkSlowMode(View view) {
