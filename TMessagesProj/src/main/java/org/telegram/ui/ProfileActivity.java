@@ -9651,9 +9651,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
         if (visible) {
             communityItem.setTag(1);
+            communityItem.setAlpha(1f);
             communityItem.setVisibility(View.VISIBLE);
         } else {
             communityItem.setTag(null);
+            communityItem.setAlpha(0f);
             communityItem.setVisibility(View.GONE);
         }
     }
@@ -10086,9 +10088,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             return null;
         }
 
-        if (communityItem != null) {
-            communityItem.setAlpha(1f);
-        }
         if (timeItem != null) {
             timeItem.setAlpha(1.0f);
         }
@@ -10126,11 +10125,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
 
         final boolean fromChat = previousTransitionFragment instanceof ChatActivity && ((ChatActivity) previousTransitionFragment).getCurrentChat() != null;
-        if (previousTransitionFragment != null) {
-            updateCommunityArrowItem();
-            updateTimeItem();
-            updateStar();
-        }
+        updateCommunityArrowItem();
+        updateTimeItem();
+        updateStar();
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(playProfileAnimation == 2 ? 250 : 180);
         listView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
