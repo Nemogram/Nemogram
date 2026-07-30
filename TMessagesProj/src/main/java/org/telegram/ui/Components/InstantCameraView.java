@@ -509,6 +509,13 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
         return MessagesController.getInstance(currentAccount).roundVideoBitrate * 1024;
     }
 
+    private int getRoundVideoResolution() {
+        if (NemoConfig.highRoundVideoBitrate) {
+            return 640;
+        }
+        return MessagesController.getInstance(currentAccount).roundVideoSize;
+    }
+
     public void setInternalPadding(int padding) {
         internalPaddingBottom = padding;
         setPadding(0, 0, 0, padding);
@@ -788,7 +795,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
             if (bothCameras) {
                 for (int a = 0; a < 2; ++a) {
                     if (camera2Sessions[a] == null) {
-                        camera2Sessions[a] = Camera2Session.create(a == 0, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
+                        camera2Sessions[a] = Camera2Session.create(a == 0, getRoundVideoResolution(), getRoundVideoResolution());
                         if (camera2Sessions[a] != null) {
                             camera2Sessions[a].setRecordingVideo(true);
                             previewSize[a] = new Size(camera2Sessions[a].getPreviewWidth(), camera2Sessions[a].getPreviewHeight());
@@ -802,7 +809,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 }
                 if (camera2SessionCurrent == null) return;
             } else {
-                camera2SessionCurrent = camera2Sessions[isFrontface ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
+                camera2SessionCurrent = camera2Sessions[isFrontface ? 0 : 1] = Camera2Session.create(isFrontface, getRoundVideoResolution(), getRoundVideoResolution());
                 if (camera2SessionCurrent == null) return;
                 camera2SessionCurrent.setRecordingVideo(true);
                 previewSize[0] = new Size(camera2SessionCurrent.getPreviewWidth(), camera2SessionCurrent.getPreviewHeight());
@@ -1155,7 +1162,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                     camera2SessionCurrent = null;
                     camera2Sessions[isFrontface ? 1 : 0] = null;
                 }
-                camera2SessionCurrent = camera2Sessions[isFrontface ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
+                camera2SessionCurrent = camera2Sessions[isFrontface ? 0 : 1] = Camera2Session.create(isFrontface, getRoundVideoResolution(), getRoundVideoResolution());
                 if (camera2SessionCurrent == null) return;
                 camera2SessionCurrent.setRecordingVideo(true);
                 previewSize[0] = new Size(camera2SessionCurrent.getPreviewWidth(), camera2SessionCurrent.getPreviewHeight());
@@ -2323,7 +2330,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
             }
 
             started = true;
-            int resolution = MessagesController.getInstance(currentAccount).roundVideoSize;
+            int resolution = getRoundVideoResolution();
             int bitrate = getRoundVideoBitrate();
             AndroidUtilities.runOnUIThread(() -> {
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.stopAllHeavyOperations, 512);
@@ -2803,8 +2810,8 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 videoEditedInfo.iv = iv;
                 videoEditedInfo.estimatedSize = Math.max(1, size);
                 videoEditedInfo.framerate = 25;
-                videoEditedInfo.resultWidth = videoEditedInfo.originalWidth = 360;
-                videoEditedInfo.resultHeight = videoEditedInfo.originalHeight = 360;
+                videoEditedInfo.resultWidth = videoEditedInfo.originalWidth = videoWidth;
+                videoEditedInfo.resultHeight = videoEditedInfo.originalHeight = videoHeight;
                 videoEditedInfo.originalPath = previewFile.getAbsolutePath();
                 setupVideoPlayer(previewFile);
                 videoEditedInfo.estimatedDuration = recordedTime;
@@ -2909,8 +2916,8 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                         videoEditedInfo.key = key;
                         videoEditedInfo.iv = iv;
                         videoEditedInfo.framerate = 25;
-                        videoEditedInfo.resultWidth = videoEditedInfo.originalWidth = 360;
-                        videoEditedInfo.resultHeight = videoEditedInfo.originalHeight = 360;
+                        videoEditedInfo.resultWidth = videoEditedInfo.originalWidth = videoWidth;
+                        videoEditedInfo.resultHeight = videoEditedInfo.originalHeight = videoHeight;
                         videoEditedInfo.originalPath = videoFile.getAbsolutePath();
                         videoEditedInfo.notReadyYet = true;
                         videoEditedInfo.thumb = firstFrameThumb;
@@ -3044,7 +3051,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                             long endTime = videoEditedInfo.endTime >= 0 ? videoEditedInfo.endTime : videoEditedInfo.estimatedDuration;
                             videoEditedInfo.estimatedDuration = endTime - startTime;
                             videoEditedInfo.estimatedSize = Math.max(1, (long) (size * (videoEditedInfo.estimatedDuration / totalDuration)));
-                            videoEditedInfo.bitrate = 1000000;
+                            videoEditedInfo.bitrate = getRoundVideoBitrate();
                             if (videoEditedInfo.startTime > 0) {
                                 videoEditedInfo.startTime *= 1000;
                             }
@@ -3061,8 +3068,8 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                         videoEditedInfo.key = key;
                         videoEditedInfo.iv = iv;
                         videoEditedInfo.framerate = 25;
-                        videoEditedInfo.resultWidth = videoEditedInfo.originalWidth = 360;
-                        videoEditedInfo.resultHeight = videoEditedInfo.originalHeight = 360;
+                        videoEditedInfo.resultWidth = videoEditedInfo.originalWidth = videoWidth;
+                        videoEditedInfo.resultHeight = videoEditedInfo.originalHeight = videoHeight;
                         videoEditedInfo.originalPath = videoFile.getAbsolutePath();
                         final VideoEditedInfo info = videoEditedInfo;
                         if (send == ENCODER_SEND_SEND) {
@@ -3157,6 +3164,30 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
             }
         }
 
+        private void clampVideoEncoderParamsToDeviceCapabilities() {
+            try {
+                MediaCodecInfo.VideoCapabilities videoCapabilities = videoEncoder.getCodecInfo().getCapabilitiesForType(VIDEO_MIME_TYPE).getVideoCapabilities();
+                if (!videoCapabilities.isSizeSupported(videoWidth, videoHeight)) {
+                    int alignment = Math.max(videoCapabilities.getWidthAlignment(), videoCapabilities.getHeightAlignment());
+                    int size = videoWidth - (videoWidth % alignment);
+                    while (size > alignment && !videoCapabilities.isSizeSupported(size, size)) {
+                        size -= alignment;
+                    }
+                    if (size > alignment && videoCapabilities.isSizeSupported(size, size)) {
+                        videoWidth = videoHeight = size;
+                    } else {
+                        videoWidth = videoHeight = MessagesController.getInstance(currentAccount).roundVideoSize;
+                    }
+                    if (BuildVars.LOGS_ENABLED) {
+                        FileLog.d("InstantCamera round video resolution clamped to device encoder capabilities: " + videoWidth);
+                    }
+                }
+                videoBitrate = videoCapabilities.getBitrateRange().clamp(videoBitrate);
+            } catch (Throwable e) {
+                FileLog.e(e);
+            }
+        }
+
         private void prepareEncoder(boolean fromPause) {
             setBluetoothScoOn(true);
 
@@ -3221,6 +3252,8 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
 
                 videoEncoder = MediaCodec.createEncoderByType(VIDEO_MIME_TYPE);
                 firstEncode = true;
+
+                clampVideoEncoderParamsToDeviceCapabilities();
 
                 MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, videoWidth, videoHeight);
 
@@ -3600,7 +3633,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
     }
 
     private String createFragmentShader(Size previewSize) {
-        if (SharedConfig.deviceIsLow() || !allowBigSizeCamera() || previewSize != null && Math.max(previewSize.getHeight(), previewSize.getWidth()) * 0.7f < MessagesController.getInstance(currentAccount).roundVideoSize) {
+        if (SharedConfig.deviceIsLow() || !allowBigSizeCamera() || previewSize != null && Math.max(previewSize.getHeight(), previewSize.getWidth()) * 0.7f < getRoundVideoResolution()) {
             return "#extension GL_OES_EGL_image_external : require\n" +
                     "precision highp float;\n" +
                     "varying vec2 vTextureCoord;\n" +
@@ -3656,7 +3689,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
     }
 
     private String createFragmentShaderV2(Size previewSize) {
-        if (SharedConfig.deviceIsLow() || !allowBigSizeCamera() || previewSize != null && Math.max(previewSize.getHeight(), previewSize.getWidth()) * 0.7f < MessagesController.getInstance(currentAccount).roundVideoSize) {
+        if (SharedConfig.deviceIsLow() || !allowBigSizeCamera() || previewSize != null && Math.max(previewSize.getHeight(), previewSize.getWidth()) * 0.7f < getRoundVideoResolution()) {
             return "#extension GL_OES_EGL_image_external : require\n" +
                     "precision highp float;\n" +
                     "varying vec2 vTextureCoord;\n" +

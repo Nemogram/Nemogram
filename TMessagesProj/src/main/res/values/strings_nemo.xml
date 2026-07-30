@@ -269,8 +269,8 @@
     <string name="StickersAndGifs">Stickers and GIF</string>
     <string name="ReplyWithTimecode">Reply with timecode</string>
     <string name="SendWithSpoiler">Send with spoiler</string>
-    <string name="HighRoundVideoBitrate">High video message bitrate</string>
-    <string name="HighRoundVideoBitrateDesc">Record round video messages at 4000 kbps instead of the default bitrate</string>
+    <string name="HighRoundVideoBitrate">High quality video messages</string>
+    <string name="HighRoundVideoBitrateDesc">Record round video messages at 4000 kbps and 640x640 instead of the default quality</string>
     <string name="PgpSettings">OpenPGP</string>
     <string name="PgpSettingsAbout">Nemogram never sees or stores your private key. All cryptographic operations are performed by a separate OpenPGP Provider app (such as OpenKeychain) that you install and manage yourself.</string>
     <string name="PgpProvider">OpenPGP Provider</string>
