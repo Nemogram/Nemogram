@@ -1922,6 +1922,7 @@ public class DialogsSearchAdapter extends RecyclerListView.SelectionAdapter {
             }
             case VIEW_TYPE_GRAY_SECTION: {
                 final GraySectionCell cell = (GraySectionCell) holder.itemView;
+                cell.setNoBackground(true);
                 if (!searchResultHashtags.isEmpty()) {
                     cell.setText(LocaleController.getString(R.string.Hashtags), LocaleController.getString(R.string.ClearButton), v -> {
                         if (delegate != null) {

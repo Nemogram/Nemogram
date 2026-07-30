@@ -78,9 +78,9 @@ public class DialogsChannelsAdapter extends UniversalAdapter {
         if (TextUtils.isEmpty(query)) {
             if (myChannels != null && !myChannels.isEmpty()) {
                 if (myChannels.size() > 5) {
-                    items.add(UItem.asGraySection(getString(R.string.SearchMyChannels), getString(expandedMyChannels ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedMyChannels));
+                    items.add(UItem.asGraySection(getString(R.string.SearchMyChannels), getString(expandedMyChannels ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedMyChannels).noBackground());
                 } else {
-                    items.add(UItem.asGraySection(getString(R.string.SearchMyChannels)));
+                    items.add(UItem.asGraySection(getString(R.string.SearchMyChannels)).noBackground());
                 }
                 int count = myChannels.size();
                 if (!expandedMyChannels)
@@ -101,7 +101,7 @@ public class DialogsChannelsAdapter extends UniversalAdapter {
                     }
                 }
                 if (!chats.isEmpty()) {
-                    items.add(UItem.asGraySection(getString(R.string.SearchRecommendedChannels)));
+                    items.add(UItem.asGraySection(getString(R.string.SearchRecommendedChannels)).noBackground());
                 }
                 for (TLRPC.Chat chat : chats) {
                     items.add(UItem.asProfileCell(chat));
@@ -132,9 +132,9 @@ public class DialogsChannelsAdapter extends UniversalAdapter {
             }
             if (!foundChannels.isEmpty()) {
                 if (foundChannels.size() > 5 && !messages.isEmpty()) {
-                    items.add(UItem.asGraySection(getString(R.string.SearchChannels), getString(expandedSearchChannels ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedSearchChannels));
+                    items.add(UItem.asGraySection(getString(R.string.SearchChannels), getString(expandedSearchChannels ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedSearchChannels).noBackground());
                 } else {
-                    items.add(UItem.asGraySection(getString(R.string.SearchChannels)));
+                    items.add(UItem.asGraySection(getString(R.string.SearchChannels)).noBackground());
                 }
                 int count = foundChannels.size();
                 if (!expandedSearchChannels && !messages.isEmpty())
@@ -144,7 +144,7 @@ public class DialogsChannelsAdapter extends UniversalAdapter {
                 }
             }
             if (!messages.isEmpty()) {
-                items.add(UItem.asGraySection(getString(R.string.SearchMessages)));
+                items.add(UItem.asGraySection(getString(R.string.SearchMessages)).noBackground());
                 for (MessageObject message : messages) {
                     items.add(UItem.asSearchMessage(message));
                 }

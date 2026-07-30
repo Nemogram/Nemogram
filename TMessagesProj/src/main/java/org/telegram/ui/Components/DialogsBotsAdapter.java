@@ -112,9 +112,9 @@ public class DialogsBotsAdapter extends UniversalAdapter {
             foundBots.addAll(searchGlobal);
             if (!foundBots.isEmpty()) {
                 if (foundBots.size() > 5 && (!searchMessages.isEmpty() && !showOnlyPopular)) {
-                    items.add(UItem.asGraySection(getString(R.string.SearchApps), getString(expandedSearchBots ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedSearchBots));
+                    items.add(UItem.asGraySection(getString(R.string.SearchApps), getString(expandedSearchBots ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedSearchBots).noBackground());
                 } else {
-                    items.add(UItem.asGraySection(getString(R.string.SearchApps)));
+                    items.add(UItem.asGraySection(getString(R.string.SearchApps)).noBackground());
                 }
                 int count = foundBots.size();
                 if (!expandedSearchBots && (!searchMessages.isEmpty() && !showOnlyPopular))
@@ -124,7 +124,7 @@ public class DialogsBotsAdapter extends UniversalAdapter {
                 }
             }
             if (!searchMessages.isEmpty() && !showOnlyPopular) {
-                items.add(UItem.asGraySection(getString(R.string.SearchMessages)));
+                items.add(UItem.asGraySection(getString(R.string.SearchMessages)).noBackground());
                 for (MessageObject message : searchMessages) {
                     items.add(UItem.asSearchMessage(message));
                 }
@@ -148,9 +148,9 @@ public class DialogsBotsAdapter extends UniversalAdapter {
             topPeersStart = items.size();
             if (!top_peers_bots.isEmpty() && !showOnlyPopular) {
                 if (top_peers_bots.size() > 5) {
-                    items.add(UItem.asGraySection(getString(R.string.SearchAppsMine), getString(expandedMyBots ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedMyBots));
+                    items.add(UItem.asGraySection(getString(R.string.SearchAppsMine), getString(expandedMyBots ? R.string.ShowLess : R.string.ShowMore), this::toggleExpandedMyBots).noBackground());
                 } else {
-                    items.add(UItem.asGraySection(getString(R.string.SearchAppsMine)));
+                    items.add(UItem.asGraySection(getString(R.string.SearchAppsMine)).noBackground());
                 }
                 for (int i = 0; i < top_peers_bots.size(); ++i) {
                     if (i >= 5 && !expandedMyBots) break;
@@ -163,7 +163,7 @@ public class DialogsBotsAdapter extends UniversalAdapter {
             uids.clear();
             topPeersEnd = items.size();
             if (!popular.bots.isEmpty()) {
-                if (!showOnlyPopular) items.add(UItem.asGraySection(getString(R.string.SearchAppsPopular)));
+                if (!showOnlyPopular) items.add(UItem.asGraySection(getString(R.string.SearchAppsPopular)).noBackground());
                 for (int i = 0; i < popular.bots.size(); ++i) {
                     final TLRPC.User user = popular.bots.get(i);
                     if (uids.contains(user.id)) continue;

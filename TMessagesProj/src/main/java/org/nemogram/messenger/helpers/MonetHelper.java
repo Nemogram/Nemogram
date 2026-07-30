@@ -18,6 +18,8 @@ import org.telegram.messenger.FileLog;
 import org.telegram.ui.ActionBar.OKLCH;
 import org.telegram.ui.ActionBar.Theme;
 
+import java.util.Locale;
+
 @RequiresApi(api = Build.VERSION_CODES.S)
 public class MonetHelper {
     private static final SparseIntArray IDS = new SparseIntArray() {{
@@ -147,16 +149,18 @@ public class MonetHelper {
                 return adaptHue(primaryColor, Color.GREEN);
             }
         }
-        var group = rawColor.charAt(0) == 'a' ? 1 : 2;
-        var palette = Integer.parseInt(rawColor.substring(1, 2));
-        var alphaStart = rawColor.indexOf("_", 3);
+        String[] parts = rawColor.split("\\.");
+        String colorToken = parts[0];
+        var group = colorToken.charAt(0) == 'a' ? 1 : 2;
+        var palette = Integer.parseInt(colorToken.substring(1, 2));
+        var alphaStart = colorToken.indexOf("_", 3);
         int shade;
         int alpha;
         if (alphaStart > 0) {
-            shade = Integer.parseInt(rawColor.substring(3, alphaStart));
-            alpha = Integer.parseInt(rawColor.substring(alphaStart + 1));
+            shade = Integer.parseInt(colorToken.substring(3, alphaStart));
+            alpha = Integer.parseInt(colorToken.substring(alphaStart + 1));
         } else {
-            shade = Integer.parseInt(rawColor.substring(3));
+            shade = Integer.parseInt(colorToken.substring(3));
             alpha = -1;
         }
         if (amoled && group == 2 && palette == 1 && shade == 900) {
@@ -170,6 +174,26 @@ public class MonetHelper {
         var color = context.getColor(id);
         if (alpha != -1) {
             color = ColorUtils.setAlphaComponent(color, alpha);
+        }
+        for (int i = 1; i < parts.length; i++) {
+            String modifier = parts[i].trim().toLowerCase(Locale.US);
+            if (modifier.length() < 2) {
+                continue;
+            }
+            char type = modifier.charAt(0);
+            int value;
+            try {
+                value = Integer.parseInt(modifier.substring(1));
+            } catch (NumberFormatException ignore) {
+                continue;
+            }
+            if (type == 'a') {
+                color = ColorUtils.setAlphaComponent(color, Math.round(255f * value / 100f));
+            } else if (type == 's') {
+                color = ColorUtils.blendARGB(Color.WHITE, color, value / 100f);
+            } else if (type == 'l') {
+                color = ColorUtils.blendARGB(Color.BLACK, color, value / 100f);
+            }
         }
         return color;
     }

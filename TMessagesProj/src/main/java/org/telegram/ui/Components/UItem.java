@@ -575,6 +575,11 @@ public class UItem extends AdapterWithDiffUtils.Item {
         return item;
     }
 
+    public UItem noBackground() {
+        flags |= 1;
+        return this;
+    }
+
     public static UItem asProfileCell(TLObject obj) {
         UItem item = new UItem(UniversalAdapter.VIEW_TYPE_PROFILE_CELL, false);
         item.object = obj;

@@ -954,6 +954,7 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
                 break;
             case VIEW_TYPE_GRAY_SECTION:
                 GraySectionCell sectionCell = (GraySectionCell) holder.itemView;
+                sectionCell.setNoBackground((item.flags & 1) != 0);
                 if (TextUtils.equals(sectionCell.getText(), item.text)) {
                     sectionCell.setRightText(item.subtext, true, item.clickCallback);
                 } else {
