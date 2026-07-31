@@ -73,6 +73,7 @@ public class WhisperHelper {
         var resourcesProvider = fragment.getResourceProvider();
         var context = fragment.getParentActivity();
         var builder = new AlertDialog.Builder(context, resourcesProvider);
+        builder.setTitle(LocaleController.getString(R.string.CloudflareCredentials));
         builder.setMessage(LocaleController.getString(R.string.CloudflareCredentialsDialog));
         builder.setCustomViewOffset(0);
 
