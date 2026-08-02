@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NemoSettings">Настройки Nemo</string>
+    <string name="NemoAbout">О приложении</string>
+    <string name="NemoSettingsSectionMain">Основные</string>
+    <string name="NemoSettingsSectionSecurity">Безопасность</string>
     <string name="PreferIPv6">Предпочитать подключение через IPv6</string>
     <string name="MessageMenu">Меню сообщений</string>
     <string name="DeleteAllFromSelf">Удалить мои сообщения</string>

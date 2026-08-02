@@ -5,37 +5,28 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
-import androidx.appcompat.content.res.AppCompatResources;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
-import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.Utilities;
-import org.telegram.messenger.browser.Browser;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.ActionBarMenuItem;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.SettingsSearchCell;
-import org.telegram.ui.Components.BackupImageView;
 import org.telegram.ui.Components.CubicBezierInterpolator;
-import org.telegram.ui.Components.LayoutHelper;
+import org.telegram.ui.Components.IconBackgroundColors;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.ProfileActivity.SearchAdapter.SearchResult;
+import org.telegram.ui.SettingsActivity;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
@@ -58,10 +49,7 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     private final int accessibilityRow = rowId++;
 
     private final int pgpRow = rowId++;
-
-    private final int channelRow = rowId++;
-    private final int sourceCodeRow = rowId++;
-    private final int nemoChannelRow = rowId++;
+    private final int aboutRow = rowId++;
 
     private final ArrayList<SearchResult> searchArray = createSearchArray();
     private final ArrayList<CharSequence> resultNames = new ArrayList<>();
@@ -70,38 +58,8 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     private Runnable searchRunnable;
     private String lastSearchString;
 
-    private FrameLayout topView;
-
     @Override
     public View createView(Context context) {
-        topView = new FrameLayout(context);
-
-        var logoContainer = new FrameLayout(context);
-        var logoView = new BackupImageView(context);
-
-        logoView.setImageDrawable(AppCompatResources.getDrawable(context, R.mipmap.ic_launcher));
-        logoContainer.addView(logoView, LayoutHelper.createFrame(90, 90, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 15, 0, 0));
-        topView.addView(logoContainer, LayoutHelper.createFrame(120, 120, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 23 - 12, 0, 0));
-
-        var titleView = new TextView(context);
-        titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
-        titleView.setTypeface(AndroidUtilities.bold());
-        titleView.setGravity(Gravity.CENTER);
-        titleView.setSingleLine();
-        titleView.setEllipsize(TextUtils.TruncateAt.END);
-        titleView.setText(LocaleController.getString(R.string.AppNameNemo));
-        titleView.setTextColor(getThemedColor(Theme.key_windowBackgroundWhiteBlackText));
-        topView.addView(titleView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 138.333f - 12, 0, 0));
-
-        var subtitleView = new TextView(context);
-        subtitleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
-        subtitleView.setGravity(Gravity.CENTER);
-        subtitleView.setSingleLine();
-        subtitleView.setEllipsize(TextUtils.TruncateAt.END);
-        subtitleView.setText(String.format(Locale.US, "%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
-        subtitleView.setTextColor(getThemedColor(Theme.key_windowBackgroundWhiteGrayText));
-        topView.addView(subtitleView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 168 - 12, 0, 0));
-
         var fragmentView = super.createView(context);
 
         var menu = actionBar.createMenu();
@@ -132,11 +90,6 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     }
 
     @Override
-    protected boolean needActionBarPadding() {
-        return false;
-    }
-
-    @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         if (isSearchFieldVisible()) {
             items.add(UItem.asSpace(ActionBar.getCurrentActionBarHeight()));
@@ -144,29 +97,27 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
             return;
         }
 
-        items.add(UItem.asCustomShadow(topView, 200 - 12));
-
-        items.add(UItem.asButton(generalRow, R.drawable.msg_media, LocaleController.getString(R.string.General)).slug("general"));
-        items.add(UItem.asButton(appearanceRow, R.drawable.msg_theme, LocaleController.getString(R.string.ChangeChannelNameColor2)).slug("appearance"));
-        items.add(UItem.asButton(chatRow, R.drawable.msg_discussion, LocaleController.getString(R.string.Chat)).slug("chat"));
-        items.add(UItem.asButton(keywordFilterRow, R.drawable.msg_block2, LocaleController.getString(R.string.KeywordFilter)).slug("keywordFilter"));
-        if (!PasscodeHelper.isSettingsHidden()) {
-            items.add(UItem.asButton(passcodeRow, R.drawable.msg_secret, LocaleController.getString(R.string.PasscodeNemo)).slug("passcode"));
-        }
-        items.add(UItem.asButton(experimentRow, R.drawable.msg_fave, LocaleController.getString(R.string.NotificationsOther)).slug("experiment"));
+        items.add(UItem.asHeader(LocaleController.getString(R.string.NemoSettingsSectionMain)));
+        items.add(SettingsActivity.SettingCell.Factory.of(generalRow, IconBackgroundColors.BLUE.top, IconBackgroundColors.BLUE.bottom, R.drawable.filled_poll_multiple_24, LocaleController.getString(R.string.General)).slug("general"));
+        items.add(SettingsActivity.SettingCell.Factory.of(appearanceRow, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_features, LocaleController.getString(R.string.ChangeChannelNameColor2)).slug("appearance"));
+        items.add(SettingsActivity.SettingCell.Factory.of(chatRow, IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom, R.drawable.settings_chat, LocaleController.getString(R.string.Chat)).slug("chat"));
+        items.add(SettingsActivity.SettingCell.Factory.of(experimentRow, IconBackgroundColors.ORANGE_DEEP.top, IconBackgroundColors.ORANGE_DEEP.bottom, R.drawable.filled_premium_away, LocaleController.getString(R.string.NotificationsOther)).slug("experiment"));
         AccessibilityManager am = (AccessibilityManager) ApplicationLoader.applicationContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
         if (am != null && am.isTouchExplorationEnabled()) {
-            items.add(UItem.asButton(accessibilityRow, LocaleController.getString(R.string.AccessibilitySettings)).slug("accessibility"));
+            items.add(SettingsActivity.SettingCell.Factory.of(accessibilityRow, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.settings_language, LocaleController.getString(R.string.AccessibilitySettings)).slug("accessibility"));
         }
         items.add(UItem.asShadow(null));
 
-        items.add(UItem.asButton(pgpRow, R.drawable.msg_secret, LocaleController.getString(R.string.PgpSettings)).slug("pgp"));
+        items.add(UItem.asHeader(LocaleController.getString(R.string.NemoSettingsSectionSecurity)));
+        items.add(SettingsActivity.SettingCell.Factory.of(keywordFilterRow, IconBackgroundColors.RED.top, IconBackgroundColors.RED.bottom, R.drawable.msg_filled_blocked, LocaleController.getString(R.string.KeywordFilter)).slug("keywordFilter"));
+        if (!PasscodeHelper.isSettingsHidden()) {
+            items.add(SettingsActivity.SettingCell.Factory.of(passcodeRow, IconBackgroundColors.BLUE_DEEP.top, IconBackgroundColors.BLUE_DEEP.bottom, R.drawable.settings_privacy, LocaleController.getString(R.string.PasscodeNemo)).slug("passcode"));
+        }
+        items.add(SettingsActivity.SettingCell.Factory.of(pgpRow, IconBackgroundColors.GRAY.top, IconBackgroundColors.GRAY.bottom, R.drawable.settings_policy, LocaleController.getString(R.string.PgpSettings)).slug("pgp"));
         items.add(UItem.asShadow(null));
 
-        items.add(UItem.asButton(channelRow, R.drawable.msg_channel, LocaleController.getString(R.string.OfficialChannel), "@NemogramUpdates").slug("channel"));
-        items.add(UItem.asButton(sourceCodeRow, R.drawable.msg_link, LocaleController.getString(R.string.ViewSourceCode), "GitHub").slug("sourceCode"));
-        items.add(UItem.asShadow(null));
-        items.add(UItem.asButton(nemoChannelRow, R.drawable.msg_channel, "Nekogram", "@nekoupdates").slug("nekoChannel"));
+        items.add(UItem.asHeader(LocaleController.getString(R.string.NemoAbout)));
+        items.add(SettingsActivity.SettingCell.Factory.of(aboutRow, IconBackgroundColors.BLUE_ALT.top, IconBackgroundColors.BLUE_ALT.bottom, R.drawable.filled_info, LocaleController.getString(R.string.NemoAbout)).slug("about"));
         items.add(UItem.asShadow(null));
 
     }
@@ -196,12 +147,8 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
             presentFragment(new AccessibilitySettingsActivity());
         } else if (id == pgpRow) {
             presentFragment(new org.nemogram.messenger.pgp.ui.PgpSettingsActivity());
-        } else if (id == channelRow) {
-            getMessagesController().openByUserName("NemogramUpdates", this, 1);
-        } else if (id == nemoChannelRow) {
-            getMessagesController().openByUserName("nekoupdates", this, 1);
-        } else if (id == sourceCodeRow) {
-            Browser.openUrl(getParentActivity(), "https://github.com/Nemogram/Nemogram");
+        } else if (id == aboutRow) {
+            presentFragment(new NemoAboutSettingsActivity());
         }
     }
 
@@ -230,15 +177,15 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     }
 
     private static BaseNemoSettingsActivity createFragment(int icon) {
-        if (icon == R.drawable.msg_media) {
+        if (icon == R.drawable.filled_poll_multiple_24) {
             return new NemoGeneralSettingsActivity();
-        } else if (icon == R.drawable.msg_theme) {
+        } else if (icon == R.drawable.settings_features) {
             return new NemoAppearanceSettingsActivity();
-        } else if (icon == R.drawable.msg_discussion) {
+        } else if (icon == R.drawable.settings_chat) {
             return new NemoChatSettingsActivity();
-        } else if (icon == R.drawable.msg_fave) {
+        } else if (icon == R.drawable.filled_premium_away) {
             return new NemoExperimentalSettingsActivity();
-        } else if (icon == R.drawable.msg_block2) {
+        } else if (icon == R.drawable.msg_filled_blocked) {
             return new NemoKeywordFilterActivity();
         }
         return new NemoSettingsActivity();
@@ -247,11 +194,11 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     private ArrayList<SearchResult> createSearchArray() {
         var searchResultList = new ArrayList<SearchResult>();
         var icons = new int[]{
-                R.drawable.msg_media,
-                R.drawable.msg_theme,
-                R.drawable.msg_discussion,
-                R.drawable.msg_fave,
-                R.drawable.msg_block2,
+                R.drawable.filled_poll_multiple_24,
+                R.drawable.settings_features,
+                R.drawable.settings_chat,
+                R.drawable.filled_premium_away,
+                R.drawable.msg_filled_blocked,
         };
         for (var i = 0; i < icons.length; i++) {
             var icon = icons[i];
@@ -278,16 +225,34 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
             }
             searchResultList.add(new SearchResult(10000 + i, fragmentTitle, icon, () -> presentFragment(fragment)));
         }
-        searchResultList.add(new SearchResult(8000, LocaleController.getString(R.string.EmojiUseDefault), null, LocaleController.getString(R.string.Chat), LocaleController.getString(R.string.EmojiSets), R.drawable.msg_theme, () -> {
+        searchResultList.add(new SearchResult(8000, LocaleController.getString(R.string.EmojiUseDefault), null, LocaleController.getString(R.string.ChangeChannelNameColor2), LocaleController.getString(R.string.EmojiSets), R.drawable.settings_chat, () -> {
             var fragment = new NemoEmojiSettingsActivity();
             presentFragment(fragment);
             AndroidUtilities.runOnUIThread(() -> fragment.scrollToRow("useSystemEmoji", () -> {
             }));
         }));
 
-        searchResultList.add(new SearchResult(20000, LocaleController.getString(R.string.OfficialChannel), "@NemogramUpdates", R.drawable.msg2_help, () -> getMessagesController().openByUserName("NemogramUpdates", this, 1)));
-        searchResultList.add(new SearchResult(20002, LocaleController.getString(R.string.ViewSourceCode), "GitHub", R.drawable.msg2_help, () -> Browser.openUrl(getParentActivity(), "https://github.com/Nemogram/Nemogram")));
-        searchResultList.add(new SearchResult(20004, "Nekogram", "@nekoupdates", R.drawable.msg2_help, () -> getMessagesController().openByUserName("nekoupdates", this, 1)));
+        searchResultList.add(new SearchResult(20000, LocaleController.getString(R.string.OfficialChannel), "@NemogramUpdates", R.drawable.settings_channel, () -> {
+            var fragment = new NemoAboutSettingsActivity();
+            presentFragment(fragment);
+            AndroidUtilities.runOnUIThread(() -> fragment.scrollToRow("channel", () -> {
+            }));
+        }));
+        searchResultList.add(new SearchResult(20002, LocaleController.getString(R.string.ViewSourceCode), "GitHub", R.drawable.settings_faq, () -> {
+            var fragment = new NemoAboutSettingsActivity();
+            presentFragment(fragment);
+            AndroidUtilities.runOnUIThread(() -> fragment.scrollToRow("sourceCode", () -> {
+            }));
+        }));
+        searchResultList.add(new SearchResult(20004, "Nekogram", "@nekoupdates", R.drawable.settings_channel, () -> {
+            var fragment = new NemoAboutSettingsActivity();
+            presentFragment(fragment);
+            AndroidUtilities.runOnUIThread(() -> fragment.scrollToRow("nekoChannel", () -> {
+            }));
+        }));
+        searchResultList.add(new SearchResult(20006, LocaleController.getString(R.string.PgpSettings), R.drawable.settings_policy, () -> {
+            presentFragment(new org.nemogram.messenger.pgp.ui.PgpSettingsActivity());
+        }));
 
         return searchResultList;
     }

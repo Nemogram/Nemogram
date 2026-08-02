@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 import org.nemogram.messenger.settings.BaseNemoSettingsActivity;
+import org.nemogram.messenger.settings.NemoAboutSettingsActivity;
 import org.nemogram.messenger.settings.NemoAppearanceSettingsActivity;
 import org.nemogram.messenger.settings.NemoChatSettingsActivity;
 import org.nemogram.messenger.settings.NemoEmojiSettingsActivity;
@@ -43,6 +44,9 @@ public class SettingsHelper {
                 case "appearance":
                 case "a":
                     fragment = new NemoAppearanceSettingsActivity();
+                    break;
+                case "about":
+                    fragment = new NemoAboutSettingsActivity();
                     break;
                 case "chat":
                 case "chats":
