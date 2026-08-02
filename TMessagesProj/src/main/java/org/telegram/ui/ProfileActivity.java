@@ -3974,6 +3974,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         TLRPC.User user = getUserConfig().getCurrentUser();
                         if (user == null) return;
                         ItemOptions itemOptions = ItemOptions.makeOptions(this, actionsView);
+                        itemOptions.setLongPressSelectionEnabled(false);
                         itemOptions.setGravity(Gravity.LEFT);
                         itemOptions.add(R.drawable.msg_qrcode, getString(R.string.QrCode), () -> {
                             Bundle args = new Bundle();
@@ -7232,6 +7233,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
             var options = ItemOptions.makeOptions(this, view)
                     .setScrimViewBackground(bg)
+                    .setLongPressSelectionEnabled(false)
                     .addIf(!self, R.drawable.msg_discussion, getString(R.string.SendMessage), () -> {
                         presentFragment(ChatActivity.of(user.id));
                     })
@@ -7570,6 +7572,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
             final ItemOptions o = ItemOptions.makeOptions(this, view);
             o.setScrimViewBackground(listView.getClipBackground(view));
+            o.setLongPressSelectionEnabled(false);
             if (position == phoneRow) {
                 if (userInfo != null && userInfo.phone_calls_available) {
                     o.add(R.drawable.msg_calls, getString(R.string.CallViaTelegram), () -> {
@@ -7660,7 +7663,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             fromLanguage[0] = "und";
             final boolean[] withTranslate = new boolean[1];
             withTranslate[0] = position == bioRow || position == channelInfoRow || position == userInfoRow;
-            final String toLang = TranslateAlert2.getToLanguage();
             Runnable showMenu = () -> {
                 if (getParentActivity() == null) {
                     return;
@@ -7668,14 +7670,15 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
                 ItemOptions.makeOptions(this, view)
                         .setScrimViewBackground(listView.getClipBackground(view))
+                        .setLongPressSelectionEnabled(false)
                         .add(R.drawable.msg_copy, getString(R.string.Copy), () -> {
                             AndroidUtilities.addToClipboard(finalText);
                             if (position == bioRow) {
                                 BulletinFactory.of(this).createCopyBulletin(LocaleController.getString(R.string.BioCopied)).show();
                             } else {
                                 BulletinFactory.of(this).createCopyBulletin(LocaleController.getString(R.string.TextCopied)).show();
-                            }
-                        })
+                        }
+                    })
                         .addIf(withTranslate[0], R.drawable.msg_translate, getString(R.string.TranslateMessage), () -> {
                             Translator.showTranslateDialog(getParentActivity(), finalText, false, this, span -> {
                                 if (span != null) {
@@ -16651,6 +16654,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private boolean editNotes(View view, int position) {
         final ItemOptions o = ItemOptions.makeOptions(this, view);
         o.setScrimViewBackground(listView.getClipBackground(view));
+        o.setLongPressSelectionEnabled(false);
         o.addIf(userInfo != null, R.drawable.msg_copy, getString(R.string.Copy), () -> {
             if (userInfo == null) return;
             final CharSequence text = MessageObject.formatTextWithEntities(userInfo.note, false);
@@ -16728,6 +16732,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
         final ItemOptions itemOptions = ItemOptions.makeOptions(this, cell);
         itemOptions.setScrimViewBackground(listView.getClipBackground(cell));
+        itemOptions.setLongPressSelectionEnabled(false);
         itemOptions.setGravity(Gravity.LEFT);
 
         if (position == bizLocationRow && userFull.business_location != null) {

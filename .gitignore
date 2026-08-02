@@ -19,3 +19,4 @@ keystore/
 gradle/gradle-daemon-jvm.properties
 TMessagesProj_App/debug/
 TMessagesProj_App/release/
+TMessagesProj/jni/ffmpeg/build_android
