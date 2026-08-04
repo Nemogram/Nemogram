@@ -25,8 +25,8 @@
     <string name="StickerSize">Çıkartma boyutu</string>
     <string name="StickerSizeLeft">Küçük</string>
     <string name="StickerSizeRight">Büyük</string>
-    <string name="StickerSizeDialogMessage">Ne kadar da şirin! Siyah bir kedi!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miyav</string>
+    <string name="StickerSizeDialogMessage">Vay, ne şirin bir balık!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Fokur fokur</string>
     <string name="Experiment">Deneysel</string>
     <string name="MessageDetails">Detaylar</string>
     <string name="DeleteAccount">Telegram hesabını sil</string>

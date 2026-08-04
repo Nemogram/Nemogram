@@ -26,8 +26,8 @@
     <string name="StickerSize">Величина налепница</string>
     <string name="StickerSizeLeft">Мала</string>
     <string name="StickerSizeRight">Велика</string>
-    <string name="StickerSizeDialogMessage">Ооо тако слатко! Црна мачка!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Мјау</string>
+    <string name="StickerSizeDialogMessage">Ох, каква слатка рибица!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Блуб</string>
     <string name="Experiment">Експериментално</string>
     <string name="MessageDetails">Детаљи</string>
     <string name="DeleteAccount">Избриши Telegram налог</string>

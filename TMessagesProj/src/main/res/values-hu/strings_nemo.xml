@@ -29,8 +29,8 @@
     <string name="StickerSize">Matrica mérete</string>
     <string name="StickerSizeLeft">Kicsi</string>
     <string name="StickerSizeRight">Nagy</string>
-    <string name="StickerSizeDialogMessage">Ó, de aranyos! Egy fekete macska!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miau</string>
+    <string name="StickerSizeDialogMessage">Ó, de aranyos hal!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blubb</string>
     <string name="Experiment">Kísérleti</string>
     <string name="MessageDetails">Részletek</string>
     <string name="DeleteAccount">Telegram fiók törlése</string>

@@ -26,8 +26,8 @@
     <string name="StickerSize">貼圖大小</string>
     <string name="StickerSizeLeft">小</string>
     <string name="StickerSizeRight">大</string>
-    <string name="StickerSizeDialogMessage">哇，是一隻黑貓！卡哇伊！</string>
-    <string name="StickerSizeDialogMessageReplyTo">喵</string>
+    <string name="StickerSizeDialogMessage">哇，好可愛的小魚！</string>
+    <string name="StickerSizeDialogMessageReplyTo">咕嘟</string>
     <string name="Experiment">實驗性</string>
     <string name="MessageDetails">資訊</string>
     <string name="DeleteAccount">刪除 Telegram 帳戶</string>

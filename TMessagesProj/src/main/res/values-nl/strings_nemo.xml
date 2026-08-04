@@ -28,8 +28,8 @@
     <string name="StickerSize">Sticker grootte</string>
     <string name="StickerSizeLeft">Klein</string>
     <string name="StickerSizeRight">Groot</string>
-    <string name="StickerSizeDialogMessage">Oh wat schattig! Een zwarte kat!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meow</string>
+    <string name="StickerSizeDialogMessage">Oh wat een schattige vis!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blub</string>
     <string name="Experiment">Experimenteel</string>
     <string name="MessageDetails">Beschrijving</string>
     <string name="DeleteAccount">Telegram account verwijderen</string>

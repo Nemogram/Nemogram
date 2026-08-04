@@ -38,8 +38,8 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
     private BackgroundGradientDrawable.Disposable backgroundGradientDisposable;
 
     private FrameLayout fragmentView;
-    private final ChatMessageCell[] cells = new ChatMessageCell[2];
-    private final MessageObject[] messageObjects = new MessageObject[2];
+    private final ChatMessageCell[] cells = new ChatMessageCell[3];
+    private final MessageObject[] messageObjects = new MessageObject[3];
     private final Drawable shadowDrawable;
 
     public StickerSizePreviewMessagesCell(Context context, Theme.ResourcesProvider resourcesProvider) {
@@ -67,7 +67,7 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
         message.media.document.access_hash = 0;
         message.media.document.date = date;
         TLRPC.TL_documentAttributeSticker attributeSticker = new TLRPC.TL_documentAttributeSticker();
-        attributeSticker.alt = "🐈‍⬛";
+        attributeSticker.alt = "🐟";
         message.media.document.attributes.add(attributeSticker);
         TLRPC.TL_documentAttributeImageSize attributeImageSize = new TLRPC.TL_documentAttributeImageSize();
         attributeImageSize.h = 512;
@@ -90,15 +90,43 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
         message.out = false;
         message.peer_id = new TLRPC.TL_peerUser();
         message.peer_id.user_id = 1;
-        messageObjects[0].customReplyName = "FiveYellowMice";
+        messageObjects[0].customReplyName = "BigFuguFish";
         messageObjects[0].replyMessageObject = new MessageObject(UserConfig.selectedAccount, message, true, false);
+
+        // GIF from the interlocutor, right after the sticker; its on-screen size is
+        // controlled by NemoConfig.gifSize the same way a real incoming GIF is (see
+        // ChatMessageCell's TYPE_GIF sizing branch), so it scales proportionally with the slider.
+        message = new TLRPC.TL_message();
+        message.date = date + 640;
+        message.dialog_id = -1;
+        message.flags = 259;
+        message.id = 3;
+        message.media = new TLRPC.TL_messageMediaDocument();
+        message.media.flags = 1;
+        message.media.document = new TLRPC.TL_document();
+        message.media.document.mime_type = "video/mp4";
+        message.media.document.file_reference = new byte[0];
+        message.media.document.access_hash = 0;
+        message.media.document.date = date;
+        TLRPC.TL_documentAttributeAnimated attributeAnimated = new TLRPC.TL_documentAttributeAnimated();
+        message.media.document.attributes.add(attributeAnimated);
+        TLRPC.TL_documentAttributeVideo attributeVideo = new TLRPC.TL_documentAttributeVideo();
+        attributeVideo.w = 320;
+        attributeVideo.h = 240;
+        message.media.document.attributes.add(attributeVideo);
+        message.message = "";
+        message.out = false;
+        message.peer_id = new TLRPC.TL_peerUser();
+        message.peer_id.user_id = 1;
+        messageObjects[1] = new MessageObject(UserConfig.selectedAccount, message, true, false);
+        messageObjects[1].useCustomPhoto = true;
 
         message = new TLRPC.TL_message();
         message.message = LocaleController.getString(R.string.StickerSizeDialogMessage);
         message.date = date + 1270;
         message.dialog_id = -1;
         message.flags = 259;
-        message.id = 3;
+        message.id = 4;
         message.reply_to = new TLRPC.TL_messageReplyHeader();
         message.reply_to.flags |= 16;
         message.reply_to.reply_to_msg_id = 2;
@@ -106,8 +134,8 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
         message.out = false;
         message.peer_id = new TLRPC.TL_peerUser();
         message.peer_id.user_id = 1;
-        messageObjects[1] = new MessageObject(UserConfig.selectedAccount, message, true, false);
-        messageObjects[1].replyMessageObject = messageObjects[0];
+        messageObjects[2] = new MessageObject(UserConfig.selectedAccount, message, true, false);
+        messageObjects[2].replyMessageObject = messageObjects[0];
 
         for (int a = 0; a < cells.length; a++) {
             cells[a] = new ChatMessageCell(context, UserConfig.selectedAccount, false, null, resourcesProvider);

@@ -29,8 +29,8 @@
     <string name="StickerSize">Размер стикеров</string>
     <string name="StickerSizeLeft">Маленький</string>
     <string name="StickerSizeRight">Большой</string>
-    <string name="StickerSizeDialogMessage">Ооо! Как мило! Чёрная кошка!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Мяу</string>
+    <string name="StickerSizeDialogMessage">Ооо! Какая милая рыбка!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Буль</string>
     <string name="Experiment">Экспериментальные настройки</string>
     <string name="MessageDetails">Подробности</string>
     <string name="DeleteAccount">Удалить аккаунт Telegram</string>

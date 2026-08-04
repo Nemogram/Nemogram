@@ -29,8 +29,8 @@
     <string name="StickerSize">Dimensione dell\'adesivo</string>
     <string name="StickerSizeLeft">Piccolo</string>
     <string name="StickerSizeRight">Grande</string>
-    <string name="StickerSizeDialogMessage">Oh che carino! Un gatto nero!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miao</string>
+    <string name="StickerSizeDialogMessage">Oh che pesce carino!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blub</string>
     <string name="Experiment">Sperimentale</string>
     <string name="MessageDetails">Dettagli</string>
     <string name="DeleteAccount">Elimina l\'account Telegram</string>

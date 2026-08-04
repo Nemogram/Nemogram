@@ -22,8 +22,8 @@
     <string name="StickerSize">चैट में स्टीकर का साइज</string>
     <string name="StickerSizeLeft">छोटा</string>
     <string name="StickerSizeRight">बड़ा</string>
-    <string name="StickerSizeDialogMessage">ओह, बहुत प्यारी! एक काली बिल्ली!</string>
-    <string name="StickerSizeDialogMessageReplyTo">म्याऊँ</string>
+    <string name="StickerSizeDialogMessage">ओह, कितनी प्यारी मछली है!</string>
+    <string name="StickerSizeDialogMessageReplyTo">बुलबुला</string>
     <string name="Experiment">प्रायोगिक</string>
     <string name="MessageDetails">विवरण</string>
     <string name="DeleteAccount">टेलीग्राम अकाउंट को डिलीट करें</string>

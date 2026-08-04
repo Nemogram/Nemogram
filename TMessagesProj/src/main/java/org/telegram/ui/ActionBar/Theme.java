@@ -5494,6 +5494,15 @@ public class Theme {
         return defaultDrawable;
     }
 
+    public static GradientDrawable createRoundRectStrokeDrawable(int rad, int strokeWidth, int strokeColor) {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setColor(Color.TRANSPARENT);
+        drawable.setCornerRadius(rad);
+        drawable.setStroke(strokeWidth, strokeColor);
+        return drawable;
+    }
+
     public static Drawable createServiceDrawable(int rad, View view, View containerView) {
         return createServiceDrawable(rad, view, containerView, chat_actionBackgroundPaint);
     }

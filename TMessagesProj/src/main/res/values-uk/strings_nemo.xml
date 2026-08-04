@@ -26,8 +26,8 @@
     <string name="StickerSize">Розмір наліпки</string>
     <string name="StickerSizeLeft">Малий</string>
     <string name="StickerSizeRight">Великий</string>
-    <string name="StickerSizeDialogMessage">Ох, який милий! Чорний кіт!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Няв</string>
+    <string name="StickerSizeDialogMessage">Оце так, яка мила рибка!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Буль</string>
     <string name="Experiment">Експериментальні</string>
     <string name="MessageDetails">Детальніше</string>
     <string name="DeleteAccount">Видалити обліковий запис Telegram</string>

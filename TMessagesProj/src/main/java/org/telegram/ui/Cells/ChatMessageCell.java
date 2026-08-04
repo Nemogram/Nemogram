@@ -249,6 +249,9 @@ import org.nemogram.messenger.helpers.MessageHelper;
 import org.nemogram.messenger.helpers.WhisperHelper;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -270,6 +273,29 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     private final static int UPLOADING_ALLOWABLE_ERROR = 1024 * 1024;
     private final static int STICKER_STATUS_OFFSET = 6;
     private final static float EPHEMERAL_HINT_HEIGHT = 25f;
+
+    // Backs the "useCustomPhoto" GIF mock used by the sticker/gif size preview in settings.
+    // AnimatedFileDrawable needs a real File, so a raw resource is copied to the cache dir once
+    // and the decoder is created lazily and reused across setMessageObject() calls.
+    private AnimatedFileDrawable customPreviewGifDrawable;
+
+    private static File extractRawResourceToCache(int rawResId, String fileName) {
+        File outFile = new File(ApplicationLoader.applicationContext.getCacheDir(), fileName);
+        if (outFile.exists() && outFile.length() > 0) {
+            return outFile;
+        }
+        try (InputStream in = ApplicationLoader.applicationContext.getResources().openRawResource(rawResId);
+             FileOutputStream out = new FileOutputStream(outFile)) {
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            return outFile;
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
     public boolean clipToGroupBounds;
     public boolean drawForBlur;
@@ -6369,6 +6395,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
+        if (customPreviewGifDrawable != null) {
+            customPreviewGifDrawable.recycle();
+            customPreviewGifDrawable = null;
+        }
+
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.startSpoilers);
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.stopSpoilers);
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.emojiLoaded);
@@ -9792,7 +9823,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         photoImage.setImage(null, null, thumb, null, messageObject, 0);
                     }
                     if (messageObject.useCustomPhoto) {
-                        photoImage.setImageBitmap(getResources().getDrawable(R.drawable.black_cat));
+                        photoImage.setImageBitmap(getResources().getDrawable(R.drawable.nemo_fish));
                     }
                     if (!reactionsLayoutInBubble.isSmall) {
                         reactionsLayoutInBubble.measure(maxWidth + dp(36), currentMessageObject.isOutOwner() && (currentMessageObject.isAnimatedEmoji() || currentMessageObject.isAnyKindOfSticker()) ? Gravity.RIGHT : Gravity.LEFT);
@@ -10417,6 +10448,31 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                             }
                         }
                     } else if (messageObject.type == MessageObject.TYPE_GIF || messageObject.type == MessageObject.TYPE_ROUND_VIDEO) {
+                        if (messageObject.useCustomPhoto) {
+                            // Same class real incoming GIFs use to decode/play/round themselves
+                            // (see the DOCUMENT_ATTACH_TYPE_GIF path below and
+                            // ImageReceiver#updateDrawableRadius' AnimatedFileDrawable branch).
+                            // It needs a real File on disk, so the raw resource (an mp4, same as
+                            // real Telegram "GIF" documents) is extracted to the cache dir once
+                            // and reused after that.
+                            if (customPreviewGifDrawable == null) {
+                                File previewGifFile = extractRawResourceToCache(R.raw.gif_size_preview, "nemo_gif_size_preview.mp4");
+                                if (previewGifFile != null) {
+                                    try {
+                                        customPreviewGifDrawable = new AnimatedFileDrawable(previewGifFile, true, 0, 0, null, null, null, 0, currentAccount, false, null);
+                                    } catch (Exception ignore) {
+                                        customPreviewGifDrawable = null;
+                                    }
+                                }
+                            }
+                            if (customPreviewGifDrawable != null) {
+                                photoImage.setImageBitmap(customPreviewGifDrawable);
+                            } else {
+                                // Extraction/decoding failed (e.g. corrupt file) — nothing sensible
+                                // to fall back to for an mp4 source, so just clear the image.
+                                photoImage.setImageBitmap((Drawable) null);
+                            }
+                        } else {
                         String fileName = FileLoader.getAttachFileName(messageObject.getDocument());
                         int localFile = 0;
                         if (messageObject.attachPathExists) {
@@ -10470,6 +10526,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                 }
                                 photoImage.setImage(ImageLocation.getForObject(currentPhotoObject, photoParentObject), currentPhotoFilter, ImageLocation.getForObject(currentPhotoObjectThumb, photoParentObject), currentPhotoFilterThumb, currentPhotoObjectThumbStripped, 0, null, messageObject, cacheType);
                             }
+                        }
                         }
                     } else {
                         if (messageObject.videoEditedInfo != null && messageObject.type == MessageObject.TYPE_ROUND_VIDEO && !currentMessageObject.needDrawBluredPreview()) {
@@ -17413,8 +17470,8 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             documentAttachType == DOCUMENT_ATTACH_TYPE_MUSIC
         ) {
             if (currentMessageObject.useCustomPhoto) {
-                buttonState = 1;
-                radialProgress.setIcon(getIconForCurrentState(), ifSame, animated);
+                buttonState = -1;
+                radialProgress.setIcon(MediaActionDrawable.ICON_NONE, ifSame, animated);
                 return;
             }
             if (currentMessageObject.attachPathExists && !TextUtils.isEmpty(currentMessageObject.messageOwner.attachPath)) {

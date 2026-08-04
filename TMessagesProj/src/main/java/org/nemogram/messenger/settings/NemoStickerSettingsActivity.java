@@ -70,6 +70,9 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             AndroidUtilities.updateViewVisibilityAnimated(resetItem, false, 0.5f, true);
             var stickerItem = listView.findItemByItemId(stickerSizeRow);
             var stickerCell = (StickerSizeCell) listView.findViewByItemId(stickerSizeRow);
+            var gifItem = listView.findItemByItemId(gifSizeRow);
+            var gifCell = (GifSizeCell) listView.findViewByItemId(gifSizeRow);
+
             if (stickerCell != null) {
                 ValueAnimator animator = ValueAnimator.ofFloat(NemoConfig.stickerSize, 14.0f);
                 animator.setDuration(150);
@@ -78,6 +81,7 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
                     var floatValue = (float) valueAnimator.getAnimatedValue();
                     NemoConfig.setStickerSize(floatValue);
                     stickerCell.setValue(floatValue);
+                    if (gifCell != null) gifCell.invalidatePreview();
                 });
                 animator.start();
             } else {
@@ -85,8 +89,6 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             }
             stickerItem.floatValue = 14.0f;
 
-            var gifItem = listView.findItemByItemId(gifSizeRow);
-            var gifCell = (GifSizeCell) listView.findViewByItemId(gifSizeRow);
             if (gifCell != null) {
                 ValueAnimator animator = ValueAnimator.ofFloat(NemoConfig.gifSize, 17.5f);
                 animator.setDuration(150);
@@ -109,26 +111,25 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
 
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(LocaleController.getString(R.string.AccDescrStickers)));
+        // items.add(UItem.asHeader(LocaleController.getString(R.string.AccDescrStickers)));
         items.add(StickerSizeCellFactory.of(stickerSizeRow, LocaleController.getString(R.string.StickerSize), NemoConfig.stickerSize, progress -> {
             NemoConfig.setStickerSize(progress);
             if (progress != 14.0f && resetItem.getVisibility() != View.VISIBLE) {
                 AndroidUtilities.updateViewVisibilityAnimated(resetItem, true, 0.5f, true);
             }
+            var gifCell = (GifSizeCell) listView.findViewByItemId(gifSizeRow);
+            if (gifCell != null) gifCell.invalidatePreview();
         }).slug("stickerSize"));
-        items.add(UItem.asCheck(hideTimeOnStickerRow, LocaleController.getString(R.string.HideTimeOnSticker)).slug("hideTimeOnSticker").setChecked(NemoConfig.hideTimeOnSticker));
-        items.add(UItem.asCheck(showTimeHintRow, LocaleController.getString(R.string.ShowTimeHint), LocaleController.getString(R.string.ShowTimeHintDesc)).slug("showTimeHint").setChecked(NemoConfig.showTimeHint));
-        items.add(UItem.asCheck(reducedColorsRow, LocaleController.getString(R.string.ReducedColors)).slug("reducedColors").setChecked(NemoConfig.reducedColors));
-        items.add(TextSettingsCellFactory.of(maxRecentStickersRow, LocaleController.getString(R.string.MaxRecentStickers), String.valueOf(NemoConfig.maxRecentStickers)).slug("maxRecentStickers"));
-        items.add(UItem.asShadow(null));
-
-        items.add(UItem.asHeader(LocaleController.getString(R.string.AttachGif)));
         items.add(GifSizeCellFactory.of(gifSizeRow, LocaleController.getString(R.string.GifSize), NemoConfig.gifSize, progress -> {
             NemoConfig.setGifSize(progress);
             if (progress != 17.5f && resetItem.getVisibility() != View.VISIBLE) {
                 AndroidUtilities.updateViewVisibilityAnimated(resetItem, true, 0.5f, true);
             }
         }).slug("gifSize"));
+        items.add(UItem.asCheck(hideTimeOnStickerRow, LocaleController.getString(R.string.HideTimeOnSticker)).slug("hideTimeOnSticker").setChecked(NemoConfig.hideTimeOnSticker));
+        items.add(UItem.asCheck(showTimeHintRow, LocaleController.getString(R.string.ShowTimeHint), LocaleController.getString(R.string.ShowTimeHintDesc)).slug("showTimeHint").setChecked(NemoConfig.showTimeHint));
+        items.add(UItem.asCheck(reducedColorsRow, LocaleController.getString(R.string.ReducedColors)).slug("reducedColors").setChecked(NemoConfig.reducedColors));
+        items.add(TextSettingsCellFactory.of(maxRecentStickersRow, LocaleController.getString(R.string.MaxRecentStickers), String.valueOf(NemoConfig.maxRecentStickers)).slug("maxRecentStickers"));
         items.add(UItem.asShadow(null));
     }
 
@@ -140,15 +141,15 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             if (view instanceof org.telegram.ui.Cells.TextCheckCell) {
                 ((org.telegram.ui.Cells.TextCheckCell) view).setChecked(NemoConfig.hideTimeOnSticker);
             }
-            var stickerCell = listView.findViewByItemId(stickerSizeRow);
-            if (stickerCell != null) stickerCell.invalidate();
+            var gifCell = (GifSizeCell) listView.findViewByItemId(gifSizeRow);
+            if (gifCell != null) gifCell.invalidatePreview();
         } else if (id == reducedColorsRow) {
             NemoConfig.toggleReducedColors();
             if (view instanceof org.telegram.ui.Cells.TextCheckCell) {
                 ((org.telegram.ui.Cells.TextCheckCell) view).setChecked(NemoConfig.reducedColors);
             }
-            var stickerCell = listView.findViewByItemId(stickerSizeRow);
-            if (stickerCell != null) stickerCell.invalidate();
+            var gifCell = (GifSizeCell) listView.findViewByItemId(gifSizeRow);
+            if (gifCell != null) gifCell.invalidatePreview();
         } else if (id == showTimeHintRow) {
             NemoConfig.toggleShowTimeHint();
             if (view instanceof org.telegram.ui.Cells.TextCheckCell) {
@@ -202,8 +203,6 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
         @Override
         public void bindView(View view, UItem item, boolean divider, UniversalAdapter adapter, UniversalRecyclerView listView) {
             var cell = (StickerSizeCell) view;
-            var frameLayout = (FrameLayout) listView.getParent();
-            cell.setFragmentView(frameLayout);
             cell.setValue(item.floatValue);
             cell.setOnDragListener((AltSeekbar.OnDrag) item.object);
         }
@@ -225,7 +224,6 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
 
     private static class StickerSizeCell extends FrameLayout {
 
-        private final StickerSizePreviewMessagesCell messagesCell;
         private final AltSeekbar sizeBar;
 
         private AltSeekbar.OnDrag onDrag;
@@ -241,29 +239,14 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             }, 2, 20, LocaleController.getString(R.string.StickerSize), LocaleController.getString(R.string.StickerSizeLeft), LocaleController.getString(R.string.StickerSizeRight), resourcesProvider);
             sizeBar.setValue(NemoConfig.stickerSize);
             addView(sizeBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-
-            messagesCell = new StickerSizePreviewMessagesCell(context, resourcesProvider);
-            messagesCell.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
-            addView(messagesCell, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 0, 112, 0, 0));
         }
 
         public void setOnDragListener(AltSeekbar.OnDrag onDrag) {
             this.onDrag = onDrag;
         }
 
-        public void setFragmentView(FrameLayout fragmentView) {
-            messagesCell.setFragmentView(fragmentView);
-        }
-
         public void setValue(float value) {
             sizeBar.setValue(value);
-            messagesCell.invalidate();
-        }
-
-        @Override
-        public void invalidate() {
-            super.invalidate();
-            messagesCell.invalidate();
         }
     }
 
@@ -280,6 +263,8 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
         @Override
         public void bindView(View view, UItem item, boolean divider, UniversalAdapter adapter, UniversalRecyclerView listView) {
             var cell = (GifSizeCell) view;
+            var frameLayout = (FrameLayout) listView.getParent();
+            cell.setFragmentView(frameLayout);
             cell.setValue(item.floatValue);
             cell.setOnDragListener((AltSeekbar.OnDrag) item.object);
         }
@@ -302,6 +287,8 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
     private static class GifSizeCell extends FrameLayout {
 
         private final AltSeekbar sizeBar;
+        private final StickerSizePreviewMessagesCell messagesCell;
+        private final FrameLayout messagesCellFrame;
         private AltSeekbar.OnDrag onDrag;
 
         public GifSizeCell(Context context, Theme.ResourcesProvider resourcesProvider) {
@@ -313,14 +300,37 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             }, 14, 20, LocaleController.getString(R.string.GifSize), LocaleController.getString(R.string.StickerSizeLeft), LocaleController.getString(R.string.StickerSizeRight), resourcesProvider);
             sizeBar.setValue(NemoConfig.gifSize);
             addView(sizeBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
+            messagesCell = new StickerSizePreviewMessagesCell(context, resourcesProvider);
+            messagesCell.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+            messagesCellFrame = new FrameLayout(context);
+            messagesCellFrame.setClipToOutline(true);
+            messagesCellFrame.setBackground(Theme.createRoundRectStrokeDrawable(AndroidUtilities.dp(12), AndroidUtilities.dp(1), Theme.getColor(Theme.key_divider, resourcesProvider)));
+            messagesCellFrame.addView(messagesCell, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            addView(messagesCellFrame, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 14, 112, 14, 0));
         }
 
         public void setOnDragListener(AltSeekbar.OnDrag onDrag) {
             this.onDrag = onDrag;
         }
 
+        public void setFragmentView(FrameLayout fragmentView) {
+            messagesCell.setFragmentView(fragmentView);
+        }
+
         public void setValue(float value) {
             sizeBar.setValue(value);
+            messagesCell.invalidate();
+        }
+
+        public void invalidatePreview() {
+            messagesCell.invalidate();
+        }
+
+        @Override
+        public void invalidate() {
+            super.invalidate();
+            messagesCell.invalidate();
         }
     }
 

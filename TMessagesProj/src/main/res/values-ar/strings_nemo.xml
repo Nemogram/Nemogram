@@ -26,8 +26,8 @@
     <string name="StickerSize">حجم الملصقات</string>
     <string name="StickerSizeLeft">ملصق صغير</string>
     <string name="StickerSizeRight">ملصق كبير</string>
-    <string name="StickerSizeDialogMessage">يا إلهي لطيف! قطة سوداء!</string>
-    <string name="StickerSizeDialogMessageReplyTo">الـرد على</string>
+    <string name="StickerSizeDialogMessage">يا إلهي! يا لها من سمكة لطيفة!</string>
+    <string name="StickerSizeDialogMessageReplyTo">بُل</string>
     <string name="Experiment">تجريبية</string>
     <string name="MessageDetails">التفاصيل</string>
     <string name="DeleteAccount">حذف حسابك في تيليجرام</string>

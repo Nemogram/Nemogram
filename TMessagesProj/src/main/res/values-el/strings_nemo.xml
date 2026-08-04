@@ -26,8 +26,8 @@
     <string name="StickerSize">Μέγεθος αυτοκόλλητου</string>
     <string name="StickerSizeLeft">Μικρό</string>
     <string name="StickerSizeRight">Μεγάλο</string>
-    <string name="StickerSizeDialogMessage">Αχ πόσο γλυκό! Μια μαύρη γάτα!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Μιάου</string>
+    <string name="StickerSizeDialogMessage">Ω, τι χαριτωμένο ψαράκι!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Μπλουπ</string>
     <string name="Experiment">Πειραματικές</string>
     <string name="MessageDetails">Λεπτομέρειες</string>
     <string name="DeleteAccount">Διαγραφή λογαριασμού Telegram</string>

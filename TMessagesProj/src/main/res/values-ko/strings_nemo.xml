@@ -24,8 +24,8 @@
     <string name="StickerSize">스티커 크기</string>
     <string name="StickerSizeLeft">작게</string>
     <string name="StickerSizeRight">크게</string>
-    <string name="StickerSizeDialogMessage">헉 정말 귀엽다! 검은 고양이네!</string>
-    <string name="StickerSizeDialogMessageReplyTo">야옹</string>
+    <string name="StickerSizeDialogMessage">헉 정말 귀여운 물고기네!</string>
+    <string name="StickerSizeDialogMessageReplyTo">뽀글뽀글</string>
     <string name="Experiment">실험용</string>
     <string name="MessageDetails">정보</string>
     <string name="DeleteAccount">텔레그램 계정 삭제</string>

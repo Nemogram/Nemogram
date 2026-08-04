@@ -29,8 +29,8 @@
     <string name="StickerSize">اندازه استیکر</string>
     <string name="StickerSizeLeft">کوچک</string>
     <string name="StickerSizeRight">بزرگ</string>
-    <string name="StickerSizeDialogMessage">اوه چه بامزه! یک گربه سیاه!</string>
-    <string name="StickerSizeDialogMessageReplyTo">میو</string>
+    <string name="StickerSizeDialogMessage">وای، چه ماهی نازی!</string>
+    <string name="StickerSizeDialogMessageReplyTo">بلوپ</string>
     <string name="Experiment">آزمایشی</string>
     <string name="MessageDetails">جزئیات</string>
     <string name="DeleteAccount">حذف حساب کاربری تلگرام</string>

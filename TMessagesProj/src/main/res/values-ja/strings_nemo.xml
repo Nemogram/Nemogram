@@ -26,8 +26,8 @@
     <string name="StickerSize">ステッカーのサイズ</string>
     <string name="StickerSizeLeft">小</string>
     <string name="StickerSizeRight">大</string>
-    <string name="StickerSizeDialogMessage">かわいい黒猫!</string>
-    <string name="StickerSizeDialogMessageReplyTo">にゃ</string>
+    <string name="StickerSizeDialogMessage">わあ、なんてかわいい魚！</string>
+    <string name="StickerSizeDialogMessageReplyTo">ぶくぶく</string>
     <string name="Experiment">実験的</string>
     <string name="MessageDetails">詳細</string>
     <string name="DeleteAccount">Telegramアカウントを削除</string>

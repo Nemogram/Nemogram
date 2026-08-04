@@ -24,8 +24,8 @@
     <string name="StickerSize">Розмір наліпки</string>
     <string name="StickerSizeLeft">Malá</string>
     <string name="StickerSizeRight">Velká</string>
-    <string name="StickerSizeDialogMessage">Ох, дуже мило! Чорна кішка!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Мяв</string>
+    <string name="StickerSizeDialogMessage">Ó, jak roztomilá rybka!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Bublu</string>
     <string name="Experiment">Експеремент</string>
     <string name="MessageDetails">Деталі</string>
     <string name="DeleteAccount">Видалити телеграм акаунт</string>

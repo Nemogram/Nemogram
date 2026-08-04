@@ -29,8 +29,8 @@
     <string name="StickerSize">ขนาดสติ๊กเกอร์</string>
     <string name="StickerSizeLeft">เล็ก</string>
     <string name="StickerSizeRight">ใหญ่</string>
-    <string name="StickerSizeDialogMessage">น่ารักจัง! แมวดำ!</string>
-    <string name="StickerSizeDialogMessageReplyTo">เหมียว</string>
+    <string name="StickerSizeDialogMessage">โอ้ ปลาน่ารักจัง!</string>
+    <string name="StickerSizeDialogMessageReplyTo">ป๋อม</string>
     <string name="Experiment">ทดลอง</string>
     <string name="MessageDetails">รายละเอียด</string>
     <string name="DeleteAccount">ลบบัญชี Telegram</string>

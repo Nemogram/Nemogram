@@ -17,7 +17,7 @@
     <string name="TestBackendOff">Denne kontoen kobles til test-backend.</string>
     <string name="ViewHistory">Vis historikk</string>
     <string name="StickerSize">Klistremerke størrelse</string>
-    <string name="StickerSizeDialogMessageReplyTo">Mjau</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blubb</string>
     <string name="Experiment">Eksperimentell</string>
     <string name="MessageDetails">Detaljer</string>
     <string name="DeleteAccount">Slett Telegram-konto</string>

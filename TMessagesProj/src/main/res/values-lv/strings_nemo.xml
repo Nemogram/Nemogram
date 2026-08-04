@@ -22,8 +22,8 @@
     <string name="StickerSize">Uzlīmes izmērs</string>
     <string name="StickerSizeLeft">Mazs</string>
     <string name="StickerSizeRight">Liels</string>
-    <string name="StickerSizeDialogMessage">Ak, tik jauki! Melns kaķis!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Māsiņa</string>
+    <string name="StickerSizeDialogMessage">Ak, cik jauka zivtiņa!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Burbulis</string>
     <string name="Experiment">Eksperimentālā</string>
     <string name="MessageDetails">Sīkāka informācija</string>
     <string name="DeleteAccount">Telegram konta dzēšana</string>

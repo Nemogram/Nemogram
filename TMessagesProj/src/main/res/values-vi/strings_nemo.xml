@@ -26,8 +26,8 @@
     <string name="StickerSize">Kích thước nhãn dán</string>
     <string name="StickerSizeLeft">Nhỏ</string>
     <string name="StickerSizeRight">Lớn</string>
-    <string name="StickerSizeDialogMessage">Ồ dễ thương quá! Một con mèo đen!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meow</string>
+    <string name="StickerSizeDialogMessage">Ôi con cá dễ thương quá!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Ục ục</string>
     <string name="Experiment">Thử nghiệm</string>
     <string name="MessageDetails">Chi tiết</string>
     <string name="DeleteAccount">Xóa tài khoản Telegram</string>

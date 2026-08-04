@@ -28,8 +28,8 @@
     <string name="StickerSize">Ukuran stiker</string>
     <string name="StickerSizeLeft">Kecil</string>
     <string name="StickerSizeRight">Besar</string>
-    <string name="StickerSizeDialogMessage">Oh lucu sekali! Seekor kucing hitam!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meong</string>
+    <string name="StickerSizeDialogMessage">Oh lucu sekali! Seekor ikan!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blub</string>
     <string name="Experiment">Eksperimental</string>
     <string name="MessageDetails">Detail</string>
     <string name="DeleteAccount">Hapus akun Telegram</string>

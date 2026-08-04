@@ -29,8 +29,8 @@
     <string name="StickerSize">Dimensiune sticker</string>
     <string name="StickerSizeLeft">Mic</string>
     <string name="StickerSizeRight">Mare</string>
-    <string name="StickerSizeDialogMessage">Ce drăguț! O pisică neagră!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meow</string>
+    <string name="StickerSizeDialogMessage">Vai, ce peștișor drăguț!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Bulbuc</string>
     <string name="Experiment">Experimental</string>
     <string name="MessageDetails">Detalii</string>
     <string name="DeleteAccount">Ștergeți contul Telegram</string>

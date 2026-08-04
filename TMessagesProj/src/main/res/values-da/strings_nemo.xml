@@ -20,8 +20,8 @@
     <string name="TestBackendOff">Denne konto vil oprette forbindelse til produktionsbackend.</string>
     <string name="ViewHistory">Se historik</string>
     <string name="StickerSize">Klistermærke størrelse</string>
-    <string name="StickerSizeDialogMessage">Åh så sød! En sort kat!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meow</string>
+    <string name="StickerSizeDialogMessage">Åh, sikke en sød fisk!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blub</string>
     <string name="Experiment">Eksperimentel</string>
     <string name="MessageDetails">Detaljer</string>
     <string name="DeleteAccount">Slet Telegram konto</string>

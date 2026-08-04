@@ -24,8 +24,8 @@
     <string name="StickerSize">Stiker hajmi</string>
     <string name="StickerSizeLeft">Kichik</string>
     <string name="StickerSizeRight">Katta</string>
-    <string name="StickerSizeDialogMessage">Oh, juda yoqimli! Qora mushuk!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meow</string>
+    <string name="StickerSizeDialogMessage">Voy, qanday chiroyli baliqcha!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Bulq-bulq</string>
     <string name="Experiment">Eksperimental</string>
     <string name="MessageDetails">Tafsilotlar</string>
     <string name="DeleteAccount">Telegram akkountni oʻchirish</string>

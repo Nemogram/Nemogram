@@ -26,8 +26,8 @@
     <string name="StickerSize">Taille des autocollants</string>
     <string name="StickerSizeLeft">Petit</string>
     <string name="StickerSizeRight">Grand</string>
-    <string name="StickerSizeDialogMessage">Oh trop mignon ! Un chat noir !</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miaou</string>
+    <string name="StickerSizeDialogMessage">Oh trop mignon ! Un poisson !</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blup</string>
     <string name="Experiment">Expérimental</string>
     <string name="MessageDetails">Détail</string>
     <string name="DeleteAccount">Effacer le compte Telegram</string>

@@ -26,8 +26,8 @@
     <string name="StickerSize">Tamaño de stickers</string>
     <string name="StickerSizeLeft">Pequeño</string>
     <string name="StickerSizeRight">Grande</string>
-    <string name="StickerSizeDialogMessage">¡Oh, es tan lindo! ¡Un gato negro!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miau</string>
+    <string name="StickerSizeDialogMessage">¡Oh, qué pez tan mono!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Glu glu</string>
     <string name="Experiment">Experimental</string>
     <string name="MessageDetails">Detalles</string>
     <string name="DeleteAccount">Eliminar cuenta de Telegram</string>

@@ -32,8 +32,8 @@
     <string name="StickerSize">Sticker size</string>
     <string name="StickerSizeLeft">Small</string>
     <string name="StickerSizeRight">Big</string>
-    <string name="StickerSizeDialogMessage">Oh so cute! A black cat!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Meow</string>
+    <string name="StickerSizeDialogMessage">Oh, what a cute fish!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blub</string>
     <string name="Experiment">Experimental</string>
     <string name="MessageDetails">Details</string>
     <string name="DeleteAccount">Delete Telegram account</string>

@@ -26,8 +26,8 @@
     <string name="StickerSize">Stickergröße</string>
     <string name="StickerSizeLeft">Klein</string>
     <string name="StickerSizeRight">Groß</string>
-    <string name="StickerSizeDialogMessage">Oh wie süß, eine schwarze Katze!</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miau</string>
+    <string name="StickerSizeDialogMessage">Oh wie süß, ein Fisch!</string>
+    <string name="StickerSizeDialogMessageReplyTo">Blubb</string>
     <string name="Experiment">Experimentell</string>
     <string name="MessageDetails">Details</string>
     <string name="DeleteAccount">Telegram-Konto löschen</string>
