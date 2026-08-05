@@ -2,6 +2,7 @@ package org.nemogram.messenger.settings;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import org.telegram.messenger.AndroidUtilities;
@@ -225,7 +226,12 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
 
             var messagesCell = new ThemePreviewMessagesCell(context, parentLayout, 0);
             messagesCell.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
-            linearLayout.addView(messagesCell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
+            var messagesCellFrame = new FrameLayout(context);
+            messagesCellFrame.setClipToOutline(true);
+            messagesCellFrame.setBackground(Theme.createRoundRectStrokeDrawable(AndroidUtilities.dp(12), AndroidUtilities.dp(1), Theme.getColor(Theme.key_divider, resourcesProvider)));
+            messagesCellFrame.addView(messagesCell, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            linearLayout.addView(messagesCellFrame, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 12, 0, 12, 0));
 
             var hLayout = new LinearLayout(context);
             hLayout.setOrientation(LinearLayout.HORIZONTAL);
