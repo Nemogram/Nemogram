@@ -9,7 +9,6 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.LocaleController;
-import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.Utilities;
@@ -34,7 +33,6 @@ import org.nemogram.messenger.helpers.remote.UpdateHelper;
 public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
 
     private final int moreHapticFeedbacksRow = rowId++;
-    private final int downloadSpeedBoostRow = rowId++;
     private final int keepFormattingRow = rowId++;
     private final int autoInlineBotRow = rowId++;
     private final int forceFontWeightFallbackRow = rowId++;
@@ -52,15 +50,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(LocaleController.getString(R.string.Experiment)));
         items.add(UItem.asCheck(moreHapticFeedbacksRow, LocaleController.getString(R.string.MoreHapticFeedback)).slug("moreHapticFeedbacks").setChecked(NemoConfig.moreHapticFeedbacks));
-        if (!MessagesController.getInstance(currentAccount).getfileExperimentalParams) {
-            items.add(TextSettingsCellFactory.of(downloadSpeedBoostRow, LocaleController.getString(R.string.DownloadSpeedBoost), switch (NemoConfig.downloadSpeedBoost) {
-                case NemoConfig.BOOST_NONE ->
-                        LocaleController.getString(R.string.DownloadSpeedBoostNone);
-                case NemoConfig.BOOST_EXTREME ->
-                        LocaleController.getString(R.string.DownloadSpeedBoostExtreme);
-                default -> LocaleController.getString(R.string.DownloadSpeedBoostAverage);
-            }).slug("downloadSpeedBoost"));
-        }
         items.add(UItem.asCheck(keepFormattingRow, LocaleController.getString(R.string.TranslationKeepFormatting)).slug("keepFormatting").setChecked(NemoConfig.keepFormatting));
         items.add(UItem.asCheck(autoInlineBotRow, LocaleController.getString(R.string.AutoInlineBot), LocaleController.getString(R.string.AutoInlineBotDesc)).slug("autoInlineBot").setChecked(NemoConfig.autoInlineBot));
         items.add(UItem.asCheck(forceFontWeightFallbackRow, LocaleController.getString(R.string.ForceFontWeightFallback)).slug("forceFontWeightFallback").setChecked(NemoConfig.forceFontWeightFallback));
@@ -182,20 +171,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.moreHapticFeedbacks);
             }
-        } else if (id == downloadSpeedBoostRow) {
-            ArrayList<String> arrayList = new ArrayList<>();
-            ArrayList<Integer> types = new ArrayList<>();
-            arrayList.add(LocaleController.getString(R.string.DownloadSpeedBoostNone));
-            types.add(NemoConfig.BOOST_NONE);
-            arrayList.add(LocaleController.getString(R.string.DownloadSpeedBoostAverage));
-            types.add(NemoConfig.BOOST_AVERAGE);
-            arrayList.add(LocaleController.getString(R.string.DownloadSpeedBoostExtreme));
-            types.add(NemoConfig.BOOST_EXTREME);
-            PopupHelper.show(arrayList, LocaleController.getString(R.string.DownloadSpeedBoost), types.indexOf(NemoConfig.downloadSpeedBoost), getParentActivity(), view, i -> {
-                NemoConfig.setDownloadSpeedBoost(types.get(i));
-                item.textValue = arrayList.get(i);
-                listView.adapter.notifyItemChanged(position, PARTIAL);
-            }, resourcesProvider);
         } else if (id == contentRestrictionRow) {
             NemoConfig.toggleIgnoreContentRestriction();
             if (view instanceof TextCheckCell) {

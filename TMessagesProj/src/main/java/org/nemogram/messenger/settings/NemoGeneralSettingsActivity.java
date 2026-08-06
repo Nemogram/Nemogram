@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.core.text.HtmlCompat;
 
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
 import org.telegram.tgnet.ConnectionsManager;
@@ -25,6 +26,7 @@ import org.nemogram.messenger.translator.TranslatorApps;
 public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
 
     private final int ipv6Row = rowId++;
+    private final int downloadSpeedBoostRow = rowId++;
 
     private final int showOriginalRow = rowId++;
     private final int translatorTypeRow = rowId++;
@@ -113,6 +115,22 @@ public class NemoGeneralSettingsActivity extends BaseNemoSettingsActivity {
         items.add(UItem.asHeader(LocaleController.getString(R.string.Connection)));
         items.add(UItem.asCheck(ipv6Row, LocaleController.getString(R.string.PreferIPv6)).slug("ipv6").setChecked(NemoConfig.preferIPv6));
         items.add(UItem.asShadow(null));
+
+        if (!MessagesController.getInstance(currentAccount).getfileExperimentalParams) {
+            items.add(UItem.asHeader(LocaleController.getString(R.string.DownloadSpeedBoost)));
+            var downloadSpeedBoostItem = UItem.asSlideView(new String[]{
+                    LocaleController.getString(R.string.DownloadSpeedBoostNone),
+                    LocaleController.getString(R.string.DownloadSpeedBoostAverage),
+                    LocaleController.getString(R.string.DownloadSpeedBoostExtreme)
+            }, NemoConfig.downloadSpeedBoost, NemoConfig::setDownloadSpeedBoost);
+            downloadSpeedBoostItem.id = downloadSpeedBoostRow;
+            // asSlideView() doesn't set item.text (SlideChooseView draws its own option labels,
+            // no separate row title) — set it so NemoSettingsActivity#createSearchArray can index
+            // this row too (it does item.text.toString() for every item with a non-empty slug).
+            downloadSpeedBoostItem.text = LocaleController.getString(R.string.DownloadSpeedBoost);
+            items.add(downloadSpeedBoostItem.slug("downloadSpeedBoost"));
+            items.add(UItem.asShadow(null));
+        }
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.Translator)));
         items.add(TextSettingsCellFactory.of(translatorTypeRow, LocaleController.getString(R.string.TranslatorType), getTranslatorType()).slug("translatorType"));
