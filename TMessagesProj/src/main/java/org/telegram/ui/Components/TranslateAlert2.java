@@ -394,28 +394,28 @@ public class TranslateAlert2 extends BottomSheet implements NotificationCenter.N
             return;
         }
 
-        TLRPC.TL_messages_translateText req = new TLRPC.TL_messages_translateText();
-        req.flags |= 2;
-        req.text.add(textWithEntities);
-        req.to_lang = normalizeLanguage(lang);
-        reqId = ConnectionsManager.getInstance(currentAccount).sendRequestTyped(req, AndroidUtilities::runOnUIThread, (res, err) -> {
-            reqId = null;
-            if (err != null && "TRANSLATIONS_DISABLED_ALT".equalsIgnoreCase(err.text)) {
-                translateAlt();
-            } else if (res != null && !res.result.isEmpty() && res.result.get(0) != null) {
+        Translator.translate(textWithEntities, null, fromLanguage, null, new Translator.TranslateCallBack() {
+            @Override
+            public void onSuccess(TLRPC.TL_textWithEntities translation, String sourceLanguage, String targetLanguage) {
                 firstTranslation = false;
-                TLRPC.TL_textWithEntities translation = res.result.get(0);
                 CharSequence translated = SpannableStringBuilder.valueOf(translation.text);
                 MessageObject.addEntitiesToText(translated, translation.entities, false, true, false, false);
-                translated = preprocessText(translated);
-                textView.setText(translated);
+                textView.setText(preprocessText(translated));
+                headerView.fromLanguageTextView.setText(languageName(fromLanguage = sourceLanguage));
                 adapter.updateMainView(textViewContainer);
-            } else if (firstTranslation) {
-                dismiss();
-                NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.showBulletin, Bulletin.TYPE_ERROR, LocaleController.getString(R.string.TranslationFailedAlert2));
-            } else {
-                BulletinFactory.of((FrameLayout) containerView, resourcesProvider).createErrorBulletin(LocaleController.getString(R.string.TranslationFailedAlert2)).show();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                String toLangRetry = toLanguage;
+                Translator.handleTranslationError(containerView.getContext(), t, () -> {
+                    if (!firstTranslation) {
+                        headerView.toLanguageTextView.setText(languageName(toLanguage = toLangRetry));
+                    }
+                    translate();
+                }, resourcesProvider);
                 headerView.toLanguageTextView.setText(languageName(toLanguage = prevToLanguage));
+                adapter.updateMainView(textViewContainer);
             }
         });
     }
