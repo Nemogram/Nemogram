@@ -260,7 +260,6 @@
     <string name="SearchBarPlaceholderEmpty">Пусто</string>
     <string name="MusicViewAlternativeLayout">Альтернативное отображение музыки</string>
     <string name="ProfileMusicLabel">Музыка</string>
-    <string name="UseStockNotificationIcon">\"Telegram\" значок уведомлений</string>
     <string name="ScrollToFirstMessage">К первому сообщению</string>
     <string name="LegacyInputPanel">Классическая панель ввода</string>
     <string name="LegacyChatActionBar">Классический верхний бар чата</string>

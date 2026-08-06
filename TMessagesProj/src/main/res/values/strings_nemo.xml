@@ -264,7 +264,6 @@
     <string name="SearchBarPlaceholderEmpty">Empty</string>
     <string name="MusicViewAlternativeLayout">Alternative music view</string>
     <string name="ProfileMusicLabel">Music</string>
-    <string name="UseStockNotificationIcon">\"Telegram\" notification icon</string>
     <string name="ScrollToFirstMessage">Scroll to first message</string>
     <string name="LegacyInputPanel">Legacy input panel</string>
     <string name="LegacyChatActionBar">Legacy chat top bar</string>

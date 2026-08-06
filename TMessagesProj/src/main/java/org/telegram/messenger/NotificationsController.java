@@ -4588,7 +4588,7 @@ public class NotificationsController extends BaseController implements Notificat
             PendingIntent contentIntent = PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT);
 
             mBuilder.setContentTitle(name)
-                    .setSmallIcon(NemoConfig.useStockNotificationIcon ? R.drawable.notification_tg : R.drawable.notification)
+                    .setSmallIcon(R.drawable.notification)
                     .setAutoCancel(true)
                     .setNumber(total_unread_count)
                     .setContentIntent(contentIntent)
@@ -5588,7 +5588,7 @@ public class NotificationsController extends BaseController implements Notificat
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(ApplicationLoader.applicationContext)
                     .setContentTitle(name)
-                    .setSmallIcon(NemoConfig.useStockNotificationIcon ? R.drawable.notification_tg : R.drawable.notification)
+                    .setSmallIcon(R.drawable.notification)
                     .setContentText(text.toString())
                     .setAutoCancel(true)
                     .setNumber(dialogKey.story ? storyPushMessages.size() : messageObjects.size())

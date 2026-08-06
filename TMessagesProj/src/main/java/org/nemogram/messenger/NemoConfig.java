@@ -120,7 +120,6 @@ public class NemoConfig {
     public static boolean tryToOpenAllLinksInIV = false;
     public static boolean formatTimeWithSeconds = false;
     public static boolean accentAsNotificationColor = false;
-    public static boolean useStockNotificationIcon = false;
     public static boolean silenceNonContacts = false;
     public static boolean disableJumpToNextChannel = false;
     public static boolean disableVoiceMessageAutoPlay = false;
@@ -218,7 +217,6 @@ public class NemoConfig {
             tryToOpenAllLinksInIV = preferences.getBoolean("tryToOpenAllLinksInIV", false);
             formatTimeWithSeconds = preferences.getBoolean("formatTimeWithSeconds", false);
             accentAsNotificationColor = preferences.getBoolean("accentAsNotificationColor", false);
-            useStockNotificationIcon = preferences.getBoolean("useStockNotificationIcon", false);
             silenceNonContacts = preferences.getBoolean("silenceNonContacts", false);
             showNoQuoteForward = preferences.getBoolean("showNoQuoteForward", false);
             translationTarget = preferences.getString("translationTarget", "app");
@@ -1115,12 +1113,6 @@ public class NemoConfig {
         musicViewAlternativeLayout = !musicViewAlternativeLayout;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("musicViewAlternativeLayout", musicViewAlternativeLayout).apply();
-    }
-
-    public static void toggleUseStockNotificationIcon() {
-        useStockNotificationIcon = !useStockNotificationIcon;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        preferences.edit().putBoolean("useStockNotificationIcon", useStockNotificationIcon).apply();
     }
 
     public static void toggleMoreHapticFeedbacks() {
