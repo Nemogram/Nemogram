@@ -355,13 +355,19 @@ public class MessageHelper extends BaseController {
     }
 
     public void saveStickerToGallery(Activity activity, MessageObject messageObject, Utilities.Callback<Uri> callback) {
+        if (messageObject == null) {
+            return;
+        }
         saveStickerToGallery(activity, getPathToMessage(messageObject), messageObject.isVideoSticker(), messageObject.isAnimatedSticker(), callback);
     }
 
     public static void saveStickerToGallery(Activity activity, TLRPC.Document document, Utilities.Callback<Uri> callback) {
+        if (document == null) {
+            return;
+        }
         String path = FileLoader.getInstance(UserConfig.selectedAccount).getPathToAttach(document, true).toString();
         File temp = new File(path);
-        if (!temp.exists()) {
+        if (!temp.exists() || temp.isDirectory()) {
             return;
         }
         saveStickerToGallery(activity, path, MessageObject.isVideoSticker(document), MessageObject.isAnimatedStickerDocument(document, true), callback);
@@ -380,11 +386,13 @@ public class MessageHelper extends BaseController {
                         var file = new File(path.endsWith(".webp") ? path.replace(".webp", ".png") : path + ".png");
                         try (var stream = new FileOutputStream(file)) {
                             image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        } finally {
+                            image.recycle();
                         }
                         MediaController.saveFile(file.toString(), activity, 0, null, null, callback);
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception | OutOfMemoryError e) {
                 FileLog.e(e);
             }
         });

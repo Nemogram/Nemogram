@@ -165,15 +165,16 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
     private HintView2 timeHint;
 
     private void showTimeHint(ChatMessageCell cell) {
-        if (cell == null || cell.timeLayout == null || cell.getMessageObject() == null ||
+        if (fragmentView == null || cell == null || cell.timeLayout == null || cell.getMessageObject() == null ||
                 cell.getMessageObject().messageOwner == null ||
                 (NemoConfig.hideTimeOnSticker && cell.getMessageObject().isAnyKindOfSticker())
         ) {
             return;
         }
+        FrameLayout parent = fragmentView;
         if (timeHint != null) {
             var hint = timeHint;
-            hint.setOnHiddenListener(() -> fragmentView.removeView(hint));
+            hint.setOnHiddenListener(() -> parent.removeView(hint));
             hint.hide();
             timeHint = null;
         }
@@ -182,15 +183,16 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
                 .setDuration(2000);
 
         timeHint.setText(MessageHelper.getTimeHintText(cell.getMessageObject()));
-        timeHint.setMaxWidthPx(fragmentView.getMeasuredWidth());
+        timeHint.setMaxWidthPx(parent.getMeasuredWidth());
         timeHint.bringToFront();
-        fragmentView.addView(timeHint, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 120, Gravity.TOP | Gravity.FILL_HORIZONTAL, 16, 0, 16, 0));
-        fragmentView.post(() -> {
+        parent.addView(timeHint, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 120, Gravity.TOP | Gravity.FILL_HORIZONTAL, 16, 0, 16, 0));
+        var hint = timeHint;
+        parent.post(() -> {
             var loc = new int[2];
             cell.getLocationInWindow(loc);
-            timeHint.setTranslationY(loc[1] - timeHint.getTop() - dp(120) + cell.getTimeY());
-            timeHint.setJointPx(0, -dp(16) + loc[0] + cell.timeX + cell.timeWidth - cell.timeTextWidth / 2f + cell.signWidth / 2f);
-            timeHint.show();
+            hint.setTranslationY(loc[1] - hint.getTop() - dp(120) + cell.getTimeY());
+            hint.setJointPx(0, -dp(16) + loc[0] + cell.timeX + cell.timeWidth - cell.timeTextWidth / 2f + cell.signWidth / 2f);
+            hint.show();
         });
     }
 
@@ -198,6 +200,9 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
     public void invalidate() {
         super.invalidate();
         for (int a = 0; a < cells.length; a++) {
+            if (cells[a] == null) {
+                continue;
+            }
             cells[a].setMessageObject(messageObjects[a], null, false, false, false);
             cells[a].invalidate();
         }

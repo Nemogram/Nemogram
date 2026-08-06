@@ -88,7 +88,9 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             } else {
                 NemoConfig.setStickerSize(14.0f);
             }
-            stickerItem.floatValue = 14.0f;
+            if (stickerItem != null) {
+                stickerItem.floatValue = 14.0f;
+            }
 
             if (gifCell != null) {
                 ValueAnimator animator = ValueAnimator.ofFloat(NemoConfig.gifSize, 17.5f);
@@ -103,7 +105,9 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
             } else {
                 NemoConfig.setGifSize(17.5f);
             }
-            gifItem.floatValue = 17.5f;
+            if (gifItem != null) {
+                gifItem.floatValue = 17.5f;
+            }
         });
         AndroidUtilities.updateViewVisibilityAnimated(resetItem, Float.compare(NemoConfig.stickerSize, 14.0f) != 0 || Float.compare(NemoConfig.gifSize, 17.5f) != 0, 1f, false);
 
@@ -264,8 +268,7 @@ public class NemoStickerSettingsActivity extends BaseNemoSettingsActivity implem
         @Override
         public void bindView(View view, UItem item, boolean divider, UniversalAdapter adapter, UniversalRecyclerView listView) {
             var cell = (GifSizeCell) view;
-            var frameLayout = (FrameLayout) listView.getParent();
-            cell.setFragmentView(frameLayout);
+            cell.setFragmentView(listView.getParent() instanceof FrameLayout frameLayout ? frameLayout : null);
             cell.setValue(item.floatValue);
             cell.setOnDragListener((AltSeekbar.OnDrag) item.object);
         }

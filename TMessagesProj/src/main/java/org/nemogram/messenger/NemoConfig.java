@@ -174,6 +174,23 @@ public class NemoConfig {
         loadConfig(false);
     }
 
+    // an imported config can hold the wrong type or a value the seekbars can never produce,
+    // both of which blow up later (getFloat throws, an out of range size overflows the sticker layout)
+    private static float readSize(SharedPreferences preferences, String key, float defaultValue, float min, float max) {
+        float value;
+        try {
+            value = preferences.getFloat(key, defaultValue);
+        } catch (ClassCastException e) {
+            FileLog.e(e);
+            preferences.edit().remove(key).apply();
+            value = defaultValue;
+        }
+        if (Float.isNaN(value)) {
+            return defaultValue;
+        }
+        return Math.max(min, Math.min(max, value));
+    }
+
     public static void loadConfig(boolean force) {
         synchronized (sync) {
             if (configLoaded && !force) {
@@ -194,8 +211,8 @@ public class NemoConfig {
             showMessageDetails = preferences.getBoolean("showMessageDetails", false);
             showTranslate = preferences.getBoolean("showTranslate", true);
             showRepeat = preferences.getBoolean("showRepeat", true);
-            stickerSize = preferences.getFloat("stickerSize", 14.0f);
-            gifSize = preferences.getFloat("gifSize", 17.5f);
+            stickerSize = readSize(preferences, "stickerSize", 14.0f, 2.0f, 20.0f);
+            gifSize = readSize(preferences, "gifSize", 17.5f, 14.0f, 20.0f);
             translationProvider = preferences.getString("translationProvider2", Translator.PROVIDER_GOOGLE);
             openArchiveOnPull = preferences.getBoolean("openArchiveOnPull", false);
             hideKeyboardOnChatScroll = preferences.getBoolean("hideKeyboardOnChatScroll", false);
@@ -310,7 +327,8 @@ public class NemoConfig {
                 } else if (o instanceof Boolean) {
                     editor.putBoolean(s, (Boolean) o);
                 } else if (o instanceof Long) {
-                    if ("stickerSize".equals(s)) {
+                    if ("stickerSize".equals(s) || "gifSize".equals(s)) {
+                        // these are read back with getFloat, storing them as int makes it throw
                         editor.putFloat(s, ((Long) o).floatValue());
                     } else {
                         editor.putInt(s, ((Long) o).intValue());
