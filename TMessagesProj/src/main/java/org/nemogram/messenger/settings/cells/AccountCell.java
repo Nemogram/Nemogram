@@ -1,4 +1,4 @@
-package org.nemogram.messenger.settings;
+package org.nemogram.messenger.settings.cells;
 
 import android.content.Context;
 import android.graphics.Canvas;

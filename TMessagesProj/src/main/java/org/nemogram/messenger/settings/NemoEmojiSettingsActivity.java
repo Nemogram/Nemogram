@@ -13,6 +13,7 @@ import android.view.View;
 
 import androidx.core.content.FileProvider;
 
+import org.nemogram.messenger.settings.cells.EmojiSetCell;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.FileLog;

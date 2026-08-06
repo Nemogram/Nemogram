@@ -1,4 +1,4 @@
-package org.nemogram.messenger.settings;
+package org.nemogram.messenger.settings.cells;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

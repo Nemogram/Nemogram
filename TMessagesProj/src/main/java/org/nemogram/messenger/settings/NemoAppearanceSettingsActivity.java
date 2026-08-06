@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.EmojiHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
-import org.nemogram.messenger.settings.SearchBarStyleActivity;
+import org.nemogram.messenger.settings.cells.EmojiSetCell;
+import org.nemogram.messenger.settings.cells.FolderTabsPreviewCell;
 
 public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity implements NotificationCenter.NotificationCenterDelegate {
 
