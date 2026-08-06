@@ -26,6 +26,7 @@ import androidx.annotation.StringRes;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.math.MathUtils;
 
+import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.DocumentObject;
@@ -45,7 +46,6 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.Premium.PremiumGradient;
 import org.telegram.ui.Components.RLottieDrawable;
 import org.telegram.ui.Components.RLottieImageView;
-import org.telegram.ui.Components.ScaleStateListAnimator;
 import org.telegram.ui.MainTabsLayout;
 
 import me.vkryl.android.AnimatorUtils;
@@ -262,6 +262,7 @@ public class GlassTabView extends FrameLayout implements MainTabsLayout.Tab, Fac
         }
         imageView.setColorFilter(filter);
         textView.setTextColor(colorText);
+        counter.setTextColor(MonetHelper.getSettingsIconForegroundColor(Color.WHITE));
     }
 
     public void updateColorsLottie() {
