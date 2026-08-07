@@ -673,6 +673,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int userInfoRow;
     private int channelInfoRow;
     private int usernameRow;
+    private int dcIdRow;
     private int restrictionReasonRow;
     private int notificationsDividerRow;
     private int notificationsRow;
@@ -5672,7 +5673,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 return false;
             }
         };
-        idTextView.setVisibility(NemoConfig.idType == NemoConfig.ID_TYPE_HIDDEN ? View.GONE : View.VISIBLE);
+        idTextView.setVisibility(View.GONE);
         idTextView.setFactory(() -> {
             SimpleTextView view = new SimpleTextView(context);
             view.setTextColor(applyPeerColor(getThemedColor(Theme.key_actionBarDefaultSubtitle), true, false));
@@ -7366,7 +7367,22 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     }
 
     private boolean processOnClickOrPress(final int position, final View view, final float x, final float y) {
-        if (position == usernameRow || position == setUsernameRow) {
+        if (position == dcIdRow) {
+            long id = userId;
+            if (chatId != 0 && NemoConfig.idType == NemoConfig.ID_TYPE_BOTAPI) {
+                TLRPC.Chat chat = getMessagesController().getChat(chatId);
+                if (chat != null && ChatObject.isChannel(chat)) {
+                    id = -1000000000000L - chat.id;
+                } else {
+                    id = chatId;
+                }
+            } else if (chatId != 0) {
+                id = chatId;
+            }
+            AndroidUtilities.addToClipboard(String.valueOf(id));
+            BulletinFactory.of(this).createCopyBulletin(LocaleController.formatString(R.string.TextCopied), resourcesProvider).show();
+            return true;
+        } else if (position == usernameRow || position == setUsernameRow) {
             final String username;
             final TLRPC.TL_username usernameObj;
             if (userId != 0) {
@@ -8951,15 +8967,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 mediaCounterTextView.setTranslationY(onlineY);
                 updateCollectibleHint();
 
-                if (NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN && !searchMode) {
-                    idTextView.setAlpha(diff);
-                    idTextView.setTag(diff);
-                    if (diff == 0) {
-                        idTextView.setVisibility(View.GONE);
-                    } else {
-                        idTextView.setVisibility(View.VISIBLE);
-                    }
-                }
+                idTextView.setVisibility(View.GONE);
             }
 
             if (!textMeasured && (expandAnimator == null || !expandAnimator.isRunning())) {
@@ -10711,6 +10719,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         locationRow = -1;
         channelInfoRow = -1;
         usernameRow = -1;
+        dcIdRow = -1;
         restrictionReasonRow = -1;
         settingsTimerRow = -1;
         settingsKeyRow = -1;
@@ -10812,6 +10821,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 numberSectionRow = rowCount++;
                 numberRow = hidePhone ? -1 : rowCount++;
                 setUsernameRow = rowCount++;
+                if (NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN) dcIdRow = rowCount++;
                 bioRow = rowCount++;
 
                 settingsSectionRow = rowCount++;
@@ -10909,6 +10919,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (user != null && username != null) {
                     usernameRow = rowCount++;
+                }
+                if (NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN) {
+                    dcIdRow = rowCount++;
                 }
                 if (user != null && !user.restriction_reason.isEmpty()) {
                     restrictionReasonRow = rowCount++;
@@ -11048,7 +11061,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 sharedMediaRow = rowCount++;
             }
         } else if (chatId != 0) {
-            if (chatInfo != null && (!TextUtils.isEmpty(chatInfo.about) || chatInfo.location instanceof TLRPC.TL_channelLocation) || ChatObject.isPublic(currentChat) || !currentChat.restriction_reason.isEmpty()) {
+            if (chatInfo != null && (!TextUtils.isEmpty(chatInfo.about) || chatInfo.location instanceof TLRPC.TL_channelLocation) || ChatObject.isPublic(currentChat) || !currentChat.restriction_reason.isEmpty() || NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN) {
                 if (emptyRow < 0 && emptyRow2 < 0) {
                     if (hasMusic || peerColor != null || actionsView == null) {
                         emptyRow2 = rowCount++;
@@ -11070,6 +11083,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (ChatObject.isPublic(currentChat)) {
                     usernameRow = rowCount++;
+                }
+                if (NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN) {
+                    dcIdRow = rowCount++;
                 }
                 if (!currentChat.restriction_reason.isEmpty()) {
                     restrictionReasonRow = rowCount++;
@@ -12841,7 +12857,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         nameTextView[1].setVisibility(View.VISIBLE);
         onlineTextView[1].setVisibility(View.VISIBLE);
         onlineTextView[3].setVisibility(View.VISIBLE);
-        if (NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN) idTextView.setVisibility(View.VISIBLE);
+        idTextView.setVisibility(View.GONE);
 
         actionBar.onSearchFieldVisibilityChanged(searchTransitionProgress > 0.5f);
         int itemVisibility = searchTransitionProgress > 0.5f ? View.VISIBLE : View.GONE;
@@ -12967,7 +12983,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         nameTextView[1].setVisibility(hide);
         onlineTextView[1].setVisibility(hide);
         onlineTextView[3].setVisibility(hide);
-        if (NemoConfig.idType != NemoConfig.ID_TYPE_HIDDEN) idTextView.setVisibility(hide);
+        idTextView.setVisibility(View.GONE);
 
         if (otherItem != null) {
             otherItem.setAlpha(1f);
@@ -13765,6 +13781,23 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                                 getString(R.string.ProfileNotesInfo),
                                 false
                         );
+                    } else if (position == dcIdRow) {
+                        long id;
+                        int dc;
+                        if (userId != 0) {
+                            TLRPC.User user = getMessagesController().getUser(userId);
+                            id = userId;
+                            dc = user != null && user.photo != null ? user.photo.dc_id : 0;
+                            if (user != null && UserObject.isUserSelf(user)) {
+                                dc = getConnectionsManager().getCurrentDatacenterId();
+                            }
+                        } else {
+                            TLRPC.Chat chat = getMessagesController().getChat(chatId);
+                            id = NemoConfig.idType == NemoConfig.ID_TYPE_BOTAPI && chat != null && ChatObject.isChannel(chat) ? -1000000000000L - chat.id : chatId;
+                            dc = chat != null && chat.photo != null && chat.photo.dc_id != 0 ? chat.photo.dc_id : chatInfo != null ? chatInfo.stats_dc : 0;
+                        }
+                        String value = dc != 0 ? "DC" + dc + " (" + getDcName(dc) + ")" : LocaleController.getString(R.string.NumberUnknown);
+                        detailCell.setTextAndValue(String.valueOf(id), value, false);
                     } else if (position == usernameRow) {
                         String username = null;
                         CharSequence text;
@@ -14619,7 +14652,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == restrictionReasonRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == restrictionReasonRow || position == dcIdRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;
@@ -16031,6 +16064,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             put(++pointer, userInfoRow, sparseIntArray);
             put(++pointer, channelInfoRow, sparseIntArray);
             put(++pointer, usernameRow, sparseIntArray);
+            put(++pointer, dcIdRow, sparseIntArray);
             put(++pointer, restrictionReasonRow, sparseIntArray);
             put(++pointer, notificationsDividerRow, sparseIntArray);
             put(++pointer, reportDividerRow, sparseIntArray);
@@ -16094,6 +16128,15 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         updateIdText(showDate, animated, false);
     }
 
+    private static String getDcName(int dc) {
+        return switch (dc) {
+            case 1, 3 -> "MIA, Miami FL, USA";
+            case 2, 4 -> "AMS, Amsterdam, NL";
+            case 5 -> "SIN, Singapore, SG";
+            default -> LocaleController.getString(R.string.NumberUnknown);
+        };
+    }
+
     private void updateIdText(boolean showDate, boolean animated, boolean chatFull) {
         if (idTextView == null || NemoConfig.idType == NemoConfig.ID_TYPE_HIDDEN) {
             return;
@@ -16128,7 +16171,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 } else {
                     id = chatId;
                 }
-                int dc = chatInfo != null ? chatInfo.stats_dc != 0 ? chatInfo.stats_dc : 0 : 0;
+                int dc = chat.photo != null && chat.photo.dc_id != 0 ? chat.photo.dc_id : chatInfo != null ? chatInfo.stats_dc : 0;
                 if (dc != 0) {
                     idTextView.setText("ID: " + id + ", DC: " + dc, animated);
                     idTextView.setTag(R.id.id_dc, dc);
