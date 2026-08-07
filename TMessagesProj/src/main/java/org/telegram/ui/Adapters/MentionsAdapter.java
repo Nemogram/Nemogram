@@ -138,6 +138,10 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
     private boolean inlineMediaEnabled = true;
     private int channelLastReqId;
     private int channelReqId;
+    private int globalUsersReqId;
+    private int globalUsersSearchId;
+    private ArrayList<TLRPC.User> globalSearchUsers;
+    private Runnable globalUsersSearchRunnable;
     private boolean isSearchingMentions;
     private TLRPC.User user;
     public TLRPC.Chat chat;
@@ -809,6 +813,10 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
 
     public void setSearchingMentions(boolean value) {
         isSearchingMentions = value;
+        setSearchInDialogs(value);
+        if (!value) {
+            cancelGlobalUsersSearch();
+        }
     }
 
     public String getBotCaption() {
@@ -973,6 +981,7 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             ConnectionsManager.getInstance(currentAccount).cancelRequest(channelReqId, true);
             channelReqId = 0;
         }
+        cancelGlobalUsersSearch();
         if (searchGlobalRunnable != null) {
             AndroidUtilities.cancelRunOnUIThread(searchGlobalRunnable);
             searchGlobalRunnable = null;
@@ -995,6 +1004,9 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
         lastText = null;
         lastUsernameOnly = usernameOnly;
         lastForSearch = forSearch;
+        if (isSearchingMentions && usernameOnly && forSearch) {
+            scheduleGlobalUsersSearch(text);
+        }
         StringBuilder result = new StringBuilder();
         int foundType = -1;
 
@@ -1273,7 +1285,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             final String usernameString = result.toString().toLowerCase();
             boolean hasSpace = usernameString.indexOf(' ') >= 0;
             ArrayList<TLObject> newResult = new ArrayList<>();
-            final LongSparseArray<TLRPC.User> newResultsHashMap = new LongSparseArray<>();
             final LongSparseArray<TLObject> newMap = new LongSparseArray<>();
 
             final ArrayList<TLRPC.TL_topPeer> bots = new ArrayList<>();
@@ -1294,7 +1305,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
                     String username = UserObject.getPublicUsername(user);
                     if (!TextUtils.isEmpty(username) && (usernameString.length() == 0 || username.toLowerCase().startsWith(usernameString))) {
                         newResult.add(user);
-                        newResultsHashMap.put(user.id, user);
                         newMap.put(user.id, user);
                         count++;
                     }
@@ -1351,12 +1361,13 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
                             continue;
                         }
                         TLRPC.User user = messagesController.getUser(chatParticipant.user_id);
-                        if (user == null || UserObject.isUserSelf(user) || newResultsHashMap.indexOfKey(user.id) >= 0) {
+                        if (user == null || UserObject.isUserSelf(user) || newMap.indexOfKey(user.id) >= 0) {
                             continue;
                         }
                         if (usernameString.length() == 0) {
                             if (!user.deleted) {
                                 newResult.add(user);
+                                newMap.put(user.id, user);
                                 continue;
                             }
                         }
@@ -1386,12 +1397,13 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
                     long id = dialogs.get(a).id;
                     if (id > 0) {
                         TLRPC.User user = messagesController.getUser(dialogs.get(a).id);
-                        if (user == null || UserObject.isUserSelf(user) || newResultsHashMap.indexOfKey(user.id) >= 0) {
+                        if (user == null || UserObject.isUserSelf(user) || newMap.indexOfKey(user.id) >= 0) {
                             continue;
                         }
                         if (usernameString.length() == 0) {
                             if (!user.deleted) {
                                 newResult.add(user);
+                                newMap.put(user.id, user);
                                 continue;
                             }
                         }
@@ -1409,7 +1421,7 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
                         }
                     } else if (!TextUtils.isEmpty(usernameString)) {
                         TLRPC.Chat chat1 = messagesController.getChat(-dialogs.get(a).id);
-                        if (chat1 == null || chat1.username == null || newResultsHashMap.indexOfKey(chat1.id) >= 0) {
+                        if (chat1 == null || chat1.username == null || newMap.indexOfKey(-chat1.id) >= 0) {
                             continue;
                         }
                         if (usernameString.length() == 0) {
@@ -1419,7 +1431,7 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
                         firstName = chat1.title;
                         username = chat1.username;
                         object = chat1;
-                        id = chat1.id;
+                        id = -chat1.id;
                         if (!TextUtils.isEmpty(username) && username.toLowerCase().startsWith(usernameString) ||
                                 !TextUtils.isEmpty(firstName) && firstName.toLowerCase().startsWith(usernameString)){
                             newResult.add(object);
@@ -1673,6 +1685,7 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             }
         }
         searchResultUsernamesMap = newMap;
+        addGlobalSearchUsers();
         if (cancelDelayRunnable != null) {
             AndroidUtilities.cancelRunOnUIThread(cancelDelayRunnable);
             cancelDelayRunnable = null;
@@ -1683,6 +1696,87 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             notifyDataSetChanged();
             delegate.needChangePanelVisibility(!searchResultUsernames.isEmpty());
         }
+    }
+
+    private void scheduleGlobalUsersSearch(String text) {
+        String query = text.startsWith("@") ? text.substring(1) : text;
+        query = query.trim();
+        if (TextUtils.isEmpty(query)) {
+            return;
+        }
+        final String searchQuery = query;
+        globalUsersSearchRunnable = () -> {
+            globalUsersSearchRunnable = null;
+            searchGlobalUsers(searchQuery);
+        };
+        AndroidUtilities.runOnUIThread(globalUsersSearchRunnable, 250);
+    }
+
+    private void searchGlobalUsers(String query) {
+        final int searchId = ++globalUsersSearchId;
+        TLRPC.TL_contacts_search request = new TLRPC.TL_contacts_search();
+        request.q = query;
+        request.limit = 20;
+        globalUsersReqId = ConnectionsManager.getInstance(currentAccount).sendRequest(request, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
+            if (searchId != globalUsersSearchId) {
+                return;
+            }
+            globalUsersReqId = 0;
+            if (!(response instanceof TLRPC.TL_contacts_found) || error != null) {
+                return;
+            }
+            TLRPC.TL_contacts_found result = (TLRPC.TL_contacts_found) response;
+            MessagesController.getInstance(currentAccount).putUsers(result.users, false);
+            ArrayList<TLRPC.User> users = new ArrayList<>();
+            LongSparseArray<TLRPC.User> usersById = new LongSparseArray<>();
+            for (int i = 0; i < result.users.size(); i++) {
+                TLRPC.User user = result.users.get(i);
+                usersById.put(user.id, user);
+            }
+            for (ArrayList<TLRPC.Peer> peers : Arrays.asList(result.my_results, result.results)) {
+                for (int i = 0; i < peers.size(); i++) {
+                    TLRPC.User user = usersById.get(peers.get(i).user_id);
+                    if (user != null && !user.deleted && !users.contains(user)) {
+                        users.add(user);
+                    }
+                }
+            }
+            globalSearchUsers = users;
+            if (addGlobalSearchUsers()) {
+                notifyDataSetChanged();
+                delegate.needChangePanelVisibility(true);
+            }
+        }));
+    }
+
+    private void cancelGlobalUsersSearch() {
+        if (globalUsersSearchRunnable != null) {
+            AndroidUtilities.cancelRunOnUIThread(globalUsersSearchRunnable);
+            globalUsersSearchRunnable = null;
+        }
+        if (globalUsersReqId != 0) {
+            ConnectionsManager.getInstance(currentAccount).cancelRequest(globalUsersReqId, true);
+            globalUsersReqId = 0;
+        }
+        globalUsersSearchId++;
+        globalSearchUsers = null;
+    }
+
+    private boolean addGlobalSearchUsers() {
+        if (globalSearchUsers == null || searchResultUsernames == null || searchResultUsernamesMap == null) {
+            return false;
+        }
+        boolean added = false;
+        for (int i = 0; i < globalSearchUsers.size(); i++) {
+            TLRPC.User user = globalSearchUsers.get(i);
+            if (searchResultUsernamesMap.indexOfKey(user.id) >= 0 || (!allowBots && user.bot) || UserObject.isService(user.id)) {
+                continue;
+            }
+            searchResultUsernames.add(user);
+            searchResultUsernamesMap.put(user.id, user);
+            added = true;
+        }
+        return added;
     }
 
     public int getResultStartPosition() {
