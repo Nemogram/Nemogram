@@ -3242,6 +3242,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     @Override
     public void setTitleOverlayText(String title, int titleId, Runnable action) {
+        if (communityId != 0) {
+            return;
+        }
         if (!isMaterialSearchBarStyle()) {
             super.setTitleOverlayText(title, titleId, action);
             if (actionBar != null && selectAnimatedEmojiDialog != null && selectAnimatedEmojiDialog.getContentView() instanceof SelectAnimatedEmojiDialog) {
