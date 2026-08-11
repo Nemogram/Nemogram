@@ -9457,18 +9457,37 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
 
     private static boolean checkFileSize(AccountInstance accountInstance, Uri uri) {
         long len = 0;
+        AssetFileDescriptor assetFileDescriptor = null;
+        Cursor cursor = null;
         try {
-            AssetFileDescriptor assetFileDescriptor = ApplicationLoader.applicationContext.getContentResolver().openAssetFileDescriptor(uri, "r", null);
+            assetFileDescriptor = ApplicationLoader.applicationContext.getContentResolver().openAssetFileDescriptor(uri, "r", null);
             if (assetFileDescriptor != null) {
                 len = assetFileDescriptor.getLength();
             }
-            Cursor cursor = ApplicationLoader.applicationContext.getContentResolver().query(uri, new String[]{OpenableColumns.SIZE}, null, null, null);
-            int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-            cursor.moveToFirst();
-            len = cursor.getLong(sizeIndex);
-            cursor.close();
+            cursor = ApplicationLoader.applicationContext.getContentResolver().query(uri, new String[]{OpenableColumns.SIZE}, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                if (sizeIndex != -1) {
+                    len = cursor.getLong(sizeIndex);
+                }
+            }
         } catch (Exception e) {
             FileLog.e(e);
+        } finally {
+            if (cursor != null) {
+                try {
+                    cursor.close();
+                } catch (Exception e2) {
+                    FileLog.e(e2);
+                }
+            }
+            if (assetFileDescriptor != null) {
+                try {
+                    assetFileDescriptor.close();
+                } catch (Exception e2) {
+                    FileLog.e(e2);
+                }
+            }
         }
         if (!FileLoader.checkUploadFileSize(accountInstance.getCurrentAccount(), len)) {
             return true;
