@@ -61,6 +61,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
@@ -1239,7 +1240,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 matrix.postTranslate(AndroidUtilities.rectTmp.left, AndroidUtilities.rectTmp.top);
                 canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, paint);
 
-                if (border) {
+                if (border && NemoConfig.strokeOnViews) {
                     final float sw = dp(1);
                     strokePaint.setStrokeWidth(sw);
                     matrix.reset();

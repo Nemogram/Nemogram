@@ -140,6 +140,8 @@ import org.telegram.ui.Components.blur3.utils.Blur3Utils;
 import org.telegram.ui.Components.chat.ViewPositionWatcher;
 import org.telegram.ui.Stories.recorder.HintView2;
 
+import org.nemogram.messenger.NemoConfig;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1551,7 +1553,7 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
                             shader.setLocalMatrix(matrix);
                             canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, gradientPaint);
 
-                            final boolean border = resourceProvider != null ? resourceProvider.isDark() : Theme.isCurrentThemeDark();
+                            final boolean border = (resourceProvider != null ? resourceProvider.isDark() : Theme.isCurrentThemeDark()) && NemoConfig.strokeOnViews;
                             if (border) {
                                 final float sw = dp(1);
                                 strokePaint.setStrokeWidth(sw);
