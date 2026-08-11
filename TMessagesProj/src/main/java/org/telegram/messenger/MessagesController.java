@@ -6709,9 +6709,6 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean isChatNoForwards(TLRPC.Chat chat) {
-        if (NemoConfig.shouldNOTTrustMe) {
-            return false;
-        }
         if (chat == null) {
             return false;
         }

@@ -160,8 +160,6 @@ public class NemoConfig {
     public static boolean moreHapticFeedbacks = false;
     public static boolean highRoundVideoBitrate = true;
 
-    public static boolean shouldNOTTrustMe = false;
-
     public static int userMcc = 0;
     public static int searchBarStyle = SEARCH_BAR_NORMAL;
 
@@ -224,7 +222,6 @@ public class NemoConfig {
             tabsTitleType = preferences.getInt("tabsTitleType2", TITLE_TYPE_MIX);
             confirmAVMessage = preferences.getBoolean("confirmAVMessage", false);
             askBeforeCall = preferences.getBoolean("askBeforeCall", true);
-            shouldNOTTrustMe = preferences.getBoolean("shouldNOTTrustMe", false);
             disableNumberRounding = preferences.getBoolean("disableNumberRounding", false);
             mediaPreview = preferences.getBoolean("mediaPreview", true);
             idType = preferences.getInt("idType", ID_TYPE_API);
