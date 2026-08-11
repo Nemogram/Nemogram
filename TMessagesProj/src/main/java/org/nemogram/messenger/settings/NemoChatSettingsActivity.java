@@ -41,6 +41,7 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
 
     private final int transcribeProviderRow = rowId++;
     private final int cfCredentialsRow = rowId++;
+    private final int offlineTranscribeProviderRow = rowId++;
 
     private final int voiceEnhancementsRow = rowId++;
     private final int rearVideoMessagesRow = rowId++;
@@ -104,10 +105,17 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
                     LocaleController.getString(R.string.TranscribeProviderAuto);
             case NemoConfig.TRANSCRIBE_WORKERSAI ->
                     LocaleController.getString(R.string.TranscribeProviderWorkersAI);
+            case NemoConfig.TRANSCRIBE_LOCAL ->
+                    LocaleController.getString(R.string.TranscribeProviderLocal);
             default -> LocaleController.getString(R.string.TelegramPremium);
         }).slug("transcribeProvider"));
-        items.add(TextSettingsCellFactory.of(cfCredentialsRow, LocaleController.getString(R.string.CloudflareCredentials), "").slug("cfCredentials"));
-        items.add(UItem.asShadow(LocaleController.formatString(R.string.TranscribeProviderDesc, LocaleController.getString(R.string.TranscribeProviderWorkersAI))));
+        if (NemoConfig.transcribeProvider == NemoConfig.TRANSCRIBE_LOCAL) {
+            items.add(TextSettingsCellFactory.of(offlineTranscribeProviderRow, LocaleController.getString(R.string.OfflineTranscribeProvider), getOfflineProviderValueText()).slug("offlineTranscribeProvider"));
+            items.add(UItem.asShadow(LocaleController.getString(R.string.OfflineTranscribeDesc)));
+        } else {
+            items.add(TextSettingsCellFactory.of(cfCredentialsRow, LocaleController.getString(R.string.CloudflareCredentials), "").slug("cfCredentials"));
+            items.add(UItem.asShadow(LocaleController.formatString(R.string.TranscribeProviderDesc, LocaleController.getString(R.string.TranscribeProviderWorkersAI))));
+        }
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.SharedMediaTab2)));
         if (VoiceEnhancementsHelper.isAvailable()) {
@@ -332,11 +340,14 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
             types.add(NemoConfig.TRANSCRIBE_PREMIUM);
             arrayList.add(LocaleController.getString(R.string.TranscribeProviderWorkersAI));
             types.add(NemoConfig.TRANSCRIBE_WORKERSAI);
+            arrayList.add(LocaleController.getString(R.string.TranscribeProviderLocal));
+            types.add(NemoConfig.TRANSCRIBE_LOCAL);
             PopupHelper.show(arrayList, LocaleController.getString(R.string.TranscribeProviderShort), types.indexOf(NemoConfig.transcribeProvider), getParentActivity(), view, i -> {
                 NemoConfig.setTranscribeProvider(types.get(i));
-                item.textValue = arrayList.get(i);
-                listView.adapter.notifyItemChanged(position, PARTIAL);
+                listView.adapter.update(true);
             }, resourcesProvider);
+        } else if (id == offlineTranscribeProviderRow) {
+            onOfflineProviderRowClick(view);
         } else if (id == cfCredentialsRow) {
             WhisperHelper.showCfCredentialsDialog(this);
         } else if (id == preferOriginalQualityRow) {
@@ -355,6 +366,54 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
                 ((TextCheckCell) view).setChecked(NemoConfig.hideAiButton);
             }
         }
+    }
+
+    private String getOfflineProviderValueText() {
+        String label = org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.selectedProviderLabel();
+        if (label != null) {
+            return label;
+        }
+        if (org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.isEnabled()) {
+            return LocaleController.getString(R.string.OfflineTranscribeProviderUnavailable);
+        }
+        return LocaleController.getString(R.string.OfflineTranscribeProviderNotSelected);
+    }
+
+    private void onOfflineProviderRowClick(View view) {
+        var providers = org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.availableProviders();
+        if (providers.isEmpty()) {
+            var builder = new AlertDialog.Builder(getParentActivity(), resourcesProvider);
+            builder.setTitle(LocaleController.getString(R.string.OfflineTranscribeNoAppTitle));
+            builder.setMessage(LocaleController.getString(R.string.OfflineTranscribeNoAppMessage));
+            builder.setPositiveButton(LocaleController.getString(R.string.OfflineTranscribeInstallScrib), (dialog, which) -> {
+                try {
+                    android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_VIEW,
+                            android.net.Uri.parse(org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.SUGGESTED_FDROID_URL));
+                    getParentActivity().startActivity(intent);
+                } catch (Exception ignore) {
+                }
+            });
+            builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+            showDialog(builder.create());
+            return;
+        }
+
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (var provider : providers) {
+            arrayList.add(String.valueOf(provider.label));
+        }
+        String selectedId = org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.selectedProviderId();
+        int selectedIndex = -1;
+        for (int i = 0; i < providers.size(); i++) {
+            if (providers.get(i).id().equals(selectedId)) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        PopupHelper.show(arrayList, LocaleController.getString(R.string.OfflineTranscribeChooseApp), selectedIndex, getParentActivity(), view, i -> {
+            org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.setProvider(providers.get(i));
+            listView.adapter.update(true);
+        }, resourcesProvider);
     }
 
     @Override

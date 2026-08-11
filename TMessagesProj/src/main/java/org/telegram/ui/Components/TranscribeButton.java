@@ -121,7 +121,7 @@ public class TranscribeButton {
 
         this.isOpen = false;
         this.shouldBeOpen = false;
-        premium = parent.getMessageObject() != null && (UserConfig.getInstance(parent.getMessageObject().currentAccount).isPremium() || WhisperHelper.useWorkersAi(parent.getMessageObject().currentAccount));
+        premium = parent.getMessageObject() != null && (UserConfig.getInstance(parent.getMessageObject().currentAccount).isPremium() || WhisperHelper.useWorkersAi(parent.getMessageObject().currentAccount) || org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.isActive());
 
         loadingFloat = new AnimatedFloat(parent, 250, CubicBezierInterpolator.EASE_OUT_QUINT);
         animatedDrawLock = new AnimatedFloat(parent, 250, CubicBezierInterpolator.EASE_OUT_QUINT);
@@ -646,6 +646,7 @@ public class TranscribeButton {
 
     private static HashMap<Long, MessageObject> transcribeOperationsById;
     private static HashMap<Integer, MessageObject> transcribeOperationsByDialogPosition;
+    private static HashMap<Integer, org.nemogram.messenger.helpers.transcribe.OfflineTranscribeSession> offlineTranscribeOperations;
     private static ArrayList<Integer> videoTranscriptionsOpen;
 
     public static void openVideoTranscription(MessageObject messageObject) {
@@ -695,6 +696,61 @@ public class TranscribeButton {
             } else {
                 if (BuildVars.LOGS_ENABLED) {
                     FileLog.d("sending Transcription request, msg_id=" + messageId + " dialog_id=" + dialogId);
+                }
+                if (org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.isActive()) {
+                    var path = MessageHelper.getPathToMessage(messageObject);
+                    if (path == null) {
+                        NotificationCenter.getInstance(account).postNotificationName(NotificationCenter.voiceTranscriptionUpdate, messageObject);
+                        NotificationCenter.getInstance(account).postNotificationName(NotificationCenter.updateTranscriptionLock);
+                        NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.showBulletin, Bulletin.TYPE_ERROR, LocaleController.getString(R.string.PleaseDownload));
+                        return;
+                    }
+                    long id = Utilities.random.nextLong();
+                    if (transcribeOperationsByDialogPosition == null) {
+                        transcribeOperationsByDialogPosition = new HashMap<>();
+                    }
+                    transcribeOperationsByDialogPosition.put(reqInfoHash(messageObject), messageObject);
+                    var cancellable = org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.requestTranscription(path, "", (partial) -> AndroidUtilities.runOnUIThread(() -> {
+                        NotificationCenter.getInstance(account).postNotificationName(NotificationCenter.voiceTranscriptionUpdate, messageObject, (Long) id, (String) partial, (Boolean) true, (Boolean) false);
+                    }), (text, exception) -> {
+                        if (offlineTranscribeOperations != null) {
+                            offlineTranscribeOperations.remove(reqInfoHash(messageObject));
+                        }
+                        if (text != null) {
+                            if (transcribeOperationsById == null) {
+                                transcribeOperationsById = new HashMap<>();
+                            }
+                            transcribeOperationsById.put(id, messageObject);
+                            messageObject.messageOwner.voiceTranscriptionId = id;
+
+                            final long duration = SystemClock.elapsedRealtime() - start;
+                            TranscribeButton.openVideoTranscription(messageObject);
+                            messageObject.messageOwner.voiceTranscriptionOpen = true;
+                            messageObject.messageOwner.voiceTranscriptionFinal = true;
+
+                            MessagesStorage.getInstance(account).updateMessageVoiceTranscription(dialogId, messageId, text, messageObject.messageOwner);
+                            AndroidUtilities.runOnUIThread(() -> finishTranscription(messageObject, id, text), Math.max(0, minDuration - duration));
+                        } else {
+                            final boolean cancelled = exception instanceof org.nemogram.messenger.helpers.transcribe.AidlOfflineTranscriber.TranscriptionCancelledException;
+                            AndroidUtilities.runOnUIThread(() -> {
+                                if (transcribeOperationsByDialogPosition != null) {
+                                    transcribeOperationsByDialogPosition.remove(reqInfoHash(messageObject));
+                                }
+                                NotificationCenter.getInstance(account).postNotificationName(NotificationCenter.voiceTranscriptionUpdate, messageObject);
+                                NotificationCenter.getInstance(account).postNotificationName(NotificationCenter.updateTranscriptionLock);
+                                if (!cancelled) {
+                                    WhisperHelper.showErrorDialog(exception);
+                                }
+                            });
+                        }
+                    });
+                    if (cancellable != null) {
+                        if (offlineTranscribeOperations == null) {
+                            offlineTranscribeOperations = new HashMap<>();
+                        }
+                        offlineTranscribeOperations.put(reqInfoHash(messageObject), cancellable);
+                    }
+                    return;
                 }
                 if (WhisperHelper.useWorkersAi(account)) {
                     var path = MessageHelper.getPathToMessage(messageObject);
@@ -907,7 +963,7 @@ public class TranscribeButton {
         if (messageObject == null || messageObject.messageOwner == null) {
             return false;
         }
-        if (WhisperHelper.useWorkersAi(messageObject.currentAccount)) {
+        if (WhisperHelper.useWorkersAi(messageObject.currentAccount) || org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager.isActive()) {
             return false;
         }
         if (isFreeTranscribeInChat(messageObject)) {

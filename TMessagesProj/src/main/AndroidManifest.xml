@@ -107,6 +107,9 @@
         <intent>
             <action android:name="org.openintents.openpgp.IOpenPgpService2"/>
         </intent>
+        <intent>
+            <action android:name="org.opentranscribe.api.ITranscriptionService"/>
+        </intent>
         <package android:name="org.sufficientlysecure.keychain"/>
     </queries>
 

@@ -85,6 +85,10 @@ dependencies {
 android {
     sourceSets.main.jniLibs.srcDirs = ['./jni/']
 
+    buildFeatures {
+        aidl = true
+    }
+
     externalNativeBuild {
         cmake {
             path 'jni/CMakeLists.txt'

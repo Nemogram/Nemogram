@@ -208,6 +208,7 @@ import org.telegram.ui.Components.TextStyleSpan;
 import org.telegram.ui.Components.TimerParticles;
 import org.telegram.ui.Components.TopicButton;
 import org.telegram.ui.Components.TopicSeparator;
+import org.nemogram.messenger.helpers.transcribe.OfflineTranscribeManager;
 import org.telegram.ui.Components.TranscribeButton;
 import org.telegram.ui.Components.TypefaceSpan;
 import org.telegram.ui.Components.URLSpanBotCommand;
@@ -12753,6 +12754,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     TranscribeButton.canTranscribeTrial(currentMessageObject) || true
                 )
                 || WhisperHelper.useWorkersAi(currentAccount)
+                || OfflineTranscribeManager.isActive()
                 /*||
                 MessagesController.getInstance(currentAccount).transcribeAudioTrialWeeklyNumber <= 0 &&
                 !MessagesController.getInstance(currentAccount).premiumFeaturesBlocked() &&

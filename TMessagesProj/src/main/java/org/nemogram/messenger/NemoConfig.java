@@ -60,6 +60,9 @@ public class NemoConfig {
     public static final int TRANSCRIBE_AUTO = 0;
     public static final int TRANSCRIBE_PREMIUM = 1;
     public static final int TRANSCRIBE_WORKERSAI = 2;
+    public static final int TRANSCRIBE_LOCAL = 3;
+
+
 
     private static final Object sync = new Object();
     public static boolean preferIPv6 = false;
@@ -94,6 +97,7 @@ public class NemoConfig {
     public static int transcribeProvider = TRANSCRIBE_PREMIUM;
     public static String cfAccountID = "";
     public static String cfApiToken = "";
+
 
     public static boolean showAddToSavedMessages = true;
     public static boolean showSetReminder = false;
