@@ -124,8 +124,6 @@
     <string name="CopyCallback">콜백 데이터 복사</string>
     <string name="CopyInlineQuery">인라인 쿼리 복사</string>
     <string name="CopyID">ID 복사</string>
-    <string name="ShowRPCError">모든 RPC 오류 넘기기</string>
-    <string name="ShowRPCErrorException">예외: %s</string>
     <string name="SoonRemovedOption">이 실험적 옵션은 곧 제거되고 기본적으로 활성화됩니다. 이 옵션에 문제가 있는 경우 **저희에게 알려주세요**</string>
     <string name="DeleteAllFromSelfDone">모든 메세지가 삭제 되었습니다</string>
     <string name="UnknownNemoSettingsOption">그러한 Nemo 설정 옵션이 없습니다.</string>

@@ -38,7 +38,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     private final int forceFontWeightFallbackRow = rowId++;
     private final int highRoundVideoBitrateRow = rowId++;
     private final int contentRestrictionRow = rowId++;
-    private final int showRPCErrorRow = rowId++;
 
     private final int checkUpdateRow = rowId++;
     private final int autoCheckUpdatesRow = rowId++;
@@ -57,7 +56,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
         if (Extra.isDirectApp()) {
             items.add(UItem.asCheck(contentRestrictionRow, LocaleController.getString(R.string.IgnoreContentRestriction)).slug("contentRestriction").setChecked(NemoConfig.ignoreContentRestriction));
         }
-        items.add(UItem.asCheck(showRPCErrorRow, LocaleController.getString(R.string.ShowRPCError), LocaleController.formatString(R.string.ShowRPCErrorException, "FILE_REFERENCE_EXPIRED")).slug("showRPCError").setChecked(NemoConfig.showRPCError));
         items.add(UItem.asShadow(null));
 
         if (getParentActivity() instanceof LaunchActivity) {
@@ -161,11 +159,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
                 }.start();
             });
             showDialog(dialog);
-        } else if (id == showRPCErrorRow) {
-            NemoConfig.toggleShowRPCError();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NemoConfig.showRPCError);
-            }
         } else if (id == moreHapticFeedbacksRow) {
             NemoConfig.toggleMoreHapticFeedbacks();
             if (view instanceof TextCheckCell) {

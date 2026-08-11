@@ -129,8 +129,6 @@
     <string name="CopyCallback">Скопировать Callback Data</string>
     <string name="CopyInlineQuery">Копировать строчный запрос</string>
     <string name="CopyID">Копировать ID</string>
-    <string name="ShowRPCError">Всплывающие уведомления обо всех ошибках RPC</string>
-    <string name="ShowRPCErrorException">Исключения: %s</string>
     <string name="SoonRemovedOption">Это экспериментальный параметр скоро будет удалён и включён по умолчанию. Если у вас есть проблемы с этим параметром, пожалуйста **сообщите нам**.</string>
     <string name="DeleteAllFromSelfDone">Все ваши сообщения удалены</string>
     <string name="UnknownNemoSettingsOption">Такого параметра Nemo нет.</string>

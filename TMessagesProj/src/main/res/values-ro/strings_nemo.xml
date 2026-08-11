@@ -127,8 +127,6 @@
     <string name="CopyCallback">Copierea datelor de apelare</string>
     <string name="CopyInlineQuery">Copiați interogarea inline</string>
     <string name="CopyID">Copiați ID-ul</string>
-    <string name="ShowRPCError">Toast toate erorile RPC</string>
-    <string name="ShowRPCErrorException">Erori: %s</string>
     <string name="SoonRemovedOption">Această opțiune experimentală va fi eliminată și activată implicit în curând, dacă aveți probleme cu această opțiune, vă rugăm **să ne-o raportați**.</string>
     <string name="DeleteAllFromSelfDone">Toate mesajele dumneavoastră sunt șterse</string>
     <string name="UnknownNemoSettingsOption">Nu există o astfel de opţiune de Setări Nemo.</string>

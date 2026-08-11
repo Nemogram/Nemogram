@@ -128,8 +128,6 @@
     <string name="CopyCallback">Visszahívási adatok másolása</string>
     <string name="CopyInlineQuery">Beágyazott lekérdezés másolása</string>
     <string name="CopyID">Azonosító másolása</string>
-    <string name="ShowRPCError">Minden RPC hibáról toast értesítő</string>
-    <string name="ShowRPCErrorException">Kivételek: %s</string>
     <string name="SoonRemovedOption">Ezt a kísérleti opciót hamarosan eltávolítjuk és alapértelmezetten bekapcsolásra kerül, ha problémái vannak ezzel az opcióval, kérjük **írjon nekünk**.</string>
     <string name="DeleteAllFromSelfDone">Az összes üzenete törlődik</string>
     <string name="UnknownNemoSettingsOption">Nincs ilyen Nemo Beállítások opció.</string>

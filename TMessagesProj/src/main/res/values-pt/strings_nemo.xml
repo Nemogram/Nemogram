@@ -127,8 +127,6 @@
     <string name="CopyCallback">Copiar dados de retorno de chamada</string>
     <string name="CopyInlineQuery">Copiar Consulta Embutida</string>
     <string name="CopyID">Copiar ID</string>
-    <string name="ShowRPCError">Torrar todos os erros RPC</string>
-    <string name="ShowRPCErrorException">Exceções: %s</string>
     <string name="SoonRemovedOption">Esta opção experimental será retirada e activada por defeito em breve, se tiver problemas com esta opção, por favor **informe-nos**.</string>
     <string name="DeleteAllFromSelfDone">Todas as suas mensagens são apagadas</string>
     <string name="UnknownNemoSettingsOption">Não existe essa opção de Configurações Nemo.</string>

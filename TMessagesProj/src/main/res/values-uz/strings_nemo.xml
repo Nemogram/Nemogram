@@ -123,8 +123,6 @@
     <string name="CopyCallback">Qayta qo\'ng\'iroq ma\'lumotlarini nusxalash</string>
     <string name="CopyInlineQuery">Inlayn so\'rovni nusxalash</string>
     <string name="CopyID">IDni ko\'chirish</string>
-    <string name="ShowRPCError">Barcha RPC xatolarini ko\'rsatish</string>
-    <string name="ShowRPCErrorException">Istisnolar: %s</string>
     <string name="SoonRemovedOption">Tez orada bu eksperimental opsiya oʻchiriladi va sukut boʻyicha yoqiladi, agar sizda ushbu parametr bilan bogʻliq muammo boʻlsa, **bizga xabar bering**.</string>
     <string name="DeleteAllFromSelfDone">Barcha xabarlaringiz o\'chirib tashlandi</string>
     <string name="UnknownNemoSettingsOption">Boshqa Nemo sozlamalari mavjud emas.</string>

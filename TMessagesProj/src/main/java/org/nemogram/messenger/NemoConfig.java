@@ -77,7 +77,6 @@ public class NemoConfig {
     public static boolean disableNumberRounding = false;
     public static boolean disableGreetingSticker = false;
     public static boolean autoTranslate = true;
-    public static boolean showRPCError = false;
     public static float stickerSize = 14.0f;
     public static float gifSize = 17.5f;
     public static String translationProvider = Translator.PROVIDER_GOOGLE;
@@ -257,7 +256,6 @@ public class NemoConfig {
             filterKeywordsInChannels = preferences.getBoolean("filterKeywordsInChannels", false);
             spoilerKeywordsInChats = preferences.getBoolean("spoilerKeywordsInChats", false);
             spoilerKeywordsInChannels = preferences.getBoolean("spoilerKeywordsInChannels", false);
-            showRPCError = preferences.getBoolean("showRPCError", false);
             hideTimeOnSticker = preferences.getBoolean("hideTimeOnSticker", false);
             showOriginal = preferences.getBoolean("showOriginal", true);
             downloadSpeedBoost = preferences.getInt("downloadSpeedBoost2", BOOST_NONE);
@@ -656,14 +654,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("hideTimeOnSticker", hideTimeOnSticker);
-        editor.apply();
-    }
-
-    public static void toggleShowRPCError() {
-        showRPCError = !showRPCError;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("showRPCError", showRPCError);
         editor.apply();
     }
 

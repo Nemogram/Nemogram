@@ -125,8 +125,6 @@
     <string name="CopyCallback">نسخ بيانات رد الاتصال</string>
     <string name="CopyInlineQuery">نسخ الاستعلام المضمن</string>
     <string name="CopyID">ينسخ ID</string>
-    <string name="ShowRPCError">نخب جميع أخطاء RPC</string>
-    <string name="ShowRPCErrorException">استثناءات: %s</string>
     <string name="SoonRemovedOption">ستتم إزالة هذا الخيار التجريبي وتمكينه افتراضيًا قريبًا ، إذا كنت تواجه مشكلات مع هذا الخيار ، فيرجى ** إبلاغنا **.</string>
     <string name="DeleteAllFromSelfDone">كل رسائلك حُذفت</string>
     <string name="UnknownNemoSettingsOption">لا يوجد خِيار لإعدادات نكو من هذا القبيل.</string>

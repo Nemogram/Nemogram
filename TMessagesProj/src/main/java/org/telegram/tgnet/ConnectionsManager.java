@@ -40,7 +40,6 @@ import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.Components.VideoPlayer;
 
-import org.nemogram.messenger.ErrorDatabase;
 import org.nemogram.messenger.NemoConfig;
 
 import java.io.ByteArrayOutputStream;
@@ -424,9 +423,6 @@ public class ConnectionsManager extends BaseController {
                         error.text = errorText;
                         if (BuildVars.LOGS_ENABLED && error.code != -2000) {
                             FileLog.e(object + " got error " + error.code + " " + error.text);
-                        }
-                        if (NemoConfig.showRPCError) {
-                            ErrorDatabase.showErrorToast(object, errorText);
                         }
                     }
                     if ((connectionType & ConnectionTypeDownload) != 0 && VideoPlayer.activePlayers.isEmpty()) {

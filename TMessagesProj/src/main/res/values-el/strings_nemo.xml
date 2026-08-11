@@ -124,8 +124,6 @@
     <string name="CopyCallback">Αντιγραφή Δεδομένων Επανάκλησης</string>
     <string name="CopyInlineQuery">Αντιγραφή Ενσωματωμένου Ερωτήματος</string>
     <string name="CopyID">Αντιγραφή ID</string>
-    <string name="ShowRPCError">Ανάδυση όλων των σφαλμάτων RPC</string>
-    <string name="ShowRPCErrorException">Εξαιρέσεις: %s</string>
     <string name="SoonRemovedOption">Αυτή η πειραματική επιλογή ίσως θα αφαιρεθεί και θα ενεργοποιηθεί από προεπιλογή σύντομα, αν έχετε προβλήματα με αυτή την επιλογή, παρακαλούμε να μας το **αναφέρετε **.</string>
     <string name="DeleteAllFromSelfDone">Όλα τα μηνύματά σας έχουν διαγραφεί</string>
     <string name="UnknownNemoSettingsOption">Δεν υπάρχει τέτοια επιλογή Ρυθμίσεων Nemo.</string>

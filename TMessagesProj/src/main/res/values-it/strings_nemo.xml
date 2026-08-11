@@ -127,8 +127,6 @@
     <string name="CopyCallback">Copia Callback Data</string>
     <string name="CopyInlineQuery">Copia Query Inline</string>
     <string name="CopyID">Copia ID</string>
-    <string name="ShowRPCError">Mostra tutti gli errori RPC con notifica toast</string>
-    <string name="ShowRPCErrorException">Eccezioni: %s</string>
     <string name="SoonRemovedOption">Questa opzione sperimentale sarà presto rimossa e abilitata di default, se hai problemi con questa opzione, per favore **segnalacelo**.</string>
     <string name="DeleteAllFromSelfDone">Tutti i tuoi messaggi sono stati cancellati</string>
     <string name="UnknownNemoSettingsOption">Non esiste questa opzione nelle impostazioni Nemo.</string>

@@ -125,8 +125,6 @@
     <string name="CopyCallback">复制回调数据</string>
     <string name="CopyInlineQuery">复制 Inline 请求</string>
     <string name="CopyID">复制 ID</string>
-    <string name="ShowRPCError">显示所有 RPC 错误</string>
-    <string name="ShowRPCErrorException">例外：%s</string>
     <string name="SoonRemovedOption">这个实验性选项将很快被删除并默认启用，如果你对这个选项有问题，请**向我们报告**。</string>
     <string name="DeleteAllFromSelfDone">您的所有消息都已删除</string>
     <string name="UnknownNemoSettingsOption">没有这样的喵设置选项。</string>

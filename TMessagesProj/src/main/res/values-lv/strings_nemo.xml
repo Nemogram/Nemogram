@@ -121,8 +121,6 @@
     <string name="CopyCallback">Izsaukuma datu kopēšana</string>
     <string name="CopyInlineQuery">Kopēt rindu vaicājumu</string>
     <string name="CopyID">Kopēšanas ID</string>
-    <string name="ShowRPCError">Izcept visas RPC kļūdas</string>
-    <string name="ShowRPCErrorException">Izņēmumi: %s</string>
     <string name="SoonRemovedOption">Šī eksperimentālā opcija drīzumā tiks noņemta un iespējota pēc noklusējuma, ja jums rodas problēmas ar šo opciju, lūdzu, **ziņojiet mums**.</string>
     <string name="DeleteAllFromSelfDone">Visi jūsu ziņojumi tiek dzēsti</string>
     <string name="UnknownNemoSettingsOption">Šādas opcijas Nemo iestatījumi nav.</string>

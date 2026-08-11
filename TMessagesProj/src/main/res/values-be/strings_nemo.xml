@@ -124,8 +124,6 @@
     <string name="CopyCallback">Скапіяваць Callback Data</string>
     <string name="CopyInlineQuery">Капіраваць Inline запыт</string>
     <string name="CopyID">Капіраваць ID</string>
-    <string name="ShowRPCError">Паказваць усе RPC памылкі</string>
-    <string name="ShowRPCErrorException">Выключэнне: %s</string>
     <string name="SoonRemovedOption">Гэта эксперыментальная опцыя скора будзе выдалена і ўключана па ўмаўчанні. Калі ў вас ёсць праблемы с гэта опцыяй, калі ласка **паведаміце нам**.</string>
     <string name="DeleteAllFromSelfDone">Усе вашы паведамленні выдалены</string>
     <string name="UnknownNemoSettingsOption">Такой опцыі ў наладах Nemo няма.</string>
