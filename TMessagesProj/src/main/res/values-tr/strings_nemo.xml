@@ -51,7 +51,6 @@
     <string name="IgnoreBlockedAbout">GERÇEKTEN GİZLEYEMEZ! Mesajlar görüntülenmeye devam ederler, ama ancak metin spoilera dönüştürülürler ve medya otomatik olarak indirilmiyecek.</string>
     <string name="ResetStickerSize">Çıkartma boyutunu sıfırla</string>
     <string name="RestartAppToTakeEffect">Etkili olması için uygulamayı yeniden başlatın.</string>
-    <string name="DisableAppBarShadow">Başlık çubuğu gölgesini kapatın</string>
     <string name="MediaPreview">Sohbet listesinde medya önizlemesi</string>
     <string name="ProviderYandex">Yandex Çeviri</string>
     <string name="IdType">Profilde sohbet kimliği</string>

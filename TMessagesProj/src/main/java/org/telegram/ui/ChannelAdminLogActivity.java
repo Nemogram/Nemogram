@@ -933,7 +933,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
             actionBar.setBackground(null);
         }
         if (parentLayout != null && parentLayout.getParentActivity() != null) {
-            parentLayout.setHeaderShadow(NemoConfig.disableAppBarShadow ? null : parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
+            parentLayout.setHeaderShadow(parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
         }
         actionBar.setOccupyStatusBar(!AndroidUtilities.isTablet());
         actionBar.setBackButtonDrawable(new BackDrawable(false));

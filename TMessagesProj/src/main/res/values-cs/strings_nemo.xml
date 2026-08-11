@@ -50,7 +50,6 @@
     <string name="IgnoreBlockedAbout">ЦЕ НЕ СПРАВЖНЄ СКРИТТЯ! Повідомлення залишаються видимими але текст форматується під Спойлер і медіа не буде автоматично загружатись.</string>
     <string name="ResetStickerSize">Скинути розмір наліпки</string>
     <string name="RestartAppToTakeEffect">Перезапустіть програму щоб додати ефект.</string>
-    <string name="DisableAppBarShadow">Вимкнути тінь рядка заголовка</string>
     <string name="MediaPreview">Прев\'ю медіа в списку діалогу</string>
     <string name="ProviderYandex">Яндекс перекладач</string>
     <string name="IdType">ID чату в профілі</string>

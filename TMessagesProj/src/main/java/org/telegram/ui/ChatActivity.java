@@ -3807,7 +3807,7 @@ public class ChatActivity extends BaseFragment implements
             actionBar.setBackground(null);
         }
         if (parentLayout != null && parentLayout.getParentActivity() != null) {
-            parentLayout.setHeaderShadow(NemoConfig.disableAppBarShadow ? null : parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
+            parentLayout.setHeaderShadow(parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
         }
         // actionBar.setOccupyStatusBar(false);
         if (inPreviewMode) {

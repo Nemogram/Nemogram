@@ -52,7 +52,6 @@
     <string name="IgnoreBlockedAbout">ΔΕΝ ΚΡΥΒΕΤΑΙ ΠΡΑΓΜΑΤΙΚΑ! Τα μηνύματα εξακολουθούν να είναι διαθέσιμα για προβολή, αλλά το κείμενο θα μετατραπεί σε Spoiler και χωρίς λήψη πολυμέσων.</string>
     <string name="ResetStickerSize">Επαναφ. μεγέθ. αυτοκόλλητου</string>
     <string name="RestartAppToTakeEffect">Επανεκκίνηση για εφαρμογή αλλαγών.</string>
-    <string name="DisableAppBarShadow">Απεν/ποίηση σκιάς γραμμής τίτλου</string>
     <string name="MediaPreview">Προεπισκ. πολυμ. στη λίστα διαλόγου</string>
     <string name="ProviderYandex">Yandex</string>
     <string name="IdType">ID συνομιλίας στο προφίλ</string>

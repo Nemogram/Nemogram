@@ -52,7 +52,6 @@
     <string name="IgnoreBlockedAbout">ES IST NICHT WIRKLICH VERSTECKT! Nachrichten sind immer noch verfügbar, aber Text wird in Spoiler konvertiert und Medien werden nicht automatisch heruntergeladen.</string>
     <string name="ResetStickerSize">Stickergröße zurücksetzen</string>
     <string name="RestartAppToTakeEffect">App neu starten, um Änderungen wirksam zu machen.</string>
-    <string name="DisableAppBarShadow">Schatten der Titelleiste deaktivieren</string>
     <string name="MediaPreview">Medienvorschau in der Dialogliste</string>
     <string name="ProviderYandex">Yandex Übersetzer</string>
     <string name="IdType">Chat-ID im Profil</string>

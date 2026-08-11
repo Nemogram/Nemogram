@@ -56,7 +56,6 @@
     <string name="ResetStickerSize">Сбросить размер стикера</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">Перезапустите приложение для применения настроек.</string>
-    <string name="DisableAppBarShadow">Отключить тень заголовка</string>
     <string name="MediaPreview">Предпросмотр медиа в списке чатов</string>
     <string name="ProviderYandex">Яндекс.Переводчик</string>
     <string name="IdType">ID чата в профиле</string>

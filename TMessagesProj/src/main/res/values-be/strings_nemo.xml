@@ -52,7 +52,6 @@
     <string name="IgnoreBlockedAbout">ГЭТА НЕ САПРАЎДНАЕ ХАВАННЕ! Паведамленні па-ранейшаму даступныя для прагляду, але тэкст будзе ператвораны ў спойлер, а медыя не будуць загружацца аўтаматычна.</string>
     <string name="ResetStickerSize">Скінуць памер стыкера</string>
     <string name="RestartAppToTakeEffect">Перазапусціце праграму для прыстасавання налад.</string>
-    <string name="DisableAppBarShadow">Адключыць цень загалоўка</string>
     <string name="MediaPreview">Прадпрагляд медыя ў спісе чатаў</string>
     <string name="ProviderYandex">Яндэкс Перакладчык</string>
     <string name="IdType">ID чата ў профілі</string>

@@ -50,7 +50,6 @@
     <string name="IgnoreBlockedAbout">Xabar haqiqatdan ham YASHIRILMAYDI! Xabarlar hali ham koʻrish mumkin, lekin matn spoylerga oʻzgartiriladi va media avtomatik yuklab olinmaydi.</string>
     <string name="ResetStickerSize">Stiker hajmini qayta o\'rnatish</string>
     <string name="RestartAppToTakeEffect">Ilovani qayta ishga tushiring.</string>
-    <string name="DisableAppBarShadow">Nom qatori soyasini o\'chirish</string>
     <string name="MediaPreview">Muloqot oynasi ro\'yxatida mediani oldindan ko\'rish</string>
     <string name="ProviderYandex">Yandex Tarjimon</string>
     <string name="IdType">Profilda Chat IDni ko\'rsatish</string>

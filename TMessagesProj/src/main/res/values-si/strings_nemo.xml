@@ -40,7 +40,6 @@
     <string name="OfficialChannel">නිල චැනලය</string>
     <string name="ResetStickerSize">ස්ටිකර් විශාලත්වය නැවත සකසන්න</string>
     <string name="RestartAppToTakeEffect">මෙය ක්‍රියාත්මක වීම සදහා ඇප් එක නැවත ක්‍රියාත්මක කරන්න.</string>
-    <string name="DisableAppBarShadow">මාතෘකා තීරු සෙවනැල්ල අක්‍රීය කරන්න</string>
     <string name="IdTypeHidden">හංගන්න</string>
     <!-- Accessibility -->
 </resources>

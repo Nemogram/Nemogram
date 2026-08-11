@@ -55,7 +55,6 @@
     <string name="IgnoreBlockedAbout">NÃO ESCONDE REALMENTE! As mensagens ainda estão disponíveis para visualização, mas o texto será convertido para Spoiler e as mídias não serão baixadas automaticamente.</string>
     <string name="ResetStickerSize">Redefinir tamanho da figurinha</string>
     <string name="RestartAppToTakeEffect">Reiniciar a aplicação para ter efeito.</string>
-    <string name="DisableAppBarShadow">Desativar sombra da barra de título</string>
     <string name="MediaPreview">Pré-visualização da mídia na lista de diálogo</string>
     <string name="ProviderYandex">Yandex Tradutor</string>
     <string name="IdType">ID do Chat no perfil</string>

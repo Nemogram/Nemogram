@@ -55,7 +55,6 @@
     <string name="IgnoreBlockedAbout">NU SUNT CHIAR ASCUNSE! Mesajele sunt încă disponibile dar textul va fi transformat în Spoiler iar fișierele nu se vor descărca automat.</string>
     <string name="ResetStickerSize">Resetați dimensiunea stickerului</string>
     <string name="RestartAppToTakeEffect">Reporniți aplicația pentru a avea efect.</string>
-    <string name="DisableAppBarShadow">Dezactivați umbra din bara de titlu</string>
     <string name="MediaPreview">Previzualizare media în lista de dialog</string>
     <string name="ProviderYandex">Traducere Yandex</string>
     <string name="IdType">ID conversație în profil</string>

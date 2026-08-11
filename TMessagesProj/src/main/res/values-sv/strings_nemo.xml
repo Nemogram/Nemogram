@@ -46,7 +46,6 @@
     <string name="IgnoreBlockedAbout">DET ÄR INTE RIKTIGT DÖLJA! Meddelanden är fortfarande tillgängliga för visning, men text konverteras till Spoiler och media laddas inte ner automatiskt.</string>
     <string name="ResetStickerSize">Återställ klistermärkesstorlek</string>
     <string name="RestartAppToTakeEffect">Starta om appen för att träda i kraft.</string>
-    <string name="DisableAppBarShadow">Inaktivera skugga i titelfältet</string>
     <string name="MediaPreview">Förhandsgranskning av media i dialoglistan</string>
     <string name="ProviderYandex">Yandex Översätt</string>
     <string name="IdType">Chatt-ID i profil</string>

@@ -115,7 +115,6 @@ public class NemoConfig {
     public static boolean hideGifts = false;
     public static boolean musicViewAlternativeLayout = false;
     public static int nameOrder = 1;
-    public static boolean disableAppBarShadow = false;
     public static boolean mediaPreview = true;
     public static boolean autoPauseVideo = true;
     public static boolean disableProximityEvents = false;
@@ -228,7 +227,6 @@ public class NemoConfig {
             askBeforeCall = preferences.getBoolean("askBeforeCall", true);
             shouldNOTTrustMe = preferences.getBoolean("shouldNOTTrustMe", false);
             disableNumberRounding = preferences.getBoolean("disableNumberRounding", false);
-            disableAppBarShadow = preferences.getBoolean("disableAppBarShadow", false);
             mediaPreview = preferences.getBoolean("mediaPreview", true);
             idType = preferences.getInt("idType", ID_TYPE_API);
             autoPauseVideo = preferences.getBoolean("autoPauseVideo", true);
@@ -888,14 +886,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("disableGooeyAvatarAnimation", disableGooeyAvatarAnimation);
-        editor.apply();
-    }
-
-    public static void toggleDisableAppBarShadow() {
-        disableAppBarShadow = !disableAppBarShadow;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("disableAppBarShadow", disableAppBarShadow);
         editor.apply();
     }
 

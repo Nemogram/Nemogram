@@ -54,7 +54,6 @@
     <string name="IgnoreBlockedAbout">ITU TIDAK BENAR-BENAR TERSEMBUNYI! Pesan masih tersedia untuk dilihat, tetapi teks akan dikonversi ke Spoiler dan media tidak akan mengunduh secara otomatis.</string>
     <string name="ResetStickerSize">Setel ulang ukuran stiker</string>
     <string name="RestartAppToTakeEffect">Mulai ulang aplikasi untuk menerapkan.</string>
-    <string name="DisableAppBarShadow">Matikan bayangan bilah judul</string>
     <string name="MediaPreview">Pratinjau media di daftar obrolan</string>
     <string name="ProviderYandex">Terjemahan Yandex</string>
     <string name="IdType">ID obrolan di profil</string>

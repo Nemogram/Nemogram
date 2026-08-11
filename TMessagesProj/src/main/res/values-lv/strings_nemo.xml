@@ -48,7 +48,6 @@
     <string name="IgnoreBlockedAbout">TAS NAV ĪSTI PASLĒPT! Ziņojumi joprojām ir pieejami apskatei, bet teksts tiks pārveidots uz spoileru un multivides līdzekļi netiks automātiski lejupielādēti.</string>
     <string name="ResetStickerSize">Atiestatīt uzlīmes lielumu</string>
     <string name="RestartAppToTakeEffect">Restartējiet lietotni, lai tas stātos spēkā.</string>
-    <string name="DisableAppBarShadow">Tituljoslas ēnas atspējošana</string>
     <string name="MediaPreview">Multivides priekšskatījums dialogsarakstā</string>
     <string name="ProviderYandex">Yandex Translate</string>
     <string name="IdType">Tērzēšanas ID profilā</string>

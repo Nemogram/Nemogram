@@ -55,7 +55,6 @@
     <string name="IgnoreBlockedAbout">มันไม่ได้ซ่อนจริงๆ! ข้อความยังคงสามารถดูได้ แต่ข้อความจะถูกแปลงเป็นสปอยเลอร์และสื่อจะไม่ดาวน์โหลดอัตโนมัติ</string>
     <string name="ResetStickerSize">รีเซ็ตขนาดสติ๊กเกอร์</string>
     <string name="RestartAppToTakeEffect">เริ่มแอปพลิเคชันใหม่เพื่อให้การเปลี่ยนแปลงมีผล</string>
-    <string name="DisableAppBarShadow">ปิดใช้งานเงาของแถบชื่อเรื่อง</string>
     <string name="MediaPreview">ตัวอย่างสื่อในรายการกล่องโต้ตอบ</string>
     <string name="ProviderYandex">Yandex Translate</string>
     <string name="IdType">รหัสแชทในโปรไฟล์</string>

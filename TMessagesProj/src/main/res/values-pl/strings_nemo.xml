@@ -52,7 +52,6 @@
     <string name="IgnoreBlockedAbout">TO NIE JEST PRAWDZIWE UKRYWANIE! Wiadomości są nadal dostępne do wyświetlenia, ale tekst zostanie przekonwertowany na Spoiler, a multimedia nie będą automatycznie pobierane.</string>
     <string name="ResetStickerSize">Resetuj rozmiar naklejek</string>
     <string name="RestartAppToTakeEffect">Zrestartuj aplikację, aby wprowadzić zmiany.</string>
-    <string name="DisableAppBarShadow">Wyłącz cień paska tytułowego</string>
     <string name="MediaPreview">Podgląd multimediów na liście rozmów</string>
     <string name="ProviderYandex">Tłumacz Yandex</string>
     <string name="IdType">ID czatu w profilu</string>

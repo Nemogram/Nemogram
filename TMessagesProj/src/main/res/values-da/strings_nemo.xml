@@ -46,7 +46,6 @@
     <string name="IgnoreBlockedAbout">Det er IKKE RIGTIG HIDE! Beskeder er stadig tilgængelige til at se, men tekst vil blive konverteret til Spoiler og medier vil ikke automatisk downloade.</string>
     <string name="ResetStickerSize">Nulstil klistermærkets størrelse</string>
     <string name="RestartAppToTakeEffect">Genstart app\'en for at træde i kraft.</string>
-    <string name="DisableAppBarShadow">Deaktivér skygge i titellinje</string>
     <string name="MediaPreview">Eksempel på medie i dialogboks</string>
     <string name="ProviderYandex">Yandex Oversæt</string>
     <string name="IdType">Chat ID i profil</string>

@@ -55,7 +55,6 @@
     <string name="IgnoreBlockedAbout">این واقعاً پنهان نیست! پیام‌ها همچنان برای مشاهده در دسترس هستند، اما نوشتار به اسپویلر تبدیل می‌شود و رسانه دانلود خودکار نمی‌شود.</string>
     <string name="ResetStickerSize">بازنشانی اندازه استیکر</string>
     <string name="RestartAppToTakeEffect">برنامه را مجدداً راه‌اندازی کنید تا تغییر اعمال شود.</string>
-    <string name="DisableAppBarShadow">سایه نوار عنوان را غیرفعال کنید</string>
     <string name="MediaPreview">پیش نمایش رسانه در لیست گفتگو</string>
     <string name="ProviderYandex">ترجمه Yandex</string>
     <string name="IdType">شناسه چت در پروفایل</string>

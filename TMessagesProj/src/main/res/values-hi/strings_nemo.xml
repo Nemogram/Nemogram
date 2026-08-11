@@ -48,7 +48,6 @@
     <string name="IgnoreBlockedAbout">यह वास्तव में छुपाएगा नहीं। मैसेज आपको पढ़ने के लिए उपलब्ध रहेंगे लेकिन जो मैसेज होंगे वो स्पॉयलर टेक्स्ट में कन्वर्ट हो जाएंगे और मीडिया अपने आप डाउनलोड नहीं होगा।</string>
     <string name="ResetStickerSize">स्टिकर साइज रीसेट करें</string>
     <string name="RestartAppToTakeEffect">ऐप को रिस्टार्ट करें बदलाव के लिए</string>
-    <string name="DisableAppBarShadow">टाइटल बार शैडो बंद करें</string>
     <string name="MediaPreview">मीडिया प्रीव्यू इन डायलॉग लिस्ट</string>
     <string name="ProviderYandex">येंडेक्स ट्रांसलेट</string>
     <string name="IdType">चैट आईडी इन प्रोफाइल</string>

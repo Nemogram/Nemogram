@@ -53,7 +53,6 @@
     <string name="ResetStickerSize">ステッカーのサイズをリセット</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">設定を反映させるためにはアプリを再起動してください。</string>
-    <string name="DisableAppBarShadow">タイトルバーの影を無効化</string>
     <string name="MediaPreview">ダイアログリストのメディアプレビュー</string>
     <string name="ProviderYandex">Yandex翻訳</string>
     <string name="IdType">プロフィールのチャットID</string>

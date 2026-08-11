@@ -52,7 +52,6 @@
     <string name="IgnoreBlockedAbout">ILS NE LE SONT PAS VRAIMENT ! Les messages seront toujours visibles, mais le texte sera converti en spoiler et les médias ne seront plus automatiquement téléchargés.</string>
     <string name="ResetStickerSize">Réinitialiser la taille des autocollants</string>
     <string name="RestartAppToTakeEffect">Redémarrez l\'application pour prendre en les changements en compte.</string>
-    <string name="DisableAppBarShadow">Désactiver l\'ombre de la barre de titre</string>
     <string name="MediaPreview">Aperçu des médias dans la liste des échanges</string>
     <string name="ProviderYandex">Yandex</string>
     <string name="IdType">ChatID sur le profil</string>

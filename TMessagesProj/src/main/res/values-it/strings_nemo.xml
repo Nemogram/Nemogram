@@ -55,7 +55,6 @@
     <string name="IgnoreBlockedAbout">NON SONO DAVVERO NASCOSTI! I messaggi sono ancora visibili, ma il testo sarà convertito in Spoiler e i media non saranno scaricati automaticamente.</string>
     <string name="ResetStickerSize">Resetta dimensione sticker</string>
     <string name="RestartAppToTakeEffect">Riavvia l\'app per applicare le modifiche.</string>
-    <string name="DisableAppBarShadow">Disabilita l\'ombra della barra del titolo</string>
     <string name="MediaPreview">Anteprima media nella lista chat</string>
     <string name="ProviderYandex">Yandex Translate</string>
     <string name="IdType">Chat ID nel profilo</string>

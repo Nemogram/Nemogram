@@ -52,7 +52,6 @@
     <string name="IgnoreBlockedAbout">ТО НИЈЕ ЗАИСТА СКРИВЕНО! Поруке су и даље доступне за преглед, али текст ће бити конвертован у спојлер и медији се неће аутоматски преузимати.</string>
     <string name="ResetStickerSize">Ресетуј величину налепница</string>
     <string name="RestartAppToTakeEffect">Рестартујте апликацију да би промене ступиле на снагу.</string>
-    <string name="DisableAppBarShadow">Онемогући сенку насловне траке</string>
     <string name="MediaPreview">Преглед медија на листи ћаскања</string>
     <string name="ProviderYandex">Yandex преводилац</string>
     <string name="IdType">ID ћаскања у профилу</string>

@@ -55,7 +55,6 @@
     <string name="IgnoreBlockedAbout">EZ VALÓBAN NEM REJTETT! Az üzenetek továbbra is megtekinthetők, de a szöveg spoilerré konvertálódik, a média pedig nem töltődik le automatikusan.</string>
     <string name="ResetStickerSize">Matrica méret visszaállítása</string>
     <string name="RestartAppToTakeEffect">A hatálybalépéshez indítsa újra az alkalmazást.</string>
-    <string name="DisableAppBarShadow">A címsor árnyékának kikapcsolása</string>
     <string name="MediaPreview">Média előnézet a párbeszédpanelen</string>
     <string name="ProviderYandex">Yandex fordító</string>
     <string name="IdType">Csevegési azonosító a profilban</string>
