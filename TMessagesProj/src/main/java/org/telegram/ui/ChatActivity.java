@@ -21475,19 +21475,11 @@ public class ChatActivity extends BaseFragment implements
             }
 
             if (!obj.isOutOwner()) {
-                boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
-                boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
-                boolean blocked = isChannel
-                    ? NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null)
-                    : NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null);
-
-                if (hide && blocked) {
-                    boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
-                    if (spoiler) {
-                        injectSpoilerEntity(obj);
-                    } else {
-                        continue;
-                    }
+                int keywordAction = getKeywordFilterAction(obj);
+                if (keywordAction == KEYWORD_FILTER_ACTION_SPOILER) {
+                    injectSpoilerEntity(obj);
+                } else if (keywordAction == KEYWORD_FILTER_ACTION_HIDE) {
+                    continue;
                 }
             }
 
@@ -25777,9 +25769,10 @@ public class ChatActivity extends BaseFragment implements
         for (int a = 0, N = arr.size(); a < N; a++) {
             FileLog.d("processNewMessages " + a + " our of " + N);
             MessageObject messageObject = arr.get(a);
-            if (!messageObject.isOutOwner() && (currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup
-                ? (NemoConfig.filterKeywordsInChannels && NemoConfig.isKeywordBlockedInChannels(messageObject.messageOwner != null ? messageObject.messageOwner.message : null))
-                : (NemoConfig.filterKeywordsInChats && NemoConfig.isKeywordBlockedInChats(messageObject.messageOwner != null ? messageObject.messageOwner.message : null)))) {
+            int keywordAction = getKeywordFilterAction(messageObject);
+            if (keywordAction == KEYWORD_FILTER_ACTION_SPOILER) {
+                injectSpoilerEntity(messageObject);
+            } else if (keywordAction == KEYWORD_FILTER_ACTION_HIDE) {
                 continue;
             }
             if (!isAd) {
@@ -26019,19 +26012,11 @@ public class ChatActivity extends BaseFragment implements
                     continue;
                 }
                 if (!obj.isOutOwner()) {
-                    boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
-                    boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
-                    boolean blocked = isChannel
-                        ? NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null)
-                        : NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null);
-
-                    if (hide && blocked) {
-                        boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
-                        if (spoiler) {
-                            injectSpoilerEntity(obj);
-                        } else {
-                            continue;
-                        }
+                    int keywordAction = getKeywordFilterAction(obj);
+                    if (keywordAction == KEYWORD_FILTER_ACTION_SPOILER) {
+                        injectSpoilerEntity(obj);
+                    } else if (keywordAction == KEYWORD_FILTER_ACTION_HIDE) {
+                        continue;
                     }
                 }
                 if (currentChat != null && currentChat.creator && (!ChatObject.isChannel(currentChat) || currentChat.megagroup) && (action instanceof TLRPC.TL_messageActionChatCreate || action instanceof TLRPC.TL_messageActionChatEditPhoto && messages.size() < 2)) {
@@ -26171,19 +26156,11 @@ public class ChatActivity extends BaseFragment implements
                     continue;
                 }
                 if (!obj.isOutOwner()) {
-                    boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
-                    boolean hide = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
-                    boolean blocked = isChannel
-                        ? NemoConfig.isKeywordBlockedInChannels(obj.messageOwner != null ? obj.messageOwner.message : null)
-                        : NemoConfig.isKeywordBlockedInChats(obj.messageOwner != null ? obj.messageOwner.message : null);
-
-                    if (hide && blocked) {
-                        boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
-                        if (spoiler) {
-                            injectSpoilerEntity(obj);
-                        } else {
-                            continue;
-                        }
+                    int keywordAction = getKeywordFilterAction(obj);
+                    if (keywordAction == KEYWORD_FILTER_ACTION_SPOILER) {
+                        injectSpoilerEntity(obj);
+                    } else if (keywordAction == KEYWORD_FILTER_ACTION_HIDE) {
+                        continue;
                     }
                 }
                 if (currentChat != null && currentChat.creator && (!ChatObject.isChannel(currentChat) || currentChat.megagroup) && (action instanceof TLRPC.TL_messageActionChatCreate || action instanceof TLRPC.TL_messageActionChatEditPhoto && messages.size() < 2)) {
@@ -26596,6 +26573,28 @@ public class ChatActivity extends BaseFragment implements
         if (currentUser != null && currentUser.bot) {
             updateTopPanel(true);
         }
+    }
+
+    private static final int KEYWORD_FILTER_ACTION_NONE = 0;
+    private static final int KEYWORD_FILTER_ACTION_SPOILER = 1;
+    private static final int KEYWORD_FILTER_ACTION_HIDE = 2;
+
+    private int getKeywordFilterAction(MessageObject obj) {
+        if (obj == null || obj.isOutOwner()) {
+            return KEYWORD_FILTER_ACTION_NONE;
+        }
+        boolean isChannel = currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup;
+        boolean filterEnabled = isChannel ? NemoConfig.filterKeywordsInChannels : NemoConfig.filterKeywordsInChats;
+        if (!filterEnabled) {
+            return KEYWORD_FILTER_ACTION_NONE;
+        }
+        String text = obj.messageOwner != null ? obj.messageOwner.message : null;
+        boolean blocked = isChannel ? NemoConfig.isKeywordBlockedInChannels(text) : NemoConfig.isKeywordBlockedInChats(text);
+        if (!blocked) {
+            return KEYWORD_FILTER_ACTION_NONE;
+        }
+        boolean spoiler = isChannel ? NemoConfig.spoilerKeywordsInChannels : NemoConfig.spoilerKeywordsInChats;
+        return spoiler ? KEYWORD_FILTER_ACTION_SPOILER : KEYWORD_FILTER_ACTION_HIDE;
     }
 
     private static void injectSpoilerEntity(MessageObject obj) {
@@ -27095,9 +27094,10 @@ public class ChatActivity extends BaseFragment implements
             if (old == null || remove && !ignoreDateCheckBeforeRemove && old.messageOwner.date != messageObject.messageOwner.date || messageObject.scheduled && chatMode != MODE_SCHEDULED) {
                 continue;
             }
-            if (!messageObject.isOutOwner() && (currentChat != null && ChatObject.isChannel(currentChat) && !currentChat.megagroup
-                    ? (NemoConfig.filterKeywordsInChannels && NemoConfig.isKeywordBlockedInChannels(messageObject.messageOwner != null ? messageObject.messageOwner.message : null))
-                    : (NemoConfig.filterKeywordsInChats && NemoConfig.isKeywordBlockedInChats(messageObject.messageOwner != null ? messageObject.messageOwner.message : null)))) {
+            int keywordAction = getKeywordFilterAction(messageObject);
+            if (keywordAction == KEYWORD_FILTER_ACTION_SPOILER) {
+                injectSpoilerEntity(messageObject);
+            } else if (keywordAction == KEYWORD_FILTER_ACTION_HIDE) {
                 if (old != null) {
                     int index = messages.indexOf(old);
                     if (index >= 0) {

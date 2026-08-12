@@ -20,6 +20,7 @@ import org.telegram.ui.ActionBar.Theme;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -92,6 +93,8 @@ public class NemoConfig {
     public static Set<String> restrictedLanguages;
     public static Set<String> blockedKeywordsChats;
     public static Set<String> blockedKeywordsChannels;
+    private static Set<String> blockedKeywordsChatsLower = new HashSet<>();
+    private static Set<String> blockedKeywordsChannelsLower = new HashSet<>();
     public static String externalTranslationProvider;
     public static int transcribeProvider = TRANSCRIBE_PREMIUM;
     public static String cfAccountID = "";
@@ -249,6 +252,7 @@ public class NemoConfig {
             restrictedLanguages = preferences.getStringSet("restrictedLanguages", null);
             blockedKeywordsChats = preferences.getStringSet("blockedKeywordsChats", new HashSet<>());
             blockedKeywordsChannels = preferences.getStringSet("blockedKeywordsChannels", new HashSet<>());
+            rebuildBlockedKeywordsLowerCache();
             filterKeywordsInChats = preferences.getBoolean("filterKeywordsInChats", false);
             filterKeywordsInChannels = preferences.getBoolean("filterKeywordsInChannels", false);
             spoilerKeywordsInChats = preferences.getBoolean("spoilerKeywordsInChats", false);
@@ -1014,32 +1018,56 @@ public class NemoConfig {
 
     public static void saveBlockedKeywordsChats(Set<String> keywords) {
         blockedKeywordsChats = new HashSet<>(keywords);
+        rebuildBlockedKeywordsLowerCache();
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putStringSet("blockedKeywordsChats", blockedKeywordsChats).apply();
     }
 
     public static void saveBlockedKeywordsChannels(Set<String> keywords) {
         blockedKeywordsChannels = new HashSet<>(keywords);
+        rebuildBlockedKeywordsLowerCache();
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putStringSet("blockedKeywordsChannels", blockedKeywordsChannels).apply();
     }
 
+    private static void rebuildBlockedKeywordsLowerCache() {
+        Set<String> chatsLower = new HashSet<>();
+        if (blockedKeywordsChats != null) {
+            for (String keyword : blockedKeywordsChats) {
+                if (keyword != null) {
+                    chatsLower.add(keyword.toLowerCase(Locale.ROOT));
+                }
+            }
+        }
+        blockedKeywordsChatsLower = chatsLower;
+
+        Set<String> channelsLower = new HashSet<>();
+        if (blockedKeywordsChannels != null) {
+            for (String keyword : blockedKeywordsChannels) {
+                if (keyword != null) {
+                    channelsLower.add(keyword.toLowerCase(Locale.ROOT));
+                }
+            }
+        }
+        blockedKeywordsChannelsLower = channelsLower;
+    }
+
     public static boolean isKeywordBlockedInChats(String text) {
-        if (blockedKeywordsChats == null || blockedKeywordsChats.isEmpty() || text == null)
+        if (blockedKeywordsChatsLower == null || blockedKeywordsChatsLower.isEmpty() || text == null)
             return false;
-        var lower = text.toLowerCase();
-        for (var keyword : blockedKeywordsChats) {
-            if (lower.contains(keyword.toLowerCase())) return true;
+        var lower = text.toLowerCase(Locale.ROOT);
+        for (var keyword : blockedKeywordsChatsLower) {
+            if (lower.contains(keyword)) return true;
         }
         return false;
     }
 
     public static boolean isKeywordBlockedInChannels(String text) {
-        if (blockedKeywordsChannels == null || blockedKeywordsChannels.isEmpty() || text == null)
+        if (blockedKeywordsChannelsLower == null || blockedKeywordsChannelsLower.isEmpty() || text == null)
             return false;
-        var lower = text.toLowerCase();
-        for (var keyword : blockedKeywordsChannels) {
-            if (lower.contains(keyword.toLowerCase())) return true;
+        var lower = text.toLowerCase(Locale.ROOT);
+        for (var keyword : blockedKeywordsChannelsLower) {
+            if (lower.contains(keyword)) return true;
         }
         return false;
     }
