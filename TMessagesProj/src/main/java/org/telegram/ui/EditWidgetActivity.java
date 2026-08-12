@@ -787,7 +787,7 @@ public class EditWidgetActivity extends BaseFragment {
             actionBar.setTitle(LocaleController.getString(R.string.WidgetShortcuts));
         }
         ActionBarMenu menu = actionBar.createMenu();
-        menu.addItem(done_item, LocaleController.getString(R.string.Done).toUpperCase());
+        menu.addItem(done_item, R.drawable.ic_ab_done).setContentDescription(LocaleController.getString(R.string.Done));
 
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
