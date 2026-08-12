@@ -16,6 +16,7 @@ import org.telegram.messenger.FileLoader;
 import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.MessageObject;
+import org.telegram.messenger.Utilities;
 import org.telegram.tgnet.tl.TL_iv;
 
 import java.util.ArrayList;
@@ -34,6 +35,14 @@ public class GroupedPhotosListView extends View implements GestureDetector.OnGes
     private int itemHeight;
     private int itemY;
     private int itemSpacing;
+
+    private static final float HERO_MAX_WIDTH_FACTOR = 2.3f;
+    private final int restingRoundRadius = AndroidUtilities.dp(6);
+    private final int heroRoundRadius = AndroidUtilities.dp(22);
+    private final float heroPopScale = 0.06f;
+    private final int heroLiftPx = AndroidUtilities.dp(3);
+    private final float neighborAlpha = 0.85f;
+    private final float unfocusedAlpha = 0.62f;
     private int drawDx;
     private float moveLineProgress;
     private float currentItemProgress = 1.0f;
@@ -686,8 +695,8 @@ public class GroupedPhotosListView extends View implements GestureDetector.OnGes
 
         int moveX = drawDx;
 
-        int maxItemWidth = (int) (itemWidth * 2.0f);
-        int padding = AndroidUtilities.dp(8);
+        int maxItemWidth = (int) (itemWidth * HERO_MAX_WIDTH_FACTOR);
+        int padding = AndroidUtilities.dp(4);
 
         ImageLocation object = currentPhotos.get(currentImage);
         int trueWidth;
@@ -754,9 +763,28 @@ public class GroupedPhotosListView extends View implements GestureDetector.OnGes
                     receiver.setImageWidth(itemWidth);
                 }
             }
-            receiver.setAlpha(drawAlpha);
-            receiver.setRoundRadius(AndroidUtilities.dp(2));
+            float widthProgress = Utilities.clamp01((receiver.getImageWidth() - itemWidth) / (float) Math.max(1, maxItemWidth - itemWidth));
+            widthProgress = CubicBezierInterpolator.EASE_OUT.getInterpolation(widthProgress);
+            int roundRadius = (int) (restingRoundRadius + (heroRoundRadius - restingRoundRadius) * widthProgress);
+
+            float pop = num == currentImage ? currentItemProgress : (num == nextImage ? nextItemProgress : 0f);
+            float scale = 1f + heroPopScale * pop;
+            float lift = -heroLiftPx * pop;
+
+            float transitionT = (nextImage >= 0 && nextImage != currentImage) ? Utilities.clamp01(nextItemProgress) : 0f;
+            float alphaForCurrentFocus = focusAlpha(num, currentImage);
+            float alphaForNextFocus = focusAlpha(num, nextImage);
+            float itemAlpha = drawAlpha * (alphaForCurrentFocus + (alphaForNextFocus - alphaForCurrentFocus) * transitionT);
+
+            canvas.save();
+            float pivotX = receiver.getImageX() + receiver.getImageWidth() / 2f;
+            float pivotY = itemY + itemHeight / 2f;
+            canvas.scale(scale, scale, pivotX, pivotY);
+            canvas.translate(0, lift);
+            receiver.setAlpha(itemAlpha);
+            receiver.setRoundRadius(roundRadius);
             receiver.draw(canvas);
+            canvas.restore();
         }
 
         long newTime = System.currentTimeMillis();
@@ -777,7 +805,7 @@ public class GroupedPhotosListView extends View implements GestureDetector.OnGes
                     }
                     drawDx = animateToDXStart + (int) Math.ceil(currentItemProgress * (animateToDX - animateToDXStart));
                 } else {
-                    nextItemProgress = CubicBezierInterpolator.EASE_OUT.getInterpolation(1.0f - moveLineProgress);
+                    nextItemProgress = CubicBezierInterpolator.EASE_OUT_BACK.getInterpolation(1.0f - moveLineProgress);
                     if (stopedScrolling) {
                         if (currentItemProgress > 0.0f) {
                             currentItemProgress -= dt / 200.0f;
@@ -787,7 +815,7 @@ public class GroupedPhotosListView extends View implements GestureDetector.OnGes
                         }
                         drawDx = animateToDXStart + (int) Math.ceil(nextItemProgress * (animateToDX - animateToDXStart));
                     } else {
-                        currentItemProgress = CubicBezierInterpolator.EASE_OUT.getInterpolation(moveLineProgress);
+                        currentItemProgress = CubicBezierInterpolator.EASE_OUT_BACK.getInterpolation(moveLineProgress);
                         drawDx = (int) Math.ceil(nextItemProgress * animateToDX);
                     }
                 }
@@ -823,6 +851,19 @@ public class GroupedPhotosListView extends View implements GestureDetector.OnGes
                 stopScrolling();
             }
         }
+    }
+
+    private float focusAlpha(int num, int center) {
+        if (center < 0) {
+            return unfocusedAlpha;
+        }
+        int distance = Math.abs(num - center);
+        if (distance == 0) {
+            return 1f;
+        } else if (distance == 1) {
+            return neighborAlpha;
+        }
+        return unfocusedAlpha;
     }
 
     public void setDelegate(GroupedPhotosListViewDelegate groupedPhotosListViewDelegate) {
