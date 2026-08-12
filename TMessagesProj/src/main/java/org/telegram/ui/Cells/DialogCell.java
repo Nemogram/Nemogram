@@ -458,6 +458,8 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     private float currentRevealBounceProgress;
     private float archiveBackgroundProgress;
 
+    private final Path revealBlobPath = new Path();
+
     private boolean openBot;
     private final ButtonBounce openButtonBounce = new ButtonBounce(this);
     private final Paint openButtonBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -3942,54 +3944,48 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                 translationDrawable.start();
             }
 
-            float tx = getMeasuredWidth() + translationX;
-            if (currentRevealProgress < 1.0f) {
-                Theme.dialogs_pinnedPaint.setColor(backgroundColor);
-                canvas.drawRect(tx - dp(8), 0, getMeasuredWidth(), getMeasuredHeight(), Theme.dialogs_pinnedPaint);
-                if (currentRevealProgress == 0) {
-                    if (Theme.dialogs_archiveDrawableRecolored) {
-                        Theme.dialogs_archiveDrawable.setLayerColor("Arrow.**", Theme.getNonAnimatedColor(Theme.key_chats_archiveBackground));
-                        Theme.dialogs_archiveDrawableRecolored = false;
-                    }
-                    if (Theme.dialogs_hidePsaDrawableRecolored) {
-                        Theme.dialogs_hidePsaDrawable.beginApplyLayerColors();
-                        Theme.dialogs_hidePsaDrawable.setLayerColor("Line 1.**", Theme.getNonAnimatedColor(Theme.key_chats_archiveBackground));
-                        Theme.dialogs_hidePsaDrawable.setLayerColor("Line 2.**", Theme.getNonAnimatedColor(Theme.key_chats_archiveBackground));
-                        Theme.dialogs_hidePsaDrawable.setLayerColor("Line 3.**", Theme.getNonAnimatedColor(Theme.key_chats_archiveBackground));
-                        Theme.dialogs_hidePsaDrawable.commitApplyLayerColors();
-                        Theme.dialogs_hidePsaDrawableRecolored = false;
-                    }
-                }
+            float pillRight = getMeasuredWidth() - dp(8);
+            float pillLeft = Math.min(pillRight, getMeasuredWidth() + translationX + dp(8));
+            float pillTop = dp(8);
+            float pillBottom = getMeasuredHeight() - dp(8);
+            float pillHeight = pillBottom - pillTop;
+            float pillCornerRadius = pillHeight / 2f;
+
+            int pillColor = ColorUtils.blendARGB(backgroundColor, revealBackgroundColor, Utilities.clamp01(currentRevealProgress));
+            Theme.dialogs_pinnedPaint.setColor(pillColor);
+
+            if (pillRight - pillLeft > 1f) {
+                revealBlobPath.reset();
+                revealBlobPath.addRoundRect(pillLeft, pillTop, pillRight, pillBottom, pillCornerRadius, pillCornerRadius, Path.Direction.CW);
+                canvas.drawPath(revealBlobPath, Theme.dialogs_pinnedPaint);
             }
-            int drawableX = getMeasuredWidth() - dp(43) - translationDrawable.getIntrinsicWidth() / 2;
-            int drawableY = (getMeasuredHeight() - dp(52)) / 2;
-            int drawableCx = drawableX + translationDrawable.getIntrinsicWidth() / 2;
-            int drawableCy = drawableY + translationDrawable.getIntrinsicHeight() / 2;
 
-            if (currentRevealProgress > 0.0f) {
-                canvas.save();
-                canvas.clipRect(tx - dp(8), 0, getMeasuredWidth(), getMeasuredHeight());
-                Theme.dialogs_pinnedPaint.setColor(revealBackgroundColor);
-
-                float rad = (float) Math.sqrt(drawableCx * drawableCx + (drawableCy - getMeasuredHeight()) * (drawableCy - getMeasuredHeight()));
-                canvas.drawCircle(drawableCx, drawableCy, rad * AndroidUtilities.accelerateInterpolator.getInterpolation(currentRevealProgress), Theme.dialogs_pinnedPaint);
-                canvas.restore();
-
-                if (!Theme.dialogs_archiveDrawableRecolored) {
-                    Theme.dialogs_archiveDrawable.setLayerColor("Arrow.**", Theme.getNonAnimatedColor(Theme.key_chats_archivePinBackground));
-                    Theme.dialogs_archiveDrawableRecolored = true;
-                }
-                if (!Theme.dialogs_hidePsaDrawableRecolored) {
-                    Theme.dialogs_hidePsaDrawable.beginApplyLayerColors();
-                    Theme.dialogs_hidePsaDrawable.setLayerColor("Line 1.**", Theme.getNonAnimatedColor(Theme.key_chats_archivePinBackground));
-                    Theme.dialogs_hidePsaDrawable.setLayerColor("Line 2.**", Theme.getNonAnimatedColor(Theme.key_chats_archivePinBackground));
-                    Theme.dialogs_hidePsaDrawable.setLayerColor("Line 3.**", Theme.getNonAnimatedColor(Theme.key_chats_archivePinBackground));
-                    Theme.dialogs_hidePsaDrawable.commitApplyLayerColors();
-                    Theme.dialogs_hidePsaDrawableRecolored = true;
-                }
+            boolean recolorForReveal = currentRevealProgress > 0.0f;
+            if (recolorForReveal != Theme.dialogs_archiveDrawableRecolored) {
+                Theme.dialogs_archiveDrawable.setLayerColor("Arrow.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_archiveDrawableRecolored = recolorForReveal;
             }
+            if (recolorForReveal != Theme.dialogs_hidePsaDrawableRecolored) {
+                Theme.dialogs_hidePsaDrawable.beginApplyLayerColors();
+                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 1.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 2.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 3.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_hidePsaDrawable.commitApplyLayerColors();
+                Theme.dialogs_hidePsaDrawableRecolored = recolorForReveal;
+            }
+
+            int iconW = translationDrawable.getIntrinsicWidth();
+            int iconH = translationDrawable.getIntrinsicHeight();
+            float pillCenterX = (pillLeft + pillRight) / 2f;
+            float minCenterX = pillRight - dp(8) - iconW / 2f;
+            float iconCx = (pillRight - pillLeft >= iconW + dp(16)) ? pillCenterX : minCenterX;
+            float iconCy = (pillTop + pillBottom) / 2f;
+
+            int drawableX = Math.round(iconCx - iconW / 2f);
+            int drawableY = Math.round(iconCy - iconH / 2f);
 
             canvas.save();
+            canvas.clipRect(pillLeft, pillTop, pillRight, pillBottom);
             canvas.translate(drawableX, drawableY);
             if (currentRevealBounceProgress != 0.0f && currentRevealBounceProgress != 1.0f) {
                 float scale = 1.0f + interpolator.getInterpolation(currentRevealBounceProgress);
@@ -3999,27 +3995,6 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
             translationDrawable.draw(canvas);
             canvas.restore();
 
-            canvas.clipRect(tx, 0, getMeasuredWidth(), getMeasuredHeight());
-
-            int width = (int) Math.ceil(Theme.dialogs_countTextPaint2.measureText(swipeMessage));
-
-            if (swipeMessageTextId != swipeMessageStringId || swipeMessageWidth != getMeasuredWidth()) {
-                swipeMessageTextId = swipeMessageStringId;
-                swipeMessageWidth = getMeasuredWidth();
-                swipeMessageTextLayout = new StaticLayout(swipeMessage, Theme.dialogs_archiveTextPaint, Math.min(dp(80), width), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
-
-                if (swipeMessageTextLayout.getLineCount() > 1) {
-                    swipeMessageTextLayout = new StaticLayout(swipeMessage, Theme.dialogs_archiveTextPaintSmall, Math.min(dp(82), width), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
-                }
-            }
-
-            if (swipeMessageTextLayout != null) {
-                canvas.save();
-                float yOffset = swipeMessageTextLayout.getLineCount() > 1 ? -dp(4) : 0;
-                canvas.translate(getMeasuredWidth() - dp(43) - swipeMessageTextLayout.getWidth() / 2f, drawableY + dp(52 - 16) + yOffset);
-                swipeMessageTextLayout.draw(canvas);
-                canvas.restore();
-            }
             canvas.restore();
         } else if (translationDrawable != null) {
             translationDrawable.stop();
