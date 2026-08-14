@@ -149,10 +149,12 @@ public class FragmentFloatingButton extends FrameLayout implements FactorAnimato
 
     public void updateColors() {
         if (isSubButton) {
-            imageView.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultIcon, resourcesProvider), PorterDuff.Mode.SRC_IN);
-            progressView.setProgressColor(Theme.getColor(Theme.key_actionBarDefaultIcon, resourcesProvider));
+            final boolean isMonet = Theme.getActiveTheme().isMonet();
+            final int iconColor = isMonet ? Theme.getColor(Theme.key_chat_outMenu) : Theme.getColor(Theme.key_actionBarDefaultIcon, resourcesProvider);
+            imageView.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+            progressView.setProgressColor(iconColor);
 
-            iBlur3SourceColor.setColor(Theme.getColor(Theme.key_windowBackgroundWhite));
+            iBlur3SourceColor.setColor(isMonet ? Theme.getColor(Theme.key_windowBackgroundWhiteLinkText, resourcesProvider) : Theme.getColor(Theme.key_windowBackgroundWhite));
             iBlur3ColorProviderTabs.updateColors();
             iBlur3Background.updateColors();
             invalidate();
