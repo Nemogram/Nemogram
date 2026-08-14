@@ -352,7 +352,7 @@ public class LinkEditActivity extends BaseFragment {
         }
 */
 
-        timeHeaderCell = new HeaderCell(context);
+        timeHeaderCell = new HeaderCell(context, 12);
         timeHeaderCell.setText(getString(R.string.LimitByPeriod));
         linearLayout.addView(timeHeaderCell);
         timeChooseView = new SlideChooseView(context);
@@ -379,7 +379,7 @@ public class LinkEditActivity extends BaseFragment {
         divider.setText(getString(R.string.TimeLimitHelp));
         linearLayout.addView(divider);
 
-        usesHeaderCell = new HeaderCell(context);
+        usesHeaderCell = new HeaderCell(context, 12);
         usesHeaderCell.setText(getString(R.string.LimitNumberOfUses));
         linearLayout.addView(usesHeaderCell);
         usesChooseView = new SlideChooseView(context);
@@ -666,10 +666,8 @@ public class LinkEditActivity extends BaseFragment {
         //buttonLayout.addView(buttonTextView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.BOTTOM | Gravity.FILL_HORIZONTAL, 16, 15, 16, 16));
         contentView.addView(buttonLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
 
-        timeHeaderCell.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         timeChooseView.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         timeEditText.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
-        usesHeaderCell.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         usesChooseView.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         usesEditText.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         nameEditText.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));

@@ -621,8 +621,8 @@ public class DataUsage2Activity extends BaseFragment {
                         view = new TextInfoPrivacyCell(getContext());
                         break;
                     case VIEW_TYPE_HEADER:
-                        view = new HeaderCell(getContext());
-                        view.setBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));
+                        view = new HeaderCell(getContext(), 24);
+                        view.setTag(RecyclerListView.TAG_NOT_SECTION);
                         break;
                     case VIEW_TYPE_RESET_BUTTON:
                         TextCell textCell = new TextCell(getContext());

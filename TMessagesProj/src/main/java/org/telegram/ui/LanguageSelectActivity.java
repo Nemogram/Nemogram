@@ -651,7 +651,7 @@ public class LanguageSelectActivity extends BaseFragment implements Notification
                     view = settingsCell;
                     break;
                 case VIEW_TYPE_HEADER:
-                    HeaderCell header = new HeaderCell(mContext);
+                    HeaderCell header = new HeaderCell(mContext, 24);
                     view = header;
                     break;
                 case VIEW_TYPE_INFO:

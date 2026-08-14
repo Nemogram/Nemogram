@@ -1056,7 +1056,7 @@ public class PrivacySettingsActivity extends BaseFragment implements Notificatio
                     view = new TextInfoPrivacyCell(mContext);
                     break;
                 case 2:
-                    view = new HeaderCell(mContext);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case 4:
                     view = new ShadowSectionCell(mContext);
@@ -1426,7 +1426,7 @@ public class PrivacySettingsActivity extends BaseFragment implements Notificatio
     public ArrayList<ThemeDescription> getThemeDescriptions() {
         ArrayList<ThemeDescription> themeDescriptions = new ArrayList<>();
 
-        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, HeaderCell.class, TextCheckCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
+        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, TextCheckCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_windowBackgroundGray));
 
 //        themeDescriptions.add(new ThemeDescription(actionBar, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_actionBarDefault));

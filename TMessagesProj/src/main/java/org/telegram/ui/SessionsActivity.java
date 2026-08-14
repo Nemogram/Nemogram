@@ -861,7 +861,7 @@ public class SessionsActivity extends BaseFragment implements NotificationCenter
                     view = new TextInfoPrivacyCell(mContext);
                     break;
                 case VIEW_TYPE_HEADER:
-                    view = new HeaderCell(mContext);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case VIEW_TYPE_SCANQR:
                     view = new ScanQRCodeView(mContext);
@@ -1284,7 +1284,7 @@ public class SessionsActivity extends BaseFragment implements NotificationCenter
     public ArrayList<ThemeDescription> getThemeDescriptions() {
         ArrayList<ThemeDescription> themeDescriptions = new ArrayList<>();
 
-        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, HeaderCell.class, SessionCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
+        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, SessionCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_windowBackgroundGray));
 
 //        themeDescriptions.add(new ThemeDescription(actionBar, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_actionBarDefault));

@@ -74,17 +74,14 @@ import org.telegram.ui.Components.CircularProgressDrawable;
 import org.telegram.ui.Components.CrossfadeDrawable;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.EditTextBoldCursor;
-import org.telegram.ui.Components.InviteLinkBottomSheet;
 import org.telegram.ui.Components.JoinToSendSettingsView;
 import org.telegram.ui.Components.LayoutHelper;
-import org.telegram.ui.Components.LinkActionView;
 import org.telegram.ui.Components.Premium.LimitReachedBottomSheet;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.SectionsScrollView;
 import org.telegram.ui.Components.TypefaceSpan;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -107,8 +104,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
     private LinearLayout adminnedChannelsLayout;
     private LinearLayout linkContainer;
     private LinearLayout publicContainer;
-    private LinearLayout privateContainer;
-    private LinkActionView permanentLinkView;
     private TextCell manageLinksTextView;
     private TextInfoPrivacyCell manageLinksInfoCell;
     private ShadowSectionCell sectionCell2;
@@ -151,16 +146,12 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
     private String lastCheckName;
     private Runnable checkRunnable;
     private boolean lastNameAvailable;
-    private boolean loadingInvite;
-    private TLRPC.TL_chatInviteExported invite;
 
     private boolean ignoreTextChanges;
 
     private boolean isForcePublic;
-    HashMap<Long, TLRPC.User> usersMap = new HashMap<>();
 
     private final static int done_button = 1;
-    private InviteLinkBottomSheet inviteLinkBottomSheet;
 
     public ChatEditTypeActivity(long id, boolean forcePublic) {
         chatId = id;
@@ -245,11 +236,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
                 textCell2.setText(LocaleController.getString(R.string.GroupStickers), false);
             }
         }
-        if (info != null) {
-            invite = info.exported_invite;
-            permanentLinkView.setLink(invite == null ? null : invite.link);
-            permanentLinkView.loadUsers(invite, chatId);
-        }
     }
 
     @Override
@@ -325,18 +311,18 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
             actionBar.setTitle(LocaleController.getString(R.string.GroupSettingsTitle));
         }
 
-        linearLayoutTypeContainer = new LinearLayout(context);
-        linearLayoutTypeContainer.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.addView(linearLayoutTypeContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-
-        headerCell2 = new HeaderCell(context, 23);
+        headerCell2 = new HeaderCell(context, 12);
         headerCell2.setHeight(46);
         if (isChannel) {
             headerCell2.setText(LocaleController.getString(R.string.ChannelTypeHeader));
         } else {
             headerCell2.setText(LocaleController.getString(R.string.GroupTypeHeader));
         }
-        linearLayoutTypeContainer.addView(headerCell2);
+        linearLayout.addView(headerCell2, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
+        linearLayoutTypeContainer = new LinearLayout(context);
+        linearLayoutTypeContainer.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.addView(linearLayoutTypeContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
         radioButtonCell2 = new RadioButtonCell(context);
         if (isChannel) {
@@ -382,12 +368,12 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
             headerCell2.setVisibility(View.GONE);
         }
 
+        headerCell = new HeaderCell(context, 12);
+        linearLayout.addView(headerCell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
         linkContainer = new LinearLayout(context);
         linkContainer.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(linkContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-
-        headerCell = new HeaderCell(context, 23);
-        linkContainer.addView(headerCell);
 
         publicContainer = new LinearLayout(context);
         publicContainer.setOrientation(LinearLayout.HORIZONTAL);
@@ -459,26 +445,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
                 checkDoneButton();
             }
         });
-
-        privateContainer = new LinearLayout(context);
-        privateContainer.setOrientation(LinearLayout.VERTICAL);
-        linkContainer.addView(privateContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-
-        permanentLinkView = new LinkActionView(context, this, null, chatId, true, ChatObject.isChannel(currentChat));
-        permanentLinkView.setDelegate(new LinkActionView.Delegate() {
-            @Override
-            public void revokeLink() {
-                ChatEditTypeActivity.this.generateLink(true);
-            }
-
-            @Override
-            public void showUsersForPermanentLink() {
-                inviteLinkBottomSheet = new InviteLinkBottomSheet(context, invite, info, usersMap, ChatEditTypeActivity.this, chatId, true, ChatObject.isChannel(currentChat));
-                inviteLinkBottomSheet.show();
-            }
-        });
-        permanentLinkView.setUsers(0, null, false);
-        privateContainer.addView(permanentLinkView);
 
         checkTextView = new TextInfoPrivacyCell(context, 12, resourceProvider) {
             @Override
@@ -580,7 +546,7 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
         manageLinksTextView.setTextAndIcon(LocaleController.getString(R.string.ManageInviteLinks), R.drawable.msg_link2, false);
         manageLinksTextView.setOnClickListener(v -> {
             ManageLinksActivity fragment = new ManageLinksActivity(chatId, 0, 0);
-            fragment.setInfo(info, invite);
+            fragment.setInfo(info, info != null ? info.exported_invite : null);
             presentFragment(fragment);
         });
         linearLayout.addView(manageLinksTextView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
@@ -627,14 +593,14 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
         joinContainer.setFullInfo(this, info);
         linearLayout.addView(joinContainer);
 
+        saveHeaderCell = new HeaderCell(context, 12);
+        saveHeaderCell.setHeight(46);
+        saveHeaderCell.setText(LocaleController.getString(R.string.SavingContentTitle));
+        linearLayout.addView(saveHeaderCell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
         saveContainer = new LinearLayout(context);
         saveContainer.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(saveContainer);
-
-        saveHeaderCell = new HeaderCell(context, 23);
-        saveHeaderCell.setHeight(46);
-        saveHeaderCell.setText(LocaleController.getString(R.string.SavingContentTitle));
-        saveContainer.addView(saveHeaderCell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         saveRestrictCell = new TextCheckCell(context);
         saveRestrictCell.setTextAndCheck(LocaleController.getString(R.string.RestrictSavingContent), isSaveRestricted, false);
         saveRestrictCell.setOnClickListener(v -> {
@@ -703,7 +669,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
             TLRPC.ChatFull chatFull = (TLRPC.ChatFull) args[0];
             if (chatFull.id == chatId) {
                 info = chatFull;
-                invite = chatFull.exported_invite;
                 updatePrivatePublic();
             }
         } else if (id == NotificationCenter.dialogDeleted) {
@@ -720,13 +685,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
 
     public void setInfo(TLRPC.ChatFull chatFull) {
         info = chatFull;
-        if (chatFull != null) {
-            if (chatFull.exported_invite != null) {
-                invite = chatFull.exported_invite;
-            } else {
-                generateLink(false);
-            }
-        }
     }
 
     private void processDone() {
@@ -1367,6 +1325,7 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
             typeInfoCell.setText(LocaleController.getString(R.string.ChangePublicLimitReached));
             typeInfoCell.setTag(Theme.key_text_RedRegular);
             typeInfoCell.setTextColor(Theme.getColor(Theme.key_text_RedRegular));
+            headerCell.setVisibility(View.GONE);
             linkContainer.setVisibility(View.GONE);
             checkTextView.setVisibility(View.GONE);
             sectionCell2.setVisibility(View.GONE);
@@ -1388,23 +1347,20 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
             }
             adminedInfoCell.setVisibility(View.GONE);
             adminnedChannelsLayout.setVisibility(View.GONE);
-            linkContainer.setVisibility(View.VISIBLE);
+            headerCell.setVisibility(isPrivate ? View.GONE : View.VISIBLE);
+            linkContainer.setVisibility(isPrivate ? View.GONE : View.VISIBLE);
             loadingAdminedCell.setVisibility(View.GONE);
             if (isChannel) {
                 typeInfoCell.setText(isPrivate ? LocaleController.getString(R.string.ChannelPrivateLinkHelp) : LocaleController.getString(R.string.ChannelUsernameHelp));
-                headerCell.setText(isPrivate ? LocaleController.getString(R.string.ChannelInviteLinkTitle) : LocaleController.getString(R.string.ChannelLinkTitle));
             } else {
                 typeInfoCell.setText(isPrivate ? LocaleController.getString(R.string.MegaPrivateLinkHelp) : LocaleController.getString(R.string.MegaUsernameHelp));
-                headerCell.setText(isPrivate ? LocaleController.getString(R.string.ChannelInviteLinkTitle) : LocaleController.getString(R.string.ChannelLinkTitle));
             }
+            headerCell.setText(LocaleController.getString(R.string.ChannelLinkTitle));
             publicContainer.setVisibility(isPrivate ? View.GONE : View.VISIBLE);
-            privateContainer.setVisibility(isPrivate ? View.VISIBLE : View.GONE);
             saveContainer.setVisibility(View.VISIBLE);
             manageLinksTextView.setVisibility(View.VISIBLE);
             manageLinksInfoCell.setVisibility(View.VISIBLE);
-            linkContainer.setPadding(0, 0, 0, isPrivate ? 0 : AndroidUtilities.dp(7));
-            permanentLinkView.setLink(invite != null ? invite.link : null);
-            permanentLinkView.loadUsers(invite, chatId);
+            linkContainer.setPadding(0, 0, 0, AndroidUtilities.dp(7));
             checkTextView.setVisibility(!isPrivate && checkTextView.length() != 0 ? View.VISIBLE : View.GONE);
             final TLRPC.ChatFull chatFull = getMessagesController().getChatFull(chatId);
             final TLRPC.Chat chat = getMessagesController().getChat(chatId);
@@ -1541,37 +1497,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
         return true;
     }
 
-    private void generateLink(final boolean newRequest) {
-        loadingInvite = true;
-        TLRPC.TL_messages_exportChatInvite req = new TLRPC.TL_messages_exportChatInvite();
-        req.legacy_revoke_permanent = true;
-        req.peer = getMessagesController().getInputPeer(-chatId);
-        final int reqId = getConnectionsManager().sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
-            if (error == null) {
-                invite = (TLRPC.TL_chatInviteExported) response;
-                if (info != null) {
-                    info.exported_invite = invite;
-                }
-                if (newRequest) {
-                    if (getParentActivity() == null) {
-                        return;
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
-                    builder.setMessage(LocaleController.getString(R.string.RevokeAlertNewLink));
-                    builder.setTitle(LocaleController.getString(R.string.RevokeLink));
-                    builder.setNegativeButton(LocaleController.getString(R.string.OK), null);
-                    showDialog(builder.create());
-                }
-            }
-            loadingInvite = false;
-            if (permanentLinkView != null) {
-                permanentLinkView.setLink(invite != null ? invite.link : null);
-                permanentLinkView.loadUsers(invite, chatId);
-            }
-        }));
-        getConnectionsManager().bindRequestToGuid(reqId, classGuid);
-    }
-
     @Override
     public ArrayList<ThemeDescription> getThemeDescriptions() {
         ArrayList<ThemeDescription> themeDescriptions = new ArrayList<>();
@@ -1586,10 +1511,6 @@ public class ChatEditTypeActivity extends BaseFragment implements NotificationCe
                 }
             }
 
-            permanentLinkView.updateColors();
-            if (inviteLinkBottomSheet != null) {
-                inviteLinkBottomSheet.updateColors();
-            }
         };
 
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_windowBackgroundGray));

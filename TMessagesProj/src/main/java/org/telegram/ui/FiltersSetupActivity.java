@@ -895,7 +895,7 @@ public class FiltersSetupActivity extends BaseFragment implements NotificationCe
             View view;
             switch (viewType) {
                 case VIEW_TYPE_HEADER:
-                    view = new HeaderCell(mContext);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case VIEW_TYPE_HINT:
                     view = new HintInnerCell(mContext, R.raw.filters, AndroidUtilities.replaceTags(LocaleController.formatString(R.string.CreateNewFilterInfo)));
@@ -1233,7 +1233,7 @@ public class FiltersSetupActivity extends BaseFragment implements NotificationCe
     public ArrayList<ThemeDescription> getThemeDescriptions() {
         ArrayList<ThemeDescription> themeDescriptions = new ArrayList<>();
 
-        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{HeaderCell.class, TextCell.class, FilterCell.class, SuggestedFilterCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
+        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextCell.class, FilterCell.class, SuggestedFilterCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_windowBackgroundGray));
 
 //        themeDescriptions.add(new ThemeDescription(actionBar, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_actionBarDefault));

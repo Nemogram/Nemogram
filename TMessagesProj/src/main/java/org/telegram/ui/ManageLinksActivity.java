@@ -766,7 +766,7 @@ public class ManageLinksActivity extends BaseFragment implements NotificationCen
                     view.setTag(RecyclerListView.TAG_NOT_SECTION);
                     break;
                 case 1:
-                    view = new HeaderCell(mContext, 23);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case 2:
                     LinkActionView linkActionView = new LinkActionView(mContext, ManageLinksActivity.this, null, currentChatId, true, isChannel);
@@ -1703,7 +1703,7 @@ public class ManageLinksActivity extends BaseFragment implements NotificationCen
             }
         };
 
-        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{HeaderCell.class, CreationTextCell.class, LinkActionView.class, LinkCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
+        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{CreationTextCell.class, LinkActionView.class, LinkCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND | ThemeDescription.FLAG_CHECKTAG, null, null, null, null, Theme.key_windowBackgroundGray));
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND | ThemeDescription.FLAG_CHECKTAG, null, null, null, null, Theme.key_windowBackgroundWhite));
 

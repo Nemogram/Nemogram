@@ -723,9 +723,8 @@ public class ChannelCreateActivity extends BaseFragment implements NotificationC
             fragmentView.setTag(Theme.key_windowBackgroundGray);
             fragmentView.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray));
 
-            headerCell2 = new HeaderCell(context, 23);
+            headerCell2 = new HeaderCell(context, 24);
             headerCell2.setHeight(46);
-            headerCell2.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
             headerCell2.setText(isGroup ? LocaleController.getString(R.string.GroupTypeHeader) : LocaleController.getString(R.string.ChannelTypeHeader));
             linearLayout.addView(headerCell2);
 

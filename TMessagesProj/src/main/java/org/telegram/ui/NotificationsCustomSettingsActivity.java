@@ -1999,7 +1999,7 @@ public class NotificationsCustomSettingsActivity extends BaseFragment implements
             View view;
             switch (viewType) {
                 case VIEW_TYPE_HEADER:
-                    view = new HeaderCell(mContext);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case VIEW_TYPE_CHECK:
                     view = new TextCheckCell(mContext);

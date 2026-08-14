@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Cells.ShadowSectionCell;
 import org.telegram.ui.Cells.TextInfoPrivacyCell;
 import org.telegram.ui.FiltersSetupActivity;
@@ -37,7 +38,8 @@ public class SectionsScrollView extends ScrollView {
         return !Objects.equals(view.getTag(), RecyclerListView.TAG_NOT_SECTION) && !(
             view instanceof TextInfoPrivacyCell ||
             view instanceof ShadowSectionCell ||
-            view instanceof FiltersSetupActivity.HintInnerCell
+            view instanceof FiltersSetupActivity.HintInnerCell ||
+            view instanceof HeaderCell
         );
     }
 

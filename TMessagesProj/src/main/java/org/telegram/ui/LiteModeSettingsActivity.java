@@ -347,7 +347,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
             final Context context = parent.getContext();
             View view = null;
             if (viewType == VIEW_TYPE_HEADER) {
-                view = new HeaderCell(context);
+                view = new HeaderCell(context, 24);
             } else if (viewType == VIEW_TYPE_SLIDER) {
                 PowerSaverSlider powerSaverSlider = new PowerSaverSlider(context);
                 view = powerSaverSlider;

@@ -1759,7 +1759,7 @@ public class PrivacyControlActivity extends BaseFragment implements Notification
                     view = new TextInfoPrivacyCell(mContext);
                     break;
                 case 2:
-                    view = new HeaderCell(mContext);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case 3:
                     view = new RadioCell(mContext);
@@ -2363,7 +2363,7 @@ public class PrivacyControlActivity extends BaseFragment implements Notification
     public ArrayList<ThemeDescription> getThemeDescriptions() {
         ArrayList<ThemeDescription> themeDescriptions = new ArrayList<>();
 
-        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, HeaderCell.class, RadioCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
+        themeDescriptions.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, RadioCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
         themeDescriptions.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_windowBackgroundWhite));
 
 //        themeDescriptions.add(new ThemeDescription(actionBar, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_actionBarDefault));

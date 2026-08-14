@@ -429,7 +429,7 @@ public class ContactsAdapter extends RecyclerListView.SectionsAdapter {
                 break;
             }
             case HEADER_CELL: {
-                view = new HeaderCell(mContext, Theme.key_windowBackgroundWhiteBlueHeader, 21, 14, 5, false, null);
+                view = new HeaderCell(mContext, Theme.key_windowBackgroundWhiteBlueHeader, 24, 14, 5, false, null);
                 break;
             }
             case SEARCH_CELL: {

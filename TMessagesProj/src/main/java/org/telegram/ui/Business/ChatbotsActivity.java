@@ -376,8 +376,8 @@ public class ChatbotsActivity extends BaseFragment {
             adapter.whiteSectionEnd();
         }
         items.add(UItem.asShadow(getString(R.string.BusinessBotLinkInfo2)));
-        adapter.whiteSectionStart();
         items.add(UItem.asHeader(getString(R.string.BusinessBotChats2)).setEnabled(selectedBot != null));
+        adapter.whiteSectionStart();
         items.add(UItem.asRadio(RADIO_EXCLUDE, getString(R.string.BusinessChatsAllPrivateExcept2)).setChecked(exclude).setEnabled(selectedBot != null));
         items.add(UItem.asRadio(RADIO_INCLUDE, getString(R.string.BusinessChatsOnlySelected2)).setChecked(!exclude).setEnabled(selectedBot != null));
         adapter.whiteSectionEnd();

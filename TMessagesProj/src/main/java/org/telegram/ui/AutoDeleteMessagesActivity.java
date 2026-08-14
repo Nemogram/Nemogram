@@ -101,14 +101,14 @@ public class AutoDeleteMessagesActivity extends BaseFragment implements Notifica
 
         mainContainer.addView(stickerHeaderCell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 170));
 
+        HeaderCell headerCell = new HeaderCell(getContext(), 24);
+        headerCell.setText(LocaleController.getString(R.string.MessageLifetime));
+        mainContainer.addView(headerCell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
         checkBoxContainer = new LinearLayout(getContext());
         checkBoxContainer.setOrientation(LinearLayout.VERTICAL);
         checkBoxContainer.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         mainContainer.addView(checkBoxContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-
-        HeaderCell headerCell = new HeaderCell(getContext());
-        headerCell.setText(LocaleController.getString(R.string.MessageLifetime));
-        checkBoxContainer.addView(headerCell);
 
         offCell = new RadioCellInternal(getContext());
         offCell.setText(LocaleController.getString(R.string.ShortMessageLifetimeForever), false, true);

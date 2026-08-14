@@ -251,8 +251,8 @@ public class ChatbotSheet extends BottomSheetWithRecyclerListView {
                 items.add(UItem.asShadow(null));
             }
 
-            adapter.whiteSectionStart();
             items.add(UItem.asHeader(getString(R.string.BusinessBotChats2)));
+            adapter.whiteSectionStart();
             items.add(UItem.asRadio(RADIO_EXCLUDE, getString(R.string.BusinessChatsAllPrivateExcept2)).setChecked(exclude));
             items.add(UItem.asRadio(RADIO_INCLUDE, getString(R.string.BusinessChatsOnlySelected2)).setChecked(!exclude));
             adapter.whiteSectionEnd();

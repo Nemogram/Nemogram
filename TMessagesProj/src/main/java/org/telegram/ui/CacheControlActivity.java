@@ -2314,7 +2314,7 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
                     view = new StorageUsageView(mContext);
                     break;
                 case VIEW_TYPE_HEADER:
-                    view = new HeaderCell(mContext);
+                    view = new HeaderCell(mContext, 24);
                     break;
                 case VIEW_TYPE_CHOOSER:
                     SlideChooseView slideChooseView = new SlideChooseView(mContext);
@@ -2668,7 +2668,7 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
         };
         ArrayList<ThemeDescription> arrayList = new ArrayList<>();
 
-        arrayList.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, SlideChooseView.class, StorageUsageView.class, HeaderCell.class}, null, null, null, Theme.key_windowBackgroundWhite));
+        arrayList.add(new ThemeDescription(listView, ThemeDescription.FLAG_CELLBACKGROUNDCOLOR, new Class[]{TextSettingsCell.class, SlideChooseView.class, StorageUsageView.class}, null, null, null, Theme.key_windowBackgroundWhite));
         arrayList.add(new ThemeDescription(fragmentView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_windowBackgroundGray));
 
         arrayList.add(new ThemeDescription(listView, ThemeDescription.FLAG_LISTGLOWCOLOR, null, null, null, null, Theme.key_actionBarDefault));
@@ -3022,7 +3022,7 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
     public static class ItemInner extends AdapterWithDiffUtils.Item {
 
         int headerTopMargin = 15;
-        int headerBottomMargin = 0;
+        int headerBottomMargin = 7;
         int keepMediaType = -1;
         CharSequence headerName;
         String text;
