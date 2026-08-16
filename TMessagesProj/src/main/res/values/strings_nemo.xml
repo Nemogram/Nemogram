@@ -314,6 +314,17 @@
     <string name="DialogsMenuSettingsInfo">Drag items to reorder. Uncheck an item to hide it from the chat list\'s ⋮ menu. \"Settings\" cannot be hidden.</string>
     <string name="DialogsMenuSettingsResetAlertTitle">Reset menu?</string>
     <string name="DialogsMenuSettingsResetAlertMessage">The chat list menu order and visibility will be reset to the default.</string>
+    <string name="NemoSettingsSectionImportExport">Import/Export</string>
+    <string name="ExportNemoSettings">Export settings</string>
+    <string name="ImportNemoSettings">Import settings</string>
+    <string name="ExportNemoSettingsSuccess">Settings exported</string>
+    <string name="ImportNemoSettingsSuccess">Settings imported</string>
+    <string name="ImportNemoSettingsError">This file is not a valid Nemogram settings export</string>
+    <string name="ImportNemoSettingsConfirmTitle">Import settings</string>
+    <string name="ImportNemoSettingsConfirmMessage">This will overwrite all your current Nemogram settings. Continue?</string>
+    <string name="ImportNemoSettingsFromChatTitle">Apply Nemogram settings?</string>
+    <string name="ImportNemoSettingsFromChatMessage">This file contains Nemogram settings. Applying it will overwrite all your current Nemogram settings. Continue?</string>
+    <string name="ImportNemoSettingsFromChatButton">Apply settings</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

@@ -310,6 +310,17 @@
     <string name="DialogsMenuSettingsInfo">Перетаскивайте пункты, чтобы изменить порядок. Снимите галочку, чтобы скрыть пункт из меню ⋮ в списке чатов. Пункт \"Настройки\" скрыть нельзя.</string>
     <string name="DialogsMenuSettingsResetAlertTitle">Сбросить меню?</string>
     <string name="DialogsMenuSettingsResetAlertMessage">Порядок и видимость пунктов меню списка чатов будут сброшены к значениям по умолчанию.</string>
+    <string name="NemoSettingsSectionImportExport">Импорт/Экспорт</string>
+    <string name="ExportNemoSettings">Экспорт настроек</string>
+    <string name="ImportNemoSettings">Импорт настроек</string>
+    <string name="ExportNemoSettingsSuccess">Настройки экспортированы</string>
+    <string name="ImportNemoSettingsSuccess">Настройки импортированы</string>
+    <string name="ImportNemoSettingsError">Это не является файлом экспорта настроек Nemogram</string>
+    <string name="ImportNemoSettingsConfirmTitle">Импорт настроек</string>
+    <string name="ImportNemoSettingsConfirmMessage">Это перезапишет все ваши текущие настройки Nemogram. Продолжить?</string>
+    <string name="ImportNemoSettingsFromChatTitle">Применить настройки Nemogram?</string>
+    <string name="ImportNemoSettingsFromChatMessage">Этот файл содержит настройки Nemogram. Применение перезапишет все ваши текущие настройки Nemogram. Продолжить?</string>
+    <string name="ImportNemoSettingsFromChatButton">Применить настройки</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

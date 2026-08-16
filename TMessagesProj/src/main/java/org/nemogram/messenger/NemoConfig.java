@@ -28,8 +28,6 @@ import java.util.function.BiConsumer;
 import app.nekogram.translator.DeepLTranslator;
 
 public class NemoConfig {
-    //TODO: refactor
-
     public static final int TITLE_TYPE_TEXT = 0;
     public static final int TITLE_TYPE_ICON = 1;
     public static final int TITLE_TYPE_MIX = 2;
@@ -305,6 +303,79 @@ public class NemoConfig {
             LensHelper.checkLensSupportAsync();
 
             configLoaded = true;
+        }
+    }
+
+    // magic header identifying our obfuscated settings export
+    // also doubles as an XOR key extension
+    private static final byte[] FISH_MAGIC = {'N', 'M', 'F', 'I', 'S', 'H', '1'};
+    private static final byte FISH_XOR_KEY = (byte) 0x5A;
+    public static final String FISH_EXTENSION = ".fish";
+
+    public static String exportConfigs() {
+        if (gson == null) {
+            gson = new GsonBuilder()
+                    .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
+                    .create();
+        }
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        Map<String, ?> all = preferences.getAll();
+        return gson.toJson(all);
+    }
+
+    public static byte[] obfuscateExport(String json) {
+        byte[] payload = json.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        byte[] out = new byte[FISH_MAGIC.length + payload.length];
+        System.arraycopy(FISH_MAGIC, 0, out, 0, FISH_MAGIC.length);
+        for (int i = 0; i < payload.length; i++) {
+            byte key = (byte) (FISH_XOR_KEY ^ FISH_MAGIC[i % FISH_MAGIC.length] ^ (i & 0xFF));
+            out[FISH_MAGIC.length + i] = (byte) (payload[i] ^ key);
+        }
+        return out;
+    }
+
+    public static String deobfuscateExport(byte[] data) {
+        if (data == null || data.length < FISH_MAGIC.length) {
+            return null;
+        }
+        for (int i = 0; i < FISH_MAGIC.length; i++) {
+            if (data[i] != FISH_MAGIC[i]) {
+                return null;
+            }
+        }
+        int payloadLen = data.length - FISH_MAGIC.length;
+        byte[] payload = new byte[payloadLen];
+        for (int i = 0; i < payloadLen; i++) {
+            byte key = (byte) (FISH_XOR_KEY ^ FISH_MAGIC[i % FISH_MAGIC.length] ^ (i & 0xFF));
+            payload[i] = (byte) (data[FISH_MAGIC.length + i] ^ key);
+        }
+        return new String(payload, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    public static String readFishExportFile(java.io.File file) {
+        if (file == null || !file.exists() || file.length() == 0 || file.length() > 1024 * 1024) {
+            return null;
+        }
+        try (java.io.FileInputStream fis = new java.io.FileInputStream(file)) {
+            byte[] data = new byte[(int) file.length()];
+            int read = fis.read(data);
+            if (read != data.length) {
+                return null;
+            }
+            String json = deobfuscateExport(data);
+            if (json == null) {
+                return null;
+            }
+            if (gson == null) {
+                gson = new GsonBuilder()
+                        .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
+                        .create();
+            }
+            Map<?, ?> map = gson.fromJson(json, Map.class);
+            return map != null && !map.isEmpty() ? json : null;
+        } catch (Exception e) {
+            FileLog.e(e);
+            return null;
         }
     }
 

@@ -42304,6 +42304,39 @@ public class ChatActivity extends BaseFragment implements
                         scrollToPositionOnRecreate = -1;
                     }
                 }
+                if (message.getDocumentName().toLowerCase().endsWith(NemoConfig.FISH_EXTENSION)) {
+                    File locFile = null;
+                    if (message.messageOwner.attachPath != null && message.messageOwner.attachPath.length() != 0) {
+                        File f = new File(message.messageOwner.attachPath);
+                        if (f.exists()) {
+                            locFile = f;
+                        }
+                    }
+                    if (locFile == null) {
+                        File f = getFileLoader().getPathToMessage(message.messageOwner);
+                        if (f.exists()) {
+                            locFile = f;
+                        }
+                    }
+                    final String fishJson = locFile != null ? NemoConfig.readFishExportFile(locFile) : null;
+                    if (fishJson != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate);
+                        builder.setTitle(LocaleController.getString(R.string.ImportNemoSettingsFromChatTitle));
+                        builder.setMessage(LocaleController.getString(R.string.ImportNemoSettingsFromChatMessage));
+                        builder.setPositiveButton(LocaleController.getString(R.string.ImportNemoSettingsFromChatButton), (dialog, which) -> {
+                            try {
+                                NemoConfig.importConfigs(fishJson);
+                                BulletinFactory.of(ChatActivity.this).createSuccessBulletin(LocaleController.getString(R.string.ImportNemoSettingsSuccess)).show();
+                            } catch (Exception e) {
+                                FileLog.e(e);
+                                BulletinFactory.of(ChatActivity.this).createErrorBulletin(LocaleController.getString(R.string.ImportNemoSettingsError)).show();
+                            }
+                        });
+                        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+                        showDialog(builder.create());
+                        return;
+                    }
+                }
                 boolean handled = false;
                 if (message.canPreviewDocument()) {
                     PhotoViewer.getInstance().setParentActivity(ChatActivity.this, themeDelegate);

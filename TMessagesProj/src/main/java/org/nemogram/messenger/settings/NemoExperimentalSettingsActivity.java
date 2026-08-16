@@ -1,6 +1,9 @@
 package org.nemogram.messenger.settings;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.CountDownTimer;
+import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -18,11 +21,16 @@ import org.telegram.tgnet.tl.TL_account;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.TextCheckCell;
+import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.LaunchActivity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import org.nemogram.messenger.Extra;
@@ -31,6 +39,10 @@ import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.helpers.remote.UpdateHelper;
 
 public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
+
+    private static final int REQUEST_CODE_EXPORT_SETTINGS = 4001;
+    private static final int REQUEST_CODE_IMPORT_SETTINGS = 4002;
+    private static final String FISH_MIME_TYPE = "application/octet-stream";
 
     private final int moreHapticFeedbacksRow = rowId++;
     private final int keepFormattingRow = rowId++;
@@ -42,6 +54,9 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     private final int checkUpdateRow = rowId++;
     private final int autoCheckUpdatesRow = rowId++;
     private final int autoCheckUpdatesIntervalRow = rowId++;
+
+    private final int exportSettingsRow = rowId++;
+    private final int importSettingsRow = rowId++;
 
     private final int deleteAccountRow = rowId++;
 
@@ -56,6 +71,11 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
         if (Extra.isDirectApp()) {
             items.add(UItem.asCheck(contentRestrictionRow, LocaleController.getString(R.string.IgnoreContentRestriction)).slug("contentRestriction").setChecked(NemoConfig.ignoreContentRestriction));
         }
+        items.add(UItem.asShadow(null));
+
+        items.add(UItem.asHeader(LocaleController.getString(R.string.NemoSettingsSectionImportExport)));
+        items.add(TextSettingsCellFactory.of(exportSettingsRow, LocaleController.getString(R.string.ExportNemoSettings), "").slug("exportSettings"));
+        items.add(TextSettingsCellFactory.of(importSettingsRow, LocaleController.getString(R.string.ImportNemoSettings), "").slug("importSettings"));
         items.add(UItem.asShadow(null));
 
         if (getParentActivity() instanceof LaunchActivity) {
@@ -219,7 +239,128 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
                 item.textValue = arrayList.get(i);
                 listView.adapter.notifyItemChanged(position, PARTIAL);
             }, resourcesProvider);
+        } else if (id == exportSettingsRow) {
+            startExportSettings();
+        } else if (id == importSettingsRow) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), resourcesProvider);
+            builder.setTitle(LocaleController.getString(R.string.ImportNemoSettingsConfirmTitle));
+            builder.setMessage(LocaleController.getString(R.string.ImportNemoSettingsConfirmMessage));
+            builder.setPositiveButton(LocaleController.getString(R.string.OK), (dialog, which) -> startImportSettings());
+            builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+            showDialog(builder.create());
         }
+    }
+
+    private String exportFileName() {
+        String stamp = DateFormat.format("yyyy-MM-dd_HHmm", new Date()).toString();
+        return "nemogram_settings_" + stamp + NemoConfig.FISH_EXTENSION;
+    }
+
+    private void startExportSettings() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType(FISH_MIME_TYPE);
+            intent.putExtra(Intent.EXTRA_TITLE, exportFileName());
+            startActivityForResult(intent, REQUEST_CODE_EXPORT_SETTINGS);
+        } catch (Exception e) {
+            FileLog.e(e);
+            BulletinFactory.of(this).createErrorBulletin(LocaleController.getString(R.string.UnknownError)).show();
+        }
+    }
+
+    private void startImportSettings() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            startActivityForResult(intent, REQUEST_CODE_IMPORT_SETTINGS);
+        } catch (Exception e) {
+            FileLog.e(e);
+            BulletinFactory.of(this).createErrorBulletin(LocaleController.getString(R.string.UnknownError)).show();
+        }
+    }
+
+    @Override
+    public void onActivityResultFragment(int requestCode, int resultCode, Intent data) {
+        if (requestCode != REQUEST_CODE_EXPORT_SETTINGS && requestCode != REQUEST_CODE_IMPORT_SETTINGS) {
+            super.onActivityResultFragment(requestCode, resultCode, data);
+            return;
+        }
+        if (resultCode != android.app.Activity.RESULT_OK || data == null || data.getData() == null) {
+            return;
+        }
+        Uri uri = data.getData();
+        if (requestCode == REQUEST_CODE_EXPORT_SETTINGS) {
+            writeExportToUri(uri);
+        } else {
+            readImportFromUri(uri);
+        }
+    }
+
+    private void writeExportToUri(Uri uri) {
+        Utilities.globalQueue.postRunnable(() -> {
+            boolean success = false;
+            try (OutputStream os = getParentActivity().getContentResolver().openOutputStream(uri)) {
+                if (os != null) {
+                    String json = NemoConfig.exportConfigs();
+                    byte[] obfuscated = NemoConfig.obfuscateExport(json);
+                    os.write(obfuscated);
+                    os.flush();
+                    success = true;
+                }
+            } catch (IOException e) {
+                FileLog.e(e);
+            }
+            boolean finalSuccess = success;
+            AndroidUtilities.runOnUIThread(() -> {
+                if (finalSuccess) {
+                    BulletinFactory.of(this).createSuccessBulletin(LocaleController.getString(R.string.ExportNemoSettingsSuccess)).show();
+                } else {
+                    BulletinFactory.of(this).createErrorBulletin(LocaleController.getString(R.string.UnknownError)).show();
+                }
+            });
+        });
+    }
+
+    private void readImportFromUri(Uri uri) {
+        Utilities.globalQueue.postRunnable(() -> {
+            byte[] raw = null;
+            try (InputStream is = getParentActivity().getContentResolver().openInputStream(uri)) {
+                if (is != null) {
+                    java.io.ByteArrayOutputStream buffer = new java.io.ByteArrayOutputStream();
+                    byte[] chunk = new byte[8192];
+                    int read;
+                    while ((read = is.read(chunk)) != -1) {
+                        buffer.write(chunk, 0, read);
+                    }
+                    raw = buffer.toByteArray();
+                }
+            } catch (IOException e) {
+                FileLog.e(e);
+            }
+
+            String json = raw != null ? NemoConfig.deobfuscateExport(raw) : null;
+            boolean success = false;
+            if (json != null) {
+                try {
+                    NemoConfig.importConfigs(json);
+                    success = true;
+                } catch (Exception e) {
+                    FileLog.e(e);
+                }
+            }
+
+            boolean finalSuccess = success;
+            AndroidUtilities.runOnUIThread(() -> {
+                if (finalSuccess) {
+                    listView.adapter.update(true);
+                    showRestartBulletin();
+                } else {
+                    BulletinFactory.of(this).createErrorBulletin(LocaleController.getString(R.string.ImportNemoSettingsError)).show();
+                }
+            });
+        });
     }
 
     private String formatAutoCheckInterval(int hours) {
