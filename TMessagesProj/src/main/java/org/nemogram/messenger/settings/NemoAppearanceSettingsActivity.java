@@ -210,7 +210,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
                 ((TextCheckCell) view).setChecked(NemoConfig.strokeOnViews);
             }
         } else if (id == searchBarStyleRow) {
-            presentFragment(new SearchBarStyleActivity());
+            presentFragment(new NemoSearchBarStyleActivity());
         } else if (id == legacyInputPanelRow) {
             NemoConfig.toggleLegacyInputPanel();
             if (view instanceof TextCheckCell) {

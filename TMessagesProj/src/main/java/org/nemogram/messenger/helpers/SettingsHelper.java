@@ -21,7 +21,7 @@ import org.nemogram.messenger.settings.NemoGeneralSettingsActivity;
 import org.nemogram.messenger.settings.NemoPasscodeSettingsActivity;
 import org.nemogram.messenger.settings.NemoKeywordFilterActivity;
 import org.nemogram.messenger.settings.NemoStickerSettingsActivity;
-import org.nemogram.messenger.settings.SearchBarStyleActivity;
+import org.nemogram.messenger.settings.NemoSearchBarStyleActivity;
 
 public class SettingsHelper {
 
@@ -74,7 +74,7 @@ public class SettingsHelper {
                     break;
                 case "searchbarstyle":
                 case "sbs":
-                    fragment = new SearchBarStyleActivity();
+                    fragment = new NemoSearchBarStyleActivity();
                     break;
                 case "update":
                     LaunchActivity.instance.checkAppUpdate(true, progress);
