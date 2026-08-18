@@ -31,7 +31,7 @@ public class SectionsScrollView extends ScrollView {
     private Theme.ResourcesProvider resourcesProvider;
     private LinearLayout contentView;
 
-    private float sectionRadius = dp(16);
+    private float sectionRadius = dp(22);
     private float[] sectionRadiusTop, sectionRadiusBottom;
 
     public static boolean isSectionView(View view) {
@@ -60,16 +60,16 @@ public class SectionsScrollView extends ScrollView {
         contentView.setPadding(dp(12), dp(enableTopPadding ? 12 : 4), dp(12), dp(12));
 
         this.sectionRadiusTop = new float[] {
-            dp(16), dp(16),
-            dp(16), dp(16),
+            dp(22), dp(22),
+            dp(22), dp(22),
             0, 0,
             0, 0
         };
         this.sectionRadiusBottom = new float[] {
             0, 0,
             0, 0,
-            dp(16), dp(16),
-            dp(16), dp(16)
+            dp(22), dp(22),
+            dp(22), dp(22)
         };
     }
 
@@ -156,7 +156,7 @@ public class SectionsScrollView extends ScrollView {
             Math.min(getHeight() + dp(16) + getScrollY(), contentView.getY() + getChildY(to) + to.getHeight() + toBottomMargin)
         );
         if (AndroidUtilities.rectTmp.bottom < AndroidUtilities.rectTmp.top) return;
-        RecyclerListView.drawBackgroundRect(canvas, AndroidUtilities.rectTmp, dp(16), dp(16), from.getAlpha(), resourcesProvider);
+        RecyclerListView.drawBackgroundRect(canvas, AndroidUtilities.rectTmp, dp(22), dp(22), from.getAlpha(), resourcesProvider);
     }
 
     @Override
