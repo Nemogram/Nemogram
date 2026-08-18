@@ -504,15 +504,15 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
                 break;
             case ID_DYNAMIC_PACK_ORDER:
                 SharedConfig.toggleUpdateStickersOrderOnSend();
-                ((TextCheckCell) view).setChecked(SharedConfig.updateStickersOrderOnSend);
+                ((TextCheckCell) view).setChecked(item.checked = SharedConfig.updateStickersOrderOnSend);
                 break;
             case ID_SUGGEST_EMOJI:
                 SharedConfig.toggleSuggestAnimatedEmoji();
-                ((TextCheckCell) view).setChecked(SharedConfig.suggestAnimatedEmoji);
+                ((TextCheckCell) view).setChecked(item.checked = SharedConfig.suggestAnimatedEmoji);
                 break;
             case ID_LARGE_EMOJI:
                 SharedConfig.toggleBigEmoji();
-                ((TextCheckCell) view).setChecked(SharedConfig.allowBigEmoji);
+                ((TextCheckCell) view).setChecked(item.checked = SharedConfig.allowBigEmoji);
                 break;
             case ID_SUGGEST_STICKERS:
                 ItemOptions.makeOptions(this, view)
