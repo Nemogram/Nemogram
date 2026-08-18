@@ -784,7 +784,7 @@ public class ThemeEditorView {
             containerView.setPadding(backgroundPaddingLeft, 0, backgroundPaddingLeft, 0);
 
             frameLayout = new FrameLayout(context);
-            frameLayout.setBackgroundColor(0xffffffff);
+            frameLayout.setBackground(Theme.createRoundRectDrawable(AndroidUtilities.dp(12), 0, 0xffffffff));
 
             searchField = new SearchField(context);
             frameLayout.addView(searchField, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.TOP | Gravity.LEFT));
