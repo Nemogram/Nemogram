@@ -6887,7 +6887,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         // actionMode.setBackgroundColor(Color.TRANSPARENT);
         // actionMode.drawBlur = false;
 
-        if (hasMainTabs) {
+        final boolean needsActionModeCloseView = hasMainTabs || actionBar.getBackButton() == null;
+        if (needsActionModeCloseView) {
             actionModeCloseView = new ImageView(getContext());
             actionModeCloseView.setScaleType(ImageView.ScaleType.CENTER);
             actionModeCloseView.setImageDrawable(new BackDrawable(true));
@@ -6902,7 +6903,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         selectedDialogsCountTextView.setTextSize(18);
         selectedDialogsCountTextView.setTypeface(AndroidUtilities.bold());
         selectedDialogsCountTextView.setTextColor(getThemedColor(Theme.key_actionBarActionModeDefaultIcon));
-        actionMode.addView(selectedDialogsCountTextView, LayoutHelper.createLinear(0, LayoutHelper.MATCH_PARENT, 1.0f, hasMainTabs ? 18 : 72, 0, 0, 0));
+        actionMode.addView(selectedDialogsCountTextView, LayoutHelper.createLinear(0, LayoutHelper.MATCH_PARENT, 1.0f, needsActionModeCloseView ? 18 : 72, 0, 0, 0));
         selectedDialogsCountTextView.setOnTouchListener((v, event) -> true);
 
         pinItem = actionMode.addItemWithWidth(pin, R.drawable.msg_pin, dp(48));
@@ -9201,6 +9202,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     private void hideActionMode(boolean animateCheck) {
         actionBar.hideActionMode();
+        if (folderId != 0 && isMaterialSearchBarStyle() && actionBar.getTitleTextView() != null) {
+            actionBar.getTitleTextView().setVisibility(View.INVISIBLE);
+        }
         selectedDialogs.clear();
         if (backDrawable != null) {
             backDrawable.setRotation(0, true);
