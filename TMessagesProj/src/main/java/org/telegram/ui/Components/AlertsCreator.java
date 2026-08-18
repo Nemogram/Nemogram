@@ -1099,24 +1099,30 @@ public class AlertsCreator {
                 ? R.string.BrowserSettingsAddText
                 : R.string.BrowserSettingsAddTextExternal));
 
-        EditTextBoldCursor editText = new EditTextBoldCursor(context);
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        EditTextBoldCursor editText = new EditTextBoldCursor(context) {
+            @Override
+            protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+                super.onMeasure(widthMeasureSpec, View.MeasureSpec.makeMeasureSpec(dp(64), View.MeasureSpec.EXACTLY));
+            }
+        };
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         editText.setTextColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
-        editText.setHintTextColor(Theme.getColor(Theme.key_groupcreate_hintText, resourcesProvider));
-        editText.setHint(LocaleController.getString(R.string.BrowserSettingsAddHint));
+        editText.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
+        editText.setHintText(LocaleController.getString(R.string.BrowserSettingsAddHint));
+        editText.setHintColor(Theme.getColor(Theme.key_windowBackgroundWhiteHintText, resourcesProvider));
+        editText.setHeaderHintColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlueHeader, resourcesProvider));
+        editText.setTransformHintToHeader(true);
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         editText.setSingleLine(true);
         editText.setFocusable(true);
-        editText.setPadding(dp(16), dp(13), dp(16), dp(13));
-        editText.setCursorWidth(1.5f);
-        editText.setCursorColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlueText4, resourcesProvider));
-
-        GradientDrawable fieldBackground = new GradientDrawable();
-        fieldBackground.setCornerRadius(dp(22));
-        fieldBackground.setColor(Theme.multAlpha(
-                Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider), 0.06f));
-        editText.setBackground(fieldBackground);
+        editText.setLineColors(
+                Theme.getColor(Theme.key_windowBackgroundWhiteInputField, resourcesProvider),
+                Theme.getColor(Theme.key_windowBackgroundWhiteInputFieldActivated, resourcesProvider),
+                Theme.getColor(Theme.key_text_RedRegular, resourcesProvider)
+        );
+        editText.setBackground(null);
+        editText.setPadding(0, 0, 0, 0);
 
         final Runnable done = () -> {
             final String text = editText.getText().toString().trim();
@@ -1149,7 +1155,7 @@ public class AlertsCreator {
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
         container.addView(editText, LayoutHelper.createLinear(
-                LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 24, 4, 24, 9));
+                LayoutHelper.MATCH_PARENT, 36, 24, 4, 24, 12));
 
         b.makeCustomMaxHeight();
         b.setView(container);
