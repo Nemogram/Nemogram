@@ -546,7 +546,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     rowCount += participants.size();
                     participantsEndRow = rowCount;
                 }
-                if (!isCommunity) {
+                if (!isCommunity && (transfer || !ChatObject.isChannelAndNotMegaGroup(currentChat) || !ChatObject.hasAdminRights(currentChat))) {
                     participantsInfoRow = rowCount++;
                 }
             } else if (!firstLoaded) {
