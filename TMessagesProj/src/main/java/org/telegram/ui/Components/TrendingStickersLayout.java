@@ -186,7 +186,7 @@ public class TrendingStickersLayout extends FrameLayout implements NotificationC
         searchAdapter = new StickersSearchAdapter(context, searchAdapterDelegate, primaryInstallingStickerSets, installingStickerSets, removingStickerSets, resourcesProvider);
 
         searchLayout = new FrameLayout(context);
-        searchLayout.setBackgroundColor(getThemedColor(Theme.key_dialogBackground));
+        searchLayout.setBackground(Theme.createRoundRectDrawable(AndroidUtilities.dp(12), 0, getThemedColor(Theme.key_dialogBackground)));
 
         searchView = new SearchField(context, true, resourcesProvider) {
             @Override
@@ -596,7 +596,7 @@ public class TrendingStickersLayout extends FrameLayout implements NotificationC
         adapter.getThemeDescriptions(descriptions, listView, delegate);
         searchAdapter.getThemeDescriptions(descriptions, listView, delegate);
         descriptions.add(new ThemeDescription(shadowView, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_dialogShadowLine));
-        descriptions.add(new ThemeDescription(searchLayout, ThemeDescription.FLAG_BACKGROUND, null, null, null, null, Theme.key_dialogBackground));
+        descriptions.add(new ThemeDescription(searchLayout, ThemeDescription.FLAG_BACKGROUNDFILTER, null, null, null, null, Theme.key_dialogBackground));
     }
 
     public void glueToTop(boolean glue) {
