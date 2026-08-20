@@ -35,6 +35,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.MonetHelper;
+
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.AnimationNotificationsLocker;
 import org.telegram.messenger.ApplicationLoader;
@@ -674,7 +676,7 @@ public class ManageLinksActivity extends BaseFragment implements NotificationCen
         linkIcon = ContextCompat.getDrawable(context, R.drawable.msg_link_1);
         linkIconRevoked = ContextCompat.getDrawable(context, R.drawable.msg_link_2);
         linkIconRevenue = ContextCompat.getDrawable(context, R.drawable.large_income);
-        linkIcon.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
+        linkIcon.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.MULTIPLY));
         updateRows(true);
 
         timeDif = getConnectionsManager().getCurrentTime() - (System.currentTimeMillis() / 1000L);

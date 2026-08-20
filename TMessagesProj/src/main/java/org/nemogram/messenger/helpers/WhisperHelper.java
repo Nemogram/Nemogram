@@ -88,6 +88,7 @@ public class WhisperHelper {
         };
         editTextAccountId.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         editTextAccountId.setTextColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
+        editTextAccountId.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
         editTextAccountId.setText(NemoConfig.cfAccountID);
         editTextAccountId.setHintText(LocaleController.getString(R.string.CloudflareAccountID));
         editTextAccountId.setHintColor(Theme.getColor(Theme.key_windowBackgroundWhiteHintText));
@@ -110,6 +111,7 @@ public class WhisperHelper {
         };
         editTextApiToken.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         editTextApiToken.setTextColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
+        editTextApiToken.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
         editTextApiToken.setText(NemoConfig.cfApiToken);
         editTextApiToken.setHintText(LocaleController.getString(R.string.CloudflareAPIToken));
         editTextApiToken.setHintColor(Theme.getColor(Theme.key_windowBackgroundWhiteHintText));

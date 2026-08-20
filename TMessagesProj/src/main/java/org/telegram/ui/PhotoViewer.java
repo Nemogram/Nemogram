@@ -21592,7 +21592,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             for (int a = 0; a < compressionsCount; a++) {
                 int cx = sideSide + (lineSize + gapSize * 2 + circleSize) * a + circleSize / 2;
                 if (a <= selectedCompression) {
-                    paint.setColor(0xff53aeef);
+                    paint.setColor(getThemedColor(Theme.key_chat_editMediaButton));
                 } else {
                     paint.setColor(0x66ffffff);
                 }
