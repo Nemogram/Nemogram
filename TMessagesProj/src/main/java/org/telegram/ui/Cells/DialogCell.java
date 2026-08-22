@@ -3962,14 +3962,14 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
 
             boolean recolorForReveal = currentRevealProgress > 0.0f;
             if (recolorForReveal != Theme.dialogs_archiveDrawableRecolored) {
-                Theme.dialogs_archiveDrawable.setLayerColor("Arrow.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_archiveDrawable.setLayerColor("Arrow", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
                 Theme.dialogs_archiveDrawableRecolored = recolorForReveal;
             }
             if (recolorForReveal != Theme.dialogs_hidePsaDrawableRecolored) {
                 Theme.dialogs_hidePsaDrawable.beginApplyLayerColors();
-                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 1.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
-                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 2.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
-                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 3.**", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 1", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 2", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
+                Theme.dialogs_hidePsaDrawable.setLayerColor("Line 3", Theme.getNonAnimatedColor(recolorForReveal ? Theme.key_chats_archivePinBackground : Theme.key_chats_archiveBackground));
                 Theme.dialogs_hidePsaDrawable.commitApplyLayerColors();
                 Theme.dialogs_hidePsaDrawableRecolored = recolorForReveal;
             }
