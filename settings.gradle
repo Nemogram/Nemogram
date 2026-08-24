@@ -30,3 +30,5 @@ include ':TMessagesProj_App'
 //include ':TMessagesProj_AppHockeyApp'
 //include ':TMessagesProj_AppStandalone'
 //include ':TMessagesProj_AppTests'
+include ':jlatexmath'
+project(':jlatexmath').projectDir = file('TMessagesProj/lib/jlatexmath/jlatexmath')
