@@ -1830,7 +1830,10 @@ public class FilterTabsView extends FrameLayout {
                 invalidated = true;
                 requestLayout();
                 allTabsWidth = 0;
-                if (!NemoConfig.hideAllTab) findDefaultTab().setTitle(LocaleController.getString(R.string.FilterAllChats), null, false);
+                final FilterTabsView.Tab defaultTab = findDefaultTab();
+                if (!NemoConfig.hideAllTab && defaultTab != null) {
+                    defaultTab.setTitle(LocaleController.getString(R.string.FilterAllChats), null, false);
+                }
                 for (int b = 0; b < N; b++) {
                     allTabsWidth += tabs.get(b).getWidth(true) + dp(FolderIconHelper.getPaddingTab());
                 }
@@ -1859,9 +1862,14 @@ public class FilterTabsView extends FrameLayout {
             invalidated = true;
             requestLayout();
             listView.setItemAnimator(itemAnimator);
-            adapter.notifyDataSetChanged();
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
             allTabsWidth = 0;
-            if (!NemoConfig.hideAllTab) findDefaultTab().setTitle(LocaleController.getString(R.string.FilterAllChats), null, false);
+            final FilterTabsView.Tab defaultTab = findDefaultTab();
+            if (!NemoConfig.hideAllTab && defaultTab != null) {
+                defaultTab.setTitle(LocaleController.getString(R.string.FilterAllChats), null, false);
+            }
             for (int b = 0, N = tabs.size(); b < N; b++) {
                 allTabsWidth += tabs.get(b).getWidth(true) + dp(FolderIconHelper.getPaddingTab());
             }
