@@ -127,6 +127,7 @@ import java.util.regex.Pattern;
 
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.MessageFilterHelper;
+import org.nemogram.messenger.helpers.MessageHelper;
 import org.nemogram.messenger.syntaxhighlight.SyntaxHighlight;
 import org.nemogram.messenger.translator.Translator;
 
@@ -6638,7 +6639,7 @@ public class MessageObject {
         if (messageOwner == null || messageOwner.entities == null)
             return false;
         for (int i = 0; i < messageOwner.entities.size(); ++i)
-            if (!(messageOwner.entities.get(i) instanceof TLRPC.TL_messageEntityCustomEmoji))
+            if (!(messageOwner.entities.get(i) instanceof TLRPC.TL_messageEntityCustomEmoji) && !MessageHelper.isLocalCustomEmoji(messageOwner.entities.get(i)))
                 return true;
         return false;
     }
@@ -8080,8 +8081,17 @@ public class MessageObject {
         for (int i = 0; i < entities.size(); ++i) {
             if (limitCount <= 0) break;
             TLRPC.MessageEntity messageEntity = entities.get(i);
-            if (messageEntity instanceof TLRPC.TL_messageEntityCustomEmoji) {
-                TLRPC.TL_messageEntityCustomEmoji entity = (TLRPC.TL_messageEntityCustomEmoji) messageEntity;
+            if (messageEntity instanceof TLRPC.TL_messageEntityCustomEmoji || messageEntity instanceof TLRPC.TL_messageEntityTextUrl) {
+                TLRPC.TL_messageEntityCustomEmoji entity;
+                if (messageEntity instanceof TLRPC.TL_messageEntityTextUrl urlEntity) {
+                    var parsed = MessageHelper.parseLocalCustomEmoji(spannable, urlEntity);
+                    if (parsed == null) {
+                        continue;
+                    }
+                    entity = parsed;
+                } else {
+                    entity = (TLRPC.TL_messageEntityCustomEmoji) messageEntity;
+                }
                 for (int j = 0; j < emojiSpans.length; ++j) {
                     Emoji.EmojiSpan span = emojiSpans[j];
                     if (span != null) {
@@ -8377,6 +8387,7 @@ public class MessageObject {
                 }
                 spannable.setSpan(new URLSpanNoUnderline("tel:" + tel, run), run.start, run.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else if (run.urlEntity instanceof TLRPC.TL_messageEntityTextUrl) {
+                if (MessageHelper.isLocalCustomEmoji(run.urlEntity)) continue;
                 if (linksCount >= MediaDataController.MAX_LINKS_COUNT) continue;
                 linksCount++;
                 url = run.urlEntity.url;

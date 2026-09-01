@@ -45,6 +45,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     private static final String FISH_MIME_TYPE = "application/octet-stream";
 
     private final int moreHapticFeedbacksRow = rowId++;
+    private final int localCustomEmojiRow = rowId++;
     private final int keepFormattingRow = rowId++;
     private final int autoInlineBotRow = rowId++;
     private final int forceFontWeightFallbackRow = rowId++;
@@ -64,6 +65,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(LocaleController.getString(R.string.Experiment)));
         items.add(UItem.asCheck(moreHapticFeedbacksRow, LocaleController.getString(R.string.MoreHapticFeedback)).slug("moreHapticFeedbacks").setChecked(NemoConfig.moreHapticFeedbacks));
+        items.add(UItem.asCheck(localCustomEmojiRow, LocaleController.getString(R.string.LocalCustomEmoji)).slug("localCustomEmoji").setChecked(NemoConfig.localCustomEmoji));
         items.add(UItem.asCheck(keepFormattingRow, LocaleController.getString(R.string.TranslationKeepFormatting)).slug("keepFormatting").setChecked(NemoConfig.keepFormatting));
         items.add(UItem.asCheck(autoInlineBotRow, LocaleController.getString(R.string.AutoInlineBot), LocaleController.getString(R.string.AutoInlineBotDesc)).slug("autoInlineBot").setChecked(NemoConfig.autoInlineBot));
         items.add(UItem.asCheck(forceFontWeightFallbackRow, LocaleController.getString(R.string.ForceFontWeightFallback)).slug("forceFontWeightFallback").setChecked(NemoConfig.forceFontWeightFallback));
@@ -221,6 +223,11 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
                 });
                 item.subtext = LocaleController.getString(R.string.CheckingUpdate);
                 listView.adapter.notifyItemChanged(position);
+            }
+        } else if (id == localCustomEmojiRow) {
+            NemoConfig.toggleLocalCustomEmoji();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.localCustomEmoji);
             }
         } else if (id == autoCheckUpdatesRow) {
             NemoConfig.toggleAutoCheckUpdates();

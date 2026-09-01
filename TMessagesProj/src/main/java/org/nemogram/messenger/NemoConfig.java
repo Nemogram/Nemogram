@@ -141,6 +141,7 @@ public class NemoConfig {
     public static boolean hideChannelBottomButtons = false;
     public static boolean hideAiButton = false;
     public static boolean keepFormatting = true;
+    public static boolean localCustomEmoji = false;
     public static boolean predictiveBackAnimation = false;
     public static boolean hideBottomNavigationBar = false;
     public static boolean bottomFilterTabs = false;
@@ -277,6 +278,7 @@ public class NemoConfig {
             hideChannelBottomButtons = preferences.getBoolean("hideChannelBottomButtons", false);
             hideAiButton = preferences.getBoolean("hideAiButton", false);
             keepFormatting = preferences.getBoolean("keepFormatting", true);
+            localCustomEmoji = preferences.getBoolean("localCustomEmoji", false);
             predictiveBackAnimation = preferences.getBoolean("predictiveBackAnimation", false);
             hideBottomNavigationBar = preferences.getBoolean("hideBottomNavigationBar", false);
             bottomFilterTabs = preferences.getBoolean("bottomFilterTabs", false);
@@ -608,6 +610,14 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("keepFormatting", keepFormatting);
+        editor.apply();
+    }
+
+    public static void toggleLocalCustomEmoji() {
+        localCustomEmoji = !localCustomEmoji;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("localCustomEmoji", localCustomEmoji);
         editor.apply();
     }
 
