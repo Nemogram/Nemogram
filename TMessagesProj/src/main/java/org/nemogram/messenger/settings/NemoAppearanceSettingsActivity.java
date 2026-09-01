@@ -36,6 +36,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int hideStoriesRow = rowId++;
     private final int mediaPreviewRow = rowId++;
     private final int dialogsMenuSettingsRow = rowId++;
+    private final int miniSenderAvatarRow = rowId++;
 
     private final int hideAllTabRow = rowId++;
     private final int folderTabsPreviewRow = rowId++;
@@ -91,6 +92,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asCheck(hideStoriesRow, LocaleController.getString(R.string.HideStories)).slug("hideStories").setChecked(NemoConfig.hideStories));
         items.add(UItem.asCheck(mediaPreviewRow, LocaleController.getString(R.string.MediaPreview)).slug("mediaPreview").setChecked(NemoConfig.mediaPreview));
         items.add(UItem.asButton(dialogsMenuSettingsRow, R.drawable.msg_list, LocaleController.getString(R.string.DialogsMenuSettings)).slug("dialogsMenuSettings"));
+        items.add(UItem.asCheck(miniSenderAvatarRow, LocaleController.getString(R.string.MiniSenderAvatar)).slug("miniSenderAvatar").setChecked(NemoConfig.miniSenderAvatar));
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.Filters)));
@@ -222,6 +224,11 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
                 ((TextCheckCell) view).setChecked(NemoConfig.legacyChatActionBar);
             }
             parentLayout.rebuildAllFragmentViews(false, false);
+        } else if (id == miniSenderAvatarRow) {
+            NemoConfig.toggleMiniSenderAvatar();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.miniSenderAvatar);
+            }
         }
     }
 

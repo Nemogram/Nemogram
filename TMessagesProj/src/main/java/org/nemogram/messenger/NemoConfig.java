@@ -138,6 +138,7 @@ public class NemoConfig {
     public static boolean autoInlineBot = false;
     public static boolean forceFontWeightFallback = false;
     public static boolean minimizedStickerCreator = false;
+    public static boolean miniSenderAvatar = false;
     public static boolean hideChannelBottomButtons = false;
     public static boolean hideAiButton = false;
     public static boolean keepFormatting = true;
@@ -275,6 +276,7 @@ public class NemoConfig {
             autoInlineBot = preferences.getBoolean("autoInlineBot", false);
             forceFontWeightFallback = preferences.getBoolean("forceFontWeightFallback", false);
             minimizedStickerCreator = preferences.getBoolean("minimizedStickerCreator", false);
+            miniSenderAvatar = preferences.getBoolean("miniSenderAvatar", false);
             hideChannelBottomButtons = preferences.getBoolean("hideChannelBottomButtons", false);
             hideAiButton = preferences.getBoolean("hideAiButton", false);
             keepFormatting = preferences.getBoolean("keepFormatting", true);
@@ -640,6 +642,14 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("minimizedStickerCreator", minimizedStickerCreator);
+        editor.apply();
+    }
+
+    public static void toggleMiniSenderAvatar() {
+        miniSenderAvatar = !miniSenderAvatar;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("miniSenderAvatar", miniSenderAvatar);
         editor.apply();
     }
 

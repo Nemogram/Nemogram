@@ -322,6 +322,7 @@
     <string name="ImportNemoSettingsFromChatMessage">Этот файл содержит настройки Nemogram. Применение перезапишет все ваши текущие настройки Nemogram. Продолжить?</string>
     <string name="ImportNemoSettingsFromChatButton">Применить настройки</string>
     <string name="LocalCustomEmoji">Локальные пользовательские эмодзи</string>
+    <string name="MiniSenderAvatar">Мини-фотография отправителя</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>
