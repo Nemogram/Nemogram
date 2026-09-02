@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">اسأل قبل الاتصال</string>
     <string name="DisableNumberRounding">تعطيل اختصارات الأرقام</string>
     <string name="OfficialChannel">القناة الرسمية</string>
-    <string name="IgnoreBlockedAbout">إنه ليس مخفيًا حقًا!  لا تزال الرسائل متاحة للعرض ، ولكن سيتم تحويل النص إلى Spoiler ولن يتم تنزيل الوسائط تلقائيًا.</string>
+    <string name="IgnoreBlockedAbout">لا تزال الرسائل متاحة للعرض ، ولكن سيتم تحويل النص إلى Spoiler ولن يتم تنزيل الوسائط تلقائيًا.</string>
     <string name="ResetStickerSize">إعادة تعيين حجم ملصق</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">أعد تشغيل التطبيق لرؤية التغييرات.</string>

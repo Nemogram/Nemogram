@@ -51,7 +51,7 @@
     <string name="AskBeforeCalling">Vragen voor het bellen</string>
     <string name="DisableNumberRounding">Afronden van getallen uitschakelen</string>
     <string name="OfficialChannel">Officieel kanaal</string>
-    <string name="IgnoreBlockedAbout">ZE ZIJN NIET ECHT VERBORGEN! Berichten zijn nog steeds beschikbaar, maar tekst wordt omgezet in spoilers en media wordt niet automatisch gedownload.</string>
+    <string name="IgnoreBlockedAbout">Berichten zijn nog steeds beschikbaar, maar tekst wordt omgezet in spoilers en media wordt niet automatisch gedownload.</string>
     <string name="ResetStickerSize">Stickergrootte opnieuw instellen</string>
     <string name="RestartAppToTakeEffect">Start de app opnieuw om de wijzigingen door te voeren.</string>
     <string name="MediaPreview">Mediapreview in dialooglijst</string>

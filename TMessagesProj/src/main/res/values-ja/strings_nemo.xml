@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">通話する前に確認</string>
     <string name="DisableNumberRounding">四捨五入を無効化</string>
     <string name="OfficialChannel">公式チャンネル</string>
-    <string name="IgnoreBlockedAbout">非表示にはなりません！メッセージはまだ閲覧可能ですが、テキストはスポイラーに変換され、メディアは自動的にダウンロードされません。</string>
+    <string name="IgnoreBlockedAbout">メッセージはまだ閲覧可能ですが、テキストはスポイラーに変換され、メディアは自動的にダウンロードされません。</string>
     <string name="ResetStickerSize">ステッカーのサイズをリセット</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">設定を反映させるためにはアプリを再起動してください。</string>

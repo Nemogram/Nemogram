@@ -51,7 +51,7 @@
     <string name="AskBeforeCalling">Tanyakan sebelum menelepon</string>
     <string name="DisableNumberRounding">Matikan pembulatan angka</string>
     <string name="OfficialChannel">Channel resmi</string>
-    <string name="IgnoreBlockedAbout">ITU TIDAK BENAR-BENAR TERSEMBUNYI! Pesan masih tersedia untuk dilihat, tetapi teks akan dikonversi ke Spoiler dan media tidak akan mengunduh secara otomatis.</string>
+    <string name="IgnoreBlockedAbout">Pesan masih tersedia untuk dilihat, tetapi teks akan dikonversi ke Spoiler dan media tidak akan mengunduh secara otomatis.</string>
     <string name="ResetStickerSize">Setel ulang ukuran stiker</string>
     <string name="RestartAppToTakeEffect">Mulai ulang aplikasi untuk menerapkan.</string>
     <string name="MediaPreview">Pratinjau media di daftar obrolan</string>

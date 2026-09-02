@@ -45,7 +45,7 @@
     <string name="AskBeforeCalling">Jautājiet pirms zvana</string>
     <string name="DisableNumberRounding">Atslēgt skaitļu noapaļošanu</string>
     <string name="OfficialChannel">Oficiālais kanāls</string>
-    <string name="IgnoreBlockedAbout">TAS NAV ĪSTI PASLĒPT! Ziņojumi joprojām ir pieejami apskatei, bet teksts tiks pārveidots uz spoileru un multivides līdzekļi netiks automātiski lejupielādēti.</string>
+    <string name="IgnoreBlockedAbout">Ziņojumi joprojām ir pieejami apskatei, bet teksts tiks pārveidots uz spoileru un multivides līdzekļi netiks automātiski lejupielādēti.</string>
     <string name="ResetStickerSize">Atiestatīt uzlīmes lielumu</string>
     <string name="RestartAppToTakeEffect">Restartējiet lietotni, lai tas stātos spēkā.</string>
     <string name="MediaPreview">Multivides priekšskatījums dialogsarakstā</string>

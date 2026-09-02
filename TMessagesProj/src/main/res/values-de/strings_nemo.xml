@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Vor Anruf fragen</string>
     <string name="DisableNumberRounding">Nummernrundung deaktivieren</string>
     <string name="OfficialChannel">Offizieller Kanal</string>
-    <string name="IgnoreBlockedAbout">ES IST NICHT WIRKLICH VERSTECKT! Nachrichten sind immer noch verfügbar, aber Text wird in Spoiler konvertiert und Medien werden nicht automatisch heruntergeladen.</string>
+    <string name="IgnoreBlockedAbout">Nachrichten sind immer noch verfügbar, aber Text wird in Spoiler konvertiert und Medien werden nicht automatisch heruntergeladen.</string>
     <string name="ResetStickerSize">Stickergröße zurücksetzen</string>
     <string name="RestartAppToTakeEffect">App neu starten, um Änderungen wirksam zu machen.</string>
     <string name="MediaPreview">Medienvorschau in der Dialogliste</string>

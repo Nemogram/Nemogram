@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Hỏi trước khi gọi</string>
     <string name="DisableNumberRounding">Vô hiệu hóa làm tròn số</string>
     <string name="OfficialChannel">Kênh chính thức</string>
-    <string name="IgnoreBlockedAbout">NÓ KHÔNG THỰC SỰ ẨN! Tin nhắn vẫn có sẵn để xem, nhưng văn bản sẽ được chuyển đổi thành Spoiler và phương tiện sẽ không tự động tải xuống.</string>
+    <string name="IgnoreBlockedAbout">Tin nhắn vẫn có sẵn để xem, nhưng văn bản sẽ được chuyển đổi thành Spoiler và phương tiện sẽ không tự động tải xuống.</string>
     <string name="ResetStickerSize">Đặt lại kích thước nhãn dán</string>
     <string name="RestartAppToTakeEffect">Khởi động lại ứng dụng để có hiệu lực.</string>
     <string name="MediaPreview">Xem trước đa phương tiện trong danh sách hộp thoại</string>

@@ -52,7 +52,7 @@
     <string name="AskBeforeCalling">Chiedi prima di chiamare</string>
     <string name="DisableNumberRounding">Disabilita arrotondamento numeri</string>
     <string name="OfficialChannel">Canale ufficiale</string>
-    <string name="IgnoreBlockedAbout">NON SONO DAVVERO NASCOSTI! I messaggi sono ancora visibili, ma il testo sarà convertito in Spoiler e i media non saranno scaricati automaticamente.</string>
+    <string name="IgnoreBlockedAbout">I messaggi sono ancora visibili, ma il testo sarà convertito in Spoiler e i media non saranno scaricati automaticamente.</string>
     <string name="ResetStickerSize">Resetta dimensione sticker</string>
     <string name="RestartAppToTakeEffect">Riavvia l\'app per applicare le modifiche.</string>
     <string name="MediaPreview">Anteprima media nella lista chat</string>

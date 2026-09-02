@@ -43,7 +43,7 @@
     <string name="AskBeforeCalling">Fråga innan samtal</string>
     <string name="DisableNumberRounding">Inaktivera avrundning av tal</string>
     <string name="OfficialChannel">Officiell kanal</string>
-    <string name="IgnoreBlockedAbout">DET ÄR INTE RIKTIGT DÖLJA! Meddelanden är fortfarande tillgängliga för visning, men text konverteras till Spoiler och media laddas inte ner automatiskt.</string>
+    <string name="IgnoreBlockedAbout">Meddelanden är fortfarande tillgängliga för visning, men text konverteras till Spoiler och media laddas inte ner automatiskt.</string>
     <string name="ResetStickerSize">Återställ klistermärkesstorlek</string>
     <string name="RestartAppToTakeEffect">Starta om appen för att träda i kraft.</string>
     <string name="MediaPreview">Förhandsgranskning av media i dialoglistan</string>

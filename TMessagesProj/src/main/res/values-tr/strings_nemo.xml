@@ -48,7 +48,7 @@
     <string name="AskBeforeCalling">Aramadan önce sor</string>
     <string name="DisableNumberRounding">Sayı yuvarlamayı devre dışı bırak</string>
     <string name="OfficialChannel">Resmi kanal</string>
-    <string name="IgnoreBlockedAbout">GERÇEKTEN GİZLEYEMEZ! Mesajlar görüntülenmeye devam ederler, ama ancak metin spoilera dönüştürülürler ve medya otomatik olarak indirilmiyecek.</string>
+    <string name="IgnoreBlockedAbout">Mesajlar görüntülenmeye devam ederler, ama ancak metin spoilera dönüştürülürler ve medya otomatik olarak indirilmiyecek.</string>
     <string name="ResetStickerSize">Çıkartma boyutunu sıfırla</string>
     <string name="RestartAppToTakeEffect">Etkili olması için uygulamayı yeniden başlatın.</string>
     <string name="MediaPreview">Sohbet listesinde medya önizlemesi</string>

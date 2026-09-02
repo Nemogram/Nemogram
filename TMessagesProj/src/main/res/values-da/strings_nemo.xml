@@ -43,7 +43,7 @@
     <string name="AskBeforeCalling">Spørg før opkald</string>
     <string name="DisableNumberRounding">Deaktiver afrunding af tal</string>
     <string name="OfficialChannel">Officiel kanal</string>
-    <string name="IgnoreBlockedAbout">Det er IKKE RIGTIG HIDE! Beskeder er stadig tilgængelige til at se, men tekst vil blive konverteret til Spoiler og medier vil ikke automatisk downloade.</string>
+    <string name="IgnoreBlockedAbout">Beskeder er stadig tilgængelige til at se, men tekst vil blive konverteret til Spoiler og medier vil ikke automatisk downloade.</string>
     <string name="ResetStickerSize">Nulstil klistermærkets størrelse</string>
     <string name="RestartAppToTakeEffect">Genstart app\'en for at træde i kraft.</string>
     <string name="MediaPreview">Eksempel på medie i dialogboks</string>

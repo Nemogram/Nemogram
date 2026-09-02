@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Запитувати перед викликом</string>
     <string name="DisableNumberRounding">Вимкнути округлення чисел</string>
     <string name="OfficialChannel">Офіційний канал</string>
-    <string name="IgnoreBlockedAbout">Насправді вміст не буде повністю приховано! Повідомлення будуть показуватися, але текст буде сховано під засвіт, а медіа не будуть автоматично завантажуватись.</string>
+    <string name="IgnoreBlockedAbout">Повідомлення будуть показуватися, але текст буде сховано під засвіт, а медіа не будуть автоматично завантажуватись.</string>
     <string name="ResetStickerSize">Скинути розмір наліпок</string>
     <string name="RestartAppToTakeEffect">Перезапустіть додаток для застосування змін.</string>
     <string name="MediaPreview">Попередній перегляд медіа у списку чатів</string>

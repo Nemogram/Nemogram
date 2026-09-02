@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Preguntar antes de llamar</string>
     <string name="DisableNumberRounding">Desactivar redondeo de número</string>
     <string name="OfficialChannel">Canal oficial</string>
-    <string name="IgnoreBlockedAbout">¡NO ESTÁ REALMENTE OCULTO! Los mensajes todavía están disponibles para ver, pero el texto se convertirá en Spoiler y los medios no se descargarán automáticamente.</string>
+    <string name="IgnoreBlockedAbout">Los mensajes todavía están disponibles para ver, pero el texto se convertirá en Spoiler y los medios no se descargarán automáticamente.</string>
     <string name="ResetStickerSize">Restablecer tamaño del sticker</string>
     <string name="RestartAppToTakeEffect">Reiniciar la app para que tenga efecto.</string>
     <string name="MediaPreview">Vista previa de multimedia en la lista de diálogos</string>

@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">呼叫前確認</string>
     <string name="DisableNumberRounding">禁用數字舍入</string>
     <string name="OfficialChannel">官方頻道</string>
-    <string name="IgnoreBlockedAbout">不是真的隱藏啦！訊息仍然可見，但訊息會帶有劇透，影片和圖片也不會自動下載。</string>
+    <string name="IgnoreBlockedAbout">訊息仍然可見，但訊息會帶有劇透，影片和圖片也不會自動下載。</string>
     <string name="ResetStickerSize">重置貼圖大小</string>
     <string name="RestartAppToTakeEffect">重新啟動應用程式即可生效。</string>
     <string name="MediaPreview">聊天列表中的媒體預覽。</string>

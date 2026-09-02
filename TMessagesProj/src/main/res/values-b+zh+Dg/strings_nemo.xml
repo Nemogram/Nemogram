@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">呼叫前确认</string>
     <string name="DisableNumberRounding">禁用数字舍入</string>
     <string name="OfficialChannel">官方频道</string>
-    <string name="IgnoreBlockedAbout">并不是真正的隐藏！仍然可以查看消息，但文本将被转换为黑幕，媒体也不会自动下载。</string>
+    <string name="IgnoreBlockedAbout">仍然可以查看消息，但文本将被转换为黑幕，媒体也不会自动下载。</string>
     <string name="ResetStickerSize">重置贴纸大小</string>
     <string name="RestartAppToTakeEffect">重启应用以生效。</string>
     <string name="MediaPreview">对话列表中的媒体预览</string>

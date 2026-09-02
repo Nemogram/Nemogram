@@ -47,7 +47,7 @@
     <string name="AskBeforeCalling">Запитати до виклику</string>
     <string name="DisableNumberRounding">Вимкнути округлення чисел</string>
     <string name="OfficialChannel">Офіціальний канал</string>
-    <string name="IgnoreBlockedAbout">ЦЕ НЕ СПРАВЖНЄ СКРИТТЯ! Повідомлення залишаються видимими але текст форматується під Спойлер і медіа не буде автоматично загружатись.</string>
+    <string name="IgnoreBlockedAbout">Повідомлення залишаються видимими але текст форматується під Спойлер і медіа не буде автоматично загружатись.</string>
     <string name="ResetStickerSize">Скинути розмір наліпки</string>
     <string name="RestartAppToTakeEffect">Перезапустіть програму щоб додати ефект.</string>
     <string name="MediaPreview">Прев\'ю медіа в списку діалогу</string>

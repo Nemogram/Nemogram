@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Perguntar antes de ligar</string>
     <string name="DisableNumberRounding">Desativar arredondamento</string>
     <string name="OfficialChannel">Canal oficial</string>
-    <string name="IgnoreBlockedAbout">NÃO É REALMENTE OCULTO! As mensagens ainda ficarão disponíveis para visualização, mas o texto será convertido para spoiler e não haverá o download automático de mídias.</string>
+    <string name="IgnoreBlockedAbout">As mensagens ainda ficarão disponíveis para visualização, mas o texto será convertido para spoiler e não haverá o download automático de mídias.</string>
     <string name="ResetStickerSize">Redefinir tamanho do sticker</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">Reinicie o aplicativo para tirar efeito.</string>

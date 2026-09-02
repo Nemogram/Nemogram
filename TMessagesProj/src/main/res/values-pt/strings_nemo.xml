@@ -52,7 +52,7 @@
     <string name="AskBeforeCalling">Perguntar antes de ligar</string>
     <string name="DisableNumberRounding">Desativar arredondamento de números</string>
     <string name="OfficialChannel">Canal oficial</string>
-    <string name="IgnoreBlockedAbout">NÃO ESCONDE REALMENTE! As mensagens ainda estão disponíveis para visualização, mas o texto será convertido para Spoiler e as mídias não serão baixadas automaticamente.</string>
+    <string name="IgnoreBlockedAbout">As mensagens ainda estão disponíveis para visualização, mas o texto será convertido para Spoiler e as mídias não serão baixadas automaticamente.</string>
     <string name="ResetStickerSize">Redefinir tamanho da figurinha</string>
     <string name="RestartAppToTakeEffect">Reiniciar a aplicação para ter efeito.</string>
     <string name="MediaPreview">Pré-visualização da mídia na lista de diálogo</string>

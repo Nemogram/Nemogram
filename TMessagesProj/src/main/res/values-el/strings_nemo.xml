@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Ερώτηση πριν την κλήση</string>
     <string name="DisableNumberRounding">Απεν/ποίηση στρογγυλ/σης αριθμού</string>
     <string name="OfficialChannel">Επίσημο Κανάλι</string>
-    <string name="IgnoreBlockedAbout">ΔΕΝ ΚΡΥΒΕΤΑΙ ΠΡΑΓΜΑΤΙΚΑ! Τα μηνύματα εξακολουθούν να είναι διαθέσιμα για προβολή, αλλά το κείμενο θα μετατραπεί σε Spoiler και χωρίς λήψη πολυμέσων.</string>
+    <string name="IgnoreBlockedAbout">Τα μηνύματα εξακολουθούν να είναι διαθέσιμα για προβολή, αλλά το κείμενο θα μετατραπεί σε Spoiler και χωρίς λήψη πολυμέσων.</string>
     <string name="ResetStickerSize">Επαναφ. μεγέθ. αυτοκόλλητου</string>
     <string name="RestartAppToTakeEffect">Επανεκκίνηση για εφαρμογή αλλαγών.</string>
     <string name="MediaPreview">Προεπισκ. πολυμ. στη λίστα διαλόγου</string>

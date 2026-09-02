@@ -55,7 +55,7 @@
     <string name="AskBeforeCalling">Ask before calling</string>
     <string name="DisableNumberRounding">Disable number rounding</string>
     <string name="OfficialChannel">Official channel</string>
-    <string name="IgnoreBlockedAbout">IT IS NOT REALLY HIDE! Messages are still available to view, but text will be converted to Spoiler and media won\'t auto download.</string>
+    <string name="IgnoreBlockedAbout">Messages are still available to view, but text will be converted to Spoiler and media won\'t auto download.</string>
     <string name="ResetStickerSize">Reset sticker size</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">Restart the app to take effect.</string>

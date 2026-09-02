@@ -52,7 +52,7 @@
     <string name="AskBeforeCalling">Подтверждать звонки</string>
     <string name="DisableNumberRounding">Не округлять числа</string>
     <string name="OfficialChannel">Официальный канал</string>
-    <string name="IgnoreBlockedAbout">ОНИ НА САМОМ ДЕЛЕ НЕ СКРЫВАЮТСЯ! Сообщения будут доступны для просмотра, но текст будет скрыт под спойлер, а автозагрузка медиа будет отключена.</string>
+    <string name="IgnoreBlockedAbout">Сообщения будут доступны для просмотра, но текст будет скрыт под спойлер, а автозагрузка медиа будет отключена.</string>
     <string name="ResetStickerSize">Сбросить размер стикера</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">Перезапустите приложение для применения настроек.</string>

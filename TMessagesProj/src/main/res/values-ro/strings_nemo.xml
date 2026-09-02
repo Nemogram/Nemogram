@@ -52,7 +52,7 @@
     <string name="AskBeforeCalling">Întrebați înainte de apelare</string>
     <string name="DisableNumberRounding">Dezactivați rotunjirea numerelor</string>
     <string name="OfficialChannel">Canal oficial</string>
-    <string name="IgnoreBlockedAbout">NU SUNT CHIAR ASCUNSE! Mesajele sunt încă disponibile dar textul va fi transformat în Spoiler iar fișierele nu se vor descărca automat.</string>
+    <string name="IgnoreBlockedAbout">Mesajele sunt încă disponibile dar textul va fi transformat în Spoiler iar fișierele nu se vor descărca automat.</string>
     <string name="ResetStickerSize">Resetați dimensiunea stickerului</string>
     <string name="RestartAppToTakeEffect">Reporniți aplicația pentru a avea efect.</string>
     <string name="MediaPreview">Previzualizare media în lista de dialog</string>

@@ -47,7 +47,7 @@
     <string name="AskBeforeCalling">통화 연결 전에 묻기</string>
     <string name="DisableNumberRounding">숫자 반올림 비활성화</string>
     <string name="OfficialChannel">공식 채널</string>
-    <string name="IgnoreBlockedAbout">숨겨진게 아닙니다!  메시지는 계속 볼 수 있지만 텍스트는 스포일러로 변환되고 미디어는 자동으로 다운로드되지 않습니다.</string>
+    <string name="IgnoreBlockedAbout">메시지는 계속 볼 수 있지만 텍스트는 스포일러로 변환되고 미디어는 자동으로 다운로드되지 않습니다.</string>
     <string name="ResetStickerSize">스티커 사이즈 초기화</string>
     <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">변경된 설정 적용을 위해 앱을 재시작</string>

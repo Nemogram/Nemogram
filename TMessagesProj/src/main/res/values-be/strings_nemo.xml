@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Пытаць перад выклікам</string>
     <string name="DisableNumberRounding">Адключыць акругленне лічбаў</string>
     <string name="OfficialChannel">Афіцыйны канал</string>
-    <string name="IgnoreBlockedAbout">ГЭТА НЕ САПРАЎДНАЕ ХАВАННЕ! Паведамленні па-ранейшаму даступныя для прагляду, але тэкст будзе ператвораны ў спойлер, а медыя не будуць загружацца аўтаматычна.</string>
+    <string name="IgnoreBlockedAbout">Паведамленні па-ранейшаму даступныя для прагляду, але тэкст будзе ператвораны ў спойлер, а медыя не будуць загружацца аўтаматычна.</string>
     <string name="ResetStickerSize">Скінуць памер стыкера</string>
     <string name="RestartAppToTakeEffect">Перазапусціце праграму для прыстасавання налад.</string>
     <string name="MediaPreview">Прадпрагляд медыя ў спісе чатаў</string>

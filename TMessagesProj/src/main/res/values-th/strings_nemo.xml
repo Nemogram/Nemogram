@@ -52,7 +52,7 @@
     <string name="AskBeforeCalling">สอบถามก่อนโทร</string>
     <string name="DisableNumberRounding">ปิดใช้งานการปัดเศษตัวเลข</string>
     <string name="OfficialChannel">ช่องทางการ</string>
-    <string name="IgnoreBlockedAbout">มันไม่ได้ซ่อนจริงๆ! ข้อความยังคงสามารถดูได้ แต่ข้อความจะถูกแปลงเป็นสปอยเลอร์และสื่อจะไม่ดาวน์โหลดอัตโนมัติ</string>
+    <string name="IgnoreBlockedAbout">ข้อความยังคงสามารถดูได้ แต่ข้อความจะถูกแปลงเป็นสปอยเลอร์และสื่อจะไม่ดาวน์โหลดอัตโนมัติ</string>
     <string name="ResetStickerSize">รีเซ็ตขนาดสติ๊กเกอร์</string>
     <string name="RestartAppToTakeEffect">เริ่มแอปพลิเคชันใหม่เพื่อให้การเปลี่ยนแปลงมีผล</string>
     <string name="MediaPreview">ตัวอย่างสื่อในรายการกล่องโต้ตอบ</string>

@@ -49,7 +49,7 @@
     <string name="AskBeforeCalling">Zapytaj przed połączeniem</string>
     <string name="DisableNumberRounding">Wyłącz zaokrąglanie liczb</string>
     <string name="OfficialChannel">Oficjalny kanał</string>
-    <string name="IgnoreBlockedAbout">TO NIE JEST PRAWDZIWE UKRYWANIE! Wiadomości są nadal dostępne do wyświetlenia, ale tekst zostanie przekonwertowany na Spoiler, a multimedia nie będą automatycznie pobierane.</string>
+    <string name="IgnoreBlockedAbout">Wiadomości są nadal dostępne do wyświetlenia, ale tekst zostanie przekonwertowany na Spoiler, a multimedia nie będą automatycznie pobierane.</string>
     <string name="ResetStickerSize">Resetuj rozmiar naklejek</string>
     <string name="RestartAppToTakeEffect">Zrestartuj aplikację, aby wprowadzić zmiany.</string>
     <string name="MediaPreview">Podgląd multimediów na liście rozmów</string>
