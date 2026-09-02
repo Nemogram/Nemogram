@@ -312,6 +312,7 @@
     <string name="DialogsMenuSettingsResetAlertTitle">Сбросить меню?</string>
     <string name="DialogsMenuSettingsResetAlertMessage">Порядок и видимость пунктов меню списка чатов будут сброшены к значениям по умолчанию.</string>
     <string name="NemoSettingsSectionImportExport">Импорт/Экспорт</string>
+    <string name="NemoSettingsSectionUpdates">Обновления</string>
     <string name="ExportNemoSettings">Экспорт настроек</string>
     <string name="ImportNemoSettings">Импорт настроек</string>
     <string name="ExportNemoSettingsSuccess">Настройки экспортированы</string>

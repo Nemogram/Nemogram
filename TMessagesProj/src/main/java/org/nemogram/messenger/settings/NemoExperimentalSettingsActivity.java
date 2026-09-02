@@ -81,6 +81,7 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
         items.add(UItem.asShadow(null));
 
         if (getParentActivity() instanceof LaunchActivity) {
+            items.add(UItem.asHeader(LocaleController.getString(R.string.NemoSettingsSectionUpdates)));
             items.add(TextDetailSettingsCellFactory.of(checkUpdateRow, LocaleController.getString(R.string.CheckUpdate), UpdateHelper.formatDateUpdate(SharedConfig.lastUpdateCheckTime)).slug("checkUpdate"));
             items.add(UItem.asCheck(autoCheckUpdatesRow, LocaleController.getString(R.string.AutoCheckUpdates)).slug("autoCheckUpdates").setChecked(NemoConfig.autoCheckUpdates));
             items.add(TextSettingsCellFactory.of(autoCheckUpdatesIntervalRow, LocaleController.getString(R.string.AutoCheckUpdatesInterval), formatAutoCheckInterval(NemoConfig.autoCheckUpdatesIntervalHours)).slug("autoCheckUpdatesInterval"));

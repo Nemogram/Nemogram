@@ -316,6 +316,7 @@
     <string name="DialogsMenuSettingsResetAlertTitle">Reset menu?</string>
     <string name="DialogsMenuSettingsResetAlertMessage">The chat list menu order and visibility will be reset to the default.</string>
     <string name="NemoSettingsSectionImportExport">Import/Export</string>
+    <string name="NemoSettingsSectionUpdates">Updates</string>
     <string name="ExportNemoSettings">Export settings</string>
     <string name="ImportNemoSettings">Import settings</string>
     <string name="ExportNemoSettingsSuccess">Settings exported</string>
