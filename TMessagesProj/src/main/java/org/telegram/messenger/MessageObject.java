@@ -6638,9 +6638,11 @@ public class MessageObject {
     private boolean hasNonEmojiEntities() {
         if (messageOwner == null || messageOwner.entities == null)
             return false;
-        for (int i = 0; i < messageOwner.entities.size(); ++i)
-            if (!(messageOwner.entities.get(i) instanceof TLRPC.TL_messageEntityCustomEmoji) && !MessageHelper.isLocalCustomEmoji(messageOwner.entities.get(i)))
+        for (int i = 0; i < messageOwner.entities.size(); ++i) {
+            TLRPC.MessageEntity entity = messageOwner.entities.get(i);
+            if (!(entity instanceof TLRPC.TL_messageEntityCustomEmoji) && !MessageHelper.isLocalCustomEmoji(entity))
                 return true;
+        }
         return false;
     }
 
