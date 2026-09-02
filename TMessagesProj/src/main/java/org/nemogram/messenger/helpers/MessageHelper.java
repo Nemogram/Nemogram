@@ -82,7 +82,7 @@ public class MessageHelper extends BaseController {
 
     private static final MessageHelper[] Instance = new MessageHelper[UserConfig.MAX_ACCOUNT_COUNT];
     private static final CharsetDecoder utf8Decoder = StandardCharsets.UTF_8.newDecoder();
-    private static final SpannableStringBuilder[] spannedStrings = new SpannableStringBuilder[5];
+    private static final SpannableStringBuilder[] spannedStrings = new SpannableStringBuilder[6];
 
     public MessageHelper(int num) {
         super(num);
@@ -124,6 +124,23 @@ public class MessageHelper extends BaseController {
             text.append(formatTime(messageObject.messageOwner.fwd_from.date));
         }
         return text;
+    }
+
+    public static CharSequence createPgpString(MessageObject messageObject) {
+        if (spannedStrings[5] == null) {
+            spannedStrings[5] = new SpannableStringBuilder("\u200B");
+            var span = new ColoredImageSpan(Theme.chat_pgpLockDrawable);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                span.setContentDescription(LocaleController.getString(R.string.PgpEncryptedMessage));
+            }
+            spannedStrings[5].setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        var spannableStringBuilder = new SpannableStringBuilder();
+        spannableStringBuilder
+                .append(spannedStrings[5])
+                .append(' ')
+                .append(LocaleController.getInstance().getFormatterDay().format((long) (messageObject.messageOwner.date) * 1000));
+        return spannableStringBuilder;
     }
 
     public static CharSequence createBlockedString(MessageObject messageObject) {

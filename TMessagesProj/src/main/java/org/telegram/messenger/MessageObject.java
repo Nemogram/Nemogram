@@ -6117,11 +6117,11 @@ public class MessageObject {
             isPgpMessage = true;
             pgpArmoredText = messageText.toString();
             if (pgpDecryptState == PGP_DECRYPT_STATE_DONE && pgpDecryptedText != null) {
-                messageText = org.nemogram.messenger.pgp.PgpUtils.withLockPrefix(pgpDecryptedText);
+                messageText = pgpDecryptedText;
             } else if (pgpDecryptState == PGP_DECRYPT_STATE_FAILED) {
-                messageText = org.nemogram.messenger.pgp.PgpUtils.withLockPrefix(getString(R.string.PgpDecryptFailed));
+                messageText = getString(R.string.PgpDecryptFailed);
             } else {
-                messageText = org.nemogram.messenger.pgp.PgpUtils.withLockPrefix(getString(R.string.PgpDecrypting));
+                messageText = getString(R.string.PgpDecrypting);
                 if (pgpDecryptState == PGP_DECRYPT_STATE_NONE) {
                     org.nemogram.messenger.pgp.PgpMessageDecryptor.decryptAsync(this);
                 }

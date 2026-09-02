@@ -299,6 +299,7 @@
     <string name="PgpEncryptedMessagePlaceholder">Зашифрованное сообщение</string>
     <string name="PgpDecrypting">Расшифровка…</string>
     <string name="PgpDecryptFailed">Не удалось расшифровать сообщение</string>
+    <string name="PgpEncryptedMessage">Зашифровано с помощью OpenPGP</string>
     <string name="PgpEncrypting">Шифрование…</string>
     <string name="PgpEncryptFailed">Не удалось зашифровать сообщение: %1$s</string>
     <string name="PgpMenuItem">OpenPGP</string>

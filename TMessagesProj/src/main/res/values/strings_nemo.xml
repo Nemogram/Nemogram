@@ -303,6 +303,7 @@
     <string name="PgpEncryptedMessagePlaceholder">Encrypted message</string>
     <string name="PgpDecrypting">Decrypting…</string>
     <string name="PgpDecryptFailed">Could not decrypt message</string>
+    <string name="PgpEncryptedMessage">Encrypted with OpenPGP</string>
     <string name="PgpEncrypting">Encrypting…</string>
     <string name="PgpEncryptFailed">Could not encrypt message: %1$s</string>
     <string name="PgpMenuItem">OpenPGP</string>

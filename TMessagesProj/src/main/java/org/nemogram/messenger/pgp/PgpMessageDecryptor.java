@@ -22,7 +22,7 @@ public class PgpMessageDecryptor {
                 AndroidUtilities.runOnUIThread(() -> {
                     messageObject.pgpDecryptState = MessageObject.PGP_DECRYPT_STATE_DONE;
                     messageObject.pgpDecryptedText = plainText;
-                    messageObject.messageText = PgpUtils.withLockPrefix(plainText);
+                    messageObject.messageText = plainText;
                     // without this the bubble would keep old size
                     messageObject.forceUpdate = true;
                     messageObject.generateLayout(null);
@@ -46,7 +46,7 @@ public class PgpMessageDecryptor {
     private static void markFailed(MessageObject messageObject) {
         AndroidUtilities.runOnUIThread(() -> {
             messageObject.pgpDecryptState = MessageObject.PGP_DECRYPT_STATE_FAILED;
-            messageObject.messageText = PgpUtils.withLockPrefix(LocaleController.getString(R.string.PgpDecryptFailed));
+            messageObject.messageText = LocaleController.getString(R.string.PgpDecryptFailed);
             messageObject.forceUpdate = true;
             messageObject.generateLayout(null);
             NotificationCenter.getInstance(messageObject.currentAccount)

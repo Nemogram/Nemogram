@@ -18585,6 +18585,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 timeString = MessageHelper.createEditedString(currentMessageObject);
                 customDrawableWidth = Theme.chat_editDrawable.getIntrinsicWidth();
             }
+        } else if (currentMessageObject.isPgpMessage) {
+            timeString = MessageHelper.createPgpString(currentMessageObject);
+            customDrawableWidth = Theme.chat_pgpLockDrawable.getIntrinsicWidth();
         } else if (currentMessageObject.isSaved && currentMessageObject.messageOwner.fwd_from != null && (currentMessageObject.messageOwner.fwd_from.date != 0 || currentMessageObject.messageOwner.fwd_from.saved_date != 0)) {
             int date = currentMessageObject.messageOwner.fwd_from.saved_date;
             if (date == 0) {

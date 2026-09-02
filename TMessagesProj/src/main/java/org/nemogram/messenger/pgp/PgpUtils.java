@@ -1,7 +1,5 @@
 package org.nemogram.messenger.pgp;
 
-import android.text.SpannableStringBuilder;
-
 import java.util.regex.Pattern;
 
 public class PgpUtils {
@@ -45,14 +43,5 @@ public class PgpUtils {
 
     public static String formatKeyId(long keyId) {
         return "0x" + Long.toHexString(keyId).toUpperCase();
-    }
-
-    public static CharSequence withLockPrefix(CharSequence text) {
-        if (text == null) {
-            return "\uD83D\uDD12 ";
-        }
-        SpannableStringBuilder builder = new SpannableStringBuilder("\uD83D\uDD12 ");
-        builder.append(text);
-        return builder;
     }
 }

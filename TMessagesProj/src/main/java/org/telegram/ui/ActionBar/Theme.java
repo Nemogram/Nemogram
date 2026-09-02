@@ -2519,6 +2519,7 @@ public class Theme {
     public static Drawable chat_arrowDrawable;
     public static Drawable chat_editDrawable;
     public static Drawable chat_blockDrawable;
+    public static Drawable chat_pgpLockDrawable;
 
     public static Drawable chat_timeHintSentDrawable;
     public static Drawable chat_timeHintForwardDrawable;
@@ -8332,6 +8333,7 @@ public class Theme {
             chat_arrowDrawable = resources.getDrawable(R.drawable.search_arrow).mutate();
             chat_editDrawable = resources.getDrawable(R.drawable.edit_pencil).mutate();
             chat_blockDrawable = resources.getDrawable(R.drawable.block_msg).mutate();
+            chat_pgpLockDrawable = resources.getDrawable(R.drawable.msg_mini_lock2).mutate();
 
             chat_timeHintSentDrawable = resources.getDrawable(R.drawable.msg_check_s).mutate();
             chat_timeHintForwardDrawable = resources.getDrawable(R.drawable.mini_forwarded).mutate();
