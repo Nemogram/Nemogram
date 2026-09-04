@@ -40,7 +40,7 @@ dependencies {
     implementation 'androidx.activity:activity:1.13.0'
     implementation 'androidx.fragment:fragment:1.9.1'
     implementation 'androidx.core:core:1.19.1'
-    implementation 'androidx.collection:collection:1.6.0'
+    implementation 'androidx.collection:collection:1.7.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.4.2'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'
@@ -72,7 +72,7 @@ dependencies {
     }
     implementation 'com.google.mlkit:language-id:17.0.6'
     implementation 'com.android.billingclient:billing:7.1.1'
-    implementation 'com.google.code.gson:gson:2.14.0'
+    implementation 'com.google.code.gson:gson:2.15.0'
     implementation 'com.github.open-keychain:openpgp-api:v11'
     implementation ('com.google.guava:guava:33.6.0-android') {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
@@ -104,10 +104,10 @@ dependencies {
 //    implementation 'com.google.mlkit:translate:17.0.3'
 
     implementation 'androidx.browser:browser:1.10.0'
-    implementation 'app.nekogram.gifski:gifski:1.0.0'
+    implementation 'app.nekogram.gifski:gifski:1.0.3'
     implementation 'com.jaredrummler:truetypeparser-light:1.0.0'
     implementation 'com.squareup.okhttp3:okhttp:5.4.0'
-    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.1'
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.2'
     implementation 'org.apache.commons:commons-text:1.15.0'
 }
 
