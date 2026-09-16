@@ -21,6 +21,7 @@ import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.settings.cells.EmojiSetCell;
 import org.nemogram.messenger.settings.cells.FolderTabsPreviewCell;
 import org.nemogram.messenger.settings.cells.InputPanelStyleCell;
+import org.nemogram.messenger.settings.cells.ChatTopBarStyleCell;
 
 public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity implements NotificationCenter.NotificationCenterDelegate {
 
@@ -30,8 +31,11 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int disableNumberRoundingRow = rowId++;
     private final int hideBottomNavigationBarRow = rowId++;
     private final int disableGooeyAvatarAnimationRow = rowId++;
-    private final int legacyChatActionBarRow = rowId++;
     private final int searchBarStyleRow = rowId++;
+
+    private final int chatTopBarStyleHeaderRow = rowId++;
+    private final int chatTopBarStyleRow = rowId++;
+    private final int chatTopBarStyleShadowRow = rowId++;
 
     private final int inputPanelStyleHeaderRow = rowId++;
     private final int inputPanelStyleRow = rowId++;
@@ -52,6 +56,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
 
     private FolderTabsPreviewCell folderTabsPreviewCell;
     private InputPanelStyleCell inputPanelStyleCell;
+    private ChatTopBarStyleCell chatTopBarStyleCell;
 
     @Override
     public boolean onFragmentCreate() {
@@ -81,7 +86,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asCheck(disableNumberRoundingRow, LocaleController.getString(R.string.DisableNumberRounding), "4.8K -> 4777").slug("disableNumberRounding").setChecked(NemoConfig.disableNumberRounding));
         items.add(UItem.asCheck(hideBottomNavigationBarRow, LocaleController.getString(R.string.HideBottomNavigationBar)).setChecked(NemoConfig.hideBottomNavigationBar).slug("hideBottomNavigationBar"));
         items.add(UItem.asCheck(disableGooeyAvatarAnimationRow, LocaleController.getString(R.string.DisableGooeyAvatarAnimation)).setChecked(NemoConfig.disableGooeyAvatarAnimation).slug("disableGooeyAvatarAnimation"));
-        items.add(UItem.asCheck(legacyChatActionBarRow, LocaleController.getString(R.string.LegacyChatActionBar)).setChecked(NemoConfig.legacyChatActionBar).slug("legacyChatActionBar"));
         items.add(TextSettingsCellFactory.of(searchBarStyleRow,
                 LocaleController.getString(R.string.SearchBarStyle),
                 LocaleController.getString(NemoConfig.searchBarStyle == NemoConfig.SEARCH_BAR_COMPACT
@@ -91,6 +95,27 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
                         : R.string.SearchBarStyleNormal)
         ).slug("searchBarStyle"));
         items.add(UItem.asShadow(null));
+
+        items.add(UItem.asHeader(chatTopBarStyleHeaderRow, LocaleController.getString(R.string.ChatTopBarStyle)));
+        if (getContext() != null) {
+            if (chatTopBarStyleCell == null) {
+                chatTopBarStyleCell = new ChatTopBarStyleCell(getContext(), resourcesProvider) {
+                    @Override
+                    protected void onStyleSelected(boolean legacy) {
+                        if (legacy == NemoConfig.legacyChatActionBar) {
+                            return;
+                        }
+                        NemoConfig.toggleLegacyChatActionBar();
+                        if (parentLayout != null) {
+                            parentLayout.rebuildAllFragmentViews(false, false);
+                        }
+                    }
+                };
+            }
+            chatTopBarStyleCell.updateSelection();
+            items.add(UItem.asCustom(chatTopBarStyleRow, chatTopBarStyleCell));
+        }
+        items.add(UItem.asShadow(chatTopBarStyleShadowRow, null));
 
         items.add(UItem.asHeader(inputPanelStyleHeaderRow, LocaleController.getString(R.string.InputPanelStyle)));
         if (getContext() != null) {
@@ -235,12 +260,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             }
         } else if (id == searchBarStyleRow) {
             presentFragment(new NemoSearchBarStyleActivity());
-        } else if (id == legacyChatActionBarRow) {
-            NemoConfig.toggleLegacyChatActionBar();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NemoConfig.legacyChatActionBar);
-            }
-            parentLayout.rebuildAllFragmentViews(false, false);
         } else if (id == miniSenderAvatarRow) {
             NemoConfig.toggleMiniSenderAvatar();
             if (view instanceof TextCheckCell) {

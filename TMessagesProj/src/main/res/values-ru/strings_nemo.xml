@@ -267,10 +267,12 @@
     <string name="MusicViewAlternativeLayout">Альтернативное отображение музыки</string>
     <string name="ProfileMusicLabel">Музыка</string>
     <string name="ScrollToFirstMessage">К первому сообщению</string>
+    <string name="ChatTopBarStyle">Стиль верхнего бара чата</string>
+    <string name="LegacyChatActionBar">Классическая</string>
+    <string name="ModernChatActionBar">Современная</string>
     <string name="InputPanelStyle">Стиль панели ввода</string>
     <string name="LegacyInputPanel">Классическая</string>
     <string name="ModernInputPanel">Современная</string>
-    <string name="LegacyChatActionBar">Классический верхний бар чата</string>
     <string name="MoreHapticFeedback">Более выраженная тактильная обратная связь</string>
     <string name="StickersAndGifs">Стикеры и GIF</string>
     <string name="ReplyWithTimecode">Ответить с таймкодом</string>
