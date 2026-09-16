@@ -271,7 +271,9 @@
     <string name="MusicViewAlternativeLayout">Alternative music view</string>
     <string name="ProfileMusicLabel">Music</string>
     <string name="ScrollToFirstMessage">Scroll to first message</string>
-    <string name="LegacyInputPanel">Legacy input panel</string>
+    <string name="InputPanelStyle">Input panel style</string>
+    <string name="LegacyInputPanel">Legacy</string>
+    <string name="ModernInputPanel">Modern</string>
     <string name="LegacyChatActionBar">Legacy chat top bar</string>
     <string name="MoreHapticFeedback">More haptic feedback</string>
     <string name="StickersAndGifs">Stickers and GIF</string>

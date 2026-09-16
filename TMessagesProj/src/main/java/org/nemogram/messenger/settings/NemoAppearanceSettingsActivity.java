@@ -20,6 +20,7 @@ import org.nemogram.messenger.helpers.EmojiHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.settings.cells.EmojiSetCell;
 import org.nemogram.messenger.settings.cells.FolderTabsPreviewCell;
+import org.nemogram.messenger.settings.cells.InputPanelStyleCell;
 
 public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity implements NotificationCenter.NotificationCenterDelegate {
 
@@ -29,9 +30,12 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int disableNumberRoundingRow = rowId++;
     private final int hideBottomNavigationBarRow = rowId++;
     private final int disableGooeyAvatarAnimationRow = rowId++;
-    private final int legacyInputPanelRow = rowId++;
     private final int legacyChatActionBarRow = rowId++;
     private final int searchBarStyleRow = rowId++;
+
+    private final int inputPanelStyleHeaderRow = rowId++;
+    private final int inputPanelStyleRow = rowId++;
+    private final int inputPanelStyleShadowRow = rowId++;
 
     private final int hideStoriesRow = rowId++;
     private final int mediaPreviewRow = rowId++;
@@ -47,6 +51,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int strokeOnViewsRow = rowId++;
 
     private FolderTabsPreviewCell folderTabsPreviewCell;
+    private InputPanelStyleCell inputPanelStyleCell;
 
     @Override
     public boolean onFragmentCreate() {
@@ -76,7 +81,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asCheck(disableNumberRoundingRow, LocaleController.getString(R.string.DisableNumberRounding), "4.8K -> 4777").slug("disableNumberRounding").setChecked(NemoConfig.disableNumberRounding));
         items.add(UItem.asCheck(hideBottomNavigationBarRow, LocaleController.getString(R.string.HideBottomNavigationBar)).setChecked(NemoConfig.hideBottomNavigationBar).slug("hideBottomNavigationBar"));
         items.add(UItem.asCheck(disableGooeyAvatarAnimationRow, LocaleController.getString(R.string.DisableGooeyAvatarAnimation)).setChecked(NemoConfig.disableGooeyAvatarAnimation).slug("disableGooeyAvatarAnimation"));
-        items.add(UItem.asCheck(legacyInputPanelRow, LocaleController.getString(R.string.LegacyInputPanel)).setChecked(NemoConfig.legacyInputPanel).slug("legacyInputPanel"));
         items.add(UItem.asCheck(legacyChatActionBarRow, LocaleController.getString(R.string.LegacyChatActionBar)).setChecked(NemoConfig.legacyChatActionBar).slug("legacyChatActionBar"));
         items.add(TextSettingsCellFactory.of(searchBarStyleRow,
                 LocaleController.getString(R.string.SearchBarStyle),
@@ -87,6 +91,24 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
                         : R.string.SearchBarStyleNormal)
         ).slug("searchBarStyle"));
         items.add(UItem.asShadow(null));
+
+        items.add(UItem.asHeader(inputPanelStyleHeaderRow, LocaleController.getString(R.string.InputPanelStyle)));
+        if (getContext() != null) {
+            if (inputPanelStyleCell == null) {
+                inputPanelStyleCell = new InputPanelStyleCell(getContext(), resourcesProvider) {
+                    @Override
+                    protected void onStyleSelected(boolean legacy) {
+                        if (legacy == NemoConfig.legacyInputPanel) {
+                            return;
+                        }
+                        NemoConfig.toggleLegacyInputPanel();
+                    }
+                };
+            }
+            inputPanelStyleCell.updateSelection(false);
+            items.add(UItem.asCustom(inputPanelStyleRow, inputPanelStyleCell));
+        }
+        items.add(UItem.asShadow(inputPanelStyleShadowRow, null));
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.SavedDialogsTab)));
         items.add(UItem.asCheck(hideStoriesRow, LocaleController.getString(R.string.HideStories)).slug("hideStories").setChecked(NemoConfig.hideStories));
@@ -213,11 +235,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             }
         } else if (id == searchBarStyleRow) {
             presentFragment(new NemoSearchBarStyleActivity());
-        } else if (id == legacyInputPanelRow) {
-            NemoConfig.toggleLegacyInputPanel();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NemoConfig.legacyInputPanel);
-            }
         } else if (id == legacyChatActionBarRow) {
             NemoConfig.toggleLegacyChatActionBar();
             if (view instanceof TextCheckCell) {
