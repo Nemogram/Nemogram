@@ -3,18 +3,24 @@ import java.nio.file.Paths
 
 plugins {
     id 'com.android.library'
-    id 'org.telegram.lottie-meta'
+    id 'org.telegram.build-plugin'
 }
 apply plugin: 'idea'
 
 idea {
     module {
         excludeDirs += [
-            file('jni/third_party'),
-            file('jni/ffmpeg'),
-            file('jni/tlottie'),
-            file('jni/boringssl'),
-            file('jni/sqlite')
+                file('jni/td'),
+                file('jni/third_party/boringssl'),
+                file('jni/third_party/dav1d'),
+                file('jni/third_party/ffmpeg'),
+                file('jni/third_party/libvpx'),
+                file('jni/third_party/libyuv'),
+                file('jni/third_party/openh264'),
+                file('jni/third_party/xiph'),
+                file('jni/tlottie'),
+                file('jni/voip/webrtc'),
+                file('jni/sqlite')
         ]
     }
 }
@@ -35,6 +41,7 @@ dependencies {
     implementation "androidx.sharetarget:sharetarget:1.2.0"
     implementation 'androidx.interpolator:interpolator:1.0.0'
     implementation 'androidx.biometric:biometric:1.1.0'
+    implementation 'androidx.webkit:webkit:1.14.0'
 
     implementation 'androidx.car.app:app:1.7.0'
     implementation 'androidx.car.app:app-projected:1.7.0'
@@ -79,6 +86,12 @@ dependencies {
     implementation("io.noties.markwon:ext-latex:4.6.2") {
         exclude group: 'ru.noties', module: 'jlatexmath-android'
     }
+
+    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer")
+    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer-dash")
+    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer-hls")
+    api project(":TMessagesProj_Modules:media3:media-lib-decoder-ffmpeg")
+    api project(":TMessagesProj_Modules:media3:media-lib-session")
     api project(':jlatexmath')
 
 //    implementation 'com.google.mlkit:translate:17.0.3'
@@ -98,7 +111,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.4.0'
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.1'
     implementation 'org.apache.commons:commons-text:1.15.0'
-    }
+}
 
 android {
     sourceSets.main.jniLibs.srcDirs = ['./jni/']

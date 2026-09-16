@@ -51,7 +51,7 @@ public class NemoAboutSettingsActivity extends BaseNemoSettingsActivity {
         titleView.setGravity(Gravity.CENTER);
         titleView.setSingleLine();
         titleView.setEllipsize(TextUtils.TruncateAt.END);
-        titleView.setText(LocaleController.getString(R.string.AppNameNemo));
+        titleView.setText(LocaleController.getString(R.string.Nemogram));
         titleView.setTextColor(getThemedColor(Theme.key_windowBackgroundWhiteBlackText));
         topView.addView(titleView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 126, 0, 0));
 

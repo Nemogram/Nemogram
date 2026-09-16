@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppNameNemo" translatable="false">@string/Nemogram</string>
     <string name="Nemogram" translatable="false">Nemogram</string>
     <string name="NemogramBeta" translatable="false">Nemogram Beta</string>
     <string name="NemoSettings">Nemo Settings</string>
