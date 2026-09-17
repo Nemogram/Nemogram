@@ -111,3 +111,4 @@
 # https://github.com/osmdroid/osmdroid/issues/633
 -dontwarn org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck
 -dontwarn org.osmdroid.**
+
