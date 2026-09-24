@@ -2135,6 +2135,11 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
         PhotoViewer.getInstance().openPhotoForSelect(arrayList, index, type, false, new BasePhotoProvider() {
 
             @Override
+            public void onPreOpen() {
+                pauseCameraPreview();
+            }
+
+            @Override
             public void onOpen() {
                 pauseCameraPreview();
             }
