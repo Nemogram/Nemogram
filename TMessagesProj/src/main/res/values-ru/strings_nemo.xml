@@ -9,7 +9,7 @@
     <string name="DeleteAllFromSelf">Удалить мои сообщения</string>
     <string name="DeleteAllFromSelfAlert">Внимание! Это **удалит все ваши сообщения** в этом чате для **всех**.</string>
     <string name="DeleteAllFromSelfAlertBefore">Осторожно! Это **удалит все ваши сообщения от вас до %s** в этом чате для **всех** участников.</string>
-    <string name="DeleteAllFromSelfBefore">Раньше...</string>
+    <string name="DeleteAllFromSelfBefore">Раньше…</string>
     <string name="IgnoreBlocked">Скрыть заблокированных пользователей</string>
     <string name="Connection">Соединение</string>
     <string name="Chat">Чат</string>
@@ -103,7 +103,7 @@
     <string name="MutualContactDescription">Этот контакт является общим.</string>
     <string name="InviteTextNemo">Привет, я использую Nemogram для переписки. Присоединяйся! Скачать его можно здесь: %1$s</string>
     <string name="NemogramVersion">Nemogram %1$s\nНа основе Telegram %2$s\nФорк Nekogram\nДизайн %3$s</string>    
-    <string name="UpdateInstalling">Установка обновления...</string>
+    <string name="UpdateInstalling">Установка обновления…</string>
     <string name="UpdateInstallingNotification">После завершения обновления появится уведомление.</string>
     <string name="UpdateInstallingRelaunch">Когда обновление завершится, приложение будет перезапущено.</string>
     <string name="UpdateInstalledNotification">Установка обновления завершена, нажмите для запуска приложения.</string>
@@ -225,7 +225,7 @@
     <string name="AddKeyword">Добавить ключевое слово</string>
     <string name="DeleteKeyword">Удалить ключевое слово</string>
     <string name="DeleteKeywordConfirm">Удалить \"%s\" из списка заблокированных ключевых слов?</string>
-    <string name="KeywordFilterHint">Введите ключевое слово...</string>
+    <string name="KeywordFilterHint">Введите ключевое слово…</string>
     <string name="FilterKeywordsInChats">Фильтровать в чатах</string>
     <string name="FilterKeywordsInChannels">Фильтровать в каналах</string>
     <string name="FilterKeywordsInChatsAbout">Скрывать сообщения с заблокированными ключевыми словами в чатах.</string>
@@ -244,7 +244,7 @@
     <string name="ExportChatFormatJson">JSON</string>
     <string name="ExportChatStart">Экспортировать</string>
     <string name="ExportChatProgress">Экспортировано: %1$d сообщений</string>
-    <string name="ExportChatPreparing">Подготовка...</string>
+    <string name="ExportChatPreparing">Подготовка…</string>
     <string name="ExportChatError">Ошибка: %1$s</string>
     <string name="ExportChatInclude">Включить в экспорт</string>
     <string name="ExportChatPhotos">Фото</string>
@@ -267,7 +267,7 @@
     <string name="MusicViewAlternativeLayout">Альтернативное отображение музыки</string>
     <string name="ProfileMusicLabel">Музыка</string>
     <string name="ScrollToFirstMessage">К первому сообщению</string>
-    <string name="ChatTopBarStyle">Стиль верхнего бара чата</string>
+    <string name="ChatTopBarStyle">Стиль верхней панели</string>
     <string name="LegacyChatActionBar">Классическая</string>
     <string name="ModernChatActionBar">Современная</string>
     <string name="InputPanelStyle">Стиль панели ввода</string>
