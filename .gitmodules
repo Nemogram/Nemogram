@@ -36,4 +36,4 @@
 	url = https://github.com/tdlib/td.git
 [submodule "TMessagesProj_Modules/media"]
 	path = TMessagesProj_Modules/media
-	url = https://github.com/Arseny271/media.git
+	url = https://github.com/Nemogram/media.git
