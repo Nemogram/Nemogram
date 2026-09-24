@@ -5308,10 +5308,15 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
             currentSheetAnimation = null;
             currentSheetAnimationType = 0;
         }
+        if (openAnimationNotificationsLocker != null) {
+            openAnimationNotificationsLocker.unlock();
+            openAnimationNotificationsLocker = null;
+        }
     }
 
     private SpringAnimation appearSpringAnimation;
     private AnimatorSet buttonsAnimation;
+    private AnimationNotificationsLocker openAnimationNotificationsLocker;
 
     @Override
     protected boolean onCustomOpenAnimation() {
@@ -5353,9 +5358,6 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
         }
         appearSpringAnimation.start();
 
-        if (useHardwareLayer) {
-            container.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        }
         currentSheetAnimationType = 1;
         currentSheetAnimation = new AnimatorSet();
         currentSheetAnimation.playTogether(
@@ -5364,18 +5366,18 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
         currentSheetAnimation.setDuration(400);
         currentSheetAnimation.setStartDelay(20);
         currentSheetAnimation.setInterpolator(openInterpolator);
-        AnimationNotificationsLocker locker = new AnimationNotificationsLocker(new int[]{NotificationCenter.albumsDidLoad});
+        openAnimationNotificationsLocker = new AnimationNotificationsLocker(new int[]{NotificationCenter.albumsDidLoad});
         BottomSheetDelegateInterface delegate = super.delegate;
         final Runnable onAnimationEnd = () -> {
             currentSheetAnimation = null;
             appearSpringAnimation = null;
-            locker.unlock();
+            if (openAnimationNotificationsLocker != null) {
+                openAnimationNotificationsLocker.unlock();
+                openAnimationNotificationsLocker = null;
+            }
             currentSheetAnimationType = 0;
             if (delegate != null) {
                 delegate.onOpenAnimationEnd();
-            }
-            if (useHardwareLayer) {
-                container.setLayerType(View.LAYER_TYPE_NONE, null);
             }
 
             if (isFullscreen) {
@@ -5408,10 +5410,9 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
                 }
             }
         });
-        locker.lock();
+        openAnimationNotificationsLocker.lock();
         NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.stopAllHeavyOperations, 512);
         currentSheetAnimation.start();
-
 //        AndroidUtilities.runOnUIThread(() -> {
 //            if (currentSheetAnimation != null) {
 //                // closes keyboard so navigation bar buttons can be accessible

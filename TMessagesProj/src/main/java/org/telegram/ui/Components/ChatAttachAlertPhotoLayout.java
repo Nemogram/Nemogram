@@ -4239,11 +4239,11 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
     public void didReceivedNotification(int id, int account, Object... args) {
         if (id == NotificationCenter.albumsDidLoad) {
             if (adapter != null) {
-                if (shouldLoadAllMedia()) {
-                    galleryAlbumEntry = MediaController.allMediaAlbumEntry;
-                } else {
-                    galleryAlbumEntry = MediaController.allPhotosAlbumEntry;
+                MediaController.AlbumEntry newGalleryAlbumEntry = shouldLoadAllMedia() ? MediaController.allMediaAlbumEntry : MediaController.allPhotosAlbumEntry;
+                if (newGalleryAlbumEntry == galleryAlbumEntry && selectedAlbumEntry != null) {
+                    return;
                 }
+                galleryAlbumEntry = newGalleryAlbumEntry;
                 if (selectedAlbumEntry == null || parentAlert != null && parentAlert.isStickerMode) {
                     selectedAlbumEntry = galleryAlbumEntry;
                 } else if (shouldLoadAllMedia()) {
