@@ -6426,6 +6426,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.didUpdatePremiumGiftStickers);
         NotificationCenter.getInstance(currentAccount).removeObserver(this, NotificationCenter.userInfoDidLoad);
 
+        if (observersGroup != null) {
+            observersGroup.removeAllObservers();
+            observersGroup = null;
+        }
+
         cancelShakeAnimation();
         if (checkBox != null) {
             checkBox.onDetachedFromWindow();
@@ -6523,15 +6528,24 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         Choreographer60FpsContent.getInstance().removeFrameCallback(invalidateOutboundsRunnable);
     }
 
+    private NotificationCenter.ObserversGroup observersGroup;
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.startSpoilers);
-        NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.stopSpoilers);
-        NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.emojiLoaded);
-        NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.didUpdatePremiumGiftStickers);
-        NotificationCenter.getInstance(currentAccount).addObserver(this, NotificationCenter.userInfoDidLoad);
+        if (observersGroup != null) {
+            observersGroup.removeAllObservers();
+            observersGroup = null;
+        }
+
+        observersGroup = NotificationCenter.getInstance(currentAccount)
+            .createObserversGroup(this)
+            .add(NotificationCenter.userInfoDidLoad)
+            .addGlobal(NotificationCenter.startSpoilers)
+            .addGlobal(NotificationCenter.stopSpoilers)
+            .addGlobal(NotificationCenter.emojiLoaded)
+            .addGlobal(NotificationCenter.didUpdatePremiumGiftStickers);
 
         if (currentMessageObject != null) {
             currentMessageObject.animateComments = false;

@@ -11,6 +11,7 @@ idea {
     module {
         excludeDirs += [
                 file('jni/td'),
+                file('jni/third_party/absl'),
                 file('jni/third_party/boringssl'),
                 file('jni/third_party/dav1d'),
                 file('jni/third_party/ffmpeg'),
@@ -35,6 +36,7 @@ dependencies {
     implementation 'androidx.activity:activity:1.13.0'
     implementation 'androidx.fragment:fragment:1.8.9'
     implementation 'androidx.core:core:1.18.0'
+    implementation 'androidx.collection:collection:1.6.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.4.2'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'

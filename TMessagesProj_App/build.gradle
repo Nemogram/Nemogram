@@ -47,6 +47,11 @@ android {
                 signingConfig signingConfigs.sign
             }
             applicationIdSuffix ".beta"
+            minifyEnabled false
+            shrinkResources false
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../TMessagesProj/proguard-rules.pro'
+            ndk.debugSymbolLevel = 'FULL'
         }
 
         release {

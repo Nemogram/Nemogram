@@ -36,6 +36,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONObject;
+import org.telegram.messenger.utils.Choreographer60FpsContent;
 import org.telegram.messenger.voip.VideoCapturerDevice;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLRPC;
@@ -195,7 +196,6 @@ public class ApplicationLoader extends Application {
 
                     boolean isSlow = isConnectionSlow();
                     for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
-                        if (!UserConfig.getInstance(a).isClientActivated()) continue;
                         ConnectionsManager.getInstance(a).checkConnection();
                         FileLoader.getInstance(a).onNetworkChanged(isSlow);
                     }
@@ -230,7 +230,6 @@ public class ApplicationLoader extends Application {
         SharedPrefsHelper.init(applicationContext);
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) { //TODO improve account
             UserConfig.getInstance(a).loadConfig();
-            if (!UserConfig.getInstance(a).isClientActivated()) continue;
             MessagesController.getInstance(a);
             if (a == 0) {
                 SharedConfig.pushStringStatus = "__FIREBASE_GENERATING_SINCE_" + ConnectionsManager.getInstance(a).getCurrentTime() + "__";
@@ -252,7 +251,6 @@ public class ApplicationLoader extends Application {
 
         MediaController.getInstance();
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) { //TODO improve account
-            if (!UserConfig.getInstance(a).isClientActivated()) continue;
             ContactsController.getInstance(a).checkAppAccount();
             DownloadController.getInstance(a);
         }
@@ -342,7 +340,15 @@ public class ApplicationLoader extends Application {
 
         LauncherIconController.tryFixLauncherIconIfNeeded();
         ProxyRotationController.init();
+
+        //if (BuildConfig.DEBUG_PRIVATE_VERSION) {
+        //    Choreographer60FpsContent.getInstance().addFrameCallback(debugEverySecondChecks, 1);
+        //}
     }
+
+    private final Runnable debugEverySecondChecks = () -> AndroidUtilities.runOnUIThread(() -> {
+        NotificationCenter.sanitize();
+    });
 
     public static void startPushService() {
         SharedPreferences preferences = MessagesController.getGlobalNotificationsSettings();

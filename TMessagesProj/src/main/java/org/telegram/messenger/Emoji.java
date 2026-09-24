@@ -141,7 +141,7 @@ public class Emoji {
             }
             loadingEmoji[page][page2] = true;
             Utilities.globalQueue.postRunnable(() -> {
-                Bitmap bitmap;
+                Bitmap bitmap = null;
                 if (isSelectedEmojiPack) {
                     int emojiSize = 66;
                     bitmap = Bitmap.createBitmap(emojiSize, emojiSize, Bitmap.Config.ARGB_8888);
@@ -160,32 +160,6 @@ public class Emoji {
                         final EmojiPack emojiPack = EmojiPack.getInstance();
                         bitmap = emojiPack.getEmoji(page, page2);
 
-                        final int maskIndex = emojiPack.getMaskId(page, page2);
-                        if (bitmap != null && maskIndex != -1) {
-                            final Bitmap alphaBitmap = emojiPack.getMask(maskIndex);
-                            if (alphaBitmap != null) {
-                                final int w = bitmap.getWidth();
-                                final int h = bitmap.getHeight();
-
-                                final int[] rgbPixels = new int[w * h];
-                                final int[] alphaPixels = new int[w * h];
-
-                                bitmap.getPixels(rgbPixels, 0, w, 0, 0, w, h);
-                                alphaBitmap.getPixels(alphaPixels, 0, w, 0, 0, w, h);
-                                alphaBitmap.recycle();
-
-                                for (int i = 0; i < rgbPixels.length; i++) {
-                                    int c = rgbPixels[i];
-                                    c = (c & 0x00FFFFFF) | ((alphaPixels[i] & 0xFF) << 24);
-
-                                    rgbPixels[i] = c;
-                                }
-
-                                bitmap.recycle();
-                                bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-                                bitmap.setPixels(rgbPixels, 0, w, 0, 0, w, h);
-                            }
-                        }
                     } catch (Exception e) {
                         FileLog.e(e);
                     }

@@ -36,7 +36,7 @@
 	url = https://github.com/tdlib/td.git
 [submodule "TMessagesProj_Modules/media"]
 	path = TMessagesProj_Modules/media
-	url = https://github.com/Nemogram/media.git
+	url = git@github.com:Nemogram/media.git
 [submodule "TMessagesProj/jni/third_party/absl"]
 	path = TMessagesProj/jni/third_party/absl
 	url = https://github.com/abseil/abseil-cpp.git

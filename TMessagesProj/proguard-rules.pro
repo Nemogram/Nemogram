@@ -112,3 +112,33 @@
 -dontwarn org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck
 -dontwarn org.osmdroid.**
 
+-keep class org.telegram.messenger.* { *; }
+-keep class org.telegram.messenger.camera.* { *; }
+-keep class org.telegram.messenger.secretmedia.* { *; }
+-keep class org.telegram.messenger.support.* { *; }
+-keep class org.telegram.messenger.support.* { *; }
+-keep class org.telegram.messenger.time.* { *; }
+-keep class org.telegram.messenger.video.* { *; }
+-keep class org.telegram.messenger.voip.* { *; }
+-keep class org.telegram.SQLite.** { *; }
+-keep class org.telegram.tgnet.ConnectionsManager { *; }
+-keep class org.telegram.tgnet.NativeByteBuffer { *; }
+-keep class org.telegram.tgnet.RequestTimeDelegate { *; }
+-keep class org.telegram.tgnet.RequestDelegate { *; }
+-keep class org.telegram.ui.Stories.recorder.FfmpegAudioWaveformLoader { *; }
+-keep class androidx.mediarouter.app.MediaRouteButton { *; }
+-keepclassmembers class ** {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# https://developers.google.com/ml-kit/known-issues#android_issues
+-keep class com.google.mlkit.nl.languageid.internal.LanguageIdentificationJni { *; }
+
+# Additional classes loaded reflectively by the updated Telegram/WebRTC code.
+-keep class org.telegram.messenger.camera.* { *; }
+-keep class org.telegram.messenger.secretmedia.* { *; }
+-keep class org.telegram.messenger.support.* { *; }
+-keep class org.telegram.messenger.time.* { *; }
+-keep class org.telegram.messenger.video.* { *; }
+-keep class org.telegram.SQLite.** { *; }
+-keep class org.telegram.tgnet.** { *; }
