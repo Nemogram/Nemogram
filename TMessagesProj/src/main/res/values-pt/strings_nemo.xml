@@ -193,8 +193,6 @@
     <string name="CloudflareCredentialsDialog">Configurar o ID da conta Cloudflare e o Token de API.</string>
     <string name="PreferOriginalQuality">Prefere qualidade original</string>
     <string name="PreferOriginalQualityDesc">Ver vídeos com a qualidade original.</string>
-    <string name="AutoInlineBot">Bot inline automático</string>
-    <string name="AutoInlineBotDesc">Consultar automaticamente o bot inline baseado na mensagem de texto.</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Configurações de acessibilidade</string>
 </resources>

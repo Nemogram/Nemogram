@@ -141,7 +141,6 @@ android {
 
             buildConfigField("int","API_ID", "${localProperties.get("apiId")}")
             buildConfigField("String","API_HASH", "\"${localProperties.get("apiHash")}\"")
-            buildConfigField("String","TWPIC_BOT_USERNAME", "\"${localProperties.get("twpicBotUsername")}\"")
         }
 
         release {
@@ -153,7 +152,6 @@ android {
 
             buildConfigField("int","API_ID", "${localProperties.get("apiId")}")
             buildConfigField("String","API_HASH", "\"${localProperties.get("apiHash")}\"")
-            buildConfigField("String","TWPIC_BOT_USERNAME", "\"${localProperties.get("twpicBotUsername")}\"")
         }
 
         nonMinifiedDebug {

@@ -206,8 +206,6 @@
     <string name="CloudflareCredentialsDialog">Конфигурация ID аккаунта Cloudflare и API-токена.</string>
     <string name="PreferOriginalQuality">Предпочитать исходное качество видео</string>
     <string name="PreferOriginalQualityDesc">Предпочитать максимальное качество видео.</string>
-    <string name="AutoInlineBot">Автоматический строчный бот</string>
-    <string name="AutoInlineBotDesc">Автоматически обращаться к функционалу строчного бота в зависимости от содержания сообщения.</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">Принудительное уменьшение размера текста</string>
     <string name="HideChannelBottomButtons">Скрыть кнопки в каналах</string>

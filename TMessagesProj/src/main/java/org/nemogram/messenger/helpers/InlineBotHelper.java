@@ -10,9 +10,6 @@ import org.telegram.tgnet.TLRPC;
 
 import java.util.ArrayList;
 
-import org.nemogram.messenger.Extra;
-import org.nemogram.messenger.NemoConfig;
-
 public class InlineBotHelper extends BaseController {
 
     private static final InlineBotHelper[] Instance = new InlineBotHelper[UserConfig.MAX_ACCOUNT_COUNT];
@@ -82,15 +79,5 @@ public class InlineBotHelper extends BaseController {
             req.peer = new TLRPC.TL_inputPeerEmpty();
             getConnectionsManager().sendRequest(req, requestDelegate, ConnectionsManager.RequestFlagFailOnServerErrors);
         }
-    }
-
-    public static String findBotForText(String s) {
-        if (!NemoConfig.autoInlineBot) return null;
-        var text = s.trim();
-        if (text.contains(" ")) return null;
-        if (text.startsWith("https://x.com/") || text.startsWith("https://twitter.com/")) {
-            return Extra.TWPIC_BOT_USERNAME;
-        }
-        return null;
     }
 }

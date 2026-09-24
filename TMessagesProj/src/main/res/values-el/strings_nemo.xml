@@ -190,8 +190,6 @@
     <string name="CloudflareCredentialsDialog">Ρύθμιση αναγνωριστικό λογαριασμού Cloudflare και Token API.</string>
     <string name="PreferOriginalQuality">Προτίμηση αρχικής ποιότητας</string>
     <string name="PreferOriginalQualityDesc">Προβολή βίντεο σε αρχική ποιότητα.</string>
-    <string name="AutoInlineBot">Αυτόματο inline bot</string>
-    <string name="AutoInlineBotDesc">Αυτόματη αναζήτηση inline bot με βάση το κείμενο του μηνύματος.</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">Επιβολή επιστροφής βάρους γραμ/σειράς</string>
     <string name="HideChannelBottomButtons">Απόκρυψη κάτω πλήκτρων καναλιού</string>

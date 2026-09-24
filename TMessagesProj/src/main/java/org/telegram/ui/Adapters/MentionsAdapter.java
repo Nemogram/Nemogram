@@ -79,8 +79,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-import org.nemogram.messenger.helpers.InlineBotHelper;
-
 public class MentionsAdapter extends RecyclerListView.SelectionAdapter implements NotificationCenter.NotificationCenterDelegate {
 
     private boolean allowStickers = true;
@@ -166,7 +164,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
     private boolean contextMedia;
     private Runnable contextQueryRunnable;
     private Location lastKnownLocation;
-    private boolean autoSearching;
 
     private ArrayList<StickerResult> stickers;
     private HashMap<String, TLRPC.Document> stickersMap;
@@ -683,10 +680,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
 //    }
 
     private void searchForContextBot(final String username, final String query) {
-        searchForContextBot(username, query, false);
-    }
-
-    private void searchForContextBot(final String username, final String query, boolean autoSearching) {
         if (foundContextBot != null && foundContextBot.username != null && foundContextBot.username.equals(username) && searchingContextQuery != null && searchingContextQuery.equals(query)) {
             return;
         }
@@ -700,7 +693,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             AndroidUtilities.cancelRunOnUIThread(contextQueryRunnable);
             contextQueryRunnable = null;
         }
-        this.autoSearching = autoSearching;
         if (TextUtils.isEmpty(username) || searchingContextUsername != null && !searchingContextUsername.equals(username)) {
             if (contextUsernameReqid != 0) {
                 ConnectionsManager.getInstance(currentAccount).cancelRequest(contextUsernameReqid, true);
@@ -820,9 +812,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
     }
 
     public String getBotCaption() {
-        if (autoSearching) {
-            return null;
-        }
         if (foundContextBot != null) {
             return foundContextBot.bot_inline_placeholder;
         } else if (searchingContextUsername != null && searchingContextUsername.equals("gif")) {
@@ -1036,7 +1025,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             isValidEmoji = spans == null || spans.length == 0;
         }
 
-        var inlineBot = InlineBotHelper.findBotForText(text);
         if (allowStickers && isValidEmoji && (currentChat == null || ChatObject.canSendStickers(currentChat))) {
             stickersToLoad.clear();
             if (SharedConfig.suggestStickers == 2 || !isValidEmoji) {
@@ -1174,8 +1162,6 @@ public class MentionsAdapter extends RecyclerListView.SelectionAdapter implement
             }
 //            searchForStickers(null, false);
             searchForContextBot(username, query);
-        } else if (inlineBot != null) {
-            searchForContextBot(inlineBot, text, true);
         } else if (allowStickers && parentFragment != null && parentFragment.getCurrentEncryptedChat() == null && (currentChat == null || ChatObject.canSendStickers(currentChat)) && text.trim().length() >= 2 && text.trim().indexOf(' ') < 0) {
 //            searchForStickers(text.trim(), false);
             searchForContextBot(null, null);

@@ -135,7 +135,6 @@ public class NemoConfig {
     public static boolean ignoreContentRestriction = false;
     public static boolean showTimeHint = false;
     public static boolean preferOriginalQuality = false;
-    public static boolean autoInlineBot = false;
     public static boolean forceFontWeightFallback = false;
     public static boolean minimizedStickerCreator = false;
     public static boolean miniSenderAvatar = false;
@@ -273,7 +272,6 @@ public class NemoConfig {
             cfAccountID = preferences.getString("cfAccountID", "");
             cfApiToken = preferences.getString("cfApiToken", "");
             preferOriginalQuality = preferences.getBoolean("preferOriginalQuality", false);
-            autoInlineBot = preferences.getBoolean("autoInlineBot", false);
             forceFontWeightFallback = preferences.getBoolean("forceFontWeightFallback", false);
             minimizedStickerCreator = preferences.getBoolean("minimizedStickerCreator", false);
             miniSenderAvatar = preferences.getBoolean("miniSenderAvatar", false);
@@ -658,14 +656,6 @@ public class NemoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("forceFontWeightFallback", forceFontWeightFallback);
-        editor.apply();
-    }
-
-    public static void toggleAutoInlineBot() {
-        autoInlineBot = !autoInlineBot;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("autoInlineBot", autoInlineBot);
         editor.apply();
     }
 

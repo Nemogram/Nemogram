@@ -191,8 +191,6 @@
     <string name="CloudflareCredentialsDialog">تكوين معرف حساب Cloudflare ورمز API.</string>
     <string name="PreferOriginalQuality">تفضيل الجودة الأصلية</string>
     <string name="PreferOriginalQualityDesc">عرض مقاطع الفيديو بالجودة الأصلية.</string>
-    <string name="AutoInlineBot">روبوت تلقائي مضمن</string>
-    <string name="AutoInlineBotDesc">الاستعلام التلقائي عن الروبوت المضمن استنادًا إلى نص الرسالة.</string>
     <string name="ShortStandardQuality">دِقَّة متوسطة</string>
     <string name="ForceFontWeightFallback">فرض تراجع وزن الخط</string>
     <string name="HideChannelBottomButtons">إخفاء الأزرار السفلية للقناة</string>

@@ -193,8 +193,6 @@
     <string name="CloudflareCredentialsDialog">Configurați ID-ul contului Cloudflare și Token-ul API.</string>
     <string name="PreferOriginalQuality">Preferați calitatea originală</string>
     <string name="PreferOriginalQualityDesc">Vizualizați videoclipurile în calitatea originală.</string>
-    <string name="AutoInlineBot">Bot de inserare automată în linie</string>
-    <string name="AutoInlineBotDesc">Interogarea automată a botului de inserare automată în linie bazat pe textul mesajului.</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">Forțați opțiunile de rezervă pentru grosimea fontului</string>
     <!-- Accessibility -->

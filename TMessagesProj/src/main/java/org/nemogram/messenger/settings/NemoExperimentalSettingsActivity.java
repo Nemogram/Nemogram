@@ -47,7 +47,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
     private final int moreHapticFeedbacksRow = rowId++;
     private final int localCustomEmojiRow = rowId++;
     private final int keepFormattingRow = rowId++;
-    private final int autoInlineBotRow = rowId++;
     private final int forceFontWeightFallbackRow = rowId++;
     private final int highRoundVideoBitrateRow = rowId++;
     private final int contentRestrictionRow = rowId++;
@@ -67,7 +66,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
         items.add(UItem.asCheck(moreHapticFeedbacksRow, LocaleController.getString(R.string.MoreHapticFeedback)).slug("moreHapticFeedbacks").setChecked(NemoConfig.moreHapticFeedbacks));
         items.add(UItem.asCheck(localCustomEmojiRow, LocaleController.getString(R.string.LocalCustomEmoji)).slug("localCustomEmoji").setChecked(NemoConfig.localCustomEmoji));
         items.add(UItem.asCheck(keepFormattingRow, LocaleController.getString(R.string.TranslationKeepFormatting)).slug("keepFormatting").setChecked(NemoConfig.keepFormatting));
-        items.add(UItem.asCheck(autoInlineBotRow, LocaleController.getString(R.string.AutoInlineBot), LocaleController.getString(R.string.AutoInlineBotDesc)).slug("autoInlineBot").setChecked(NemoConfig.autoInlineBot));
         items.add(UItem.asCheck(forceFontWeightFallbackRow, LocaleController.getString(R.string.ForceFontWeightFallback)).slug("forceFontWeightFallback").setChecked(NemoConfig.forceFontWeightFallback));
         items.add(UItem.asCheck(highRoundVideoBitrateRow, LocaleController.getString(R.string.HighRoundVideoBitrate), LocaleController.getString(R.string.HighRoundVideoBitrateDesc)).slug("highRoundVideoBitrate").setChecked(NemoConfig.highRoundVideoBitrate));
         if (Extra.isDirectApp()) {
@@ -191,11 +189,6 @@ public class NemoExperimentalSettingsActivity extends BaseNemoSettingsActivity {
             NemoConfig.toggleIgnoreContentRestriction();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.ignoreContentRestriction);
-            }
-        } else if (id == autoInlineBotRow) {
-            NemoConfig.toggleAutoInlineBot();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NemoConfig.autoInlineBot);
             }
         } else if (id == forceFontWeightFallbackRow) {
             NemoConfig.toggleForceFontWeightFallback();

@@ -190,8 +190,6 @@
     <string name="CloudflareCredentialsDialog">Наладзіць Cloudfare Acconut ID і API Token.</string>
     <string name="PreferOriginalQuality">Аддаваць перавагу арыгінальнай якасці</string>
     <string name="PreferOriginalQualityDesc">Прагляд відэа ў арыгінальнай якасці.</string>
-    <string name="AutoInlineBot">Аўтаматычны ўбудаваны бот</string>
-    <string name="AutoInlineBotDesc">Аўтаматычнае запытванне ўбудаванага бота на аснове тэксту паведамлення.</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">Прымусовае памяншэнне памеру тэксту</string>
     <string name="HideChannelBottomButtons">Схаваць ніжнія кнопкі ў канале</string>

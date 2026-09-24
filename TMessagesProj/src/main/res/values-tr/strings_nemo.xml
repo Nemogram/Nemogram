@@ -188,7 +188,6 @@
     <string name="CloudflareCredentialsDialog">Cloudflare Hesap Kimliğini ve API Belirtecini yapılandırın.</string>
     <string name="PreferOriginalQuality">Orijinal kaliteyi tercih edin</string>
     <string name="PreferOriginalQualityDesc">Videoları orijinal kalitede göster.</string>
-    <string name="AutoInlineBot">Otomatik satır içi botu</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">Yazı tipi ağırlığı yedeklemesini zorla</string>
     <string name="HideChannelBottomButtons">Kanallarda aşağı butonları gizle</string>

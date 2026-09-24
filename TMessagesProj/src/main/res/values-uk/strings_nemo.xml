@@ -192,8 +192,6 @@
     <string name="CloudflareCredentialsDialog">Налаштувати ID облікового запису та токен API</string>
     <string name="PreferOriginalQuality">Віддавати перевагу оригінальній якості</string>
     <string name="PreferOriginalQualityDesc">Переглядати відео в оригінальній якості.</string>
-    <string name="AutoInlineBot">Автоматично inline режим бота</string>
-    <string name="AutoInlineBotDesc">Автоматично запитувати inline режим бота на основі тексту повідомлення.</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">Змусити передню вагу впасти назад</string>
     <string name="HideChannelBottomButtons">Приховати нижні кнопки у каналі</string>

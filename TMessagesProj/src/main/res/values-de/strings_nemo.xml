@@ -190,8 +190,6 @@
     <string name="CloudflareCredentialsDialog">Einrichtung von Cloudflare-Konto-ID und API-Token.</string>
     <string name="PreferOriginalQuality">Bevorzuge Originalqualität</string>
     <string name="PreferOriginalQualityDesc">Videos in Originalqualität ansehen.</string>
-    <string name="AutoInlineBot">Automatischer Inlinebot</string>
-    <string name="AutoInlineBotDesc">Automatische Abfrage des Inlinebots, basierend auf dem Nachrichtentext.</string>
     <string name="ShortStandardQuality">Standardauflösung</string>
     <string name="ForceFontWeightFallback">Zurückschalten der Schriftgröße erzwingen</string>
     <string name="HideChannelBottomButtons">Schaltflächen am unteren Rand des Kanals ausblenden</string>

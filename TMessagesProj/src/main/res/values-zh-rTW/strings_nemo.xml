@@ -193,8 +193,6 @@
     <string name="CloudflareCredentialsDialog">設定 Cloudflare 帳戶 ID 和 API 權杖。</string>
     <string name="PreferOriginalQuality">偏好原始畫質</string>
     <string name="PreferOriginalQualityDesc">以原始畫質觀看影片。</string>
-    <string name="AutoInlineBot">自動 Inline 機器人</string>
-    <string name="AutoInlineBotDesc">根據訊息文字自動查詢 Inline 機器人。</string>
     <string name="ShortStandardQuality">SD</string>
     <string name="ForceFontWeightFallback">強制使用字重替代</string>
     <string name="HideChannelBottomButtons">隱藏頻道底部按鈕</string>

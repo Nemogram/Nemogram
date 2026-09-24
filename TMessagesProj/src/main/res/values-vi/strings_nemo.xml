@@ -192,8 +192,6 @@
     <string name="CloudflareCredentialsDialog">ID tài khoản Cloudflare và mã API chưa được thiết lập. </string>
     <string name="PreferOriginalQuality">Ưu tiên chất lượng gốc</string>
     <string name="PreferOriginalQualityDesc">Xem video với chất lượng gốc.</string>
-    <string name="AutoInlineBot">Bot tự động nội tuyến</string>
-    <string name="AutoInlineBotDesc">Truy vấn bot bằng cách dựa trên cú pháp tin nhắn.</string>
     <string name="ShortStandardQuality">Chất lượng cơ bản, ngắn gọn</string>
     <string name="ForceFontWeightFallback">Buộc kiểu chữ sử dụng độ đậm mặc định</string>
     <string name="HideChannelBottomButtons">Ẩn nút dưới màn hình của kênh</string>
