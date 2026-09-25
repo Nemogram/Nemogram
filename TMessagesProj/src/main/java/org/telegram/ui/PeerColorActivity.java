@@ -64,6 +64,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildVars;
@@ -2535,10 +2536,13 @@ public class PeerColorActivity extends BaseFragment implements NotificationCente
 
         @Override
         protected void dispatchDraw(Canvas canvas) {
-            DrawableUtils.setBounds(drawable, rtl(dp(28)), getMeasuredHeight() / 2f, Gravity.CENTER);
+            final boolean m3 = M3SectionsHelper.isEnabled();
+            final int iconCenter = m3 ? dp(31) : dp(28);
+            final int textInset = m3 ? dp(60) : dp(58);
+            DrawableUtils.setBounds(drawable, rtl(iconCenter), getMeasuredHeight() / 2f, Gravity.CENTER);
             drawable.draw(canvas);
-            buttonText.ellipsize(getMeasuredWidth() - dp(64 + 7 + 100) - (lock != null ? lock.getIntrinsicWidth() + dp(8) : 0));
-            float textX = LocaleController.isRTL ? getMeasuredWidth() - buttonText.getWidth() - dp(58) : dp(58);
+            buttonText.ellipsize(getMeasuredWidth() - (m3 ? textInset + dp(100) : dp(64 + 7 + 100)) - (lock != null ? lock.getIntrinsicWidth() + dp(8) : 0));
+            float textX = LocaleController.isRTL ? getMeasuredWidth() - buttonText.getWidth() - textInset : textInset;
             buttonText.draw(canvas, textX, getMeasuredHeight() / 2f);
             if (lock != null) {
                 int x = (int) (textX + buttonText.getWidth() + dp(6));

@@ -42,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BotWebViewVibrationEffect;
 import org.telegram.messenger.ChatObject;
@@ -1264,6 +1265,13 @@ public class ItemOptions {
             scrimBlur3SourceBitmap = new BlurredBackgroundSourceBitmap();
         }
 
+        if (scrimViewBackground == null && scrimView != null && scrimView.getParent() instanceof RecyclerListView) {
+            final RecyclerListView listView = (RecyclerListView) scrimView.getParent();
+            if (listView.hasSections()) {
+                scrimViewBackground = listView.getClipBackground(scrimView);
+            }
+        }
+
         ViewGroup container = pointContainer = this.container == null ? fragment.getParentLayout().getOverlayContainerView() : this.container;
 
         if (context == null || container == null) {
@@ -2177,6 +2185,7 @@ public class ItemOptions {
                     } else {
                         canvas.save();
                     }
+                    M3SectionsHelper.applyScrimClip(canvas, scrimView);
                     if (scrimView instanceof ScrimView) {
                         ((ScrimView) scrimView).drawScrim(canvas, dimProgress);
                     } else {

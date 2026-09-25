@@ -30,8 +30,10 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.FileLog;
+import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Components.AnimatedArrowDrawable;
 import org.telegram.ui.Components.AudioPlayerAlert;
 import org.telegram.ui.Components.AvatarDrawable;
@@ -529,7 +531,11 @@ public class ThemeDescription {
                             }
                         }
                     } else if ((changeFlags & FLAG_CELLBACKGROUNDCOLOR) != 0) {
-                        child.setBackgroundColor(color);
+                        if (child instanceof HeaderCell && viewToInvalidate instanceof RecyclerListView && ((RecyclerListView) viewToInvalidate).hasSections() && M3SectionsHelper.isEnabled()) {
+                            // skip
+                        } else {
+                            child.setBackgroundColor(color);
+                        }
                     } else if ((changeFlags & FLAG_TEXTCOLOR) != 0) {
                         if (child instanceof TextView) {
                             ((TextView) child).setTextColor(color);

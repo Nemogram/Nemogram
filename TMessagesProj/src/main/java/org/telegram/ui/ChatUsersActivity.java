@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.AnimationNotificationsLocker;
 import org.telegram.messenger.BotWebViewVibrationEffect;
@@ -3723,6 +3724,9 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     } else {
                         checkCell.setIcon(0);
                     }
+                    if (position == sendMediaRow && M3SectionsHelper.isEnabled()) {
+                        M3SectionsHelper.markMerged(checkCell, false, sendMediaExpanded);
+                    }
                     break;
                 case 8:
                     GraySectionCell sectionCell = (GraySectionCell) holder.itemView;
@@ -3792,6 +3796,9 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     } else
                     //  checkBoxCell.setText(getCheckBoxTitle(item.headerName, percents[item.index < 0 ? 8 : item.index], item.index < 0), AndroidUtilities.formatFileSize(item.size), selected, item.index < 0 ? !collapsed : !item.last);
                     checkBoxCell.setPad(1);
+                    if (M3SectionsHelper.isEnabled()) {
+                        M3SectionsHelper.markMerged(checkBoxCell, true, isExpandableSendMediaRow(position + 1));
+                    }
                     break;
                 case VIEW_TYPE_CHECK:
                     TextCheckCell checkCell2 = (TextCheckCell) holder.itemView;

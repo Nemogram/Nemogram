@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.ui.ActionBar.Theme;
@@ -59,7 +60,7 @@ public class TextCheckCell extends FrameLayout {
     private Paint animationPaint;
     private float lastTouchX;
     private ObjectAnimator animator;
-    private boolean drawCheckRipple;
+    public boolean drawCheckRipple;
     private int padding;
     private Theme.ResourcesProvider resourcesProvider;
     ImageView imageView;
@@ -149,6 +150,10 @@ public class TextCheckCell extends FrameLayout {
         if (isMultiline) {
             super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
         } else {
+            if (M3SectionsHelper.isEnabled()) {
+                super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(valueTextView.getVisibility() == VISIBLE ? 72 : (height == 50 ? 56 : height)) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
+                return;
+            }
             super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(valueTextView.getVisibility() == VISIBLE ? 64 : height) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
         }
     }

@@ -42,6 +42,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AccountInstance;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BotWebViewVibrationEffect;
@@ -1940,6 +1941,9 @@ public class ChatRightsEditActivity extends BaseFragment implements Notification
                 case VIEW_TYPE_HEADER_CELL:
                     view = new HeaderCell(mContext, Theme.key_windowBackgroundWhiteBlueHeader, 21, 15, true);
                     view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
+                    if (M3SectionsHelper.isEnabled()) {
+                        M3SectionsHelper.styleHeaderCell((HeaderCell) view);
+                    }
                     break;
                 case VIEW_TYPE_EXPANDABLE_SWITCH:
                 case VIEW_TYPE_SWITCH_CELL:

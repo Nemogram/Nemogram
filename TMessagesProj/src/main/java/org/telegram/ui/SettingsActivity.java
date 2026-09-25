@@ -63,6 +63,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.MonetHelper;
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
@@ -1182,6 +1183,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             titleView.setTranslationX(icon == 0 ? dp(2) : 0);
             subtitleView.setTranslationX(icon == 0 ? dp(2) : 0);
 
+            M3SectionsHelper.applySettingCellIcon(iconLayout, iconView, iconColorTop, iconColorBottom, iconBackground);
+
             iconBackground.setColor(iconColorTop, iconColorBottom);
             iconView.setImageResource(icon);
             titleView.setText(title);
@@ -1204,6 +1207,13 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            if (M3SectionsHelper.isEnabled()) {
+                super.onMeasure(
+                    MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(dp(twoLines ? 64 : 52), MeasureSpec.EXACTLY)
+                );
+                return;
+            }
             super.onMeasure(
                 MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(dp(mini ? 44 : twoLines ? 60 : 50), MeasureSpec.EXACTLY)
@@ -1232,8 +1242,17 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 this.border = drawBorder;
             }
 
+            public int m3FlatColor;
+
             @Override
             public void draw(@NonNull Canvas canvas) {
+                if (m3FlatColor != 0) {
+                    paint.setShader(null);
+                    paint.setColor(m3FlatColor);
+                    Rect b = getBounds();
+                    canvas.drawCircle(b.exactCenterX(), b.exactCenterY(), Math.min(b.width(), b.height()) / 2f, paint);
+                    return;
+                }
                 final float r = dp(10);
                 AndroidUtilities.rectTmp.set(getBounds());
                 matrix.reset();

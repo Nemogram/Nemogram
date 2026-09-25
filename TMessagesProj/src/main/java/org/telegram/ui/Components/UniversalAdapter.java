@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.LocaleController;
@@ -591,12 +592,14 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
     }
 
     private boolean hasDivider(int position) {
+        if (M3SectionsHelper.isEnabled() && listView != null && listView.hasSections()) return false;
         UItem item = getItem(position);
         UItem nextItem = getItem(position + 1);
         return item != null && !item.hideDivider && nextItem != null && isShadow(nextItem.viewType) == isShadow(item.viewType);
     }
 
     public static boolean isShadow(int viewType) {
+        if (M3SectionsHelper.isEnabled() && M3SectionsHelper.isHeaderViewType(viewType)) return true;
         if (viewType >= UItem.factoryViewTypeStartsWith) {
             UItem.UItemFactory<?> factory = UItem.findFactory(viewType);
             return factory != null && factory.isShadow();
@@ -622,6 +625,13 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
         final int viewType = holder.getItemViewType();
         final boolean divider = hasDivider(position);
         updateColors(holder);
+        if (M3SectionsHelper.isEnabled()) {
+            M3SectionsHelper.markMerged(
+                holder.itemView,
+                item.pad > 0,
+                nextItem != null && nextItem.pad > 0
+            );
+        }
         if (viewType >= UItem.factoryViewTypeStartsWith) {
             UItem.UItemFactory<?> factory = UItem.findFactory(viewType);
             if (factory != null) {
@@ -633,6 +643,9 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
             case VIEW_TYPE_LARGE_HEADER:
                 ((HeaderCell) holder.itemView).setText(item.text);
                 ((HeaderCell) holder.itemView).setEnabled(item.enabled, true);
+                if (M3SectionsHelper.isEnabled() && listView != null && listView.hasSections()) {
+                    M3SectionsHelper.styleHeaderCell((HeaderCell) holder.itemView);
+                }
                 break;
             case VIEW_TYPE_ANIMATED_HEADER:
                 HeaderCell animatedHeaderCell = (HeaderCell) holder.itemView;
@@ -765,7 +778,7 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
                 if (viewType == VIEW_TYPE_SHADOW || viewType == VIEW_TYPE_LARGE_SHADOW) {
                     TextInfoPrivacyCell cell2 = (TextInfoPrivacyCell) holder.itemView;
                     if (TextUtils.isEmpty(item.text)) {
-                        cell2.setFixedSize(viewType == VIEW_TYPE_LARGE_SHADOW ? 220 : 12);
+                        cell2.setFixedSize(viewType == VIEW_TYPE_LARGE_SHADOW ? 220 : M3SectionsHelper.shadowHeightDp(nextItem, 12));
                         cell2.setText("");
                     } else {
                         cell2.setFixedSize(0);
@@ -1148,6 +1161,7 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
                 viewType == VIEW_TYPE_ICON_TEXT_CHECK ||
                 viewType == VIEW_TYPE_RIGHT_ICON_TEXT ||
                 viewType == VIEW_TYPE_CHECK ||
+                viewType == VIEW_TYPE_CHECKRIPPLE ||
                 viewType == VIEW_TYPE_RADIO ||
                 viewType == VIEW_TYPE_RADIO_2 ||
                 viewType == VIEW_TYPE_FILTER_CHAT ||

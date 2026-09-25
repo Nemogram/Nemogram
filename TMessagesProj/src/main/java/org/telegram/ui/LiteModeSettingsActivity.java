@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BuildVars;
 import org.telegram.messenger.LiteMode;
@@ -405,6 +406,13 @@ public class LiteModeSettingsActivity extends BaseFragment {
                 final boolean divider = position + 1 < items.size() && items.get(position + 1).viewType != VIEW_TYPE_INFO;
                 SwitchCell switchCell = (SwitchCell) holder.itemView;
                 switchCell.set(item, divider);
+                if (M3SectionsHelper.isEnabled()) {
+                    M3SectionsHelper.markMerged(
+                        switchCell,
+                        viewType == VIEW_TYPE_CHECKBOX,
+                        position + 1 < items.size() && items.get(position + 1).viewType == VIEW_TYPE_CHECKBOX
+                    );
+                }
             } else if (viewType == VIEW_TYPE_SWITCH2) {
                 TextCell textCell = (TextCell) holder.itemView;
                 if (item.type == SWITCH_TYPE_SMOOTH_TRANSITIONS) {

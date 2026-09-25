@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.nemogram.messenger.helpers.MonetHelper;
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
@@ -59,9 +60,10 @@ public class TextCell extends FrameLayout {
     private ImageView valueImageView;
     public int leftPadding;
     private boolean needDivider;
-    public int offsetFromImage = 58;
-    public int heightDp = 50;
+    public int offsetFromImage = M3SectionsHelper.isEnabled() ? 60 : 58;
+    public int heightDp = M3SectionsHelper.isEnabled() ? 56 : 50;
     public int imageLeft = 16;
+    public int m3IconSize = 22;
     private boolean inDialogs;
     private boolean prioritizeTitleOverValue;
     private Theme.ResourcesProvider resourcesProvider;
@@ -203,7 +205,21 @@ public class TextCell extends FrameLayout {
             subtitleView.measure(MeasureSpec.makeMeasureSpec(width - dp(71 + leftPadding) - valueWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(dp(20), MeasureSpec.EXACTLY));
         }
         if (imageView.getVisibility() == VISIBLE) {
+            if (M3SectionsHelper.isEnabled()) {
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                if (imageView.getBackground() instanceof SettingsActivity.SettingCell.Background) {
+                    imageView.setPadding(dp(7), dp(7), dp(7), dp(7));
+                    final int iconMeasureSpec = MeasureSpec.makeMeasureSpec(dp(36), MeasureSpec.EXACTLY);
+                    imageView.measure(iconMeasureSpec, iconMeasureSpec);
+                } else {
+                    imageView.setPadding(0, 0, 0, 0);
+                    final boolean autoSizeLottie = m3IconSize == 22 && imageView.getDrawable() instanceof RLottieDrawable;
+                    final int iconMeasureSpec = MeasureSpec.makeMeasureSpec(dp(autoSizeLottie ? 48 : m3IconSize), autoSizeLottie ? MeasureSpec.AT_MOST : MeasureSpec.EXACTLY);
+                    imageView.measure(iconMeasureSpec, iconMeasureSpec);
+                }
+            } else {
             imageView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
+            }
         }
         if (valueImageView.getVisibility() == VISIBLE) {
             valueImageView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
@@ -266,7 +282,7 @@ public class TextCell extends FrameLayout {
         } else {
             viewLeft = dp(imageView.getVisibility() == VISIBLE ? offsetFromImage : leftPadding);
         }
-        if (subtitleView.getVisibility() == View.VISIBLE) {
+        if (subtitleView.getVisibility() == View.VISIBLE && (!M3SectionsHelper.isEnabled() || subtitleView.getTextHeight() > 0)) {
             int margin = heightDp > 50 ? 4 : 2;
             viewTop = (height - textView.getTextHeight() - subtitleView.getTextHeight() - dp(margin)) / 2 + dp(1);
             textView.layout(viewLeft, viewTop, viewLeft + textView.getMeasuredWidth(), viewTop + textView.getMeasuredHeight());
@@ -274,11 +290,19 @@ public class TextCell extends FrameLayout {
             subtitleView.layout(viewLeft, viewTop, viewLeft + subtitleView.getMeasuredWidth(), viewTop + subtitleView.getMeasuredHeight());
         } else {
             viewTop = (height - textView.getTextHeight()) / 2 + dp(1);
+            if (M3SectionsHelper.isEnabled()) {
+                viewTop = (height - textView.getMeasuredHeight()) / 2;
+            }
             textView.layout(viewLeft, viewTop, viewLeft + textView.getMeasuredWidth(), viewTop + textView.getMeasuredHeight());
         }
         if (imageView.getVisibility() == VISIBLE) {
             viewTop = dp(heightDp > 50 ? 0 : 2) + (height - imageView.getMeasuredHeight()) / 2 - imageView.getPaddingTop() + dp(1);
-            viewLeft = !LocaleController.isRTL ? dp(imageLeft) : width - imageView.getMeasuredWidth() - dp(imageLeft);
+            if (M3SectionsHelper.isEnabled()) {
+                viewTop = (height - imageView.getMeasuredHeight()) / 2;
+            }
+            final boolean m3Colorful = imageView.getBackground() instanceof SettingsActivity.SettingCell.Background;
+            final int m3ImageLeft = M3SectionsHelper.isEnabled() && imageLeft == 16 ? (m3Colorful ? 14 : 21) : imageLeft;
+            viewLeft = !LocaleController.isRTL ? dp(m3ImageLeft) : width - imageView.getMeasuredWidth() - dp(m3ImageLeft);
             imageView.layout(viewLeft, viewTop, viewLeft + imageView.getMeasuredWidth(), viewTop + imageView.getMeasuredHeight());
         }
 
@@ -629,6 +653,7 @@ public class TextCell extends FrameLayout {
         drawable.setColor(MonetHelper.getSettingsIconBackgroundColor(colorTop), MonetHelper.getSettingsIconBackgroundColor(colorBottom));
         drawable.setDrawBorder(border);
         imageView.setBackground(drawable);
+        M3SectionsHelper.applyTextCellColorfulIcon(imageView, colorTop, colorBottom, drawable);
     }
 
     public void setTextAndCheck(CharSequence text, boolean checked, boolean divider) {
@@ -823,6 +848,7 @@ public class TextCell extends FrameLayout {
     }
 
     protected int getOffsetFromImage(boolean colourful) {
+        if (M3SectionsHelper.isEnabled()) return 60;
         return colourful ? 52 : 58;
     }
 

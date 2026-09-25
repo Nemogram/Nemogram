@@ -212,6 +212,8 @@
     <string name="TranslationKeepFormatting">Сохранять форматирования текста при переводе</string>
     <string name="PredictiveBackAnimation">Предсказательная обратная анимация</string>
     <string name="HideBottomNavigationBar">Скрыть нижнюю панель навигации</string>
+    <string name="M3SectionsStyle">Стиль секций MD3</string>
+    <string name="Sections">Секции</string>
     <string name="TabsPosition">Положение вкладок</string>
     <string name="TabsPositionTop">Сверху</string>
     <string name="TabsPositionBottom">Снизу</string>

@@ -46,6 +46,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.ChatObject;
@@ -1288,6 +1289,7 @@ public class StatisticActivity extends BaseFragment implements NotificationCente
                 };
                 headerCell.setWillNotDraw(false);
                 headerCell.setPadding(headerCell.getPaddingLeft(), dp(16), headerCell.getRight(), dp(16));
+                M3SectionsHelper.markMerged(headerCell, false, true);
                 v = headerCell;
             } else if (viewType == 14) {
                 v = new OverviewCell(parent.getContext(), isMegagroup ? 2 : 4);

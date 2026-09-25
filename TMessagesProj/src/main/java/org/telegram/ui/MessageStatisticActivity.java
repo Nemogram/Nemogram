@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.ChatObject;
@@ -1002,10 +1003,12 @@ public class MessageStatisticActivity extends BaseFragment implements Notificati
                         headerCell.setTopMargin(9);
                         headerCell.setPadding(0, 0, 0, AndroidUtilities.dp(8));
                         headerCell.setText(LocaleController.formatString("StatisticOverview", R.string.StatisticOverview));
+                        M3SectionsHelper.markMerged(headerCell, false, true);
                     } else {
                         headerCell.setTopMargin(11);
                         headerCell.setPadding(0, 0, 0, 0);
                         headerCell.setText(LocaleController.formatString("PublicShares", R.string.PublicShares));
+                        M3SectionsHelper.markMerged(headerCell, false, false);
                     }
                     break;
                 case 4:

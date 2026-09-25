@@ -62,6 +62,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.FileLog;
@@ -213,7 +214,7 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
 
     protected Consumer<Canvas> selectorTransformer;
 
-    protected final Theme.ResourcesProvider resourcesProvider;
+    public final Theme.ResourcesProvider resourcesProvider;
 
     private boolean accessibilityEnabled = true;
 
@@ -2675,14 +2676,34 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
 
     @Override
     public boolean drawChild(Canvas canvas, View child, long drawingTime) {
+        final boolean m3Enabled = hasSections() && M3SectionsHelper.isEnabled();
+        final int oldDividerAlpha = m3Enabled ? Theme.dividerPaint.getAlpha() : 0;
+        if (m3Enabled) Theme.dividerPaint.setAlpha(0);
+        final Paint providerDivider = m3Enabled && resourcesProvider != null ? resourcesProvider.getPaint(Theme.key_paint_divider) : null;
+        final int oldProviderDividerAlpha = providerDivider != null ? providerDivider.getAlpha() : 0;
+        if (providerDivider != null) providerDivider.setAlpha(0);
+        final boolean r;
         if (hasSections() && !ignoreClipChild) {
             canvas.save();
             clipChild(canvas, child);
-            boolean r = super.drawChild(canvas, child, drawingTime);
+            r = super.drawChild(canvas, child, drawingTime);
             canvas.restore();
-            return r;
         } else {
-            return super.drawChild(canvas, child, drawingTime);
+            r = super.drawChild(canvas, child, drawingTime);
+        }
+        if (m3Enabled) Theme.dividerPaint.setAlpha(oldDividerAlpha);
+        if (providerDivider != null) providerDivider.setAlpha(oldProviderDividerAlpha);
+        return r;
+    }
+
+    @Override
+    public void onDescendantInvalidated(@NonNull View child, @NonNull View target) {
+        super.onDescendantInvalidated(child, target);
+        if (hasSections() && M3SectionsHelper.isEnabled()) {
+            // since API 26 a dirty child re-records its display list without going through the
+            // parent's drawChild, escaping the divider paint suppression above — dirty ourselves
+            // so the re-record happens inside drawChild
+            invalidate();
         }
     }
 
@@ -3257,12 +3278,12 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
         return sectionsItemDecoration != null;
     }
 
-    private ListSectionsDecoration sectionsItemDecoration;
+    public ListSectionsDecoration sectionsItemDecoration;
     private Utilities.CallbackReturn<Integer, Boolean> isViewTypeSection;
     private Utilities.Callback5<Canvas, RectF, Float, Float, Float> drawSectionBackground;
     public ArrayList<Long> forcedSections;
-    private float sectionRadius;
-    private float[] sectionRadiusTop, sectionRadiusBottom;
+    public float sectionRadius;
+    public float[] sectionRadiusTop, sectionRadiusBottom;
     public boolean applyPaddingToSections = false;
 
     public static final int TAG_NOT_SECTION = -33024;
@@ -3288,7 +3309,7 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
     }
     public void setSections(int padding, float roundRadius, boolean topPadding) {
         setSections(
-            view -> !(view instanceof TextInfoPrivacyCell || view instanceof ShadowSectionCell || view instanceof FiltersSetupActivity.HintInnerCell || view instanceof GraySectionCell || view instanceof CollapseTextCell) && !Objects.equals(view.getTag(), TAG_NOT_SECTION),
+            view -> !(view instanceof TextInfoPrivacyCell || view instanceof ShadowSectionCell || view instanceof FiltersSetupActivity.HintInnerCell || view instanceof GraySectionCell || view instanceof CollapseTextCell) && !M3SectionsHelper.isDetachedHeaderCell(view) && !Objects.equals(view.getTag(), TAG_NOT_SECTION),
             padding,
             roundRadius,
             this::drawBackgroundRect,
@@ -3405,6 +3426,9 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
                         if (last) outRect.bottom = padding;
                     }
                 }
+                if (M3SectionsHelper.isEnabled()) {
+                    M3SectionsHelper.augmentItemOffsets(outRect, parent, view);
+                }
             }
         }
 
@@ -3475,6 +3499,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
     }
     public void drawSectionsBackgrounds(Canvas canvas) {
         if (drawSectionBackground == null) return;
+
+        if (M3SectionsHelper.isEnabled()) {
+            M3SectionsHelper.drawSectionsBackgrounds(canvas, this);
+            return;
+        }
 
         if (isAnimating()) {
             if (sections == null) {
@@ -3622,6 +3651,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
         if (child == null || !sectionsItemDecoration.isSectionItem.run(child))
             return;
 
+        if (M3SectionsHelper.isEnabled()) {
+            M3SectionsHelper.clipChild(canvas, child, this);
+            return;
+        }
+
         boolean prev, next;
         int position = getChildAdapterPosition(child);
         if (position == RecyclerView.NO_POSITION) {
@@ -3681,6 +3715,11 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
 
     public Drawable getClipBackground(View child, boolean forceRound) {
         if (child.getParent() != this || !hasSections() || !sectionsItemDecoration.isSectionItem.run(child)) return null;
+
+        if (M3SectionsHelper.isEnabled()) {
+            final Drawable m3 = M3SectionsHelper.makeClipBackground(this, child);
+            if (m3 != null) return m3;
+        }
 
         boolean prev, next;
         int position = getChildAdapterPosition(child);

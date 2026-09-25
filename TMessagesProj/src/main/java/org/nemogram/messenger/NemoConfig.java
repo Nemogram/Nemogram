@@ -161,6 +161,7 @@ public class NemoConfig {
     public static String searchBarPlaceholder = "";
     public static boolean moreHapticFeedbacks = false;
     public static boolean highRoundVideoBitrate = true;
+    public static boolean m3SectionsStyle = false;
 
     public static int userMcc = 0;
     public static int searchBarStyle = SEARCH_BAR_NORMAL;
@@ -295,6 +296,7 @@ public class NemoConfig {
             searchBarPlaceholder = preferences.getString("searchBarPlaceholder", "");
             moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
             highRoundVideoBitrate = preferences.getBoolean("highRoundVideoBitrate", true);
+            m3SectionsStyle = preferences.getBoolean("m3SectionsStyle", false);
             dialogsMenuOrder = preferences.getString("dialogsMenuOrder", "");
             if (preferences.contains("dialogsMenuHiddenItems")) {
                 dialogsMenuHiddenItems = new HashSet<>(preferences.getStringSet("dialogsMenuHiddenItems", new HashSet<>()));
@@ -1235,6 +1237,12 @@ public class NemoConfig {
         highRoundVideoBitrate = !highRoundVideoBitrate;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("highRoundVideoBitrate", highRoundVideoBitrate).apply();
+    }
+
+    public static void toggleM3SectionsStyle() {
+        m3SectionsStyle = !m3SectionsStyle;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putBoolean("m3SectionsStyle", m3SectionsStyle).apply();
     }
 
     public static int getNotificationColor() {

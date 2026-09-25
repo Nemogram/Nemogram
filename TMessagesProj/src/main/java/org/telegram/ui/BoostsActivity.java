@@ -29,6 +29,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.M3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ChannelBoostsController;
 import org.telegram.messenger.ChatObject;
@@ -160,10 +161,12 @@ public class BoostsActivity extends GradientHeaderActivity implements Notificati
                 case HEADER_VIEW_TYPE:
                     view = new ChartHeaderView(getContext());
                     view.setPadding(view.getPaddingLeft(), AndroidUtilities.dp(16), view.getRight(), AndroidUtilities.dp(16));
+                    M3SectionsHelper.markMerged(view, false, true);
                     break;
                 case HEADER_VIEW_TYPE_SMALL:
                     view = new ChartHeaderView(getContext());
                     view.setPadding(view.getPaddingLeft(), AndroidUtilities.dp(16), view.getRight(), AndroidUtilities.dp(8));
+                    M3SectionsHelper.markMerged(view, false, true);
                     break;
                 case HEADER_VIEW_TYPE_TABS:
                     boostsTabs = new ScrollSlidingTextTabStrip(getContext(), resourceProvider);
@@ -174,6 +177,7 @@ public class BoostsActivity extends GradientHeaderActivity implements Notificati
                         @Override
                         protected void dispatchDraw(Canvas canvas) {
                             super.dispatchDraw(canvas);
+                            if (M3SectionsHelper.isEnabled()) return;
                             dividerPaint.setColor(Theme.getColor(Theme.key_windowBackgroundGray, resourceProvider));
                             canvas.drawRect(0, getHeight() - 2, getWidth(), getHeight(), dividerPaint);
                         }
@@ -196,6 +200,7 @@ public class BoostsActivity extends GradientHeaderActivity implements Notificati
                         }
                     });
                     frameLayoutWrapper.addView(boostsTabs, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 48));
+                    M3SectionsHelper.markMerged(frameLayoutWrapper, false, true);
                     view = frameLayoutWrapper;
                     break;
                 case SHOW_BOOST_BY_GIFTS:
@@ -285,6 +290,7 @@ public class BoostsActivity extends GradientHeaderActivity implements Notificati
                 userCell.setData(user, ContactsController.formatName(user), str, 0, !items.get(position).isLast);
                 userCell.setStatus(booster);
                 userCell.setAvatarPadding(5);
+                M3SectionsHelper.markMerged(userCell, true, true);
             } else if (holder.getItemViewType() == DIVIDER_TEXT_VIEW_TYPE) {
                 TextInfoPrivacyCell privacyCell = (TextInfoPrivacyCell) holder.itemView;
                 privacyCell.setText(items.get(position).title);
