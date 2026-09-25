@@ -599,6 +599,16 @@ public static VideoAds make(
         setWaitingPaused(true);
     }
 
+    public void release() {
+        stop();
+        if (premiumSheet != null) {
+            premiumSheet.dismiss();
+            premiumSheet = null;
+        }
+        onPopupCallback = null;
+        bulletinFactory = null;
+    }
+
     public static class AdOptionsDrawable extends Drawable {
 
         public final int color;

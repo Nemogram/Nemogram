@@ -18874,39 +18874,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         VideoAds videoAds = ads;
         ads = null;
         try {
-            videoAds.setPauseOnPopupCallback(null);
-        } catch (Throwable e) {
-            FileLog.e(e);
-        }
-        try {
-            videoAds.stop();
-        } catch (Throwable e) {
-            FileLog.e(e);
-        }
-        clearVideoAdsUiReferences(videoAds);
-    }
-
-    private static void clearVideoAdsUiReferences(VideoAds videoAds) {
-        if (videoAds == null) {
-            return;
-        }
-        // VideoAds instances are kept in VideoAds.cached, a static map keyed by dialog.
-        // Never let a cached ad object retain PhotoViewer's Activity-backed views.
-        clearPrivateField(videoAds, "bulletinFactory");
-        clearPrivateField(videoAds, "bulletin");
-        clearPrivateField(videoAds, "currentMenu");
-        clearPrivateField(videoAds, "premiumSheet");
-        clearPrivateField(videoAds, "onPopupCallback");
-    }
-
-    private static void clearPrivateField(Object target, String fieldName) {
-        if (target == null) {
-            return;
-        }
-        try {
-            Field field = target.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            field.set(target, null);
+            videoAds.release();
         } catch (Throwable e) {
             FileLog.e(e);
         }
