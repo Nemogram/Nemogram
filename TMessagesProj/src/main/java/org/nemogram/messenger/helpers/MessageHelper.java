@@ -310,9 +310,6 @@ public class MessageHelper extends BaseController {
         if (messageObject != null && messageObject.translating) {
             return null;
         }
-        if (messageObject != null && messageObject.translated && !messageObject.manually) {
-            return null;
-        }
         return messageObject;
     }
 
