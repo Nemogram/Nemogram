@@ -53,7 +53,14 @@ public class Translator {
     public static final String TRANSLATION_SEPARATOR = "\n--------\n";
 
     private static final ListeningExecutorService executorService = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
-    private static final LruCache<Pair<String, String>, TranslationResult> cache = new LruCache<>(200);
+    private static final LruCache<CacheKey, TranslationResult> cache = new LruCache<>(200);
+
+    private record CacheKey(String text, int entitiesHash, String target, String provider,
+                            boolean keepFormatting) {
+        public static CacheKey of(TLRPC.TL_textWithEntities query, String tl, String provider, boolean keepFormatting) {
+            return new CacheKey(query.text, query.entities != null ? query.entities.hashCode() : 0, tl, provider, keepFormatting);
+        }
+    }
 
     public static ListeningExecutorService getExecutorService() {
         return executorService;
@@ -425,7 +432,7 @@ public class Translator {
 
         @Override
         public TranslationResult call() throws Exception {
-            var key = Pair.create(query.text, tl + "|" + NemoConfig.translationProvider);
+            var key = CacheKey.of(query, tl, NemoConfig.translationProvider, NemoConfig.keepFormatting);
             var cached = cache.get(key);
             if (cached != null) {
                 return cached;
