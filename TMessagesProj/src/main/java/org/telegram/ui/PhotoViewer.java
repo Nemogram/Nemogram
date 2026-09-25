@@ -4792,7 +4792,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             return;
         }
         if (parentActivity != null && parentActivity != activity && windowView != null) {
-            releaseWindowView(true);
+            releaseWindowView(false);
         }
         inBubbleMode = activity instanceof BubbleActivity;
         parentActivity = activity;
@@ -9556,7 +9556,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             isVisible = true;
             isVisibleOrAnimating = true;
             WindowManager wm = (WindowManager) parentActivity.getSystemService(Context.WINDOW_SERVICE);
-            wm.addView(windowView, windowLayoutParams);
+            windowView.setVisibility(View.VISIBLE);
+            if (windowView.getParent() == null) {
+                wm.addView(windowView, windowLayoutParams);
+            }
             onShowView();
             if (currentPlaceObject != null && !currentPlaceObject.keepImageReceiverVisible) {
                 currentPlaceObject.imageReceiver.setVisible(false, false);
@@ -17626,7 +17629,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             windowLayoutParams.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION;
             windowView.setFocusable(false);
             containerView.setFocusable(false);
-            wm.addView(windowView, windowLayoutParams);
+            windowView.setVisibility(View.VISIBLE);
+            if (windowView.getParent() == null) {
+                wm.addView(windowView, windowLayoutParams);
+            }
             onShowView();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -18965,6 +18971,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (viewToDetach == null) {
             return;
         }
+        viewToDetach.setVisibility(View.INVISIBLE);
         unregisterBackInvokedCallback();
         try {
             viewToDetach.animate().setListener(null);
@@ -19104,7 +19111,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (object != null && !AndroidUtilities.isTablet() && object.animatingImageView != null) {
             object.animatingImageView.setImageBitmap(null);
         }
-        detachWindowView(windowView, true);
+        detachWindowView(windowView, false);
         if (placeProvider != null) {
             placeProvider.willHidePhotoViewer();
         }
@@ -24009,7 +24016,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         windowViewSkipRender = false;
         if (windowView != null) {
             WindowManager wm = (WindowManager) parentActivity.getSystemService(Context.WINDOW_SERVICE);
-            wm.addView(windowView, windowLayoutParams);
+            windowView.setVisibility(View.VISIBLE);
+            if (windowView.getParent() == null) {
+                wm.addView(windowView, windowLayoutParams);
+            }
             windowView.invalidate();
         }
 
