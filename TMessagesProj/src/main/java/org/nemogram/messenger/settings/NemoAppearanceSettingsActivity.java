@@ -19,7 +19,6 @@ import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.EmojiHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.settings.cells.EmojiSetCell;
-import org.nemogram.messenger.settings.cells.FolderTabsPreviewCell;
 import org.nemogram.messenger.settings.cells.InputPanelStyleCell;
 import org.nemogram.messenger.settings.cells.ChatTopBarStyleCell;
 
@@ -47,7 +46,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int dialogsMenuSettingsRow = rowId++;
 
     private final int hideAllTabRow = rowId++;
-    private final int folderTabsPreviewRow = rowId++;
     private final int hideFolderUnreadBadgeRow = rowId++;
     private final int tabsTitleTypeRow = rowId++;
     private final int tabsPositionRow = rowId++;
@@ -56,7 +54,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int md3SectionsHeaderRow = rowId++;
     private final int md3SectionsStyleRow = rowId++;
 
-    private FolderTabsPreviewCell folderTabsPreviewCell;
     private InputPanelStyleCell inputPanelStyleCell;
     private ChatTopBarStyleCell chatTopBarStyleCell;
 
@@ -145,12 +142,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.Filters)));
-        if (getContext() != null) {
-            if (folderTabsPreviewCell == null) {
-                folderTabsPreviewCell = new FolderTabsPreviewCell(getContext(), resourcesProvider);
-            }
-            items.add(UItem.asCustom(folderTabsPreviewRow, folderTabsPreviewCell));
-        }
         items.add(UItem.asCheck(hideAllTabRow, LocaleController.getString(R.string.HideAllTab)).slug("hideAllTab").setChecked(NemoConfig.hideAllTab));
         items.add(UItem.asCheck(hideFolderUnreadBadgeRow, LocaleController.getString(R.string.HideFolderUnreadBadge)).slug("hideFolderUnreadBadge").setChecked(NemoConfig.hideFolderUnreadBadge));
         items.add(TextSettingsCellFactory.of(tabsTitleTypeRow, LocaleController.getString(R.string.TabTitleType), switch (NemoConfig.tabsTitleType) {
@@ -208,14 +199,12 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             }
             getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
             getNotificationCenter().postNotificationName(NotificationCenter.mainUserInfoChanged);
-            if (folderTabsPreviewCell != null) folderTabsPreviewCell.invalidatePreview();
         } else if (id == hideFolderUnreadBadgeRow) {
             NemoConfig.toggleHideFolderUnreadBadge();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.hideFolderUnreadBadge);
             }
             getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
-            if (folderTabsPreviewCell != null) folderTabsPreviewCell.invalidatePreview();
         } else if (id == tabsTitleTypeRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             ArrayList<Integer> types = new ArrayList<>();
@@ -230,7 +219,6 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
                 item.textValue = arrayList.get(i);
                 listView.adapter.notifyItemChanged(position, PARTIAL);
                 getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
-                if (folderTabsPreviewCell != null) folderTabsPreviewCell.invalidatePreview();
             }, resourcesProvider);
         } else if (id == predictiveBackAnimationRow) {
             NemoConfig.togglePredictiveBackAnimation();
