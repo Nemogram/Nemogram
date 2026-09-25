@@ -53,6 +53,8 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int tabsPositionRow = rowId++;
 
     private final int strokeOnViewsRow = rowId++;
+    private final int md3SectionsHeaderRow = rowId++;
+    private final int md3SectionsStyleRow = rowId++;
 
     private FolderTabsPreviewCell folderTabsPreviewCell;
     private InputPanelStyleCell inputPanelStyleCell;
@@ -164,6 +166,10 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asHeader(LocaleController.getString(R.string.LiteOptionsBlur2)));
         items.add(UItem.asCheck(strokeOnViewsRow, LocaleController.getString(R.string.StrokeOnViews)).setChecked(NemoConfig.strokeOnViews).slug("strokeOnViews"));
         items.add(UItem.asShadow(null));
+
+        items.add(UItem.asHeader(md3SectionsHeaderRow, LocaleController.getString(R.string.Sections)));
+        items.add(UItem.asCheck(md3SectionsStyleRow, LocaleController.getString(R.string.MD3SectionsStyle)).setChecked(NemoConfig.md3SectionsStyle).slug("md3SectionsStyle"));
+        items.add(UItem.asShadow(null));
     }
 
     @Override
@@ -243,6 +249,12 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.disableGooeyAvatarAnimation);
             }
+        } else if (id == md3SectionsStyleRow) {
+            NemoConfig.toggleMd3SectionsStyle();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NemoConfig.md3SectionsStyle);
+            }
+            parentLayout.rebuildAllFragmentViews(false, false);
         } else if (id == tabsPositionRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             arrayList.add(LocaleController.getString(R.string.TabsPositionTop));

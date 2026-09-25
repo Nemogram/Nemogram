@@ -327,6 +327,8 @@
     <string name="ImportNemoSettingsFromChatButton">Применить настройки</string>
     <string name="LocalCustomEmoji">Локальные пользовательские эмодзи</string>
     <string name="MiniSenderAvatar">Мини-фотография отправителя</string>
+    <string name="Sections">Секции</string>
+    <string name="MD3SectionsStyle">MD3 стиль секций</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

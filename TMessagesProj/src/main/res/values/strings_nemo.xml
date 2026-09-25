@@ -330,6 +330,8 @@
     <string name="ImportNemoSettingsFromChatButton">Apply settings</string>
     <string name="LocalCustomEmoji">Local custom emoji</string>
     <string name="MiniSenderAvatar">Sender mini photo</string>
+    <string name="Sections">Sections</string>
+    <string name="MD3SectionsStyle">MD3 section style</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
