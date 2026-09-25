@@ -27,8 +27,6 @@ import org.nemogram.messenger.helpers.WhisperHelper;
 
 public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
 
-    private final int stickerSettingsRow = rowId++;
-
     private final int ignoreBlockedRow = rowId++;
     private final int quickForwardRow = rowId++;
     private final int hideKeyboardOnChatScrollRow = rowId++;
@@ -82,9 +80,6 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
 
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asButton(stickerSettingsRow, R.drawable.msg_sticker, LocaleController.getString(R.string.StickersAndGifs)).slug("stickerSettings"));
-        items.add(UItem.asShadow(null));
-
         items.add(UItem.asHeader(LocaleController.getString(R.string.Chat)));
         items.add(UItem.asCheck(ignoreBlockedRow, LocaleController.getString(R.string.IgnoreBlocked), LocaleController.getString(R.string.IgnoreBlockedAbout)).slug("ignoreBlocked").setChecked(NemoConfig.ignoreBlocked));
         items.add(UItem.asCheck(quickForwardRow, LocaleController.getString(R.string.QuickForward)).slug("quickForward").setChecked(NemoConfig.quickForward));
@@ -148,9 +143,7 @@ public class NemoChatSettingsActivity extends BaseNemoSettingsActivity {
     @Override
     protected void onItemClick(UItem item, View view, int position, float x, float y) {
         var id = item.id;
-        if (id == stickerSettingsRow) {
-            presentFragment(new NemoStickerSettingsActivity());
-        } else if (id == ignoreBlockedRow) {
+        if (id == ignoreBlockedRow) {
             NemoConfig.toggleIgnoreBlocked();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.ignoreBlocked);

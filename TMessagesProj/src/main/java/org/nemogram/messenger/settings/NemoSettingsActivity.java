@@ -43,6 +43,7 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
     private final int generalRow = rowId++;
     private final int appearanceRow = rowId++;
     private final int chatRow = rowId++;
+    private final int stickersAndGifsRow = rowId++;
     private final int keywordFilterRow = rowId++;
     private final int passcodeRow = rowId++;
     private final int experimentRow = rowId++;
@@ -101,6 +102,7 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
         items.add(SettingsActivity.SettingCell.Factory.of(generalRow, IconBackgroundColors.BLUE.top, IconBackgroundColors.BLUE.bottom, R.drawable.filled_poll_multiple_24, LocaleController.getString(R.string.General)).slug("general"));
         items.add(SettingsActivity.SettingCell.Factory.of(appearanceRow, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_features, LocaleController.getString(R.string.ChangeChannelNameColor2)).slug("appearance"));
         items.add(SettingsActivity.SettingCell.Factory.of(chatRow, IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom, R.drawable.settings_chat, LocaleController.getString(R.string.Chat)).slug("chat"));
+        items.add(SettingsActivity.SettingCell.Factory.of(stickersAndGifsRow, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.msg_premium_stickers, LocaleController.getString(R.string.StickersAndGifs)).slug("stickersAndGifs"));
         items.add(SettingsActivity.SettingCell.Factory.of(experimentRow, IconBackgroundColors.ORANGE_DEEP.top, IconBackgroundColors.ORANGE_DEEP.bottom, R.drawable.filled_premium_away, LocaleController.getString(R.string.NotificationsOther)).slug("experiment"));
         AccessibilityManager am = (AccessibilityManager) ApplicationLoader.applicationContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
         if (am != null && am.isTouchExplorationEnabled()) {
@@ -133,6 +135,8 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
         var id = item.id;
         if (id == chatRow) {
             presentFragment(new NemoChatSettingsActivity());
+        } else if (id == stickersAndGifsRow) {
+            presentFragment(new NemoStickerSettingsActivity());
         } else if (id == keywordFilterRow) {
         presentFragment(new NemoKeywordFilterActivity());
         } else if (id == generalRow) {
@@ -183,6 +187,8 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
             return new NemoAppearanceSettingsActivity();
         } else if (icon == R.drawable.settings_chat) {
             return new NemoChatSettingsActivity();
+        } else if (icon == R.drawable.msg_sticker) {
+            return new NemoStickerSettingsActivity();
         } else if (icon == R.drawable.filled_premium_away) {
             return new NemoExperimentalSettingsActivity();
         } else if (icon == R.drawable.msg_filled_blocked) {
@@ -197,6 +203,7 @@ public class NemoSettingsActivity extends BaseNemoSettingsActivity implements Fa
                 R.drawable.filled_poll_multiple_24,
                 R.drawable.settings_features,
                 R.drawable.settings_chat,
+                R.drawable.msg_sticker,
                 R.drawable.filled_premium_away,
                 R.drawable.msg_filled_blocked,
         };
