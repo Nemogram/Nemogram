@@ -1,4 +1,4 @@
-package app.nekogram.translator;
+package org.nemogram.messenger.translator;
 
 import java.io.IOException;
 

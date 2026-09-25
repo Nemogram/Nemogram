@@ -53,7 +53,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-import app.nekogram.translator.Http429Exception;
+import org.nemogram.messenger.translator.Http429Exception;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.MessageHelper;
 import org.nemogram.messenger.translator.Translator;

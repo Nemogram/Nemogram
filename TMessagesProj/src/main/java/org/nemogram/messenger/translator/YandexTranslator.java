@@ -1,4 +1,4 @@
-package app.nekogram.translator;
+package org.nemogram.messenger.translator;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

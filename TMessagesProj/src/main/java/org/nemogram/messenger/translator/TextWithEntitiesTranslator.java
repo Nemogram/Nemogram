@@ -7,10 +7,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import app.nekogram.translator.BaseTranslator;
-import app.nekogram.translator.DeepLTranslator;
-import app.nekogram.translator.GoogleAppTranslator;
-import app.nekogram.translator.YandexTranslator;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.translator.html.HTMLKeeper;
 

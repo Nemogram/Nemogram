@@ -38,7 +38,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-import app.nekogram.translator.Http429Exception;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.settings.NemoLanguagesSelectActivity;

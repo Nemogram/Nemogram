@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import app.nekogram.translator.DeepLTranslator;
+import org.nemogram.messenger.translator.DeepLTranslator;
 
 public class NemoConfig {
     public static final int TITLE_TYPE_TEXT = 0;
