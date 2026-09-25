@@ -18458,9 +18458,12 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (isInline) {
             isInline = false;
             animationInProgress = 0;
+            final FrameLayoutDrawer localContainerView = containerView;
             onPhotoClosed(object);
-            containerView.setScaleX(1.0f);
-            containerView.setScaleY(1.0f);
+            if (localContainerView != null) {
+                localContainerView.setScaleX(1.0f);
+                localContainerView.setScaleY(1.0f);
+            }
             if (!doneButtonPressed) {
                 releasePlayer(true);
             }
@@ -18990,33 +18993,39 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         castItemButton = null;
     }
 
-    private void releaseWindowView(boolean immediate) {
-        final FrameLayout viewToRelease = windowView;
-        final Activity activityToUse = parentActivity;
-        if (viewToRelease == null) {
+    private void detachWindowView(FrameLayout viewToDetach, boolean immediate) {
+        if (viewToDetach == null) {
             return;
         }
-        windowView = null;
         unregisterBackInvokedCallback();
         try {
-            viewToRelease.animate().setListener(null);
-            viewToRelease.animate().cancel();
+            viewToDetach.animate().setListener(null);
+            viewToDetach.animate().cancel();
         } catch (Throwable ignore) {
 
         }
         try {
-            if (viewToRelease.getParent() != null && activityToUse != null) {
-                WindowManager wm = (WindowManager) activityToUse.getSystemService(Context.WINDOW_SERVICE);
+            if (viewToDetach.getParent() != null && parentActivity != null) {
+                WindowManager wm = (WindowManager) parentActivity.getSystemService(Context.WINDOW_SERVICE);
                 if (immediate) {
-                    wm.removeViewImmediate(viewToRelease);
+                    wm.removeViewImmediate(viewToDetach);
                 } else {
-                    wm.removeView(viewToRelease);
+                    wm.removeView(viewToDetach);
                 }
                 onHideView();
             }
         } catch (Exception e) {
             FileLog.e(e);
         }
+    }
+
+    private void releaseWindowView(boolean immediate) {
+        final FrameLayout viewToRelease = windowView;
+        if (viewToRelease == null) {
+            return;
+        }
+        windowView = null;
+        detachWindowView(viewToRelease, immediate);
         try {
             viewToRelease.setOnClickListener(null);
             viewToRelease.setOnTouchListener(null);
@@ -19127,7 +19136,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (object != null && !AndroidUtilities.isTablet() && object.animatingImageView != null) {
             object.animatingImageView.setImageBitmap(null);
         }
-        releaseWindowView(true);
+        detachWindowView(windowView, true);
         if (placeProvider != null) {
             placeProvider.willHidePhotoViewer();
         }
@@ -19154,9 +19163,6 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         }
         cancelPendingPhotoViewerCallbacks();
         cancelPhotoViewerAnimators();
-        clearDetachedPhotoViewerViewReferences();
-        clearStaticInstanceReference();
-        clearActivityContextReferences();
     }
 
     private void redraw(final int count) {
