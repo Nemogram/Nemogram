@@ -395,8 +395,9 @@ public class SaveToGallerySettingsActivity extends BaseFragment {
                     view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
                     break;
                 case VIEW_TYPE_HEADER:
-                    HeaderCell headerCell = new HeaderCell(parent.getContext(), 24);
+                    HeaderCell headerCell = new HeaderCell(parent.getContext());
                     view = headerCell;
+                    view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
                     break;
                 case VIEW_TYPE_TOGGLE:
                     TextCheckCell textCheckCell = new TextCheckCell(parent.getContext());

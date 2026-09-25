@@ -46,7 +46,6 @@ import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.ActionBar.ThemeDescription;
-import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Cells.ManageChatTextCell;
 import org.telegram.ui.Cells.ManageChatUserCell;
 import org.telegram.ui.Cells.TextInfoPrivacyCell;
@@ -90,7 +89,6 @@ public class ChatLinkActivity extends BaseFragment implements NotificationCenter
     private int chatEndRow;
     private int removeChatRow;
     private int detailRow;
-    private int joinToSendHeaderRow;
     private int joinToSendRow;
     private int joinToSendInfoRow;
     private int rowCount;
@@ -190,7 +188,6 @@ public class ChatLinkActivity extends BaseFragment implements NotificationCenter
         chatEndRow = -1;
         removeChatRow = -1;
         detailRow = -1;
-        joinToSendHeaderRow = -1;
         joinToSendRow = -1;
         joinToSendInfoRow = -1;
 
@@ -215,7 +212,6 @@ public class ChatLinkActivity extends BaseFragment implements NotificationCenter
         if (!isChannel || chats.size() > 0 && info.linked_chat_id != 0) {
             TLRPC.Chat chat = isChannel ? chats.get(0) : currentChat;
             if (chat != null && (!ChatObject.isPublic(chat) || isChannel) && (chat.creator || chat.admin_rights != null && chat.admin_rights.ban_users)) {
-                joinToSendHeaderRow = rowCount++;
                 joinToSendRow = rowCount++;
             }
         }
@@ -984,10 +980,6 @@ public class ChatLinkActivity extends BaseFragment implements NotificationCenter
                         }
                     };
                     break;
-                case 5:
-                    view = new HeaderCell(mContext, 24);
-                    ((HeaderCell) view).setText(LocaleController.getString(R.string.ChannelSettingsJoinTitle));
-                    break;
                 case 3:
                 default:
                     view = new HintInnerCell(mContext);
@@ -1054,8 +1046,6 @@ public class ChatLinkActivity extends BaseFragment implements NotificationCenter
                 return 0;
             } else if (position == joinToSendRow) {
                 return 4;
-            } else if (position == joinToSendHeaderRow) {
-                return 5;
             }
             return 1;
         }

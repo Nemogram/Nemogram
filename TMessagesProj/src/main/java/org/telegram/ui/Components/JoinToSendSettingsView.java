@@ -22,6 +22,7 @@ import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Cells.TextCheckCell;
 import org.telegram.ui.Cells.TextInfoPrivacyCell;
 import org.telegram.ui.LaunchActivity;
@@ -29,6 +30,7 @@ import org.telegram.ui.ProfileActivity;
 
 public class JoinToSendSettingsView extends LinearLayout {
 
+    public HeaderCell joinHeaderCell;
     public TextCheckCell joinToSendCell;
     public TextCheckCell joinRequestCell;
     public TextInfoPrivacyCell joinToSendInfoCell;
@@ -45,6 +47,11 @@ public class JoinToSendSettingsView extends LinearLayout {
         isJoinRequest = currentChat.join_request;
 
         setOrientation(LinearLayout.VERTICAL);
+
+        joinHeaderCell = new HeaderCell(context, 20);
+        joinHeaderCell.setText(LocaleController.getString(R.string.ChannelSettingsJoinTitle));
+        joinHeaderCell.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
+        addView(joinHeaderCell);
 
         joinToSendCell = new TextCheckCell(context, 20);
         joinToSendCell.setTextAndCheck(LocaleController.getString(R.string.ChannelSettingsJoinToSend), isJoinToSend, isJoinToSend);
@@ -123,6 +130,7 @@ public class JoinToSendSettingsView extends LinearLayout {
     }
 
     public void showJoinToSend(boolean show) {
+        joinHeaderCell.setVisibility(show ? View.VISIBLE : View.GONE);
         joinToSendCell.setVisibility(show ? View.VISIBLE : View.GONE);
         if (!show) {
             isJoinToSend = true;
@@ -194,6 +202,7 @@ public class JoinToSendSettingsView extends LinearLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int y = 0;
         if (joinToSendCell.getVisibility() == View.VISIBLE) {
+            joinHeaderCell.layout(0, y, r - l, y += joinHeaderCell.getMeasuredHeight());
             joinToSendCell.layout(0, y, r - l, y += joinToSendCell.getMeasuredHeight());
         }
         joinRequestCell.layout(0, y, r - l, y += joinRequestCell.getMeasuredHeight());
@@ -206,7 +215,7 @@ public class JoinToSendSettingsView extends LinearLayout {
     private int calcHeight() {
         return (int) (
             (joinToSendCell.getVisibility() == View.VISIBLE ?
-                joinToSendCell.getMeasuredHeight() + joinRequestCell.getMeasuredHeight() * toggleValue :
+                joinHeaderCell.getMeasuredHeight() + joinToSendCell.getMeasuredHeight() + joinRequestCell.getMeasuredHeight() * toggleValue :
                 joinRequestCell.getMeasuredHeight()
             ) +
             AndroidUtilities.lerp(joinToSendInfoCell.getMeasuredHeight(), joinRequestInfoCell.getMeasuredHeight(), toggleValue)
@@ -215,6 +224,7 @@ public class JoinToSendSettingsView extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        joinHeaderCell.measure(widthMeasureSpec, MAXSPEC);
         joinToSendCell.measure(widthMeasureSpec, MAXSPEC);
         joinRequestCell.measure(widthMeasureSpec, MAXSPEC);
         joinToSendInfoCell.measure(widthMeasureSpec, MAXSPEC);

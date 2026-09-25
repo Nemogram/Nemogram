@@ -639,7 +639,8 @@ public class NotificationsSoundActivity extends BaseFragment implements ChatAtta
                     break;
                 default:
                 case 1:
-                    view = new HeaderCell(context, 24, resourcesProvider);
+                    view = new HeaderCell(context, resourcesProvider);
+                    view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider));
                     break;
                 case 2:
                     CreationTextCell creationTextCell = new CreationTextCell(context, 70, resourcesProvider);
