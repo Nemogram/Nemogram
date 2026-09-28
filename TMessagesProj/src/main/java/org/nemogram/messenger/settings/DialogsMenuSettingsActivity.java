@@ -90,6 +90,7 @@ public class DialogsMenuSettingsActivity extends BaseFragment {
         listView = new RecyclerListView(context);
         listView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         listView.setVerticalScrollBarEnabled(false);
+        listView.setSections();
         listView.setAdapter(adapter = new ListAdapter(context));
         listView.setOnItemClickListener((view, position) -> {
             if (position < 0 || position >= items.size()) {
@@ -296,7 +297,6 @@ public class DialogsMenuSettingsActivity extends BaseFragment {
             View view;
             if (viewType == VIEW_TYPE_ITEM) {
                 MenuItemCell cell = new MenuItemCell(mContext, getResourceProvider());
-                cell.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite, getResourceProvider()));
                 cell.setOnReorderButtonTouchListener((v, event) -> {
                     if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                         itemTouchHelper.startDrag(listView.getChildViewHolder(cell));
