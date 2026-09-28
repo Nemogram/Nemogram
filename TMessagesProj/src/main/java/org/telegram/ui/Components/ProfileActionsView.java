@@ -59,6 +59,8 @@ import java.util.Set;
 @SuppressLint("ViewConstructor")
 public class ProfileActionsView extends View {
 
+    public static final int HEIGHT_DP = 92;
+
     private final List<Action> actions = new ArrayList<>();
     private final Paint paint = new Paint();
     private final Paint shaderPaint = new Paint();
@@ -209,7 +211,7 @@ public class ProfileActionsView extends View {
 
         this.radialGradient = new RadialGradient(
                 width / 2f,
-                targetHeight / 2f,
+                getPillHeight() / 2f,
                 hasColorById ? width * 0.65f : 1f,
                 Theme.multAlpha(color, 0.8f),
                 color,
@@ -270,7 +272,7 @@ public class ProfileActionsView extends View {
             if (action.isDeleted) continue;
 
             if (!action.isDeleting) {
-                action.rect.set(left, top, left + width, top + height);
+                action.rect.set(left, top, left + width, top + getPillHeight() * Utilities.clamp01(height / targetHeight));
                 left += width + betweenPadding;
 
                 if (newFirstAction == null) {
@@ -391,18 +393,32 @@ public class ProfileActionsView extends View {
         final float cx = action.rect.centerX();
         final float cy = action.rect.centerY();
 
-        final int drawableSize = dp(24);
+        final int drawableSize = dp(28);
         final float drawableR = drawableSize * 0.5f;
 
-        action.text.setMaxWidth(action.rect.width() - dp(2));
-        action.textScale = action.text.getLineCount() >= 3 ? 0.75f : action.text.getLineCount() >= 2 ? 0.85f : 1.0f;
-        final float drawableTop = Math.max(0, (targetHeight - action.text.getHeight() * action.textScale) / 3f + dpf2(1.33f));
+        final float drawableTop = cy - drawableR;
         action.setBounds(
             (int) (cx - drawableR),
             (int) (drawableTop),
             (int) (cx + drawableR),
             (int) (drawableTop + drawableSize)
         );
+    }
+
+    private void updateLabel(Action action) {
+        final float available = action.rect.width() + xpadding / 2f - dp(4);
+        final float maxWidth = action.textNaturalWidth <= available ? available : (float) Math.ceil(action.textNaturalWidth) + 1;
+        if (action.textMaxWidth != maxWidth) {
+            action.textMaxWidth = maxWidth;
+            action.text.setMaxWidth(maxWidth);
+        }
+        action.text.ellipsize(available);
+    }
+
+    private void drawLabel(Canvas canvas, Action action, int color, float alpha) {
+        updateLabel(action);
+        final float cy = action.rect.bottom + getLabelGap() + action.text.getHeight() / 2f;
+        action.text.draw(canvas, action.rect.centerX() - action.text.getWidth() / 2f, cy, color, alpha);
     }
 
     private int lastColorFilterColor;
@@ -431,15 +447,10 @@ public class ProfileActionsView extends View {
         final float cy = action.rect.centerY();
         fraction *= action.getScale();
         canvas.scale(fraction, fraction, cx, cy);
+        drawLabel(canvas, action, textColor, alpha);
         canvas.clipRect(action.rect);
 
         updateBounds(action);
-
-        final float textY = action.bounds.bottom + action.bounds.top - action.text.getHeight() * action.textScale / 2.0f - dp(4.66f);
-        canvas.save();
-        canvas.scale(action.textScale, action.textScale, cx, textY + action.text.getHeight() * action.textScale / 2.0f);
-        action.text.draw(canvas, cx - action.text.getWidth() / 2f, textY, textColor, alpha);
-        canvas.restore();
 
         if (action.iconTranslationY != 0) {
             canvas.translate(0, action.iconTranslationY);
@@ -532,8 +543,27 @@ public class ProfileActionsView extends View {
         action.rippleDrawable.draw(canvas);
     }
 
+    private final RectF cellTmp = new RectF();
+    private boolean isInCell(Action action, float x, float y) {
+        getCellRect(action, cellTmp);
+        return cellTmp.contains(x, y);
+    }
+
+    private int getPillHeight() {
+        return dp(52);
+    }
+
+    private float getLabelGap() {
+        return dp(4);
+    }
+
+    private void getCellRect(Action action, RectF out) {
+        out.set(action.rect);
+        out.bottom = action.rect.bottom + getLabelGap() + action.text.getHeight();
+    }
+
     public float getRoundRadius() {
-        return dp(28);
+        return getPillHeight() / 2f;
     }
 
     private Action hit = null;
@@ -555,7 +585,7 @@ public class ProfileActionsView extends View {
             int c = actions.size();
             for (int i = 0; i < c; i++) {
                 Action a = actions.get(i);
-                if (!a.isDeleting && a.rect.contains(x, y)) {
+                if (!a.isDeleting && isInCell(a, x, y)) {
                     hit = a;
                     downX = x;
                     downY = y;
@@ -581,7 +611,7 @@ public class ProfileActionsView extends View {
             if (hit != null) {
                 hit.bounce.setPressed(false);
                 hit.rippleDrawable.setState(new int[]{});
-                if (eventAction == MotionEvent.ACTION_UP && hit.rect.contains(x, y)) {
+                if (eventAction == MotionEvent.ACTION_UP && isInCell(hit, x, y)) {
                     if (System.currentTimeMillis() - downTime > 250) {
                         try {
                             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
@@ -984,7 +1014,7 @@ public class ProfileActionsView extends View {
                 Action action = actions.get(i);
                 if (action.isDeleted) continue;
                 if (action.key == KEY_CALL) {
-                    callAction.rect.set(left, top, left + width, top + targetHeight);
+                    callAction.rect.set(left, top, left + width, top + getPillHeight());
                     break;
                 }
                 left += width + betweenPadding;
@@ -1044,7 +1074,8 @@ public class ProfileActionsView extends View {
         private Drawable drawableOutline;
         private RLottieDrawable drawableAnimated;
         private Text text;
-        private float textScale = 1.0f;
+        private float textNaturalWidth;
+        private float textMaxWidth = -1;
 
         public void setBounds(int l, int t, int r, int b) {
             bounds.set(l, t, r, b);
@@ -1064,9 +1095,10 @@ public class ProfileActionsView extends View {
         }
 
         public void setText(CharSequence cs) {
-            this.text = new Text(cs, 11, AndroidUtilities.bold())
-                .multiline(3)
+            this.text = new Text(cs, 12, AndroidUtilities.bold())
                 .align(Layout.Alignment.ALIGN_CENTER);
+            this.textNaturalWidth = this.text.calculateRealWidth();
+            this.textMaxWidth = -1;
         }
 
         boolean isOpening = false;
@@ -1076,7 +1108,7 @@ public class ProfileActionsView extends View {
         int iconTranslationY = 0;
         float iconScale = 1f;
 
-        RippleDrawable rippleDrawable = (RippleDrawable) Theme.AdaptiveRipple.createRect(0, Theme.multAlpha(Theme.getColor(Theme.key_windowBackgroundWhite), 0.45f), 28);
+        RippleDrawable rippleDrawable = (RippleDrawable) Theme.AdaptiveRipple.createRect(0, Theme.multAlpha(Theme.getColor(Theme.key_windowBackgroundWhite), 0.45f), 18);
         LoadingDrawable loadingDrawable;
         boolean isLoading;
         boolean supportsLoading;
@@ -1328,11 +1360,12 @@ public class ProfileActionsView extends View {
 
                         info.setText(action.text.getText());
 
+                        getCellRect(action, cellTmp);
                         Rect parentBounds = new Rect(
-                                (int) action.rect.left,
-                                (int) action.rect.top,
-                                (int) action.rect.right,
-                                (int) action.rect.bottom
+                                (int) cellTmp.left,
+                                (int) cellTmp.top,
+                                (int) cellTmp.right,
+                                (int) cellTmp.bottom
                         );
                         info.setBoundsInParent(parentBounds);
                         parentBounds.offset(pos[0], pos[1]);
