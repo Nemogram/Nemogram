@@ -329,6 +329,10 @@
     <string name="MiniSenderAvatar">Мини-фотография отправителя</string>
     <string name="Sections">Секции</string>
     <string name="MD3SectionsStyle">MD3 стиль секций</string>
+    <string name="SettingsIcons">Иконки настроек</string>
+    <string name="IconShape">Форма иконок</string>
+    <string name="IconShapeLeft">Квадрат</string>
+    <string name="IconShapeRight">Круг</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

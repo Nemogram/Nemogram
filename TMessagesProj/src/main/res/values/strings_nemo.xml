@@ -332,6 +332,10 @@
     <string name="MiniSenderAvatar">Sender mini photo</string>
     <string name="Sections">Sections</string>
     <string name="MD3SectionsStyle">MD3 section style</string>
+    <string name="SettingsIcons">Settings icons</string>
+    <string name="IconShape">Icon shape</string>
+    <string name="IconShapeLeft">Square</string>
+    <string name="IconShapeRight">Circle</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

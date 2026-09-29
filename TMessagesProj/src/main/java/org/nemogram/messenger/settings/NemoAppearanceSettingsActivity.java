@@ -19,6 +19,7 @@ import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.EmojiHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.settings.cells.EmojiSetCell;
+import org.nemogram.messenger.settings.cells.IconShapeCell;
 import org.nemogram.messenger.settings.cells.InputPanelStyleCell;
 import org.nemogram.messenger.settings.cells.ChatTopBarStyleCell;
 
@@ -53,9 +54,13 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int strokeOnViewsRow = rowId++;
     private final int md3SectionsHeaderRow = rowId++;
     private final int md3SectionsStyleRow = rowId++;
+    private final int iconShapeHeaderRow = rowId++;
+    private final int iconShapeRow = rowId++;
+    private final int iconShapeShadowRow = rowId++;
 
     private InputPanelStyleCell inputPanelStyleCell;
     private ChatTopBarStyleCell chatTopBarStyleCell;
+    private IconShapeCell iconShapeCell;
 
     @Override
     public boolean onFragmentCreate() {
@@ -161,6 +166,15 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asHeader(md3SectionsHeaderRow, LocaleController.getString(R.string.Sections)));
         items.add(UItem.asCheck(md3SectionsStyleRow, LocaleController.getString(R.string.MD3SectionsStyle)).setChecked(NemoConfig.md3SectionsStyle).slug("md3SectionsStyle"));
         items.add(UItem.asShadow(null));
+
+        items.add(UItem.asHeader(iconShapeHeaderRow, LocaleController.getString(R.string.SettingsIcons)));
+        if (getContext() != null) {
+            if (iconShapeCell == null) {
+                iconShapeCell = new IconShapeCell(getContext(), resourcesProvider);
+            }
+            items.add(UItem.asCustom(iconShapeRow, iconShapeCell));
+        }
+        items.add(UItem.asShadow(iconShapeShadowRow, null));
     }
 
     @Override

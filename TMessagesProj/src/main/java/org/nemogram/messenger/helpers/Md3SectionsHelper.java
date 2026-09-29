@@ -296,7 +296,7 @@ public class Md3SectionsHelper {
         if (!isEnabled()) return;
 
         resizeSquare(iconLayout, 36);
-        resizeSquare(iconView, 22);
+        resizeSquare(iconView, 24);
         applyIconColors(iconView, topColor, cellBackground);
     }
 

@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.nemogram.messenger.helpers.IconShapeHelper;
 import org.nemogram.messenger.helpers.MonetHelper;
 import org.nemogram.messenger.helpers.Md3SectionsHelper;
 import org.telegram.messenger.AndroidUtilities;
@@ -208,7 +209,7 @@ public class TextCell extends FrameLayout {
             if (Md3SectionsHelper.isEnabled()) {
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 if (imageView.getBackground() instanceof SettingsActivity.SettingCell.Background) {
-                    imageView.setPadding(dp(7), dp(7), dp(7), dp(7));
+                    imageView.setPadding(dp(6), dp(6), dp(6), dp(6));
                     final int iconMeasureSpec = MeasureSpec.makeMeasureSpec(dp(36), MeasureSpec.EXACTLY);
                     imageView.measure(iconMeasureSpec, iconMeasureSpec);
                 } else {
@@ -645,7 +646,7 @@ public class TextCell extends FrameLayout {
         imageView.setVisibility(VISIBLE);
         imageView.setPadding(dp(2), dp(2), dp(2), dp(2));
         imageView.setTranslationX(dp(LocaleController.isRTL ? 0 : -3));
-        imageView.setImageResource(resId);
+        IconShapeHelper.setIcon(imageView, resId);
         imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
 
         final boolean border = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();

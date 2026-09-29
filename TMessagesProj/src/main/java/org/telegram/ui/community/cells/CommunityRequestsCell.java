@@ -1,5 +1,6 @@
 package org.telegram.ui.community.cells;
 
+import org.nemogram.messenger.helpers.IconShapeHelper;
 import static org.telegram.messenger.AndroidUtilities.dp;
 
 import android.content.Context;
@@ -115,7 +116,7 @@ public class CommunityRequestsCell extends LinearLayout implements Theme.Colorab
         titleView.setTranslationX(icon == 0 ? dp(2) : 0);
 
         iconBackground.setColor(iconColorTop, iconColorBottom);
-        iconView.setImageResource(icon);
+        IconShapeHelper.setIcon(iconView, icon);
         setTitle(title);
         setValue(value);
         setUnreadMode(valueAsUnread);

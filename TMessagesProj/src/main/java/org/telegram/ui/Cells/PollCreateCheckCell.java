@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import org.nemogram.messenger.helpers.IconShapeHelper;
 import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
@@ -95,7 +96,7 @@ public class PollCreateCheckCell extends FrameLayout {
         drawable.setColor(MonetHelper.getSettingsIconBackgroundColor(color.top), MonetHelper.getSettingsIconBackgroundColor(color.bottom));
         drawable.setDrawBorder(border);
         imageView.setBackground(drawable);
-        imageView.setImageResource(iconResId);
+        IconShapeHelper.setIcon(imageView, iconResId);
         imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
         checkBox.setChecked(checked, 0, animationsEnabled);
         multilineValueTextView.setText(value);

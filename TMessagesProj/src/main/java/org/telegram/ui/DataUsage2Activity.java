@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.IconShapeHelper;
 import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
@@ -1058,7 +1059,7 @@ public class DataUsage2Activity extends BaseFragment {
                 drawable.setColor(MonetHelper.getSettingsIconBackgroundColor(imageColorTop), MonetHelper.getSettingsIconBackgroundColor(imageColorBottom));
                 drawable.setDrawBorder(border);
                 imageView.setBackground(drawable);
-                imageView.setImageResource(imageResId);
+                IconShapeHelper.setIcon(imageView, imageResId);
                 imageView.setColorFilter(new PorterDuffColorFilter(MonetHelper.getSettingsIconForegroundColor(Color.WHITE), PorterDuff.Mode.SRC_IN));
             }
 

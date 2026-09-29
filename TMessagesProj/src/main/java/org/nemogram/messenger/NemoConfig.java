@@ -61,8 +61,6 @@ public class NemoConfig {
     public static final int TRANSCRIBE_WORKERSAI = 2;
     public static final int TRANSCRIBE_LOCAL = 3;
 
-
-
     private static final Object sync = new Object();
     public static boolean preferIPv6 = false;
 
@@ -162,6 +160,8 @@ public class NemoConfig {
     public static boolean moreHapticFeedbacks = false;
     public static boolean highRoundVideoBitrate = true;
     public static boolean md3SectionsStyle = false;
+
+    public static int iconRoundness = 100;
 
     public static int userMcc = 0;
     public static int searchBarStyle = SEARCH_BAR_NORMAL;
@@ -297,6 +297,7 @@ public class NemoConfig {
             moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
             highRoundVideoBitrate = preferences.getBoolean("highRoundVideoBitrate", true);
             md3SectionsStyle = preferences.getBoolean("md3SectionsStyle", false);
+            iconRoundness = preferences.getInt("iconRoundness", 100);
             dialogsMenuOrder = preferences.getString("dialogsMenuOrder", "");
             if (preferences.contains("dialogsMenuHiddenItems")) {
                 dialogsMenuHiddenItems = new HashSet<>(preferences.getStringSet("dialogsMenuHiddenItems", new HashSet<>()));
@@ -1243,6 +1244,12 @@ public class NemoConfig {
         md3SectionsStyle = !md3SectionsStyle;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("md3SectionsStyle", md3SectionsStyle).apply();
+    }
+
+    public static void setIconRoundness(int roundness) {
+        iconRoundness = Math.max(0, Math.min(100, roundness));
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putInt("iconRoundness", iconRoundness).apply();
     }
 
     public static int getNotificationColor() {

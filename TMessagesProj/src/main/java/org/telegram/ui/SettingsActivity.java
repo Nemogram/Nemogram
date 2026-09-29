@@ -63,6 +63,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.MonetHelper;
+import org.nemogram.messenger.helpers.IconShapeHelper;
 import org.nemogram.messenger.helpers.Md3SectionsHelper;
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
@@ -1186,7 +1187,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             Md3SectionsHelper.applySettingCellIcon(iconLayout, iconView, iconColorTop, iconColorBottom, iconBackground);
 
             iconBackground.setColor(iconColorTop, iconColorBottom);
-            iconView.setImageResource(icon);
+            IconShapeHelper.setIcon(iconView, icon);
             titleView.setText(title);
             twoLines = false;
             subtitleView.setVisibility(View.GONE);
@@ -1233,7 +1234,11 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             }
 
             public void setColor(int topColor, int bottomColor) {
-                gradient = new LinearGradient(0, 0, 0, dp(28), new int[] { topColor, bottomColor }, new float[] { 0, 1 }, Shader.TileMode.CLAMP);
+                setColor(topColor, bottomColor, dp(28));
+            }
+
+            public void setColor(int topColor, int bottomColor, float height) {
+                gradient = new LinearGradient(0, 0, 0, height, new int[] { topColor, bottomColor }, new float[] { 0, 1 }, Shader.TileMode.CLAMP);
                 paint.setShader(gradient);
             }
 
@@ -1243,29 +1248,23 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             }
 
             public int md3FlatColor;
+            private final Paint flatPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
             @Override
             public void draw(@NonNull Canvas canvas) {
+                AndroidUtilities.rectTmp.set(getBounds());
                 if (md3FlatColor != 0) {
-                    paint.setShader(null);
-                    paint.setColor(md3FlatColor);
-                    Rect b = getBounds();
-                    canvas.drawCircle(b.exactCenterX(), b.exactCenterY(), Math.min(b.width(), b.height()) / 2f, paint);
+                    flatPaint.setColor(md3FlatColor);
+                    IconShapeHelper.draw(canvas, AndroidUtilities.rectTmp, flatPaint);
                     return;
                 }
-                final float r = dp(10);
-                AndroidUtilities.rectTmp.set(getBounds());
-                matrix.reset();
-                matrix.postTranslate(AndroidUtilities.rectTmp.left, AndroidUtilities.rectTmp.top);
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, paint);
+                IconShapeHelper.draw(canvas, AndroidUtilities.rectTmp, paint);
 
                 if (border && NemoConfig.strokeOnViews) {
                     final float sw = dp(1);
                     strokePaint.setStrokeWidth(sw);
-                    matrix.reset();
-                    matrix.postTranslate(AndroidUtilities.rectTmp.left, AndroidUtilities.rectTmp.top);
                     AndroidUtilities.rectTmp.inset(sw / 2.0f, sw / 2.0f);
-                    canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, strokePaint);
+                    IconShapeHelper.draw(canvas, AndroidUtilities.rectTmp, strokePaint);
                 }
             }
 
