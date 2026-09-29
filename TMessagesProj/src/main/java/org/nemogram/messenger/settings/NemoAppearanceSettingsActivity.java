@@ -165,7 +165,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
 
         items.add(UItem.asHeader(md3SectionsHeaderRow, LocaleController.getString(R.string.Sections)));
         items.add(UItem.asCheck(md3SectionsStyleRow, LocaleController.getString(R.string.MD3SectionsStyle)).setChecked(NemoConfig.md3SectionsStyle).slug("md3SectionsStyle"));
-        items.add(UItem.asShadow(null));
+        items.add(UItem.asShadow(LocaleController.getString(R.string.MD3SectionsStyleDesc)));
 
         items.add(UItem.asHeader(iconShapeHeaderRow, LocaleController.getString(R.string.SettingsIcons)));
         if (getContext() != null) {

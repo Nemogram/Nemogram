@@ -328,7 +328,8 @@
     <string name="LocalCustomEmoji">Локальные пользовательские эмодзи</string>
     <string name="MiniSenderAvatar">Мини-фотография отправителя</string>
     <string name="Sections">Секции</string>
-    <string name="MD3SectionsStyle">MD3 стиль секций</string>
+    <string name="MD3SectionsStyle">MD3 секции</string>
+    <string name="MD3SectionsStyleDesc">Разбивает элементы списков на отдельные скруглённые плитки с небольшими промежутками, как в Material Design 3.</string>
     <string name="SettingsIcons">Иконки настроек</string>
     <string name="IconShape">Форма иконок</string>
     <string name="IconShapeLeft">Квадрат</string>

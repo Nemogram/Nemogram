@@ -331,7 +331,8 @@
     <string name="LocalCustomEmoji">Local custom emoji</string>
     <string name="MiniSenderAvatar">Sender mini photo</string>
     <string name="Sections">Sections</string>
-    <string name="MD3SectionsStyle">MD3 section style</string>
+    <string name="MD3SectionsStyle">MD3 sections</string>
+    <string name="MD3SectionsStyleDesc">Splits list items into separate rounded tiles with small gaps, like in Material Design 3.</string>
     <string name="SettingsIcons">Settings icons</string>
     <string name="IconShape">Icon shape</string>
     <string name="IconShapeLeft">Square</string>
