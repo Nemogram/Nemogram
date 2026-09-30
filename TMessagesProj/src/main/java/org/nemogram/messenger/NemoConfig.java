@@ -52,6 +52,9 @@ public class NemoConfig {
     public static final int SEARCH_BAR_COMPACT = 1;
     public static final int SEARCH_BAR_MATERIAL = 2;
 
+    public static final int CONTROLS_STYLE_DEFAULT = 0;
+    public static final int CONTROLS_STYLE_MD3 = 2;
+
     public static final int BOOST_NONE = 0;
     public static final int BOOST_AVERAGE = 1;
     public static final int BOOST_EXTREME = 2;
@@ -160,6 +163,7 @@ public class NemoConfig {
     public static boolean moreHapticFeedbacks = false;
     public static boolean highRoundVideoBitrate = true;
     public static boolean md3SectionsStyle = false;
+    public static int controlsStyle = CONTROLS_STYLE_DEFAULT;
 
     public static int iconRoundness = 100;
 
@@ -297,6 +301,8 @@ public class NemoConfig {
             moreHapticFeedbacks = preferences.getBoolean("moreHapticFeedbacks", true);
             highRoundVideoBitrate = preferences.getBoolean("highRoundVideoBitrate", true);
             md3SectionsStyle = preferences.getBoolean("md3SectionsStyle", false);
+            int savedControlsStyle = preferences.getInt("controlsStyle", CONTROLS_STYLE_DEFAULT);
+            controlsStyle = savedControlsStyle == CONTROLS_STYLE_MD3 ? CONTROLS_STYLE_MD3 : CONTROLS_STYLE_DEFAULT;
             iconRoundness = preferences.getInt("iconRoundness", 100);
             dialogsMenuOrder = preferences.getString("dialogsMenuOrder", "");
             if (preferences.contains("dialogsMenuHiddenItems")) {
@@ -1244,6 +1250,12 @@ public class NemoConfig {
         md3SectionsStyle = !md3SectionsStyle;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
         preferences.edit().putBoolean("md3SectionsStyle", md3SectionsStyle).apply();
+    }
+
+    public static void setControlsStyle(int style) {
+        controlsStyle = style == CONTROLS_STYLE_MD3 ? CONTROLS_STYLE_MD3 : CONTROLS_STYLE_DEFAULT;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
+        preferences.edit().putInt("controlsStyle", controlsStyle).apply();
     }
 
     public static void setIconRoundness(int roundness) {

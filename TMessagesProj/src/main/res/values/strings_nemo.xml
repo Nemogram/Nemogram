@@ -337,6 +337,10 @@
     <string name="IconShape">Icon shape</string>
     <string name="IconShapeLeft">Square</string>
     <string name="IconShapeRight">Circle</string>
+    <string name="ControlsStyle">Switches and sliders</string>
+    <string name="ControlsStyleDefault">Default</string>
+    <string name="ControlsStyleMD3">MD3</string>
+    <string name="ControlsStyleDesc">Changes the look of switches and sliders across the app.</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

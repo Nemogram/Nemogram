@@ -33,6 +33,7 @@ import androidx.annotation.Nullable;
 import org.nemogram.messenger.helpers.IconShapeHelper;
 import org.nemogram.messenger.helpers.MonetHelper;
 import org.nemogram.messenger.helpers.Md3SectionsHelper;
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
@@ -226,7 +227,7 @@ public class TextCell extends FrameLayout {
             valueImageView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
         }
         if (checkBox != null) {
-            checkBox.measure(MeasureSpec.makeMeasureSpec(dp(37), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(dp(20), MeasureSpec.EXACTLY));
+            checkBox.measure(MeasureSpec.makeMeasureSpec(dp(37), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(dp(NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20), MeasureSpec.EXACTLY));
         }
         setMeasuredDimension(width, height + (needDivider ? 1 : 0));
     }

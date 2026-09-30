@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import org.telegram.messenger.AndroidUtilities;
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.DocumentObject;
 import org.telegram.messenger.Emoji;
 import org.telegram.messenger.ImageLocation;
@@ -68,7 +69,7 @@ public class AvailableReactionCell extends FrameLayout {
         } else {
             switchView = new Switch(context);
             switchView.setColors(Theme.key_switchTrack, Theme.key_switchTrackChecked, Theme.key_switchTrackBlueThumb, Theme.key_switchTrackBlueThumbChecked);
-            addView(switchView, LayoutHelper.createFrameRelatively(37, 20, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 22, 0));
+            addView(switchView, LayoutHelper.createFrameRelatively(37, NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 22, 0));
         }
         setWillNotDraw(false);
     }
@@ -76,6 +77,14 @@ public class AvailableReactionCell extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec((int) (AndroidUtilities.dp(58) + Theme.dividerPaint.getStrokeWidth()), MeasureSpec.EXACTLY));
+        if (switchView != null) {
+            LayoutParams params = (LayoutParams) switchView.getLayoutParams();
+            int desiredHeight = AndroidUtilities.dp(NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20);
+            if (params.height != desiredHeight) {
+                params.height = desiredHeight;
+                switchView.setLayoutParams(params);
+            }
+        }
     }
 
     /**

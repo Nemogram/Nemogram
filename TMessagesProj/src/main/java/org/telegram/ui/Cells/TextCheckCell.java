@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nemogram.messenger.helpers.Md3SectionsHelper;
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.ui.ActionBar.Theme;
@@ -124,7 +125,7 @@ public class TextCheckCell extends FrameLayout {
 
         checkBox = new Switch(context, resourcesProvider);
         checkBox.setColors(Theme.key_switchTrack, Theme.key_switchTrackChecked, Theme.key_windowBackgroundWhite, Theme.key_windowBackgroundWhite);
-        addView(checkBox, LayoutHelper.createFrame(37, 20, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL, 22, 0, 22, 0));
+        addView(checkBox, LayoutHelper.createFrame(37, NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL, 22, 0, 22, 0));
 
         setClipChildren(false);
 
@@ -152,9 +153,23 @@ public class TextCheckCell extends FrameLayout {
         } else {
             if (Md3SectionsHelper.isEnabled()) {
                 super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(valueTextView.getVisibility() == VISIBLE ? 72 : (height == 50 ? 56 : height)) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
+                updateSwitchLayoutParams();
                 return;
             }
             super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(valueTextView.getVisibility() == VISIBLE ? 64 : height) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
+        }
+        updateSwitchLayoutParams();
+    }
+
+    private void updateSwitchLayoutParams() {
+        if (checkBox == null) {
+            return;
+        }
+        LayoutParams params = (LayoutParams) checkBox.getLayoutParams();
+        int desiredHeight = AndroidUtilities.dp(NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20);
+        if (params.height != desiredHeight) {
+            params.height = desiredHeight;
+            checkBox.setLayoutParams(params);
         }
     }
 
@@ -199,7 +214,7 @@ public class TextCheckCell extends FrameLayout {
         addView(valueTextView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, (LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT) | Gravity.TOP, LocaleController.isRTL ? 64 : padding, 36, LocaleController.isRTL ? padding : 64, 0));
 
         removeView(checkBox);
-        addView(checkBox, LayoutHelper.createFrame(37, 20, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL, 22, 0, 22, 0));
+        addView(checkBox, LayoutHelper.createFrame(37, NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL, 22, 0, 22, 0));
     }
 
     public void setColors(int key, int switchKey, int switchKeyChecked, int switchThumb, int switchThumbChecked) {

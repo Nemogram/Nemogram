@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import androidx.core.graphics.ColorUtils;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.Emoji;
 import org.telegram.messenger.FileLog;
@@ -77,6 +78,10 @@ public class SeekBarView extends FrameLayout {
     private int lineWidthDp = 3;
 
     private boolean twoSided;
+    private int styleOverride = -1;
+    private float styledPress;
+    private final Path styledPath = new Path();
+    private final float[] styledRadii = new float[8];
     private final Theme.ResourcesProvider resourcesProvider;
     private final AudioPlayerAlert.ClippingTextViewSwitcher textViewSwitcher;
 
@@ -447,6 +452,13 @@ public class SeekBarView extends FrameLayout {
         int y = (getMeasuredHeight() - thumbSize) / 2;
         innerPaint1.setColor(getThemedColor(Theme.key_player_progressBackground));
 
+        final int controlsStyle = getEffectiveStyle();
+        if (controlsStyle != NemoConfig.CONTROLS_STYLE_DEFAULT && (timestamps == null || timestamps.isEmpty())) {
+            transitionProgress = 1f;
+            drawStyled(canvas, thumbX, controlsStyle);
+            return;
+        }
+
         float centerY = getMeasuredHeight() / 2f;
         float left = selectorWidth / 2f, right = getMeasuredWidth() - selectorWidth / 2;
         float top = centerY - AndroidUtilities.dp(lineWidthDp) / 2f, bottom = centerY + AndroidUtilities.dp(lineWidthDp) / 2f;
@@ -652,6 +664,120 @@ public class SeekBarView extends FrameLayout {
                 return 0;
             }
         });
+    }
+
+    /**
+     * Forces a specific style for this instance (used by settings previews).
+     * Pass -1 to follow {@link NemoConfig#controlsStyle}.
+     */
+    public void setStyleOverride(int style) {
+        if (styleOverride != style) {
+            styleOverride = style;
+            invalidate();
+        }
+    }
+
+    private int getEffectiveStyle() {
+        return styleOverride >= 0 ? styleOverride : NemoConfig.controlsStyle;
+    }
+
+    private void setStyledPath(float l, float t, float r, float b, float leftRadius, float rightRadius) {
+        rect.set(l, t, r, b);
+        styledRadii[0] = styledRadii[1] = styledRadii[6] = styledRadii[7] = leftRadius;
+        styledRadii[2] = styledRadii[3] = styledRadii[4] = styledRadii[5] = rightRadius;
+        styledPath.reset();
+        styledPath.addRoundRect(rect, styledRadii, Path.Direction.CW);
+    }
+
+    /** Draws a track piece in the inactive color, then the part of it that lies inside [activeStart, activeEnd] in the active color. */
+    private void drawStyledPiece(Canvas canvas, float l, float t, float r, float b, float leftRadius, float rightRadius, float activeStart, float activeEnd) {
+        if (r - l < 1f) {
+            return;
+        }
+        setStyledPath(l, t, r, b, leftRadius, rightRadius);
+        canvas.drawPath(styledPath, innerPaint1);
+        final float from = Math.max(l, activeStart);
+        final float to = Math.min(r, activeEnd);
+        if (to > from) {
+            canvas.save();
+            canvas.clipRect(from, t - dp(2), to, b + dp(2));
+            canvas.drawPath(styledPath, outerPaint1);
+            canvas.restore();
+        }
+    }
+
+    private void drawStyled(Canvas canvas, int thumbX, int style) {
+        final boolean md3 = style == NemoConfig.CONTROLS_STYLE_MD3;
+
+        final float lineH = Math.min(dp(md3 ? 13 : 17), Math.max(dp(4), getMeasuredHeight() - dp(6)));
+        final float cy = getMeasuredHeight() / 2f;
+        final float top = cy - lineH / 2f, bottom = cy + lineH / 2f;
+        final float left = selectorWidth / 2f, right = getMeasuredWidth() - selectorWidth / 2f;
+        final float thumbC = thumbX + selectorWidth / 2f;
+        final float full = lineH / 2f;
+
+        // where the "active" color applies
+        float activeStart, activeEnd;
+        if (twoSided) {
+            final float mid = getMeasuredWidth() / 2f;
+            activeStart = Math.min(mid, thumbC);
+            activeEnd = Math.max(mid, thumbC);
+        } else {
+            activeStart = minProgress >= 0 ? left + minProgress * (right - left) : left;
+            activeEnd = thumbC;
+        }
+
+        // press animation (thumb gets thinner while dragging)
+        final float pressTarget = pressed ? 1f : 0f;
+        boolean needInvalidate = false;
+        if (styledPress != pressTarget) {
+            final float step = 16 / 150f;
+            styledPress = styledPress < pressTarget ? Math.min(pressTarget, styledPress + step) : Math.max(pressTarget, styledPress - step);
+            needInvalidate = true;
+        }
+
+        if (md3) {
+            final float thumbW = dp(4) - dp(2) * styledPress;
+            final float gap = dp(6) + dp(1) * styledPress;
+            final float small = dp(3);
+            final float splitL = thumbC - thumbW / 2f - gap;
+            final float splitR = thumbC + thumbW / 2f + gap;
+
+            // dimmed area before minProgress
+            if (!twoSided && minProgress >= 0 && activeStart > left) {
+                final int was = outerPaint1.getAlpha();
+                outerPaint1.setAlpha((int) (0.5f * was));
+                setStyledPath(left, top, Math.min(activeStart, splitL), bottom, full, small);
+                canvas.drawPath(styledPath, outerPaint1);
+                outerPaint1.setAlpha(was);
+                drawStyledPiece(canvas, Math.max(left, activeStart), top, splitL, bottom, small, small, activeStart, activeEnd);
+            } else {
+                drawStyledPiece(canvas, left, top, splitL, bottom, full, small, activeStart, activeEnd);
+            }
+            drawStyledPiece(canvas, splitR, top, right, bottom, small, full, activeStart, activeEnd);
+
+            final float pillTop = Math.max(0, top - dp(5)), pillBottom = Math.min(getMeasuredHeight(), bottom + dp(5));
+            rect.set(thumbC - thumbW / 2f, pillTop, thumbC + thumbW / 2f, pillBottom);
+            canvas.drawRoundRect(rect, thumbW / 2f, thumbW / 2f, outerPaint1);
+        } else {
+            drawStyledPiece(canvas, left, top, right, bottom, full, full, activeStart, activeEnd);
+
+            // small grip near the end of the filled part
+            final float gripX = thumbC - dp(7);
+            if (gripX - left > dp(8)) {
+                final int was = innerPaint1.getAlpha();
+                innerPaint1.setAlpha((int) (0.85f * 255));
+                final float half = Math.min(lineH * 0.22f, dp(5));
+                final float w = dp(2) + dp(0.5f) * styledPress;
+                rect.set(gripX - w / 2f, cy - half, gripX + w / 2f, cy + half);
+                canvas.drawRoundRect(rect, w / 2f, w / 2f, innerPaint1);
+                innerPaint1.setAlpha(was);
+            }
+        }
+
+        if (needInvalidate) {
+            postInvalidateOnAnimation();
+        }
     }
 
     private void drawProgressBar(Canvas canvas, RectF rect, Paint paint) {

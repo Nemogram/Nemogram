@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import androidx.annotation.Keep;
+import androidx.core.graphics.ColorUtils;
 
 import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
@@ -88,6 +89,9 @@ public class Switch extends View {
 
     private int overrideColorProgress;
 
+    private int styleOverride = -1;
+    private final Paint borderPaint;
+
     public interface OnCheckedChangeListener {
         void onCheckedChanged(Switch view, boolean isChecked);
     }
@@ -106,6 +110,9 @@ public class Switch extends View {
         paint2.setStyle(Paint.Style.STROKE);
         paint2.setStrokeCap(Paint.Cap.ROUND);
         paint2.setStrokeWidth(AndroidUtilities.dp(2));
+
+        borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        borderPaint.setStyle(Paint.Style.STROKE);
 
         setHapticFeedbackEnabled(true);
     }
@@ -382,6 +389,12 @@ public class Switch extends View {
             return;
         }
 
+        final int style = getEffectiveStyle();
+        if (style != NemoConfig.CONTROLS_STYLE_DEFAULT) {
+            drawStyled(canvas, style);
+            return;
+        }
+
         int width = AndroidUtilities.dp(31);
         int thumb = AndroidUtilities.dp(20);
         int x = (getMeasuredWidth() - width) / 2;
@@ -556,6 +569,170 @@ public class Switch extends View {
         if (overrideColorProgress != 0) {
             canvas.drawBitmap(overlayBitmap[1], 0, 0, null);
         }
+    }
+
+    /**
+     * Forces a specific style for this instance (used by settings previews).
+     * Pass -1 to follow {@link NemoConfig#controlsStyle}.
+     */
+    public void setStyleOverride(int style) {
+        if (styleOverride != style) {
+            styleOverride = style;
+            invalidate();
+        }
+    }
+
+    private int getEffectiveStyle() {
+        return styleOverride >= 0 ? styleOverride : NemoConfig.controlsStyle;
+    }
+
+    private float getLayerProgress(int layer) {
+        if (overrideColorProgress == 1) {
+            return layer == 0 ? 0 : 1;
+        } else if (overrideColorProgress == 2) {
+            return layer == 0 ? 1 : 0;
+        }
+        return progress;
+    }
+
+    private void prepareOverlayLayer() {
+        overlayBitmap[0].eraseColor(0);
+        paint.setColor(0xff000000);
+        overlayMaskCanvas.drawRect(0, 0, overlayMaskBitmap.getWidth(), overlayMaskBitmap.getHeight(), paint);
+        overlayMaskCanvas.drawCircle(overlayCx - getX(), overlayCy - getY(), overlayRad, overlayEraserPaint);
+    }
+
+    private void drawStyled(Canvas canvas, int style) {
+        final boolean md3 = style == NemoConfig.CONTROLS_STYLE_MD3;
+
+        final int trackW = AndroidUtilities.dp(36);
+        final float trackH = AndroidUtilities.dpf2(20);
+        final float x = (getMeasuredWidth() - trackW) / 2f;
+        final float cy = getMeasuredHeight() / 2f;
+        final float stroke = AndroidUtilities.dpf2(md3 ? 1.5f : 1.25f);
+        final float thumbTravelStart = x + AndroidUtilities.dpf2(10);
+        final float thumbTravel = AndroidUtilities.dpf2(16);
+
+        final int offTrack = processColor(Theme.getColor(trackColorKey, resourcesProvider));
+        final int onTrack = processColor(Theme.getColor(trackCheckedColorKey, resourcesProvider));
+        final int thumbBase = Theme.getColor(thumbColorKey, resourcesProvider);
+        final int thumbOn = processColor(Theme.getColor(thumbCheckedColorKey, resourcesProvider));
+        final int offFill = md3
+                ? Theme.blendOver(
+                        Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider),
+                        Theme.multAlpha(offTrack, Theme.isCurrentThemeDay() ? 0.2f : 0.1f))
+                : (onTrack & 0x00ffffff); // transparent, same hue as checked track so the fade doesn't pass through black
+
+        borderPaint.setStrokeWidth(stroke);
+        final boolean hasIcon = iconDrawable != null && animatorIconVisibility.getFloatValue() > 0;
+
+        // track layer
+        for (int a = 0; a < 2; a++) {
+            if (a == 1 && overrideColorProgress == 0) {
+                continue;
+            }
+            Canvas c = a == 0 ? canvas : overlayCanvas[0];
+            if (a == 1) {
+                prepareOverlayLayer();
+            }
+            final float p = getLayerProgress(a);
+
+            rectF.set(x, cy - trackH / 2f, x + trackW, cy + trackH / 2f);
+            paint.setColor(ColorUtils.blendARGB(offFill, onTrack, p));
+            c.drawRoundRect(rectF, trackH / 2f, trackH / 2f, paint);
+
+            rectF.inset(stroke / 2f, stroke / 2f);
+            borderPaint.setColor(ColorUtils.blendARGB(offTrack, onTrack, p));
+            c.drawRoundRect(rectF, trackH / 2f, trackH / 2f, borderPaint);
+
+            if (a == 0 && rippleDrawable != null) {
+                final int rx = (int) (thumbTravelStart + thumbTravel * progress);
+                final int ry = (int) cy;
+                rippleDrawable.setBounds(rx - AndroidUtilities.dp(18), ry - AndroidUtilities.dp(18), rx + AndroidUtilities.dp(18), ry + AndroidUtilities.dp(18));
+                rippleDrawable.draw(c);
+            } else if (a == 1) {
+                c.drawBitmap(overlayMaskBitmap, 0, 0, overlayMaskPaint);
+            }
+        }
+        if (overrideColorProgress != 0) {
+            canvas.drawBitmap(overlayBitmap[0], 0, 0, null);
+        }
+
+        // thumb layer
+        for (int a = 0; a < 2; a++) {
+            if (a == 1 && overrideColorProgress == 0) {
+                continue;
+            }
+            Canvas c = a == 0 ? canvas : overlayCanvas[1];
+            if (a == 1) {
+                overlayBitmap[1].eraseColor(0);
+            }
+            final float p = getLayerProgress(a);
+            final float tx = thumbTravelStart + thumbTravel * progress;
+
+            final float radius = AndroidUtilities.dpf2(md3 ? 6.5f + 1.5f * p : 6f + 2f * p);
+            paint.setColor(ColorUtils.blendARGB(offTrack, thumbOn, p));
+            c.drawCircle(tx, cy, radius, paint);
+
+            if (hasIcon) {
+                final int iconColor = md3 ? ColorUtils.blendARGB(offFill, onTrack, p) : ColorUtils.blendARGB(thumbBase, onTrack, p);
+                if (a == 0) {
+                    if (lastIconColor != iconColor) {
+                        iconDrawable.setColorFilter(new PorterDuffColorFilter(lastIconColor = iconColor, PorterDuff.Mode.MULTIPLY));
+                    }
+                    final float factor = animatorIconVisibility.getFloatValue();
+                    c.save();
+                    c.scale(factor * 0.8f, factor * 0.8f, tx, cy);
+                    iconDrawable.setBounds((int) tx - iconDrawable.getIntrinsicWidth() / 2, (int) cy - iconDrawable.getIntrinsicHeight() / 2, (int) tx + iconDrawable.getIntrinsicWidth() / 2, (int) cy + iconDrawable.getIntrinsicHeight() / 2);
+                    iconDrawable.draw(c);
+                    c.restore();
+                }
+            } else if (md3) {
+                final int crossColor = offFill;
+                drawStyledCross(c, tx, cy, crossColor, 1f - p);
+                drawStyledCheck(c, tx, cy, onTrack, p);
+            } else if (drawIconType == 1) {
+                drawStyledCross(c, tx, cy, thumbBase, 1f - p);
+            }
+
+            if (a == 1) {
+                c.drawBitmap(overlayMaskBitmap, 0, 0, overlayMaskPaint);
+            }
+        }
+        if (overrideColorProgress != 0) {
+            canvas.drawBitmap(overlayBitmap[1], 0, 0, null);
+        }
+    }
+
+    private void drawStyledCross(Canvas c, float cx, float cy, int color, float alpha) {
+        if (alpha <= 0.01f) {
+            return;
+        }
+        final float oldWidth = paint2.getStrokeWidth();
+        paint2.setColor(color);
+        paint2.setAlpha((int) (Color.alpha(color) * alpha));
+        paint2.setStrokeWidth(AndroidUtilities.dpf2(1.5f));
+        final float s = AndroidUtilities.dpf2(2.4f) * (0.6f + 0.4f * alpha);
+        c.drawLine(cx - s, cy - s, cx + s, cy + s, paint2);
+        c.drawLine(cx + s, cy - s, cx - s, cy + s, paint2);
+        paint2.setStrokeWidth(oldWidth);
+    }
+
+    private void drawStyledCheck(Canvas c, float cx, float cy, int color, float alpha) {
+        if (alpha <= 0.01f) {
+            return;
+        }
+        final float oldWidth = paint2.getStrokeWidth();
+        paint2.setColor(color);
+        paint2.setAlpha((int) (Color.alpha(color) * alpha));
+        paint2.setStrokeWidth(AndroidUtilities.dpf2(1.7f));
+        final float k = AndroidUtilities.dpf2(1f) * (0.6f + 0.4f * alpha);
+        final float x1 = cx - 3.0f * k, y1 = cy + 0.2f * k;
+        final float x2 = cx - 0.9f * k, y2 = cy + 2.4f * k;
+        final float x3 = cx + 3.2f * k, y3 = cy - 2.4f * k;
+        c.drawLine(x1, y1, x2, y2, paint2);
+        c.drawLine(x2, y2, x3, y3, paint2);
+        paint2.setStrokeWidth(oldWidth);
     }
 
     @Override

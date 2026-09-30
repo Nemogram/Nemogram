@@ -2,13 +2,17 @@ package org.nemogram.messenger.settings;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
+import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.TextCheckCell;
 import org.telegram.ui.Components.RecyclerListView;
+import org.telegram.ui.Components.SeekBarView;
+import org.telegram.ui.Components.Switch;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.Components.UniversalRecyclerView;
@@ -19,6 +23,7 @@ import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.helpers.EmojiHelper;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.settings.cells.EmojiSetCell;
+import org.nemogram.messenger.settings.cells.ControlsStyleCell;
 import org.nemogram.messenger.settings.cells.IconShapeCell;
 import org.nemogram.messenger.settings.cells.InputPanelStyleCell;
 import org.nemogram.messenger.settings.cells.ChatTopBarStyleCell;
@@ -54,6 +59,9 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private final int strokeOnViewsRow = rowId++;
     private final int md3SectionsHeaderRow = rowId++;
     private final int md3SectionsStyleRow = rowId++;
+    private final int controlsStyleHeaderRow = rowId++;
+    private final int controlsStyleRow = rowId++;
+    private final int controlsStyleShadowRow = rowId++;
     private final int iconShapeHeaderRow = rowId++;
     private final int iconShapeRow = rowId++;
     private final int iconShapeShadowRow = rowId++;
@@ -61,6 +69,7 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
     private InputPanelStyleCell inputPanelStyleCell;
     private ChatTopBarStyleCell chatTopBarStyleCell;
     private IconShapeCell iconShapeCell;
+    private ControlsStyleCell controlsStyleCell;
 
     @Override
     public boolean onFragmentCreate() {
@@ -166,6 +175,21 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
         items.add(UItem.asHeader(md3SectionsHeaderRow, LocaleController.getString(R.string.Sections)));
         items.add(UItem.asCheck(md3SectionsStyleRow, LocaleController.getString(R.string.MD3SectionsStyle)).setChecked(NemoConfig.md3SectionsStyle).slug("md3SectionsStyle"));
         items.add(UItem.asShadow(LocaleController.getString(R.string.MD3SectionsStyleDesc)));
+
+        items.add(UItem.asHeader(controlsStyleHeaderRow, LocaleController.getString(R.string.ControlsStyle)));
+        if (getContext() != null) {
+            if (controlsStyleCell == null) {
+                controlsStyleCell = new ControlsStyleCell(getContext(), resourcesProvider) {
+                    @Override
+                    protected void onStyleSelected(int style) {
+                        refreshControls();
+                    }
+                };
+            }
+            controlsStyleCell.updateSelection(false);
+            items.add(UItem.asCustom(controlsStyleRow, controlsStyleCell));
+        }
+        items.add(UItem.asShadow(controlsStyleShadowRow, LocaleController.getString(R.string.ControlsStyleDesc)));
 
         items.add(UItem.asHeader(iconShapeHeaderRow, LocaleController.getString(R.string.SettingsIcons)));
         if (getContext() != null) {
@@ -278,6 +302,31 @@ public class NemoAppearanceSettingsActivity extends BaseNemoSettingsActivity imp
             NemoConfig.toggleMiniSenderAvatar();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NemoConfig.miniSenderAvatar);
+            }
+        }
+    }
+
+    /** Switch / SeekBarView read the style in onDraw, so a plain invalidate of every instance is enough. */
+    private void refreshControls() {
+        if (parentLayout == null) {
+            return;
+        }
+        for (BaseFragment fragment : parentLayout.getFragmentStack()) {
+            invalidateControls(fragment.getFragmentView());
+        }
+    }
+
+    private static void invalidateControls(View view) {
+        if (view == null) {
+            return;
+        }
+        if (view instanceof Switch || view instanceof SeekBarView) {
+            view.invalidate();
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                invalidateControls(group.getChildAt(i));
             }
         }
     }

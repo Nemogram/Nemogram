@@ -334,6 +334,10 @@
     <string name="IconShape">Форма иконок</string>
     <string name="IconShapeLeft">Квадрат</string>
     <string name="IconShapeRight">Круг</string>
+    <string name="ControlsStyle">Переключатели и слайдеры</string>
+    <string name="ControlsStyleDefault">Стандартный</string>
+    <string name="ControlsStyleMD3">MD3</string>
+    <string name="ControlsStyleDesc">Меняет внешний вид переключателей и слайдеров во всём приложении.</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Настройки доступности</string>

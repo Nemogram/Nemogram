@@ -24,6 +24,7 @@ import org.telegram.ui.Components.AvatarDrawable;
 import org.telegram.ui.Components.BackupImageView;
 import org.telegram.ui.Components.CombinedDrawable;
 import org.telegram.ui.Components.LayoutHelper;
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.ui.Components.Switch;
 
 public class CheckBoxUserCell extends FrameLayout {
@@ -53,12 +54,18 @@ public class CheckBoxUserCell extends FrameLayout {
 
         checkBox = new Switch(context, null);
         checkBox.setColors(Theme.key_switchTrack, Theme.key_switchTrackChecked, Theme.key_windowBackgroundWhite, Theme.key_windowBackgroundWhite);
-        addView(checkBox, LayoutHelper.createFrame(37, 20, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL, 22, 0, 22, 0));
+        addView(checkBox, LayoutHelper.createFrame(37, NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL, 22, 0, 22, 0));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(50) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
+        LayoutParams params = (LayoutParams) checkBox.getLayoutParams();
+        int desiredHeight = AndroidUtilities.dp(NemoConfig.controlsStyle == NemoConfig.CONTROLS_STYLE_MD3 ? 24 : 20);
+        if (params.height != desiredHeight) {
+            params.height = desiredHeight;
+            checkBox.setLayoutParams(params);
+        }
     }
 
     public void setTextColor(int color) {
