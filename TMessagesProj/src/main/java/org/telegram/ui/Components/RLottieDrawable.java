@@ -1309,17 +1309,6 @@ public class RLottieDrawable extends BitmapDrawable implements Animatable, Bitma
         }
     }
 
-    @Override
-    public Bitmap getFirstFrame(Bitmap bitmap) {
-        long nativePtr = RLottieNative.create(args.file.toString(), args.json, new int[] {width, height, 0}, args.colorReplacement, args.fitzModifier);
-        if (nativePtr == 0) {
-            return bitmap;
-        }
-        RLottieNative.getFrame(nativePtr, 0, bitmap, true);
-        RLottieNative.destroy(nativePtr);
-        return bitmap;
-    }
-
     public final void setMasterParent(View parent) {
         masterParent = new WeakReference<>(parent);
     }

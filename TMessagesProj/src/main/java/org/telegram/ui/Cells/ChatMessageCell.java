@@ -18592,7 +18592,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             customDrawableWidth = timeString instanceof SpannableStringBuilder ? Theme.chat_arrowDrawable.getIntrinsicWidth() : 0;
         } else if (edited) {
             if (AppGlobalConfig.getInstance(currentAccount).messagePrimaryEditedDate.get()) {
-                timeString = LocaleController.formatPmEditedDate(currentMessagesGroup != null ? currentMessagesGroup.getMaxEditDate() : messageObject.messageOwner.edit_date);
+                int editDate = currentMessagesGroup != null ? currentMessagesGroup.getMaxEditDate() : messageObject.messageOwner.edit_date;
+                if (editDate == 0 && currentMessageObject.isEditing()) {
+                    editDate = ConnectionsManager.getInstance(currentAccount).getCurrentTime();
+                }
+                timeString = LocaleController.formatPmEditedDate(editDate);
             } else {
                 timeString = MessageHelper.createEditedString(currentMessageObject);
                 customDrawableWidth = Theme.chat_editDrawable.getIntrinsicWidth();
