@@ -142,3 +142,7 @@
 -keep class org.telegram.messenger.video.* { *; }
 -keep class org.telegram.SQLite.** { *; }
 -keep class org.telegram.tgnet.** { *; }
+
+# Do not obfuscate Nemo classes
+-keep class org.nemogram.** { *; }
+-keepnames class org.nemogram.** { *; }
