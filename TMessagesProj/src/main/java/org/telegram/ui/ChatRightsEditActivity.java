@@ -1513,9 +1513,6 @@ public class ChatRightsEditActivity extends BaseFragment implements Notification
                 rightsShadowRow = rowCount++;
             }
         }
-        if (currentType == TYPE_ADD_BOT) {
-            addBotButtonRow = rowCount++;
-        }
 
         if (update) {
             if (transferOwnerShadowRowPrev == -1 && transferOwnerShadowRow != -1) {
