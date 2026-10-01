@@ -716,6 +716,11 @@ public class LanguageSelectActivity extends BaseFragment implements Notification
                     if (!search)
                         position--;
                     ShadowSectionCell sectionCell = (ShadowSectionCell) holder.itemView;
+                    if (listView.hasSections()) {
+                        // gap between them needs no divider drawable
+                        sectionCell.setBackground(null);
+                        break;
+                    }
                     if (position == 2 || !unofficialLanguages.isEmpty() && position == unofficialLanguages.size()) {
                         sectionCell.setBackgroundDrawable(Theme.getThemedDrawableByKey(mContext, R.drawable.greydivider, Theme.key_windowBackgroundGrayShadow));
                     } else {
