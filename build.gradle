@@ -10,7 +10,7 @@ subprojects {
         if (plugins.hasPlugin("com.android.library") ||
                 plugins.hasPlugin("com.android.application")) {
             android {
-                compileSdkVersion 36
+                compileSdkVersion 37
                 buildToolsVersion "36.1.0"
                 ndkVersion "27.3.13750724"
 
