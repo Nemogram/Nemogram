@@ -17,6 +17,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.browser.Browser;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.BackupImageView;
+import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.IconBackgroundColors;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.UItem;
@@ -60,7 +61,16 @@ public class NemoAboutSettingsActivity extends BaseNemoSettingsActivity {
         subtitleView.setGravity(Gravity.CENTER);
         subtitleView.setSingleLine();
         subtitleView.setEllipsize(TextUtils.TruncateAt.END);
-        subtitleView.setText(String.format(Locale.US, "%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
+        var versionText = String.format(Locale.US, "%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE);
+        if (!TextUtils.isEmpty(BuildConfig.GIT_COMMIT_HASH) && !"unknown".equals(BuildConfig.GIT_COMMIT_HASH)) {
+            versionText += " \u2022 " + BuildConfig.GIT_COMMIT_HASH;
+        }
+        final var copyText = versionText;
+        subtitleView.setText(copyText);
+        subtitleView.setOnClickListener(v -> {
+            AndroidUtilities.addToClipboard(copyText);
+            BulletinFactory.of(this).createCopyBulletin(LocaleController.getString(R.string.TextCopied)).show();
+        });
         subtitleView.setTextColor(getThemedColor(Theme.key_windowBackgroundWhiteGrayText));
         topView.addView(subtitleView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 156, 0, 0));
 

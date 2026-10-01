@@ -115,6 +115,25 @@ dependencies {
     implementation 'org.apache.commons:commons-text:1.15.0'
 }
 
+def gitCommitHash = {
+    try {
+        def run = { List<String> cmd ->
+            providers.exec {
+                commandLine(['git'] + cmd)
+                workingDir = rootProject.projectDir
+                ignoreExitValue = true
+            }.standardOutput.asText.get().trim()
+        }
+        def hash = run(['rev-parse', '--short=7', 'HEAD'])
+        if (!(hash ==~ /[0-9a-f]{7,40}/)) {
+            return 'unknown'
+        }
+        return run(['status', '--porcelain', '--untracked-files=no']).isEmpty() ? hash : hash + '-dirty'
+    } catch (Throwable ignored) {
+        return 'unknown'
+    }
+}.call()
+
 android {
     sourceSets.main.jniLibs.srcDirs = ['./jni/']
 
@@ -140,6 +159,7 @@ android {
             buildConfigField("long", "BUILD_VERSION", "${TG_APP_VERSION_CODE}")
             buildConfigField("String","BUILD_VERSION_STRING","\"${TG_APP_VERSION_NAME}\"")
             buildConfigField("boolean", "DEBUG_PRIVATE_VERSION", "false")
+            buildConfigField("String", "GIT_COMMIT_HASH", "\"${gitCommitHash}\"")
 
             buildConfigField("int","API_ID", "${localProperties.get("apiId")}")
             buildConfigField("String","API_HASH", "\"${localProperties.get("apiHash")}\"")
@@ -151,6 +171,7 @@ android {
             buildConfigField("long", "BUILD_VERSION", "${TG_APP_VERSION_CODE}")
             buildConfigField("String","BUILD_VERSION_STRING","\"${TG_APP_VERSION_NAME}\"")
             buildConfigField("boolean", "DEBUG_PRIVATE_VERSION", "false")
+            buildConfigField("String", "GIT_COMMIT_HASH", "\"${gitCommitHash}\"")
 
             buildConfigField("int","API_ID", "${localProperties.get("apiId")}")
             buildConfigField("String","API_HASH", "\"${localProperties.get("apiHash")}\"")
