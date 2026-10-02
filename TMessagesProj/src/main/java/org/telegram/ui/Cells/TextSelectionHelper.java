@@ -58,6 +58,7 @@ import org.telegram.messenger.RichMessageLayout;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.ActionBar.ActionBarPopupWindow;
+import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.FloatingActionMode;
 import org.telegram.ui.ActionBar.FloatingToolbar;
 import org.telegram.ui.iv.RichTextCell;
@@ -331,6 +332,14 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
     private OnTranslateListener onTranslateListener = null;
     public void setOnTranslate(OnTranslateListener listener) {
         onTranslateListener = listener;
+    }
+
+    protected boolean canTranslate() {
+        return onTranslateListener != null;
+    }
+
+    protected BaseFragment getTranslateFragment() {
+        return null;
     }
 
     public void setParentView(ViewGroup view) {
@@ -1591,7 +1600,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                 if (pasteItem != null) {
                     pasteItem.setVisible(canPaste() && clipboardHasContent());
                 }
-                if (onTranslateListener != null && LanguageDetector.hasSupport() && getSelectedText() != null) {
+                if (canTranslate() && LanguageDetector.hasSupport() && getSelectedText() != null) {
                     LanguageDetector.detectLanguage(getSelectedText().toString(), lng -> {
                         translateFromLanguage = lng;
                         updateTranslateButton(menu);
@@ -1615,7 +1624,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                     return;
                 }
                 translateItem.setVisible(
-                    onTranslateListener != null && (
+                    canTranslate() && (
                         (
                             translateFromLanguage != null &&
                             !RestrictedLanguagesSelectActivity.getRestrictedLanguages().contains(translateFromLanguage)
@@ -1657,7 +1666,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                         return true;
                     }
                     var view = selectedView instanceof View ? (View) selectedView : null;
-                    Translator.showTranslateDialog(textSelectionOverlay.getContext(), str.toString(), false, null, null, translateFromLanguage, view, getResourcesProvider());
+                    Translator.showTranslateDialog(textSelectionOverlay.getContext(), str.toString(), !canCopy(), getTranslateFragment(), null, translateFromLanguage, view, getResourcesProvider());
                     hideActions();
                     clear(true);
                     if (TextSelectionHelper.this.callback != null) {

@@ -3660,6 +3660,18 @@ public class ChatActivity extends BaseFragment implements
         }
 
         @Override
+        protected boolean canTranslate() {
+            // selection already is in the target language while the whole dialog is being translated
+            return chatActivity != null && chatActivity.getParentActivity() != null &&
+                !chatActivity.getMessagesController().getTranslateController().isTranslatingDialog(chatActivity.dialog_id);
+        }
+
+        @Override
+        protected BaseFragment getTranslateFragment() {
+            return chatActivity;
+        }
+
+        @Override
         protected void onQuoteClick(MessageObject messageObject, int start, int end, CharSequence text) {
             if (messageObject == null) {
                 return;
