@@ -9222,7 +9222,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                             reactionsLayoutInBubble.totalHeight += dp(12);
                             reactionsLayoutInBubble.positionOffsetY -= dp(12);
                         }
-                        if (!messageObject.isRestrictedMessage && messageObject.caption != null) {
+                        // onDraw() subtracts dp(14) for captions, except for outgoing forwarded messages without a cover image.
+                        // Mirror that condition, otherwise the reactions end up dp(14) lower and stick out of the bubble.
+                        if (!messageObject.isRestrictedMessage && messageObject.caption != null && !(messageObject.isOut() && drawForwardedName && !drawPhotoImage)) {
                             reactionsLayoutInBubble.positionOffsetY += dp(14);
                         }
                         totalHeight += reactionsLayoutInBubble.totalHeight;
