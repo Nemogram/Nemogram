@@ -30,7 +30,16 @@ public class SendOptionsMenuLayout extends LinearLayout {
     }
 
     public SendOptionsMenuLayout(Context parentActivity, ForwardContext forwardContext, boolean showSchedule, boolean showNotify, long dialogId, Delegate delegate, Theme.ResourcesProvider resourcesProvider) {
+        this(parentActivity, forwardContext, showSchedule, showNotify, dialogId, delegate, null, null, resourcesProvider);
+    }
+
+    /**
+     * @param sendAsFileTitle title of the "Send as file(s)" item; the item is shown only when both
+     *                        {@code sendAsFileTitle} and {@code sendAsFile} are non-null
+     */
+    public SendOptionsMenuLayout(Context parentActivity, ForwardContext forwardContext, boolean showSchedule, boolean showNotify, long dialogId, Delegate delegate, CharSequence sendAsFileTitle, Runnable sendAsFile, Theme.ResourcesProvider resourcesProvider) {
         super(parentActivity);
+        final boolean showSendAsFile = sendAsFileTitle != null && sendAsFile != null;
         setOrientation(VERTICAL);
 
         var forwardParams = forwardContext.getForwardParams();
@@ -188,9 +197,21 @@ public class SendOptionsMenuLayout extends LinearLayout {
         });
         sendPopupLayout2.setShownFromBottom(false);
 
+        if (showSendAsFile) {
+            ActionBarMenuSubItem sendAsFileButton = new ActionBarMenuSubItem(getContext(), true, !showSchedule && !showNotify, resourcesProvider);
+            sendAsFileButton.setTextAndIcon(sendAsFileTitle, R.drawable.msg_sendfile);
+            sendAsFileButton.setMinimumWidth(AndroidUtilities.dp(196));
+            sendAsFileButton.setOnClickListener(v -> {
+                if (sendPopupWindow != null && sendPopupWindow.isShowing()) {
+                    sendPopupWindow.dismiss();
+                }
+                sendAsFile.run();
+            });
+            sendPopupLayout2.addView(sendAsFileButton, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));
+        }
         if (showSchedule) {
-            ActionBarMenuSubItem scheduleButton = new ActionBarMenuSubItem(getContext(), true, !showNotify, resourcesProvider);
-            scheduleButton.setTextAndIcon(LocaleController.getString(R.string.ScheduleMessage), R.drawable.msg_calendar2);
+            ActionBarMenuSubItem scheduleButton = new ActionBarMenuSubItem(getContext(), !showSendAsFile, !showNotify, resourcesProvider);
+            scheduleButton.setTextAndIcon(LocaleController.getString(dialogId != 0 ? R.string.SetReminder : R.string.ScheduleMessage), R.drawable.msg_calendar2);
             scheduleButton.setMinimumWidth(AndroidUtilities.dp(196));
             scheduleButton.setOnClickListener(v -> {
                 if (sendPopupWindow != null && sendPopupWindow.isShowing()) {
@@ -206,7 +227,7 @@ public class SendOptionsMenuLayout extends LinearLayout {
             sendPopupLayout2.addView(scheduleButton, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));
         }
         if (showNotify) {
-            ActionBarMenuSubItem sendWithoutSoundButton = new ActionBarMenuSubItem(getContext(), !showSchedule, true, resourcesProvider);
+            ActionBarMenuSubItem sendWithoutSoundButton = new ActionBarMenuSubItem(getContext(), !showSchedule && !showSendAsFile, true, resourcesProvider);
             sendWithoutSoundButton.setTextAndIcon(LocaleController.getString(R.string.SendWithoutSound), R.drawable.input_notify_off);
             sendWithoutSoundButton.setMinimumWidth(AndroidUtilities.dp(196));
             sendWithoutSoundButton.setOnClickListener(v -> {
