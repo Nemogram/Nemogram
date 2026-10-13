@@ -37,6 +37,8 @@ import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.UserConfig;
+import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.SimpleTextView;
 import org.telegram.ui.ActionBar.Theme;
@@ -627,6 +629,11 @@ public class TextCell extends FrameLayout {
 
     public static CharSequence applyNewSpan(CharSequence str) {
         return applyNewSpan(str, false);
+    }
+    public static CharSequence applyNewSpanTimed(CharSequence str, int since) {
+        if (ConnectionsManager.getInstance(UserConfig.selectedAccount).getCurrentTime() - since > 4 * 7 * 24 * 60 * 60)
+            return str;
+        return applyNewSpan(str);
     }
     public static CharSequence applyNewSpan(CharSequence str, boolean usePaintAlpha) {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(str);
