@@ -16,6 +16,9 @@ android {
     defaultConfig.applicationId = APP_PACKAGE
 
     packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
         resources {
             excludes += '**'
         }
