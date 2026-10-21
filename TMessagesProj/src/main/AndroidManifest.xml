@@ -616,13 +616,6 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name="org.nemogram.messenger.SaveToDownloadReceiver" android:exported="false">
-            <intent-filter>
-                <action android:name="${applicationId}.CANCEL_SAVE_TO_DOWNLOAD" />
-            </intent-filter>
-        </receiver>
-
         <provider
             android:authorities="${applicationId}.streaming"
             android:name="org.nemogram.messenger.streaming.MediaStreamingProvider"
