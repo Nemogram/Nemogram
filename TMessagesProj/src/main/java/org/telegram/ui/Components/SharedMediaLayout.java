@@ -3763,6 +3763,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                         }
                     }
                 }
+                setVisibleHeight(lastVisibleHeight);
                 // SharedMediaLayout.this.setPadding(0, , 0, 0);
             });
             fragmentContextView = new FragmentContextView(context, parent, this, false, resourcesProvider) {
@@ -6055,8 +6056,8 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
         lastVisibleHeight = height;
         for (int a = 0; a < mediaPages.length; a++) {
             float t = -(getMeasuredHeight() - Math.max(height, dp(mediaPages[a].selectedType == TAB_STORIES ? 280 : 120))) / 2f;
-            mediaPages[a].emptyView.setTranslationY(t);
-            mediaPages[a].progressView.setTranslationY(-t);
+            mediaPages[a].emptyView.setTranslationY(t + topLayoutPadding);
+            mediaPages[a].progressView.setTranslationY(-t - topLayoutPadding);
         }
         if (botPreviewsContainer != null) {
             botPreviewsContainer.setVisibleHeight(height);
