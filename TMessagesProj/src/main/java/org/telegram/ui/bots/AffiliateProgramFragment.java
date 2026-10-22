@@ -24,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.IconShapeHelper;
+import org.nemogram.messenger.helpers.Md3SectionsHelper;
 import org.nemogram.messenger.helpers.MonetHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
@@ -34,6 +36,7 @@ import org.telegram.messenger.browser.Browser;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_bots;
 import org.telegram.tgnet.tl.TL_payments;
+import org.telegram.ui.SettingsActivity;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.INavigationLayout;
@@ -687,8 +690,11 @@ public class AffiliateProgramFragment extends GradientHeaderActivity implements 
         }
 
         public void set(int color, int iconResId, CharSequence title, CharSequence text) {
-            imageView.setImageResource(iconResId);
-            imageView.setBackground(Theme.createRoundRectDrawable(dp(9), MonetHelper.getSettingsIconBackgroundColor(color)));
+            IconShapeHelper.setIcon(imageView, iconResId);
+            final SettingsActivity.SettingCell.Background iconBackground = new SettingsActivity.SettingCell.Background();
+            iconBackground.setColor(MonetHelper.getSettingsIconBackgroundColor(color), MonetHelper.getSettingsIconBackgroundColor(color));
+            imageView.setBackground(iconBackground);
+            Md3SectionsHelper.applyTextCellColorfulIcon(imageView, color, color, iconBackground);
 
             titleView.setText(title);
             if (TextUtils.isEmpty(text)) {

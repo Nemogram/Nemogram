@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.nemogram.messenger.helpers.IconShapeHelper;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.DialogObject;
@@ -600,7 +601,7 @@ public class PremiumPreviewBottomSheet extends BottomSheetWithRecyclerListView i
                         protected void dispatchDraw(Canvas canvas) {
                             AndroidUtilities.rectTmp.set(imageView.getLeft(), imageView.getTop(), imageView.getRight(), imageView.getBottom());
                             gradientTools.gradientMatrix(0, 0, getMeasuredWidth(), totalGradientHeight, 0, -data.yOffset);
-                            canvas.drawRoundRect(AndroidUtilities.rectTmp, AndroidUtilities.dp(8), AndroidUtilities.dp(8), gradientTools.paint);
+                            IconShapeHelper.draw(canvas, AndroidUtilities.rectTmp, gradientTools.paint);
                             super.dispatchDraw(canvas);
                         }
                     };

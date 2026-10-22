@@ -142,6 +142,7 @@ import org.telegram.ui.Components.chat.ViewPositionWatcher;
 import org.telegram.ui.Stories.recorder.HintView2;
 
 import org.nemogram.messenger.NemoConfig;
+import org.nemogram.messenger.helpers.IconShapeHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1555,14 +1556,13 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
                     view = new PremiumFeatureCell(context) {
                         @Override
                         protected void dispatchDraw(Canvas canvas) {
-                            final float r = dp(10);
-
                             AndroidUtilities.rectTmp.set(imageView.getLeft(), imageView.getTop(), imageView.getRight(), imageView.getBottom());
+                            final float r = Math.min(AndroidUtilities.rectTmp.width(), AndroidUtilities.rectTmp.height()) * IconShapeHelper.cornerRatio();
                             matrix.reset();
                             matrix.postScale(1f, totalGradientHeight / 100f, 0, 0);
                             matrix.postTranslate(0, -data.yOffset);
                             shader.setLocalMatrix(matrix);
-                            canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, gradientPaint);
+                            IconShapeHelper.draw(canvas, AndroidUtilities.rectTmp, gradientPaint);
 
                             final boolean border = (resourceProvider != null ? resourceProvider.isDark() : Theme.isCurrentThemeDark()) && NemoConfig.strokeOnViews;
                             if (border) {
