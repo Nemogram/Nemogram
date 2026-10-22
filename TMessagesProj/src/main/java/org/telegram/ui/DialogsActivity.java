@@ -1152,6 +1152,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
 
         private boolean wasPortrait;
+        private int lastMaterialActionBarExtra;
 
         @Override
         protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
@@ -1165,6 +1166,14 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 LayoutParams layoutParams = (LayoutParams) doneItem.getLayoutParams();
                 layoutParams.topMargin = actionBar.getOccupyStatusBar() ? AndroidUtilities.statusBarHeight : 0;
                 layoutParams.height = ActionBar.getCurrentActionBarHeight();
+            }
+
+            final int materialActionBarExtra = isMaterialSearchBarStyle()
+                ? Math.max(0, dp(56) - ActionBar.getCurrentActionBarHeight())
+                : 0;
+            if (lastMaterialActionBarExtra != materialActionBarExtra) {
+                lastMaterialActionBarExtra = materialActionBarExtra;
+                actionBar.setExtraHeight(materialActionBarExtra);
             }
 
             measureChildWithMargins(actionBar, widthMeasureSpec, 0, heightMeasureSpec, 0);
