@@ -291,7 +291,6 @@ import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import org.nemogram.messenger.helpers.PopupHelper;
 import org.nemogram.messenger.helpers.TypefaceHelper;
-import org.nemogram.messenger.helpers.remote.ConfigHelper;
 import me.vkryl.android.util.ClickHelper;
 
 public class DialogsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, FloatingDebugProvider, FactorAnimator.Target, MainTabsActivity.TabFragmentDelegate {
@@ -6138,7 +6137,6 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             } catch (Exception e) {}
             dialogsHintCell.clear();
         }
-        var nemoSuggestion = ConfigHelper.getNewsSuggestion();
         if (isInPreviewMode()) {
             dialogsHintCellVisible = false;
         } else if (getMessagesController().isFrozen()) {
@@ -6152,28 +6150,6 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     false,
                     true
             );
-        } else if (folderId == 0 && nemoSuggestion != null) {
-            final TLRPC.TL_pendingSuggestion suggestion = nemoSuggestion;
-            dialogsHintCellVisible = true;
-
-            CharSequence title = new SpannableStringBuilder(suggestion.title.text);
-            MessageObject.addEntitiesToText(title, suggestion.title.entities, false, false, true, true);
-            title = Emoji.replaceEmoji(title, dialogsHintCell.titleView.getPaint().getFontMetricsInt(), false, null);
-            title = MessageObject.replaceAnimatedEmoji(title, suggestion.title.entities, dialogsHintCell.titleView.getPaint().getFontMetricsInt());
-
-            CharSequence subtitle = new SpannableStringBuilder(suggestion.description.text);
-            MessageObject.addEntitiesToText(subtitle, suggestion.description.entities, false, false, true, true);
-            subtitle = Emoji.replaceEmoji(subtitle, dialogsHintCell.messageView.getPaint().getFontMetricsInt(), false, null);
-            subtitle = MessageObject.replaceAnimatedEmoji(subtitle, suggestion.description.entities, dialogsHintCell.messageView.getPaint().getFontMetricsInt());
-
-            dialogsHintCell.setText(title, subtitle);
-            dialogsHintCell.setOnClickListener(v -> {
-                Browser.openUrl(getContext(), suggestion.url);
-            });
-            dialogsHintCell.setOnCloseListener(v -> {
-                ConfigHelper.removeNews(suggestion.suggestion);
-                updateDialogsHint();
-            });
         } else if (folderId == 0 && communityId == 0 && getMessagesController().pendingSuggestions.contains("SETUP_PASSKEY")) {
             dialogsHintCellVisible = true;
             dialogsHintCell.setOnClickListener(v -> {
