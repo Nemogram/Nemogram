@@ -28,8 +28,6 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
-import org.telegram.tgnet.OutputSerializedData;
-import org.telegram.tgnet.TLObject;
 import org.telegram.ui.ActionBar.ActionBarMenuItem;
 import org.telegram.ui.ActionBar.ActionBarMenuSubItem;
 import org.telegram.ui.ActionBar.ActionBarPopupWindow;
@@ -112,44 +110,6 @@ public class PopupHelper {
         }
         popupLayout.setParentWindow(popupWindow);
     }
-
-    public static TLObject getPeerAndFull(BaseFragment fragment, long peerId) {
-        var messagesController = fragment.getMessagesController();
-        var mediaDataController = fragment.getMediaDataController();
-        TLObject peer;
-        TLObject peerFull;
-        TLObject info;
-        if (peerId > 0) {
-            peer = messagesController.getUser(peerId);
-            peerFull = messagesController.getUserFull(peerId);
-            info = mediaDataController.getBotInfoCached(peerId, peerId);
-        } else {
-            peer = messagesController.getChat(-peerId);
-            peerFull = messagesController.getChatFull(-peerId);
-            info = null;
-        }
-        if (peer == null) {
-            return null;
-        }
-        return new TLObject() {
-            @Override
-            public void serializeToStream(OutputSerializedData stream) {
-                stream.writeInt32(0x1cb5c415);
-                var count = 1;
-                if (peerFull != null) count++;
-                if (info != null) count++;
-                stream.writeInt32(count);
-                peer.serializeToStream(stream);
-                if (peerFull != null) {
-                    peerFull.serializeToStream(stream);
-                }
-                if (info != null) {
-                    info.serializeToStream(stream);
-                }
-            }
-        };
-    }
-
 
     public static void showCopyPopup(BaseFragment fragment, CharSequence title, View anchorView, float x, float y, Runnable callback) {
         Context context = fragment.getParentActivity();
