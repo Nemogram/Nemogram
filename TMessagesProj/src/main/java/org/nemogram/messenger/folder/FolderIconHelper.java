@@ -51,7 +51,6 @@ public class FolderIconHelper {
         put("\uD83D\uDCE2", R.drawable.filter_channels);
         put("\uD83D\uDCC1", R.drawable.filter_custom);
         put("\uD83D\uDCCB", R.drawable.filter_setup);
-        //put("\uD83D\uDCA9", R.drawable.filter_poo);
     }};
 
     public static Pair<String, String> getEmoticonFromFlags(int newFilterFlags) {
