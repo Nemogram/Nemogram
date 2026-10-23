@@ -4925,7 +4925,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             });
 
             BlurredBackgroundDrawable topPanelLayoutBackground = iBlur3FactoryLiquidGlass.create(topPanelLayout)
-                .setColorProvider(BlurredBackgroundProviderImpl.topPanel(resourceProvider))
+                .setColorProvider(BlurredBackgroundProviderImpl.dialogsTopPanel(resourceProvider))
                 .setPadding(dp(7));
 
             topPanelLayout.setPadding(dp(11), dp(21), dp(11), dp(21));
