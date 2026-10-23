@@ -12,7 +12,6 @@ import org.opentranscribe.api.ErrorType;
 import org.opentranscribe.api.ITranscriptionCallback;
 import org.opentranscribe.api.ITranscriptionService;
 import org.opentranscribe.api.ITranscriptionSession;
-import org.opentranscribe.api.TranscriberCapabilities;
 import org.opentranscribe.api.TranscriptionError;
 import org.opentranscribe.api.TranscriptionRequest;
 import org.telegram.messenger.ApplicationLoader;
@@ -47,19 +46,6 @@ public class AidlOfflineTranscriber {
 
     public AidlOfflineTranscriber(String servicePackage) {
         this.servicePackage = servicePackage;
-    }
-
-    public TranscriberCapabilities capabilities() {
-        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) {
-            return null;
-        }
-        try {
-            ITranscriptionService bound = ensureService();
-            return bound != null ? bound.getCapabilities() : null;
-        } catch (Exception e) {
-            service = null;
-            return null;
-        }
     }
 
     public OfflineTranscribeSession requestTranscription(String audioFilePath, String languageHint,

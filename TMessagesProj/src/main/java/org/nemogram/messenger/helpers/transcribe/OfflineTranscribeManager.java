@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.SystemClock;
 
-import org.opentranscribe.api.TranscriberCapabilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.MessagesController;
 
@@ -100,10 +99,6 @@ public class OfflineTranscribeManager {
         return !selectedProviderId().isEmpty();
     }
 
-    public static boolean isAnyProviderInstalled() {
-        return !availableProviders().isEmpty();
-    }
-
     public static boolean isActive() {
         return selectedProvider() != null;
     }
@@ -112,11 +107,6 @@ public class OfflineTranscribeManager {
         cachedId = null;
         cachedProvider = null;
         cachedAt = 0L;
-    }
-
-    public static TranscriberCapabilities capabilitiesOf(OfflineTranscribeProvider provider) {
-        AidlOfflineTranscriber transcriber = transcriberFor(provider);
-        return transcriber != null ? transcriber.capabilities() : null;
     }
 
     public static OfflineTranscribeSession requestTranscription(String audioFilePath, String languageHint,
