@@ -26,7 +26,6 @@ import java.util.zip.ZipOutputStream;
 public class ChatExportManager {
 
     private static final int MAX_PARALLEL_DOWNLOADS = 3;
-    private static final int THREAD_POOL_SIZE = MAX_PARALLEL_DOWNLOADS + 2;
     private static final int[] RETRY_DELAYS_MS = {5_000, 15_000, 30_000};
     private static ChatExportManager instance;
     private final AtomicBoolean cancelled = new AtomicBoolean(false);
