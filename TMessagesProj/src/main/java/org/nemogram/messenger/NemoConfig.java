@@ -864,14 +864,6 @@ public class NemoConfig {
         editor.apply();
     }
 
-    public static void setDeepLFormality(int formality) {
-        deepLFormality = formality;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("deepLFormality", deepLFormality);
-        editor.apply();
-    }
-
     public static void toggleOpenArchiveOnPull() {
         openArchiveOnPull = !openArchiveOnPull;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
