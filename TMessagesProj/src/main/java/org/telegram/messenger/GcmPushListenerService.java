@@ -15,8 +15,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import org.nemogram.messenger.helpers.PushHelper;
-
 public class GcmPushListenerService extends FirebaseMessagingService {
 
     @Override
@@ -27,11 +25,6 @@ public class GcmPushListenerService extends FirebaseMessagingService {
 
         if (BuildVars.LOGS_ENABLED) {
             FileLog.d("FCM received data: " + data + " from: " + from);
-        }
-
-        if (data.containsKey("n")) {
-            PushHelper.processRemoteMessage(data.get("n"));
-            return;
         }
 
         PushListenerController.processRemoteMessage(PushListenerController.PUSH_TYPE_FIREBASE, data.get("p"), time);
