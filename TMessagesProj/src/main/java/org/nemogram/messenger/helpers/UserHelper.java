@@ -17,7 +17,6 @@ import org.telegram.ui.ChatActivity;
 import org.telegram.ui.ProfileActivity;
 import org.telegram.ui.TopicsFragment;
 
-import java.util.Locale;
 import java.util.function.Consumer;
 
 public class UserHelper extends BaseController {
@@ -279,30 +278,6 @@ public class UserHelper extends BaseController {
         } else {
             return new TGDBBot();
         }
-    }
-
-    private static String getDCLocation(int dc) {
-        return switch (dc) {
-            case 1, 3 -> "Miami";
-            case 2, 4 -> "Amsterdam";
-            case 5 -> "Singapore";
-            default -> "Unknown";
-        };
-    }
-
-    private static String getDCName(int dc) {
-        return switch (dc) {
-            case 1 -> "Pluto";
-            case 2 -> "Venus";
-            case 3 -> "Aurora";
-            case 4 -> "Vesta";
-            case 5 -> "Flora";
-            default -> "Unknown";
-        };
-    }
-
-    public static String formatDCString(int dc) {
-        return String.format(Locale.US, "DC%d %s, %s", dc, UserHelper.getDCName(dc), UserHelper.getDCLocation(dc));
     }
 
     public static long getOwnerFromStickerSetId(long id) {
