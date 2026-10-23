@@ -46,7 +46,7 @@ import org.nemogram.messenger.NemoConfig;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class EmojiHelper {
     private static final String EMOJI_PACKS_FILE_DIR;
-    public static EmojiPack DEFAULT_PACK = new EmojiPack("Apple", "default", "", "", 0);
+    public static EmojiPack DEFAULT_PACK = new EmojiPack("Apple", "default", "", "");
     private static final Runnable invalidateUiRunnable = () -> NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.emojiLoaded);
     private static final String[] previewEmojis = {
             "\uD83D\uDE00",
@@ -473,18 +473,16 @@ public class EmojiHelper {
         protected String packId;
         protected String fileLocation;
         private String preview;
-        protected long fileSize;
 
         public EmojiPack() {
-            this(null, null, null, null, 0);
+            this(null, null, null, null);
         }
 
-        public EmojiPack(String packName, String packId, String fileLocation, String preview, long fileSize) {
+        public EmojiPack(String packName, String packId, String fileLocation, String preview) {
             this.packName = packName;
             this.packId = packId;
             this.fileLocation = fileLocation;
             this.preview = preview;
-            this.fileSize = fileSize;
         }
 
         public void loadFromFile(File file) {
@@ -496,7 +494,6 @@ public class EmojiHelper {
             File fileFont = new File(file, packName + ".ttf");
             fileLocation = fileFont.getAbsolutePath();
             preview = file.getAbsolutePath() + "/preview.png";
-            fileSize = fileFont.length();
         }
 
         public String getPackName() {
@@ -513,10 +510,6 @@ public class EmojiHelper {
 
         public String getPreview() {
             return preview;
-        }
-
-        public Long getFileSize() {
-            return fileSize;
         }
     }
 
