@@ -121,10 +121,7 @@
     <string name="EditRedo">Rétablir</string>
     <string name="EditEnableMarkdown">Activer Markdown</string>
     <string name="EditDisableMarkdown">Désactiver Markdown</string>
-    <string name="CopyCallback">Copier les données de rappel</string>
-    <string name="CopyInlineQuery">Copier la requête inline</string>
     <string name="CopyID">Copier l\'ID</string>
-    <string name="SoonRemovedOption">Cette option expérimentale sera bientôt supprimée et activée par défaut. Si vous rencontrez des problèmes avec cette option, veuillez **nous le signaler**.</string>
     <string name="DeleteAllFromSelfDone">Tous vos messages sont supprimés</string>
     <string name="UnknownNemoSettingsOption">Il n\'y a pas d\'option Paramètres Nemo de ce type.</string>
     <string name="Translated">traduit</string>

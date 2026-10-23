@@ -15,12 +15,9 @@
     <string name="Repeat">반복</string>
     <string name="AddToSavedMessages">메세지 저장</string>
     <string name="CreateMention">멘션 만들기</string>
-    <string name="EnableResidentNotification">참가자 알림 표시</string>
-    <string name="DisableResidentNotification">참가자 알림 중지</string>
     <string name="DeleteDownloadedFile">다운로드 한 파일 삭제</string>
     <string name="TestBackendOn">이 계정은 테스트 백엔드에 연결됩니다.</string>
     <string name="TestBackendOff">이 계정은 프로덕션 백엔드에 연결됩니다.</string>
-    <string name="ViewHistory">이전 기록 보기</string>
     <string name="StickerSize">스티커 크기</string>
     <string name="StickerSizeLeft">작게</string>
     <string name="StickerSizeRight">크게</string>
@@ -49,7 +46,6 @@
     <string name="OfficialChannel">공식 채널</string>
     <string name="IgnoreBlockedAbout">메시지는 계속 볼 수 있지만 텍스트는 스포일러로 변환되고 미디어는 자동으로 다운로드되지 않습니다.</string>
     <string name="ResetStickerSize">스티커 사이즈 초기화</string>
-    <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">변경된 설정 적용을 위해 앱을 재시작</string>
     <string name="MediaPreview">대화목록 에서 미디어 미리보기</string>
     <string name="ProviderYandex">Yandex 번역</string>
@@ -80,8 +76,6 @@
     <string name="SilenceNonContacts">비연락처 묵음</string>
     <string name="SilenceNonContactsAbout">연락처가 아닌 사람의 알림은 소리없이 표시됩니다. 전화 번호를 몰라도 프로필에서 연락처에 사용자를 추가 할 수 있습니다.</string>
     <string name="StickerSavedHint">스티커가 갤러리에 저장됨</string>
-    <string name="WsEnableTls">TLS 활성화</string>
-    <string name="WsProvider">제공자</string>
     <string name="UpdateNemogram">네코그램 업데이트</string>
     <string name="TranslationTarget">번역 언어</string>
     <string name="TranslationTargetApp">기기 언어 따라가기</string>
@@ -121,10 +115,7 @@
     <string name="EditRedo">재실행</string>
     <string name="EditEnableMarkdown">마크다운 활성화</string>
     <string name="EditDisableMarkdown">마크다운 비활성화</string>
-    <string name="CopyCallback">콜백 데이터 복사</string>
-    <string name="CopyInlineQuery">인라인 쿼리 복사</string>
     <string name="CopyID">ID 복사</string>
-    <string name="SoonRemovedOption">이 실험적 옵션은 곧 제거되고 기본적으로 활성화됩니다. 이 옵션에 문제가 있는 경우 **저희에게 알려주세요**</string>
     <string name="DeleteAllFromSelfDone">모든 메세지가 삭제 되었습니다</string>
     <string name="UnknownNemoSettingsOption">그러한 Nemo 설정 옵션이 없습니다.</string>
     <string name="Translated">번역</string>

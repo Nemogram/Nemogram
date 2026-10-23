@@ -13,12 +13,9 @@
     <string name="Repeat">Atkārtojiet</string>
     <string name="AddToSavedMessages">Saglabāt ziņojumu</string>
     <string name="CreateMention">Izveidot pieminēšanu</string>
-    <string name="EnableResidentNotification">Rādīt rezidenta paziņojumu</string>
-    <string name="DisableResidentNotification">Rādīt rezidenta paziņojumu</string>
     <string name="DeleteDownloadedFile">Lejupielādētā faila dzēšana</string>
     <string name="TestBackendOn">Šis konts tiks savienots ar testa backend.</string>
     <string name="TestBackendOff">Šis konts tiks savienots ar testa backend.</string>
-    <string name="ViewHistory">Skatīt vēsturi</string>
     <string name="StickerSize">Uzlīmes izmērs</string>
     <string name="StickerSizeLeft">Mazs</string>
     <string name="StickerSizeRight">Liels</string>
@@ -77,8 +74,6 @@
     <string name="SilenceNonContacts">Bezkontaktu klusums</string>
     <string name="SilenceNonContactsAbout">Paziņojumi no cilvēkiem, kas nav jūsu kontakti, tiks rādīti bez skaņas. Varat pievienot lietotājus kontaktiem no viņu profila, nezinot viņu tālruņa numuru.</string>
     <string name="StickerSavedHint">Uzlīme saglabāta galerijā</string>
-    <string name="WsEnableTls">TLS iespējošana</string>
-    <string name="WsProvider">Nodrošinātājs</string>
     <string name="UpdateNemogram">Nemogrammas atjaunināšana</string>
     <string name="TranslationTarget">Mērķa valoda</string>
     <string name="TranslationTargetApp">Sekojiet lietotnei</string>
@@ -118,10 +113,7 @@
     <string name="EditRedo">Pārtaisīt</string>
     <string name="EditEnableMarkdown">Iespējot Markdown</string>
     <string name="EditDisableMarkdown">Izslēgt iezīmēšanu</string>
-    <string name="CopyCallback">Izsaukuma datu kopēšana</string>
-    <string name="CopyInlineQuery">Kopēt rindu vaicājumu</string>
     <string name="CopyID">Kopēšanas ID</string>
-    <string name="SoonRemovedOption">Šī eksperimentālā opcija drīzumā tiks noņemta un iespējota pēc noklusējuma, ja jums rodas problēmas ar šo opciju, lūdzu, **ziņojiet mums**.</string>
     <string name="DeleteAllFromSelfDone">Visi jūsu ziņojumi tiek dzēsti</string>
     <string name="UnknownNemoSettingsOption">Šādas opcijas Nemo iestatījumi nav.</string>
     <string name="Translated">tulkojums</string>

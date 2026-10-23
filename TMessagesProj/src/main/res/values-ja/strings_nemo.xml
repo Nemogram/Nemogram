@@ -51,7 +51,6 @@
     <string name="OfficialChannel">公式チャンネル</string>
     <string name="IgnoreBlockedAbout">メッセージはまだ閲覧可能ですが、テキストはスポイラーに変換され、メディアは自動的にダウンロードされません。</string>
     <string name="ResetStickerSize">ステッカーのサイズをリセット</string>
-    <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">設定を反映させるためにはアプリを再起動してください。</string>
     <string name="MediaPreview">ダイアログリストのメディアプレビュー</string>
     <string name="ProviderYandex">Yandex翻訳</string>
@@ -123,10 +122,7 @@
     <string name="EditRedo">やり直す</string>
     <string name="EditEnableMarkdown">マークダウンを有効化</string>
     <string name="EditDisableMarkdown">マークダウンを無効化</string>
-    <string name="CopyCallback">コールバックデータをコピー</string>
-    <string name="CopyInlineQuery">インラインクエリをコピー</string>
     <string name="CopyID">IDをコピー</string>
-    <string name="SoonRemovedOption">この試験的なオプションはまもなく削除され、デフォルトで有効になります。このオプションに問題がある場合は、**私たちに報告してください。**</string>
     <string name="DeleteAllFromSelfDone">あなたが送信したすべてのメッセージが削除されました</string>
     <string name="UnknownNemoSettingsOption">このようなNemogramの設定オプションはありません。</string>
     <string name="Translated">翻訳済み</string>

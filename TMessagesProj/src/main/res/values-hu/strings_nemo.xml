@@ -20,12 +20,9 @@
     <string name="Repeat">Ismétlés</string>
     <string name="AddToSavedMessages">Üzenet mentése</string>
     <string name="CreateMention">Említés Létrehozása</string>
-    <string name="EnableResidentNotification">Állandó értesítés megjelenítése</string>
-    <string name="DisableResidentNotification">Állandó értesítés letiltása</string>
     <string name="DeleteDownloadedFile">Letöltött fájl törlése</string>
     <string name="TestBackendOn">Ez a fiók csatlakozni fog a teszt háttérrendszerhez.</string>
     <string name="TestBackendOff">Ez a fiók csatlakozni fog az éles háttérrendszerhez.</string>
-    <string name="ViewHistory">Előzmények megtekintése</string>
     <string name="StickerSize">Matrica mérete</string>
     <string name="StickerSizeLeft">Kicsi</string>
     <string name="StickerSizeRight">Nagy</string>
@@ -84,8 +81,6 @@
     <string name="SilenceNonContacts">Nem-kapcsolat némítása</string>
     <string name="SilenceNonContactsAbout">A nem az Ön kapcsolattartóitól érkező értesítések hang nélkül jelennek meg. Felhasználókat a profiljukból a telefonszámuk ismerete nélkül is felvehet a névjegyek közé.</string>
     <string name="StickerSavedHint">Matrica mentve a galériába</string>
-    <string name="WsEnableTls">TLS engedélyezése</string>
-    <string name="WsProvider">Szolgáltató</string>
     <string name="UpdateNemogram">Nemogram frissítése</string>
     <string name="TranslationTarget">Célnyelv</string>
     <string name="TranslationTargetApp">Alkalmazás követése</string>
@@ -125,10 +120,7 @@
     <string name="EditRedo">Újra</string>
     <string name="EditEnableMarkdown">Markdown engedélyezése</string>
     <string name="EditDisableMarkdown">Markdown letiltása</string>
-    <string name="CopyCallback">Visszahívási adatok másolása</string>
-    <string name="CopyInlineQuery">Beágyazott lekérdezés másolása</string>
     <string name="CopyID">Azonosító másolása</string>
-    <string name="SoonRemovedOption">Ezt a kísérleti opciót hamarosan eltávolítjuk és alapértelmezetten bekapcsolásra kerül, ha problémái vannak ezzel az opcióval, kérjük **írjon nekünk**.</string>
     <string name="DeleteAllFromSelfDone">Az összes üzenete törlődik</string>
     <string name="UnknownNemoSettingsOption">Nincs ilyen Nemo Beállítások opció.</string>
     <string name="Translated">lefordítva</string>

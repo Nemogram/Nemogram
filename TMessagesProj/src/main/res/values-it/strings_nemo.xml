@@ -20,12 +20,9 @@
     <string name="Repeat">Ripeti</string>
     <string name="AddToSavedMessages">Salva messaggio</string>
     <string name="CreateMention">Crea menzione</string>
-    <string name="EnableResidentNotification">Mostra notifica persistente</string>
-    <string name="DisableResidentNotification">Disabilita notifica persistente</string>
     <string name="DeleteDownloadedFile">Elimina il file scaricato</string>
     <string name="TestBackendOn">Questo account si connetterà al server di test.</string>
     <string name="TestBackendOff">Questo account si connetterà al server principale.</string>
-    <string name="ViewHistory">Visualizza la cronologia</string>
     <string name="StickerSize">Dimensione dell\'adesivo</string>
     <string name="StickerSizeLeft">Piccolo</string>
     <string name="StickerSizeRight">Grande</string>
@@ -124,10 +121,7 @@
     <string name="EditRedo">Ripeti</string>
     <string name="EditEnableMarkdown">Abilita Markdown</string>
     <string name="EditDisableMarkdown">Disabilita Markdown</string>
-    <string name="CopyCallback">Copia Callback Data</string>
-    <string name="CopyInlineQuery">Copia Query Inline</string>
     <string name="CopyID">Copia ID</string>
-    <string name="SoonRemovedOption">Questa opzione sperimentale sarà presto rimossa e abilitata di default, se hai problemi con questa opzione, per favore **segnalacelo**.</string>
     <string name="DeleteAllFromSelfDone">Tutti i tuoi messaggi sono stati cancellati</string>
     <string name="UnknownNemoSettingsOption">Non esiste questa opzione nelle impostazioni Nemo.</string>
     <string name="Translated">tradotto</string>

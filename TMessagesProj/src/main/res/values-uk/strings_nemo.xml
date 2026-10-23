@@ -121,10 +121,7 @@
     <string name="EditRedo">Повторити</string>
     <string name="EditEnableMarkdown">Увімкнути Markdown</string>
     <string name="EditDisableMarkdown">Вимкнути Markdown</string>
-    <string name="CopyCallback">Копіювати вхідні дані</string>
-    <string name="CopyInlineQuery">Копіювати Inline запит</string>
     <string name="CopyID">Скопіювати ID</string>
-    <string name="SoonRemovedOption">Цей експериментальний параметр буде видалено та увімкнено по замовчуванню найближчим часом, якщо у вас виникають проблеми з ним, будь ласка, **повідомте нас**.</string>
     <string name="DeleteAllFromSelfDone">Видалити свої повідомлення</string>
     <string name="UnknownNemoSettingsOption">Немає такої опції Налаштування Nemo.</string>
     <string name="Translated">перекладено</string>

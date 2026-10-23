@@ -19,12 +19,9 @@
     <string name="Repeat">Herhalen</string>
     <string name="AddToSavedMessages">Bewaar bericht</string>
     <string name="CreateMention">Maak vermelding</string>
-    <string name="EnableResidentNotification">Toon permanente melding</string>
-    <string name="DisableResidentNotification">Schakel permanente melding uit</string>
     <string name="DeleteDownloadedFile">Gedownload bestand verwijderen</string>
     <string name="TestBackendOn">Dit account zal verbinding maken met de test backend.</string>
     <string name="TestBackendOff">Dit account zal verbinding maken met de productie backend.</string>
-    <string name="ViewHistory">Geschiedenis bekijken</string>
     <string name="StickerSize">Sticker grootte</string>
     <string name="StickerSizeLeft">Klein</string>
     <string name="StickerSizeRight">Groot</string>
@@ -83,8 +80,6 @@
     <string name="SilenceNonContacts">Demp niet-contacten</string>
     <string name="SilenceNonContactsAbout">Meldingen van mensen die niet tot je contacten behoren, verschijnen zonder geluid. Je kunt gebruikers toevoegen aan contacten vanuit hun profiel zonder hun telefoonnummer te kennen.</string>
     <string name="StickerSavedHint">Sticker opgeslagen naar galerij</string>
-    <string name="WsEnableTls">TLS inschakelen</string>
-    <string name="WsProvider">Aanbieder</string>
     <string name="UpdateNemogram">Nemogram bijwerken</string>
     <string name="TranslationTarget">Doeltaal</string>
     <string name="TranslationTargetApp">Systeem volgen</string>

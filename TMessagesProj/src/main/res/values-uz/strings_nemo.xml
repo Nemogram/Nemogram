@@ -15,12 +15,9 @@
     <string name="Repeat">Takrorlash</string>
     <string name="AddToSavedMessages">Xabarni saqlash</string>
     <string name="CreateMention">Eslatma yaratish</string>
-    <string name="EnableResidentNotification">Rezident bildirishnomasini ko\'rsatish</string>
-    <string name="DisableResidentNotification">Rezident bildirishnomasini o\'chirib qo\'yish</string>
     <string name="DeleteDownloadedFile">Yuklab olingan faylni o\'chirish</string>
     <string name="TestBackendOn">Bu hisob test serveriga ulanadi.</string>
     <string name="TestBackendOff">Bu hisob ishlab chiqarish serveriga ulanadi.</string>
-    <string name="ViewHistory">Tarixni ko\'rish</string>
     <string name="StickerSize">Stiker hajmi</string>
     <string name="StickerSizeLeft">Kichik</string>
     <string name="StickerSizeRight">Katta</string>
@@ -79,8 +76,6 @@
     <string name="SilenceNonContacts">Kontakt bo\'lmaganlarni ovozsiz qilish</string>
     <string name="SilenceNonContactsAbout">Kontaktlaringiz bo\'lmagan odamlarning bildirishnomalari ovozsiz chiqadi. Siz foydalanuvchilarni telefon raqamini bilmasdan profilidagi kontaktlarga qo\'shishingiz mumkin.</string>
     <string name="StickerSavedHint">Stiker galeriyaga saqlandi</string>
-    <string name="WsEnableTls">TLSni yoqish</string>
-    <string name="WsProvider">Provayder</string>
     <string name="UpdateNemogram">Nemogramni yangilash</string>
     <string name="TranslationTarget">Maqsadli til</string>
     <string name="TranslationTargetApp">Tarjima tili</string>
@@ -120,10 +115,7 @@
     <string name="EditRedo">Qayta bajarish</string>
     <string name="EditEnableMarkdown">Markdownni yoqish</string>
     <string name="EditDisableMarkdown">Markdownni o\'chirish</string>
-    <string name="CopyCallback">Qayta qo\'ng\'iroq ma\'lumotlarini nusxalash</string>
-    <string name="CopyInlineQuery">Inlayn so\'rovni nusxalash</string>
     <string name="CopyID">IDni ko\'chirish</string>
-    <string name="SoonRemovedOption">Tez orada bu eksperimental opsiya oʻchiriladi va sukut boʻyicha yoqiladi, agar sizda ushbu parametr bilan bogʻliq muammo boʻlsa, **bizga xabar bering**.</string>
     <string name="DeleteAllFromSelfDone">Barcha xabarlaringiz o\'chirib tashlandi</string>
     <string name="UnknownNemoSettingsOption">Boshqa Nemo sozlamalari mavjud emas.</string>
     <string name="Translated">tarjima qilindi</string>

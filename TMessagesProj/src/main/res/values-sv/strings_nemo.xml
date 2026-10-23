@@ -13,12 +13,9 @@
     <string name="Repeat">Upprepa</string>
     <string name="AddToSavedMessages">Spara meddelande</string>
     <string name="CreateMention">Skapa omnämning</string>
-    <string name="EnableResidentNotification">Visa en inhemsk notifikation</string>
-    <string name="DisableResidentNotification">Inaktivera inhemska notifikationer</string>
     <string name="DeleteDownloadedFile">Radera nedladdad fil</string>
     <string name="TestBackendOn">Detta konto kommer ansluta till testbackend.</string>
     <string name="TestBackendOff">Detta konto kommer att ansluta till produktionsbackend.</string>
-    <string name="ViewHistory">Visa historik</string>
     <string name="StickerSize">Storlek på klistermärken</string>
     <string name="StickerSizeDialogMessage">Åh så söt fisk!</string>
     <string name="StickerSizeDialogMessageReplyTo">Bubbel</string>
@@ -75,8 +72,6 @@
     <string name="SilenceNonContacts">Tysta notifikationer av icke-kontakter</string>
     <string name="SilenceNonContactsAbout">Meddelanden från personer som inte är dina kontakter visas utan ljud. Du kan lägga till användare till kontakter från deras profil utan att känna till deras telefonnummer.</string>
     <string name="StickerSavedHint">Klistermärke sparat i galleriet</string>
-    <string name="WsEnableTls">Aktivera TLS</string>
-    <string name="WsProvider">Leverantör</string>
     <string name="UpdateNemogram">Uppdatera Nemogram</string>
     <string name="TranslationTarget">Målspråk</string>
     <string name="TranslationTargetApp">Följ appen</string>
@@ -116,7 +111,6 @@
     <string name="EditEnableMarkdown">Aktivera markdown-kod</string>
     <string name="EditDisableMarkdown">Inaktivera markdown-kod</string>
     <string name="CopyID">Kopiera ID</string>
-    <string name="SoonRemovedOption">Det här experimentella alternativet kommer snart att tas bort och aktiveras som standard, om du har problem med det här alternativet, vänligen **rapportera till oss**.</string>
     <string name="DeleteAllFromSelfDone">Alla dina meddelanden är raderade</string>
     <string name="UnknownNemoSettingsOption">Det finns inget sådant alternativ för Nemo-inställningar.</string>
     <string name="Translated">översatt</string>

@@ -51,7 +51,6 @@
     <string name="OfficialChannel">القناة الرسمية</string>
     <string name="IgnoreBlockedAbout">لا تزال الرسائل متاحة للعرض ، ولكن سيتم تحويل النص إلى Spoiler ولن يتم تنزيل الوسائط تلقائيًا.</string>
     <string name="ResetStickerSize">إعادة تعيين حجم ملصق</string>
-    <string name="OfficialChannelUsername">nemoupdates</string>
     <string name="RestartAppToTakeEffect">أعد تشغيل التطبيق لرؤية التغييرات.</string>
     <string name="MediaPreview">صورٌ مصغرة في الشاشة الرئيسية</string>
     <string name="ProviderYandex">ترجمة Yandex</string>
@@ -122,10 +121,7 @@
     <string name="EditRedo">إعادة</string>
     <string name="EditEnableMarkdown">تمكين وضع علامة</string>
     <string name="EditDisableMarkdown">تعطيل وضع علامة</string>
-    <string name="CopyCallback">نسخ بيانات رد الاتصال</string>
-    <string name="CopyInlineQuery">نسخ الاستعلام المضمن</string>
     <string name="CopyID">ينسخ ID</string>
-    <string name="SoonRemovedOption">ستتم إزالة هذا الخيار التجريبي وتمكينه افتراضيًا قريبًا ، إذا كنت تواجه مشكلات مع هذا الخيار ، فيرجى ** إبلاغنا **.</string>
     <string name="DeleteAllFromSelfDone">كل رسائلك حُذفت</string>
     <string name="UnknownNemoSettingsOption">لا يوجد خِيار لإعدادات نكو من هذا القبيل.</string>
     <string name="Translated">تمت التَّرْجَمَة</string>

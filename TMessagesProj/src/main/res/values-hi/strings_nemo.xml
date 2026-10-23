@@ -13,12 +13,9 @@
     <string name="Repeat">दोहराएं</string>
     <string name="AddToSavedMessages">संदेश सेव करो</string>
     <string name="CreateMention">उल्लेख बनाएं</string>
-    <string name="EnableResidentNotification">कोई निवासी सूचना दिखाएँ</string>
-    <string name="DisableResidentNotification">निवासी अधिसूचना अक्षम करें</string>
     <string name="DeleteDownloadedFile">डाउनलोड की गई फ़ाइल को हटाएं</string>
     <string name="TestBackendOn">यह अकाउंट टेस्ट बैकएंड से कनेक्ट करेगा।</string>
     <string name="TestBackendOff">यह खाता प्रोडक्शन बैकएंड से कनेक्ट करेगा।</string>
-    <string name="ViewHistory">इतिहास देखें</string>
     <string name="StickerSize">चैट में स्टीकर का साइज</string>
     <string name="StickerSizeLeft">छोटा</string>
     <string name="StickerSizeRight">बड़ा</string>
@@ -77,8 +74,6 @@
     <string name="SilenceNonContacts">बिना कॉन्टैक्ट्स को साइलेंट करें</string>
     <string name="SilenceNonContactsAbout">उन लोगों की सूचनाएं जो आपके संपर्क नहीं हैं, ध्वनि के बिना दिखाई देंगी। आप उपयोगकर्ताओं को उनका फ़ोन नंबर जाने बिना उनकी प्रोफ़ाइल से संपर्कों में जोड़ सकते हैं।</string>
     <string name="StickerSavedHint">स्टिकर गैलरी में सहेजा गया।</string>
-    <string name="WsEnableTls">TLS लागू करें</string>
-    <string name="WsProvider">प्रदाता</string>
     <string name="UpdateNemogram">Nemogram को अपडेट करें</string>
     <string name="TranslationTarget">चाही गई भाषा</string>
     <string name="TranslationTargetApp">App को फॉलो करें</string>
@@ -118,10 +113,7 @@
     <string name="EditRedo">री डू</string>
     <string name="EditEnableMarkdown">मार्कडाउन को चालू करें</string>
     <string name="EditDisableMarkdown">मार्कडाउन को बंद करें</string>
-    <string name="CopyCallback">कॉलबैक डाटा कॉपी करें</string>
-    <string name="CopyInlineQuery">इनलाइन क्वेरी कॉपी करें</string>
     <string name="CopyID">आईडी कॉपी करें</string>
-    <string name="SoonRemovedOption">यह प्रयोगात्मक विकल्प जल्द ही हटा दिया जाएगा और डिफ़ॉल्ट रूप से सक्षम कर दिया जाएगा, यदि आपको इस विकल्प के साथ समस्या हो रही है, तो कृपया **हमें रिपोर्ट करें**।</string>
     <string name="DeleteAllFromSelfDone">आपके सभी संदेश हटा दिए गए हैं</string>
     <string name="UnknownNemoSettingsOption">ऐसा कोई नेको सेटिंग्स विकल्प नहीं है।</string>
     <string name="Translated">अनुवाद किया जा चुका है</string>

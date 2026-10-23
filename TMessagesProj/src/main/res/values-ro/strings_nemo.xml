@@ -20,12 +20,9 @@
     <string name="Repeat">Repetă</string>
     <string name="AddToSavedMessages">Salvează mesaj</string>
     <string name="CreateMention">Creează mențiune</string>
-    <string name="EnableResidentNotification">Afișează o notificare rezidentă</string>
-    <string name="DisableResidentNotification">Dezactivează notificarea rezidentă</string>
     <string name="DeleteDownloadedFile">Șterge fișierul descărcat</string>
     <string name="TestBackendOn">Acest cont se va conecta la sistemul backend de testare.</string>
     <string name="TestBackendOff">Acest cont se va conecta la sistemul backend de producție.</string>
-    <string name="ViewHistory">Vizualizare istoric</string>
     <string name="StickerSize">Dimensiune sticker</string>
     <string name="StickerSizeLeft">Mic</string>
     <string name="StickerSizeRight">Mare</string>
@@ -124,10 +121,7 @@
     <string name="EditRedo">Refaceți</string>
     <string name="EditEnableMarkdown">Activați Markdown</string>
     <string name="EditDisableMarkdown">Dezactivați Markdown</string>
-    <string name="CopyCallback">Copierea datelor de apelare</string>
-    <string name="CopyInlineQuery">Copiați interogarea inline</string>
     <string name="CopyID">Copiați ID-ul</string>
-    <string name="SoonRemovedOption">Această opțiune experimentală va fi eliminată și activată implicit în curând, dacă aveți probleme cu această opțiune, vă rugăm **să ne-o raportați**.</string>
     <string name="DeleteAllFromSelfDone">Toate mesajele dumneavoastră sunt șterse</string>
     <string name="UnknownNemoSettingsOption">Nu există o astfel de opţiune de Setări Nemo.</string>
     <string name="Translated">tradus</string>

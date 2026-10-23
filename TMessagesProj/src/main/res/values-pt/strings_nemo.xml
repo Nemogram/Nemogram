@@ -20,12 +20,9 @@
     <string name="Repeat">Repetir</string>
     <string name="AddToSavedMessages">Mensagens salvas</string>
     <string name="CreateMention">Criar menção</string>
-    <string name="EnableResidentNotification">Ativar notificação overlay</string>
-    <string name="DisableResidentNotification">Desabilitar notificação overlay</string>
     <string name="DeleteDownloadedFile">Excluir arquivo baixado</string>
     <string name="TestBackendOn">Esta conta conectará ao backend de teste.</string>
     <string name="TestBackendOff">Esta conta conectará ao backend de produção.</string>
-    <string name="ViewHistory">Ver Histórico</string>
     <string name="StickerSize">Tamanho da figurinha</string>
     <string name="StickerSizeLeft">Pequeno</string>
     <string name="StickerSizeRight">Grande</string>
@@ -124,10 +121,7 @@
     <string name="EditRedo">Refazer</string>
     <string name="EditEnableMarkdown">Ativar Remarcação</string>
     <string name="EditDisableMarkdown">Desativar Remarcação</string>
-    <string name="CopyCallback">Copiar dados de retorno de chamada</string>
-    <string name="CopyInlineQuery">Copiar Consulta Embutida</string>
     <string name="CopyID">Copiar ID</string>
-    <string name="SoonRemovedOption">Esta opção experimental será retirada e activada por defeito em breve, se tiver problemas com esta opção, por favor **informe-nos**.</string>
     <string name="DeleteAllFromSelfDone">Todas as suas mensagens são apagadas</string>
     <string name="UnknownNemoSettingsOption">Não existe essa opção de Configurações Nemo.</string>
     <string name="Translated">traduzido</string>

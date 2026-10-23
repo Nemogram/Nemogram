@@ -20,12 +20,9 @@
     <string name="Repeat">تکرار</string>
     <string name="AddToSavedMessages">ذخیره پیام</string>
     <string name="CreateMention">ایجاد منشن</string>
-    <string name="EnableResidentNotification">نمایش یک اعلان ساکن</string>
-    <string name="DisableResidentNotification">اعلان ساکن را غیرفعال کنید</string>
     <string name="DeleteDownloadedFile">حذف فایل دانلود شده</string>
     <string name="TestBackendOn">این حساب به پشتیبان آزمایشی متصل می شود.</string>
     <string name="TestBackendOff">این حساب به باطن تولید متصل می شود.</string>
-    <string name="ViewHistory">مشاهده تاریخچه</string>
     <string name="StickerSize">اندازه استیکر</string>
     <string name="StickerSizeLeft">کوچک</string>
     <string name="StickerSizeRight">بزرگ</string>
@@ -124,10 +121,7 @@
     <string name="EditRedo">انجام دوباره</string>
     <string name="EditEnableMarkdown">فعال کردن علامت گذاری</string>
     <string name="EditDisableMarkdown">غیر فعال کردن علامت گذاری</string>
-    <string name="CopyCallback">کپی کردن داده های تماس</string>
-    <string name="CopyInlineQuery">کپی پرس و جو در خط</string>
     <string name="CopyID">کپی شناسه</string>
-    <string name="SoonRemovedOption">این گزینه آزمایشی به زودی حذف و به طور پیش فرض فعال می شود، اگر با این گزینه مشکل دارید، لطفاً **به ما گزارش دهید**.</string>
     <string name="DeleteAllFromSelfDone">حذف تمامی پیام های شما</string>
     <string name="UnknownNemoSettingsOption">گزینه تنظیمات نکو وجود ندارد.</string>
     <string name="Translated">ترجمه شده</string>

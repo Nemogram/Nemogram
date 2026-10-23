@@ -121,10 +121,7 @@
     <string name="EditRedo">Паўтарыць</string>
     <string name="EditEnableMarkdown">Уключыць Markdown</string>
     <string name="EditDisableMarkdown">Адключыць Markdown</string>
-    <string name="CopyCallback">Скапіяваць Callback Data</string>
-    <string name="CopyInlineQuery">Капіраваць Inline запыт</string>
     <string name="CopyID">Капіраваць ID</string>
-    <string name="SoonRemovedOption">Гэта эксперыментальная опцыя скора будзе выдалена і ўключана па ўмаўчанні. Калі ў вас ёсць праблемы с гэта опцыяй, калі ласка **паведаміце нам**.</string>
     <string name="DeleteAllFromSelfDone">Усе вашы паведамленні выдалены</string>
     <string name="UnknownNemoSettingsOption">Такой опцыі ў наладах Nemo няма.</string>
     <string name="Translated">перакладзена</string>
@@ -233,14 +230,12 @@
     <string name="SearchBarStyleNormal">Звычайны</string>
     <string name="SearchBarStyleCompact">Кампактны</string>
     <string name="HideSearchBarOnScroll">Хаваць пры пракрутцы</string>
-    <string name="SearchBarStylePreviewTitle">Прэв\'ю</string>
     <string name="Placeholder">Плэйсхолдэр</string>
     <string name="SearchBarPlaceholder">Тэкст у радку пошуку</string>
     <string name="SearchBarPlaceholderHide">Схаваць тэкст у радку пошуку</string>
     <string name="SearchBarPlaceholderEmpty">Пуста</string>
     <string name="MusicViewAlternativeLayout">Альтэрнатыўнае адлюстраванне музыкі</string>
     <string name="ProfileMusicLabel">Музыка</string>
-    <string name="UseStockNotificationIcon">\"Telegram\" значок апавяшчэнняў</string>
     <string name="ScrollToFirstMessage">У пачатак</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Адмысловыя магчымасці</string>

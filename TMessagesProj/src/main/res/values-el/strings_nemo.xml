@@ -121,10 +121,7 @@
     <string name="EditRedo">Επανάληψη</string>
     <string name="EditEnableMarkdown">Ενεργοποίηση Markdown</string>
     <string name="EditDisableMarkdown">Απενεργοποίηση Markdown</string>
-    <string name="CopyCallback">Αντιγραφή Δεδομένων Επανάκλησης</string>
-    <string name="CopyInlineQuery">Αντιγραφή Ενσωματωμένου Ερωτήματος</string>
     <string name="CopyID">Αντιγραφή ID</string>
-    <string name="SoonRemovedOption">Αυτή η πειραματική επιλογή ίσως θα αφαιρεθεί και θα ενεργοποιηθεί από προεπιλογή σύντομα, αν έχετε προβλήματα με αυτή την επιλογή, παρακαλούμε να μας το **αναφέρετε **.</string>
     <string name="DeleteAllFromSelfDone">Όλα τα μηνύματά σας έχουν διαγραφεί</string>
     <string name="UnknownNemoSettingsOption">Δεν υπάρχει τέτοια επιλογή Ρυθμίσεων Nemo.</string>
     <string name="Translated">μεταφράστηκε</string>

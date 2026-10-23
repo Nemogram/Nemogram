@@ -120,10 +120,7 @@
     <string name="EditRedo">Rehacer</string>
     <string name="EditEnableMarkdown">Activar Markdown</string>
     <string name="EditDisableMarkdown">Desactivar Markdown</string>
-    <string name="CopyCallback">Copiar datos de devolución de llamada</string>
-    <string name="CopyInlineQuery">Copiar consulta en línea</string>
     <string name="CopyID">Copiar ID</string>
-    <string name="SoonRemovedOption">Esta opción experimental será eliminada y activada por defecto en breve, si tiene problemas con esta opción, por favor **infórmenos**.</string>
     <string name="DeleteAllFromSelfDone">Todos tus mensajes han sido borrados</string>
     <string name="UnknownNemoSettingsOption">No existe esa opción en los Ajustes de Nemo.</string>
     <string name="Translated">traducido</string>

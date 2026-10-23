@@ -15,12 +15,9 @@
     <string name="Repeat">Повтор</string>
     <string name="AddToSavedMessages">Зберегти повідомлення</string>
     <string name="CreateMention">Відредагувати коментар</string>
-    <string name="EnableResidentNotification">Показати сповіщення мешканця</string>
-    <string name="DisableResidentNotification">Вимкнути сповіщення мешканця</string>
     <string name="DeleteDownloadedFile">Видалити скачаний файл</string>
     <string name="TestBackendOn">Цей обліковий запис буде підключено до тестового сервера.</string>
     <string name="TestBackendOff">Цей обліковий запис буде підключено до робочого сервера.</string>
-    <string name="ViewHistory">Подивитись історію</string>
     <string name="StickerSize">Розмір наліпки</string>
     <string name="StickerSizeLeft">Malá</string>
     <string name="StickerSizeRight">Velká</string>
@@ -79,8 +76,6 @@
     <string name="SilenceNonContacts">Тиша неконтактів</string>
     <string name="SilenceNonContactsAbout">Сповіщення від людей, які не є вашими контактами відображатимуться без звуку. Ви можете додавати користувачів до контактів із їхнього профілю, не знаючи їх номера телефону.</string>
     <string name="StickerSavedHint">Наліпка збережена до галереї</string>
-    <string name="WsEnableTls">Увімкнути TLS</string>
-    <string name="WsProvider">Провайдер</string>
     <string name="UpdateNemogram">Оновити некограм</string>
     <string name="TranslationTarget">Цільова мова</string>
     <string name="TranslationTargetApp">Підписатись на програму</string>

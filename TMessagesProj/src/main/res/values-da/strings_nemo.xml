@@ -13,12 +13,9 @@
     <string name="Repeat">Gentag</string>
     <string name="AddToSavedMessages">Gem besked</string>
     <string name="CreateMention">Opret Omtale</string>
-    <string name="EnableResidentNotification">Vis en resident underretning</string>
-    <string name="DisableResidentNotification">Deaktiver residente notifikationer</string>
     <string name="DeleteDownloadedFile">Slet hentede filer</string>
     <string name="TestBackendOn">Denne konto vil oprette forbindelse til test backend.</string>
     <string name="TestBackendOff">Denne konto vil oprette forbindelse til produktionsbackend.</string>
-    <string name="ViewHistory">Se historik</string>
     <string name="StickerSize">Klistermærke størrelse</string>
     <string name="StickerSizeDialogMessage">Åh, sikke en sød fisk!</string>
     <string name="StickerSizeDialogMessageReplyTo">Blub</string>
@@ -75,8 +72,6 @@
     <string name="SilenceNonContacts">Gør Ikke-Kontakter Tavse</string>
     <string name="SilenceNonContactsAbout">Meddelelser fra personer, der ikke er dine kontakter, vises uden lyd. Du kan føje brugere til kontakter fra deres profil uden at kende deres telefonnummer.</string>
     <string name="StickerSavedHint">Klistermærke gemt i galleri</string>
-    <string name="WsEnableTls">Aktiver TLS</string>
-    <string name="WsProvider">Udbyder</string>
     <string name="UpdateNemogram">Opdater Nemogram</string>
     <string name="TranslationTarget">Målsprog</string>
     <string name="TranslationTargetApp">Følg app</string>
@@ -116,10 +111,7 @@
     <string name="EditRedo">Gendan</string>
     <string name="EditEnableMarkdown">Aktivér Markering</string>
     <string name="EditDisableMarkdown">Deaktiver Markering</string>
-    <string name="CopyCallback">Kopiering af callback-data</string>
-    <string name="CopyInlineQuery">Kopier Inline-forespørgsel</string>
     <string name="CopyID">Kopier ID</string>
-    <string name="SoonRemovedOption">Denne eksperimentelle indstilling vil snart blive fjernet og aktiveret som standard, hvis du har problemer med denne indstilling, bedes du **rapportere til os**.</string>
     <string name="DeleteAllFromSelfDone">Alle dine beskeder er slettet</string>
     <string name="UnknownNemoSettingsOption">Der er ikke en sådan indstillingsmulighed for Nemo.</string>
     <string name="Translated">oversat</string>
