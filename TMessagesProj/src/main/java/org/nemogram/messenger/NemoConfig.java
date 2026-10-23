@@ -167,7 +167,6 @@ public class NemoConfig {
 
     public static int iconRoundness = 100;
 
-    public static int userMcc = 0;
     public static int searchBarStyle = SEARCH_BAR_NORMAL;
 
     public static String dialogsMenuOrder = "";
@@ -203,7 +202,6 @@ public class NemoConfig {
             if (configLoaded && !force) {
                 return;
             }
-            userMcc = ApplicationLoader.applicationContext.getResources().getConfiguration().mcc;
 
             SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nemoconfig", Activity.MODE_PRIVATE);
             preferIPv6 = preferences.getBoolean("preferIPv6", false);
