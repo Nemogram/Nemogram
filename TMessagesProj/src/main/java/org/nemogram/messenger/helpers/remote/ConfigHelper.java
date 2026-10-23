@@ -1,8 +1,15 @@
 package org.nemogram.messenger.helpers.remote;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.FileLog;
 import org.telegram.tgnet.TLRPC;
@@ -15,8 +22,15 @@ import java.util.List;
 import org.nemogram.messenger.Extra;
 import org.nemogram.messenger.NemoConfig;
 
-public class ConfigHelper extends BaseRemoteHelper {
-    private static final String NEWS_METHOD = "get_config";
+public class ConfigHelper {
+
+    private static final String CONFIG_KEY = "get_config";
+    private static final String CONFIG_UPDATE_TIME_KEY = CONFIG_KEY + "_update_time";
+    private static final long CONFIG_TTL_MS = 24 * 60 * 60 * 1000;
+
+    private static final SharedPreferences preferences =
+            ApplicationLoader.applicationContext.getSharedPreferences("nemoremoteconfig", Context.MODE_PRIVATE);
+    private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
     private static final List<Long> DEFAULT_VERIFY_LIST = Arrays.asList(
             1349472891L,
@@ -125,11 +139,31 @@ public class ConfigHelper extends BaseRemoteHelper {
         preferences.edit().putBoolean("news_dismissed_" + id, true).apply();
     }
 
+    public void onLoadSuccess(String result) {
+        if (result == null) {
+            config = null;
+            preferences.edit()
+                    .remove(CONFIG_UPDATE_TIME_KEY)
+                    .remove(CONFIG_KEY)
+                    .apply();
+            return;
+        }
+        preferences.edit()
+                .putLong(CONFIG_UPDATE_TIME_KEY, System.currentTimeMillis())
+                .putString(CONFIG_KEY, result)
+                .apply();
+        try {
+            config = GSON.fromJson(result, Config.class);
+        } catch (Throwable t) {
+            FileLog.e(t);
+        }
+    }
+
     private Config config;
 
     private Config getConfig() {
         if (config == null) {
-            var json = getInstance().getJSON();
+            var json = getJSON();
             if (json == null) {
                 return null;
             }
@@ -142,29 +176,52 @@ public class ConfigHelper extends BaseRemoteHelper {
         return config;
     }
 
-    @Override
-    public void onLoadSuccess(String result) {
-        super.onLoadSuccess(result);
-        try {
-            config = GSON.fromJson(result, Config.class);
-        } catch (Throwable t) {
-            FileLog.e(t);
+    private static String getJSON() {
+        var json = preferences.getString(CONFIG_KEY, "");
+        if (TextUtils.isEmpty(json)) {
+            return null;
         }
+        var updateTime = preferences.getLong(CONFIG_UPDATE_TIME_KEY, 0);
+        if (Math.abs(System.currentTimeMillis() - updateTime) > CONFIG_TTL_MS) {
+            return null;
+        }
+        return json;
     }
 
-    @Override
-    protected void onError(String text, Delegate delegate) {
-        FileLog.e("ConfigHelper error = " + text);
-    }
-
-    @Override
-    protected String getRequestMethod() {
-        return NEWS_METHOD;
-    }
-
-    @Override
-    protected String getRequestParams() {
-        return "";
+    private static List<TLRPC.MessageEntity> parseBotAPIEntities(MessageEntity[] botEntities, boolean emojiOnly) {
+        if (botEntities == null) {
+            return Collections.emptyList();
+        }
+        return Arrays.stream(botEntities)
+                .filter(e -> !emojiOnly || e.customEmojiId != null)
+                .map(e -> {
+                    var entity = switch (e.type) {
+                        case "mention" -> new TLRPC.TL_messageEntityMention();
+                        case "hashtag" -> new TLRPC.TL_messageEntityHashtag();
+                        case "cashtag" -> new TLRPC.TL_messageEntityCashtag();
+                        case "bot_command" -> new TLRPC.TL_messageEntityBotCommand();
+                        case "url" -> new TLRPC.TL_messageEntityUrl();
+                        case "email" -> new TLRPC.TL_messageEntityEmail();
+                        case "phone_number" -> new TLRPC.TL_messageEntityPhone();
+                        case "bold" -> new TLRPC.TL_messageEntityBold();
+                        case "italic" -> new TLRPC.TL_messageEntityItalic();
+                        case "underline" -> new TLRPC.TL_messageEntityUnderline();
+                        case "strikethrough" -> new TLRPC.TL_messageEntityStrike();
+                        case "spoiler" -> new TLRPC.TL_messageEntitySpoiler();
+                        case "text_link" -> new TLRPC.TL_messageEntityTextUrl();
+                        case "custom_emoji" -> {
+                            var emoji = new TLRPC.TL_messageEntityCustomEmoji();
+                            emoji.document_id = e.customEmojiId;
+                            yield emoji;
+                        }
+                        default -> new TLRPC.TL_messageEntityUnknown();
+                    };
+                    entity.offset = e.offset;
+                    entity.length = e.length;
+                    entity.url = e.url;
+                    return entity;
+                })
+                .toList();
     }
 
     public static class News {
@@ -231,5 +288,23 @@ public class ConfigHelper extends BaseRemoteHelper {
         @SerializedName("cryptos")
         @Expose
         public List<Crypto> cryptos;
+    }
+
+    public static class MessageEntity {
+        @SerializedName("type")
+        @Expose
+        public String type;
+        @SerializedName("offset")
+        @Expose
+        public Integer offset;
+        @SerializedName("length")
+        @Expose
+        public Integer length;
+        @SerializedName("url")
+        @Expose
+        public String url;
+        @SerializedName("custom_emoji_id")
+        @Expose
+        public Long customEmojiId;
     }
 }
