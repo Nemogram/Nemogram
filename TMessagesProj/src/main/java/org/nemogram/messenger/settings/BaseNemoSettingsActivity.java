@@ -9,8 +9,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -41,7 +39,6 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.UItem;
-import org.telegram.ui.Components.URLSpanNoUnderline;
 import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.Components.UniversalRecyclerView;
 import org.telegram.ui.Components.blur3.DownscaleScrollableNoiseSuppressor;
@@ -346,19 +343,6 @@ public abstract class BaseNemoSettingsActivity extends BaseFragment {
 
     protected void notifyItemRangeInserted(int itemId, int itemCount) {
         listView.adapter.notifyItemRangeInserted(listView.findPositionByItemId(itemId), itemCount);
-    }
-
-    public static CharSequence getSpannedString(int id, String url) {
-        var text = LocaleController.getString(id);
-        var builder = new SpannableStringBuilder(text);
-        int index1 = text.indexOf("**");
-        int index2 = text.lastIndexOf("**");
-        if (index1 >= 0 && index2 >= 0 && index1 != index2) {
-            builder.replace(index2, index2 + 2, "");
-            builder.replace(index1, index1 + 2, "");
-            builder.setSpan(new URLSpanNoUnderline(url), index1, index2 - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        return builder;
     }
 
     public void scrollToRow(String key, Runnable unknown) {
