@@ -349,7 +349,6 @@ import org.nemogram.messenger.BackButtonMenuRecent;
 import org.nemogram.messenger.NemoConfig;
 import org.nemogram.messenger.SimpleTextViewSwitcher;
 import org.nemogram.messenger.helpers.PopupHelper;
-import org.nemogram.messenger.helpers.remote.ConfigHelper;
 import org.nemogram.messenger.settings.NemoSettingsActivity;
 import org.nemogram.messenger.translator.Translator;
 import me.vkryl.android.animator.BoolAnimator;
@@ -12031,8 +12030,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (chat.verified) {
                         nameTextView[a].setRightDrawable2(getVerifiedCrossfadeDrawable(a));
                         nameTextViewRightDrawableContentDescription = LocaleController.getString(R.string.AccDescrVerified);
-                    } else if (ConfigHelper.isChatCat(chat)) {
-                        nameTextView[a].setRightDrawable(Theme.profile_verifiedCatDrawable);
                     } else {
                         nameTextView[a].setRightDrawable2(null);
                         nameTextViewRightDrawableContentDescription = null;
