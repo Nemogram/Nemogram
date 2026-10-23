@@ -261,10 +261,6 @@ public class EmojiHelper {
                 ? emojiPack : "default";
     }
 
-    public ArrayList<EmojiPack> getEmojiPacks() {
-        return emojiPacksInfo;
-    }
-
     public ArrayList<EmojiPack> getEmojiPacksInfo() {
         return emojiPacksInfo.stream()
                 .filter(e -> !e.getPackId().equals(pendingDeleteEmojiPackId))
