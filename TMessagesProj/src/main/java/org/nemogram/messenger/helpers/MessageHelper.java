@@ -15,7 +15,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -63,10 +62,6 @@ import org.telegram.ui.Components.TranscribeButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -81,7 +76,6 @@ import org.nemogram.messenger.NemoConfig;
 public class MessageHelper extends BaseController {
 
     private static final MessageHelper[] Instance = new MessageHelper[UserConfig.MAX_ACCOUNT_COUNT];
-    private static final CharsetDecoder utf8Decoder = StandardCharsets.UTF_8.newDecoder();
     private static final SpannableStringBuilder[] spannedStrings = new SpannableStringBuilder[6];
 
     public MessageHelper(int num) {
@@ -207,14 +201,6 @@ public class MessageHelper extends BaseController {
             callback.run();
         } catch (Exception e) {
             FileLog.e(e);
-        }
-    }
-
-    public static String getTextOrBase64(byte[] data) {
-        try {
-            return utf8Decoder.decode(ByteBuffer.wrap(data)).toString();
-        } catch (CharacterCodingException e) {
-            return Base64.encodeToString(data, Base64.NO_PADDING | Base64.NO_WRAP);
         }
     }
 
