@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -17,6 +19,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.math.MathUtils;
 
+import org.nemogram.messenger.NemoConfig;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.ui.ActionBar.Theme;
 
@@ -35,6 +38,12 @@ public class SlideChooseView extends View {
     private int lineSize;
 
     private int dashedFrom = -1;
+
+    private int styleOverride = -1;
+
+    private final Path styledPath = new Path();
+    private final RectF styledRect = new RectF();
+    private final float[] styledRadii = new float[8];
 
     private boolean moving;
     private boolean startMoving;
@@ -138,6 +147,93 @@ public class SlideChooseView extends View {
         dashedFrom = from;
     }
 
+    public void setStyleOverride(int style) {
+        if (styleOverride != style) {
+            styleOverride = style;
+            invalidate();
+        }
+    }
+
+    private int getEffectiveStyle() {
+        return styleOverride >= 0 ? styleOverride : NemoConfig.controlsStyle;
+    }
+
+    private void setStyledPath(float l, float t, float r, float b, float leftRadius, float rightRadius) {
+        styledRect.set(l, t, r, b);
+        styledRadii[0] = styledRadii[1] = styledRadii[6] = styledRadii[7] = leftRadius;
+        styledRadii[2] = styledRadii[3] = styledRadii[4] = styledRadii[5] = rightRadius;
+        styledPath.reset();
+        styledPath.addRoundRect(styledRect, styledRadii, Path.Direction.CW);
+    }
+
+    private void fillStyledPiece(Canvas canvas, float l, float t, float r, float b, float leftRadius, float rightRadius, int color) {
+        if (r - l < 1f) {
+            return;
+        }
+        setStyledPath(l, t, r, b, leftRadius, rightRadius);
+        paint.setColor(color);
+        canvas.drawPath(styledPath, paint);
+    }
+
+    private void drawMd3Track(Canvas canvas, float selectedIndexAnimated, float movingAnimated, float cy) {
+        final float step = lineSize + gapSize * 2 + circleSize;
+        final float trackL = sideSide + circleSize / 2f;
+        final float trackR = trackL + step * (optionsStr.length - 1);
+        final float trackH = AndroidUtilities.dp(8);
+        final float top = cy - trackH / 2f, bottom = cy + trackH / 2f;
+        final float full = trackH / 2f, small = AndroidUtilities.dp(3);
+
+        // thumb is a thin vertical handle splitting the track, thinner while dragging
+        final float thumbC = trackL + step * selectedIndexAnimated;
+        final float thumbW = AndroidUtilities.dp(4) - AndroidUtilities.dp(1.5f) * movingAnimated;
+        final float gap = AndroidUtilities.dp(5) + AndroidUtilities.dp(1.5f) * movingAnimated;
+        final float splitL = Math.min(thumbC - thumbW / 2f - gap, trackR);
+        final float splitR = Math.max(thumbC + thumbW / 2f + gap, trackL);
+
+        final int activeColor = getThemedColor(Theme.key_switchTrackChecked);
+        final int inactiveColor = getThemedColor(Theme.key_switchTrack);
+
+        // filled part up to the thumb, dimmed before minIndex the way the classic style dims those stops
+        final float minC = minIndex > 0 ? trackL + step * minIndex : -1;
+        final float activeEnd = Math.min(thumbC, splitL);
+        if (activeEnd > trackL) {
+            if (minC > trackL) {
+                fillStyledPiece(canvas, trackL, top, Math.min(activeEnd, minC), bottom, full, small, Theme.multAlpha(activeColor, .5f));
+            }
+            if (activeEnd > Math.max(trackL, minC)) {
+                fillStyledPiece(canvas, Math.max(trackL, minC), top, activeEnd, bottom, small, small, activeColor);
+            }
+        }
+
+        // rest of the track, dashed after dashedFrom like the classic style
+        final float dashC = dashedFrom >= 0 ? MathUtils.clamp(trackL + step * dashedFrom, splitR, trackR) : trackR;
+        fillStyledPiece(canvas, splitR, top, dashC, bottom, small, small, inactiveColor);
+        if (dashC < trackR - AndroidUtilities.dp(2)) {
+            int width = (int) (trackR - dashC) - AndroidUtilities.dp(2);
+            int dash = Math.max(1, width / AndroidUtilities.dp(13));
+            float gapPx = (width - dash * AndroidUtilities.dp(8)) / (float) dash;
+            linePaint.setPathEffect(new DashPathEffect(new float[]{AndroidUtilities.dp(6), Math.max(gapPx, AndroidUtilities.dp(4))}, 0));
+            linePaint.setColor(inactiveColor);
+            canvas.drawLine(dashC + AndroidUtilities.dp(1), cy, trackR - AndroidUtilities.dp(1), cy, linePaint);
+        }
+
+        final float handleH = trackH + AndroidUtilities.dp(12);
+        styledRect.set(thumbC - thumbW / 2f, cy - handleH / 2f, thumbC + thumbW / 2f, cy + handleH / 2f);
+        paint.setColor(activeColor);
+        canvas.drawRoundRect(styledRect, thumbW / 2f, thumbW / 2f, paint);
+
+        // stop indicators as holes in the inactive part
+        final int holeColor = getThemedColor(Theme.key_windowBackgroundWhite);
+        for (int a = (int) Math.floor(selectedIndexAnimated) + 1; a < optionsStr.length; a++) {
+            float cx = trackL + step * a;
+            if (cx < splitR + AndroidUtilities.dp(2) || cx > trackR - AndroidUtilities.dp(4) || cx >= dashC) {
+                continue;
+            }
+            paint.setColor(ColorUtils.blendARGB(inactiveColor, holeColor, .55f));
+            canvas.drawCircle(cx, cy, AndroidUtilities.dp(1.5f), paint);
+        }
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
@@ -226,35 +322,17 @@ public class SlideChooseView extends View {
         float selectedIndexAnimated = selectedIndexAnimatedHolder.set(selectedIndex);
         float movingAnimated = movingAnimatedHolder.set(moving ? 1 : 0);
         int cy = getMeasuredHeight() / 2 + AndroidUtilities.dp(11);
+        final boolean md3 = getEffectiveStyle() == NemoConfig.CONTROLS_STYLE_MD3;
+
+        if (md3) {
+            drawMd3Track(canvas, selectedIndexAnimated, movingAnimated, cy);
+        }
 
         for (int a = 0; a < optionsStr.length; a++) {
             int cx = sideSide + (lineSize + gapSize * 2 + circleSize) * a + circleSize / 2;
             float t = Math.max(0, 1f - Math.abs(a - selectedIndexAnimated));
-            float ut = MathUtils.clamp(selectedIndexAnimated - a + 1f, 0, 1);
-            int color = ColorUtils.blendARGB(getThemedColor(Theme.key_switchTrack), Theme.multAlpha(getThemedColor(Theme.key_switchTrackChecked), minIndex != Integer.MIN_VALUE && a <= minIndex ? .50f : 1.0f), ut);
-            paint.setColor(color);
-            linePaint.setColor(color);
-            canvas.drawCircle(cx, cy, AndroidUtilities.lerp(circleSize / 2, AndroidUtilities.dp(6), t), paint);
-            if (a != 0) {
-                int x = cx - circleSize / 2 - gapSize - lineSize;
-                int width = lineSize;
-                if (dashedFrom != -1 && a - 1 >= dashedFrom) {
-                    x += AndroidUtilities.dp(3);
-                    width -= AndroidUtilities.dp(3);
-                    int dash = width / AndroidUtilities.dp(13);
-                    if (lastDash != dash) {
-                        float gap = (width - dash * AndroidUtilities.dp(8)) / (float) (dash - 1);
-                        linePaint.setPathEffect(new DashPathEffect(new float[]{AndroidUtilities.dp(6), gap}, 0));
-                        lastDash = dash;
-                    }
-                    canvas.drawLine(x + AndroidUtilities.dp(1), cy, x + width - AndroidUtilities.dp(1), cy, linePaint);
-                } else {
-                    float nt = MathUtils.clamp(1f - Math.abs(a - selectedIndexAnimated - 1), 0, 1);
-                    float nct = MathUtils.clamp(1f - Math.min(Math.abs(a - selectedIndexAnimated), Math.abs(a - selectedIndexAnimated - 1)), 0, 1);
-                    width -= AndroidUtilities.dp(3) * nct;
-                    x += AndroidUtilities.dp(3) * nt;
-                    canvas.drawRect(x, cy - AndroidUtilities.dp(1), x + width, cy + AndroidUtilities.dp(1), paint);
-                }
+            if (!md3) {
+                drawClassicStop(canvas, a, cx, t, selectedIndexAnimated, cy);
             }
             int size = optionsSizes[a];
             String text = optionsStr[a];
@@ -289,11 +367,42 @@ public class SlideChooseView extends View {
             }
         }
 
-        float cx = sideSide + (lineSize + gapSize * 2 + circleSize) * selectedIndexAnimated + circleSize / 2;
-        paint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_switchTrackChecked), 80));
-        canvas.drawCircle(cx, cy, AndroidUtilities.dp(12 * movingAnimated), paint);
-        paint.setColor(getThemedColor(Theme.key_switchTrackChecked));
-        canvas.drawCircle(cx, cy, AndroidUtilities.dp(6), paint);
+        if (!md3) {
+            float cx = sideSide + (lineSize + gapSize * 2 + circleSize) * selectedIndexAnimated + circleSize / 2;
+            paint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_switchTrackChecked), 80));
+            canvas.drawCircle(cx, cy, AndroidUtilities.dp(12 * movingAnimated), paint);
+            paint.setColor(getThemedColor(Theme.key_switchTrackChecked));
+            canvas.drawCircle(cx, cy, AndroidUtilities.dp(6), paint);
+        }
+    }
+
+    private void drawClassicStop(Canvas canvas, int a, int cx, float t, float selectedIndexAnimated, int cy) {
+        float ut = MathUtils.clamp(selectedIndexAnimated - a + 1f, 0, 1);
+        int color = ColorUtils.blendARGB(getThemedColor(Theme.key_switchTrack), Theme.multAlpha(getThemedColor(Theme.key_switchTrackChecked), minIndex != Integer.MIN_VALUE && a <= minIndex ? .50f : 1.0f), ut);
+        paint.setColor(color);
+        linePaint.setColor(color);
+        canvas.drawCircle(cx, cy, AndroidUtilities.lerp(circleSize / 2, AndroidUtilities.dp(6), t), paint);
+        if (a != 0) {
+            int x = cx - circleSize / 2 - gapSize - lineSize;
+            int width = lineSize;
+            if (dashedFrom != -1 && a - 1 >= dashedFrom) {
+                x += AndroidUtilities.dp(3);
+                width -= AndroidUtilities.dp(3);
+                int dash = width / AndroidUtilities.dp(13);
+                if (lastDash != dash) {
+                    float gap = (width - dash * AndroidUtilities.dp(8)) / (float) (dash - 1);
+                    linePaint.setPathEffect(new DashPathEffect(new float[]{AndroidUtilities.dp(6), gap}, 0));
+                    lastDash = dash;
+                }
+                canvas.drawLine(x + AndroidUtilities.dp(1), cy, x + width - AndroidUtilities.dp(1), cy, linePaint);
+            } else {
+                float nt = MathUtils.clamp(1f - Math.abs(a - selectedIndexAnimated - 1), 0, 1);
+                float nct = MathUtils.clamp(1f - Math.min(Math.abs(a - selectedIndexAnimated), Math.abs(a - selectedIndexAnimated - 1)), 0, 1);
+                width -= AndroidUtilities.dp(3) * nct;
+                x += AndroidUtilities.dp(3) * nt;
+                canvas.drawRect(x, cy - AndroidUtilities.dp(1), x + width, cy + AndroidUtilities.dp(1), paint);
+            }
+        }
     }
 
     @Override
